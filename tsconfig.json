@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ESNext"
+        ],
+        "jsx": "react-jsx",
+        "declaration": true,
+        "declarationDir": "build",
+        "outDir": "build",
+        "rootDir": "src",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+    },
+    "include": [
+        "src/**/*",
+    ],
+    "exclude": [
+        "node_modules",
+        "build",
+        "**/*.stories.tsx",
+        "**/*.test.tsx"
+    ]
+}
