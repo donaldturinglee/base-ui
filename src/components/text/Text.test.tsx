@@ -1,5 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "@jest/globals";
+import "@testing-library/jest-dom/jest-globals";
 import Text from "./Text";
 
 describe("Text", () => {
