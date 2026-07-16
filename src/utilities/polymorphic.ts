@@ -1,63 +1,38 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type, @typescript-eslint/no-explicit-any */
-
-import type * as React from "react";
-import type { JSX } from "react";
-
-export interface SlotMarker {
-    /** Marker to denote the custom child slot for a component */
-    __SLOT__?: symbol;
-}
-
-export type WithSlotMarker<T> = T & SlotMarker;
-
-export type FCWithSlotMarker<P> = WithSlotMarker<React.FC<P>>;
-
-/* Utility types */
-
-type Merge<P1 = {}, P2 = {}> = Omit<P1, keyof P2> & P2;
+import { forwardRef } from "react";
+import type { ComponentPropsWithRef, ElementType } from "react";
 
 /**
- * Infers the Props if E is a ForwardRefExoticComponentWithAs
+ * Distributive Omit utility type that works correctly with union types
  */
-type Props<E> = E extends ForwardRefComponent<any, infer P> ? P : {};
+export type DistributiveOmit<T, TOmitted extends PropertyKey> = T extends unknown
+    ? Omit<T, TOmitted>
+    : never;
 
 /**
- * Infers the JSX.IntrinsicElement if E is a ForwardRefExoticComponentWithAs
+ * Fixed version of forwardRef that provides better type inference for polymorphic components
  */
-type IntrinsicElement<E> = E extends ForwardRefComponent<infer I, any> ? I : never;
+// TODO: figure out how to change this type so we can set displayName
+// like this: `ComponentName.displayName = 'DisplayName' instead of using workarounds
+type FixedForwardRef = <T, P = object>(
+    render: (props: P, ref: React.Ref<T>) => React.ReactNode,
+) => (props: P & React.RefAttributes<T>) => React.ReactNode;
 
-type ForwardRefExoticComponent<E, Props> = React.ForwardRefExoticComponent<
-    Merge<E extends React.ElementType ? React.ComponentPropsWithRef<E> : never, Props & { as?: E }>
->;
+/**
+ * Cast forwardRef to the fixed version with better type inference
+ */
+export const fixedForwardRef = forwardRef as FixedForwardRef;
 
-/* ForwardRefComponent */
-
-interface ForwardRefComponent<
-    IntrinsicElementString,
-    Props = {},
-    /**
-     * Extends original type to ensure built in React types play nice
-     * with polymorphic components still e.g. `React.ElementRef` etc.
-     */
->
-    extends ForwardRefExoticComponent<IntrinsicElementString, Props>, SlotMarker {
-    /**
-     * When `as` prop is passed, use this overload.
-     * Merges original own props (without DOM props) and the inferred props
-     * from `as` element with the own props taking precedence.
-     *
-     * We explicitly avoid `React.ElementType` and manually narrow the prop types
-     * so that events are typed when using JSX.IntrinsicElements.
-     */
-    <As = IntrinsicElementString>(
-        props: As extends ""
-            ? { as: keyof JSX.IntrinsicElements }
-            : As extends React.ComponentType<infer P>
-              ? Merge<P, Props & { as: As }>
-              : As extends keyof JSX.IntrinsicElements
-                ? Merge<JSX.IntrinsicElements[As], Props & { as: As }>
-                : never,
-    ): React.ReactElement<any> | null;
-}
-
-export type { ForwardRefComponent, Props, IntrinsicElement, Merge };
+/**
+ * Simplified polymorphic props type that handles the common pattern of
+ * `DistributiveOmit<ComponentPropsWithRef<ElementType extends As ? DefaultElement : As>, 'as'>`
+ */
+export type PolymorphicProps<
+    TAs extends ElementType,
+    TDefaultElement extends ElementType = "div",
+    Props = object,
+> = DistributiveOmit<
+    ComponentPropsWithRef<ElementType extends TAs ? TDefaultElement : TAs> & Props,
+    "as"
+> & {
+    as?: TAs;
+};
