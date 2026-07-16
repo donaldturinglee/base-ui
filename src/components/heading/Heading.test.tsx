@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { Heading } from "./Heading";
+import Heading from "./Heading";
 
 describe("Heading", () => {
     it("renders an h2 element by default", () => {

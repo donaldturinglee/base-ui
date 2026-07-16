@@ -1,5 +1,5 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
-import { Heading } from "./Heading";
+import Heading from "./Heading";
 import type { HeadingProps } from "./Heading.types";
 
 export default {
