@@ -1,5 +1,5 @@
 import type { StoryFn } from "@storybook/react-vite";
-import { Spinner } from "./Spinner";
+import Spinner from "./Spinner";
 
 export default {
     title: "Components/Spinner/Features",

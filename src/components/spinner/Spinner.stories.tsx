@@ -1,5 +1,5 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
-import { Spinner } from "./Spinner";
+import Spinner from "./Spinner";
 import type { SpinnerProps } from "./Spinner.types";
 
 export default {
