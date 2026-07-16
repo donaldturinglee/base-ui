@@ -39,6 +39,11 @@ describe("Spinner", () => {
         expect(container.querySelector("svg")).toHaveClass("size-[var(--spinner-size-medium)]");
     });
 
+    it("tags the root element with a data-component attribute", () => {
+        render(<Spinner />);
+        expect(screen.getByRole("status")).toHaveAttribute("data-component", "Spinner");
+    });
+
     it("forwards a ref to the root element", () => {
         const ref = React.createRef<HTMLSpanElement>();
         render(<Spinner ref={ref} />);

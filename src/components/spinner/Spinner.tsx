@@ -24,6 +24,7 @@ const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner
             role="status"
             aria-label={ariaLabel ?? undefined}
             className={classNames(classes.root, className)}
+            data-component="Spinner"
             {...rest}
         >
             <ArrowClockwiseRegular
