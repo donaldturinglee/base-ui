@@ -26,7 +26,7 @@ export const PixelWidth: StoryFn<typeof Placeholder> = () => (
 // Percentage Width
 export const PercentageWidth: StoryFn<typeof Placeholder> = () => (
     // A percentage width resolves against the containing block, so it needs one with a set width
-    <div className="w-[400px]">
+    <div className="flex justify-center w-[400px]">
         <Placeholder width="50%" height="64px" label="Placeholder" />
     </div>
 );
