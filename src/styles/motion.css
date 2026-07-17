@@ -1,0 +1,13 @@
+@theme static {
+  --animate-shimmer: shimmer var(--base-duration-1000) infinite; /** Continuous sweep across a masked surface. Use for skeleton loaders that stand in for pending content. */
+
+  @keyframes shimmer {
+    from {
+      mask-position: 200%;
+    }
+
+    to {
+      mask-position: 0%;
+    }
+  }
+}

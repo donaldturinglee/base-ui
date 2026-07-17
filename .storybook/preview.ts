@@ -1,7 +1,20 @@
-import type { Preview } from "@storybook/react-vite";
+import type { Preview, Renderer } from "@storybook/react-vite";
+import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import "../src/styles/main.css";
 
 const preview: Preview = {
+    // The design tokens in themes.css are scoped to [data-theme], so stories only
+    // resolve them once the attribute is set on the preview
+    decorators: [
+        withThemeByDataAttribute<Renderer>({
+            themes: {
+                light: "light",
+                dark: "dark",
+            },
+            defaultTheme: "light",
+            attributeName: "data-theme",
+        }),
+    ],
     parameters: {
         controls: {
             matchers: {
