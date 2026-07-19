@@ -1,31 +1,40 @@
 import { forwardRef } from "react";
-import type { ComponentPropsWithRef, ElementType } from "react";
+import type * as React from "react";
+import type { ComponentPropsWithRef, ElementType, JSX } from "react";
+import type { SlotMarker } from "./types/slots";
 
-/**
- * Distributive Omit utility type that works correctly with union types
- */
+type Merge<P1 = object, P2 = object> = Omit<P1, keyof P2> & P2;
+
+type ForwardRefExoticComponent<E, OwnProps> = React.ForwardRefExoticComponent<
+    Merge<E extends ElementType ? ComponentPropsWithRef<E> : never, OwnProps & { as?: E }>
+>;
+
+interface ForwardRefComponent<IntrinsicElementString, OwnProps = object>
+    extends ForwardRefExoticComponent<IntrinsicElementString, OwnProps>, SlotMarker {
+    <As = IntrinsicElementString>(
+        props: As extends ""
+            ? { as: keyof JSX.IntrinsicElements }
+            : As extends React.ComponentType<infer P>
+              ? Merge<P, OwnProps & { as: As }>
+              : As extends keyof JSX.IntrinsicElements
+                ? Merge<JSX.IntrinsicElements[As], OwnProps & { as: As }>
+                : never,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ): React.ReactElement<any> | null;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type OwnProps<E> = E extends ForwardRefComponent<any, infer P> ? P : object;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type IntrinsicElement<E> = E extends ForwardRefComponent<infer I, any> ? I : never;
+
+export type { ForwardRefComponent, OwnProps, IntrinsicElement, Merge };
+
 export type DistributiveOmit<T, TOmitted extends PropertyKey> = T extends unknown
     ? Omit<T, TOmitted>
     : never;
 
-/**
- * Fixed version of forwardRef that provides better type inference for polymorphic components
- */
-// TODO: figure out how to change this type so we can set displayName
-// like this: `ComponentName.displayName = 'DisplayName' instead of using workarounds
-type FixedForwardRef = <T, P = object>(
-    render: (props: P, ref: React.Ref<T>) => React.ReactNode,
-) => (props: P & React.RefAttributes<T>) => React.ReactNode;
-
-/**
- * Cast forwardRef to the fixed version with better type inference
- */
-export const fixedForwardRef = forwardRef as FixedForwardRef;
-
-/**
- * Simplified polymorphic props type that handles the common pattern of
- * `DistributiveOmit<ComponentPropsWithRef<ElementType extends As ? DefaultElement : As>, 'as'>`
- */
 export type PolymorphicProps<
     TAs extends ElementType,
     TDefaultElement extends ElementType = "div",
@@ -36,3 +45,9 @@ export type PolymorphicProps<
 > & {
     as?: TAs;
 };
+
+type FixedForwardRef = <T, P = object>(
+    render: (props: P, ref: React.Ref<T>) => React.ReactNode,
+) => (props: P & React.RefAttributes<T>) => React.ReactNode;
+
+export const fixedForwardRef = forwardRef as FixedForwardRef;
