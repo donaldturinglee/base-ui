@@ -89,6 +89,7 @@
   "dependencies": {
     "@gamecrafters/base-ui-icons": "^0.0.6",
     "clsx": "^2.1.1",
+    "echarts": "^6.1.0",
     "tailwind-merge": "^3.6.0"
   }
 }
