@@ -3,4 +3,5 @@ export * from "./placeholder";
 export * from "./skeleton-box";
 export * from "./skeleton-text";
 export * from "./spinner";
+export * from "./stack";
 export * from "./text";
