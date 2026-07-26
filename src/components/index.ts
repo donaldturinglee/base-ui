@@ -1,5 +1,6 @@
 export * from "./avatar";
 export * from "./heading";
+export * from "./hidden";
 export * from "./label";
 export * from "./link";
 export * from "./placeholder";
