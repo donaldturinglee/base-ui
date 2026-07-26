@@ -1,4 +1,5 @@
 export * from "./avatar";
+export * from "./counter-label";
 export * from "./heading";
 export * from "./hidden";
 export * from "./label";
