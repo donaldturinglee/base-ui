@@ -6,6 +6,7 @@ export * from "./link";
 export * from "./placeholder";
 export * from "./portal";
 export * from "./progress-bar";
+export * from "./skeleton-avatar";
 export * from "./skeleton-box";
 export * from "./skeleton-text";
 export * from "./spinner";
