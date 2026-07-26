@@ -70,48 +70,20 @@ describe("Alert", () => {
         expect(screen.getByTestId("alert")).toHaveClass("[&_svg]:mr-[var(--base-size-8)]");
     });
 
-    it("rounds the corners and borders every side by default", () => {
+    it("rounds the corners and borders every side", () => {
         render(<Alert data-testid="alert">Message</Alert>);
         const alert = screen.getByTestId("alert");
         expect(alert).toHaveClass("border-[length:var(--border-width-thin)]");
         expect(alert).toHaveClass("rounded-[var(--border-radius-medium)]");
-        expect(alert).not.toHaveAttribute("data-full");
     });
 
-    it("drops the side borders and the radius when full", () => {
+    it("does not leak the variant prop onto the element", () => {
         render(
-            <Alert full data-testid="alert">
+            <Alert variant="success" data-testid="alert">
                 Message
             </Alert>,
         );
-        const alert = screen.getByTestId("alert");
-        expect(alert).toHaveAttribute("data-full", "true");
-        expect(alert).toHaveClass("border-x-0");
-        expect(alert).toHaveClass("border-y-[length:var(--border-width-thin)]");
-        expect(alert).toHaveClass("rounded-none");
-        expect(alert).not.toHaveClass("rounded-[var(--border-radius-medium)]");
-    });
-
-    it("pulls a full width alert over the element above it", () => {
-        render(
-            <Alert full data-testid="alert">
-                Message
-            </Alert>,
-        );
-        const alert = screen.getByTestId("alert");
-        expect(alert).toHaveClass("-mt-px");
-        expect(alert).not.toHaveClass("mt-0");
-    });
-
-    it("does not leak the variant and full props onto the element", () => {
-        render(
-            <Alert variant="success" full data-testid="alert">
-                Message
-            </Alert>,
-        );
-        const alert = screen.getByTestId("alert");
-        expect(alert).not.toHaveAttribute("variant");
-        expect(alert).not.toHaveAttribute("full");
+        expect(screen.getByTestId("alert")).not.toHaveAttribute("variant");
     });
 
     it("forwards element specific props to the element passed to the as prop", () => {

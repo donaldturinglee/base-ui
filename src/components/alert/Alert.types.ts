@@ -8,7 +8,6 @@ export type AlertProps<As extends React.ElementType = "div"> = PolymorphicProps<
     "div",
     {
         variant?: AlertVariant;
-        full?: boolean;
         className?: string;
     }
 >;

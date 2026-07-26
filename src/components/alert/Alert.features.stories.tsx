@@ -43,14 +43,6 @@ export const Danger: StoryFn<typeof Alert> = () => (
     </Alert>
 );
 
-// Full Width
-export const Full: StoryFn<typeof Alert> = () => (
-    <Alert full className={classes.row}>
-        <InfoRegular className={classes.icon} aria-label="Info" />
-        Full
-    </Alert>
-);
-
 // With Icon And Action
 export const WithIconAndAction: StoryFn<typeof Alert> = () => (
     <Alert className={classes.row}>

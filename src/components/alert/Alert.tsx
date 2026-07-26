@@ -4,11 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { AlertProps, AlertVariant } from "./Alert.types";
 
 const classes = {
-    root: "relative mt-0 p-[var(--base-size-16)] [color:var(--foreground-color-default)] border-solid [&_p:last-child]:mb-0 [&_svg]:mr-[var(--base-size-8)]",
-    inset: "border-[length:var(--border-width-thin)] rounded-[var(--border-radius-medium)]",
-    // A full width alert spans the page, so the side borders and the radius come off and the
-    // top border pulls up over the one above it
-    full: "-mt-px border-x-0 border-y-[length:var(--border-width-thin)] rounded-none",
+    root: "relative mt-0 p-[var(--base-size-16)] [color:var(--foreground-color-default)] border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-medium)] [&_p:last-child]:mb-0 [&_svg]:mr-[var(--base-size-8)]",
     variant: {
         default:
             "bg-[var(--background-color-accent-muted)] border-[color:var(--border-color-accent-muted)] [&_svg]:[color:var(--foreground-color-accent)]",
@@ -29,22 +25,15 @@ function Alert<As extends React.ElementType = "div">(
         as: Component = "div",
         className,
         variant = "default",
-        full,
         ...rest
     } = props as AlertProps<"div">;
 
     return (
         <Component
             ref={ref}
-            className={classNames(
-                classes.root,
-                full ? classes.full : classes.inset,
-                classes.variant[variant],
-                className,
-            )}
+            className={classNames(classes.root, classes.variant[variant], className)}
             data-component="Alert"
             data-variant={variant}
-            data-full={full}
             {...rest}
         />
     );

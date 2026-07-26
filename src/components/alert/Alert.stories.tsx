@@ -13,7 +13,6 @@ export const Playground: StoryFn<AlertProps> = (args) => <Alert {...args}>Defaul
 
 Playground.args = {
     variant: "default",
-    full: false,
 };
 
 Playground.argTypes = {
@@ -23,12 +22,6 @@ Playground.argTypes = {
         },
         options: ["default", "success", "warning", "danger"],
         description: "Sets the background, border and icon colour",
-    },
-    full: {
-        control: {
-            type: "boolean",
-        },
-        description: "Spans the full width, dropping the side borders and the radius",
     },
     children: {
         table: {
