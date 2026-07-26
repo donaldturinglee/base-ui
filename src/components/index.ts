@@ -3,6 +3,7 @@ export * from "./heading";
 export * from "./label";
 export * from "./link";
 export * from "./placeholder";
+export * from "./portal";
 export * from "./skeleton-box";
 export * from "./skeleton-text";
 export * from "./spinner";
