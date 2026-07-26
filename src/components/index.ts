@@ -8,6 +8,7 @@ export * from "./heading";
 export * from "./hidden";
 export * from "./label";
 export * from "./link";
+export * from "./pagination";
 export * from "./placeholder";
 export * from "./portal";
 export * from "./progress-bar";
