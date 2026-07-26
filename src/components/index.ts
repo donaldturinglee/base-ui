@@ -1,6 +1,7 @@
 export * from "./alert";
 export * from "./avatar";
 export * from "./avatar-stack";
+export * from "./blankslate";
 export * from "./card";
 export * from "./counter-label";
 export * from "./heading";
