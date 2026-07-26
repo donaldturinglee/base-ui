@@ -19,3 +19,4 @@ export * from "./spinner";
 export * from "./stack";
 export * from "./state-label";
 export * from "./text";
+export * from "./truncate";
