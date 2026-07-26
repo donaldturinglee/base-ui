@@ -4,6 +4,7 @@ export * from "./avatar-stack";
 export * from "./blankslate";
 export * from "./card";
 export * from "./checkbox";
+export * from "./checkbox-group";
 export * from "./counter-label";
 export * from "./heading";
 export * from "./hidden";
