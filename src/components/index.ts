@@ -3,6 +3,7 @@ export * from "./avatar";
 export * from "./avatar-stack";
 export * from "./blankslate";
 export * from "./card";
+export * from "./checkbox";
 export * from "./counter-label";
 export * from "./heading";
 export * from "./hidden";
