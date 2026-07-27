@@ -2,6 +2,7 @@ export * from "./alert";
 export * from "./avatar";
 export * from "./avatar-stack";
 export * from "./blankslate";
+export * from "./button";
 export * from "./card";
 export * from "./checkbox";
 export * from "./checkbox-group";
