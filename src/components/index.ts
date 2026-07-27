@@ -12,6 +12,7 @@ export * from "./hidden";
 export * from "./icon-button";
 export * from "./label";
 export * from "./link";
+export * from "./link-button";
 export * from "./pagination";
 export * from "./placeholder";
 export * from "./portal";
