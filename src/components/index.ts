@@ -9,6 +9,7 @@ export * from "./checkbox-group";
 export * from "./counter-label";
 export * from "./heading";
 export * from "./hidden";
+export * from "./icon-button";
 export * from "./label";
 export * from "./link";
 export * from "./pagination";
