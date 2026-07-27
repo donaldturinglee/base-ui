@@ -29,5 +29,6 @@ export * from "./stack";
 export * from "./state-label";
 export * from "./text";
 export * from "./textarea";
+export * from "./toggle-switch";
 export * from "./topic-tag";
 export * from "./truncate";
