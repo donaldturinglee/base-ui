@@ -11,6 +11,7 @@ export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./confirmation-dialog";
 export * from "./counter-label";
+export * from "./data-table";
 export * from "./dialog";
 export * from "./heading";
 export * from "./hidden";
