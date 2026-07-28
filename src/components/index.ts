@@ -38,6 +38,7 @@ export * from "./state-label";
 export * from "./text";
 export * from "./text-input";
 export * from "./textarea";
+export * from "./timeline";
 export * from "./toggle-switch";
 export * from "./topic-tag";
 export * from "./truncate";
