@@ -36,5 +36,5 @@ export default {
         visualizer(),
         terser(),
     ],
-    external: ["react", "react-dom"],
+    external: ["react", "react-dom", "react-dom/client"],
 };

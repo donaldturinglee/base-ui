@@ -42,8 +42,9 @@ export type DialogFooterButtonLayout = "wrap" | "scroll";
 export type DialogButtonType = "default" | "primary" | "danger" | "normal";
 
 // The label comes from `content` rather than from children, so the buttons can be given
-// as plain objects
-export type DialogButtonProps = Omit<ButtonProps, "children"> & {
+// as plain objects. A button carries a `content` attribute of its own for microdata, which
+// is dropped so the label is free to be anything that can be rendered
+export type DialogButtonProps = Omit<ButtonProps, "children" | "content"> & {
     buttonType?: DialogButtonType;
     // The button's inner text
     content: React.ReactNode;
