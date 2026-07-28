@@ -20,6 +20,8 @@ export * from "./pagination";
 export * from "./placeholder";
 export * from "./portal";
 export * from "./progress-bar";
+export * from "./radio";
+export * from "./radio-group";
 export * from "./relative-time";
 export * from "./scrollable-region";
 export * from "./select";
