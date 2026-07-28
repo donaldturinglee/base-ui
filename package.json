@@ -62,6 +62,7 @@
     "@types/jest": "^30.0.0",
     "@types/jest-axe": "^3.5.9",
     "@types/react-dom": "^19.2.3",
+    "@types/react-is": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
     "babel-jest": "^30.2.0",
@@ -91,6 +92,7 @@
     "@gamecrafters/base-ui-icons": "^0.0.7",
     "clsx": "^2.1.1",
     "echarts": "^6.1.0",
+    "react-is": "^19.2.8",
     "tailwind-merge": "^3.6.0"
   }
 }
