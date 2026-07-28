@@ -29,18 +29,18 @@ const isHidden = (node: HTMLElement) => {
     return style.display === "none" || style.visibility === "hidden";
 };
 
+// Everything inside the node that can take focus, in the order the tab key reaches them
+export const getInteractiveNodes = (node: HTMLElement | null) => {
+    if (!node || isHidden(node)) {
+        return [];
+    }
+
+    return Array.from(node.querySelectorAll<HTMLElement>(interactiveSelector)).filter(
+        (candidate) => !isHidden(candidate),
+    );
+};
+
 // Reports whether anything inside the node can take focus, so a container can decide
 // whether it needs to be focusable itself
-export const hasInteractiveNodes = (node: HTMLElement | null) => {
-    if (!node || isHidden(node)) {
-        return false;
-    }
-
-    for (const candidate of node.querySelectorAll<HTMLElement>(interactiveSelector)) {
-        if (candidate !== node && !isHidden(candidate)) {
-            return true;
-        }
-    }
-
-    return false;
-};
+export const hasInteractiveNodes = (node: HTMLElement | null) =>
+    getInteractiveNodes(node).length > 0;

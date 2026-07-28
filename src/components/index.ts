@@ -9,6 +9,7 @@ export * from "./card";
 export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./counter-label";
+export * from "./dialog";
 export * from "./heading";
 export * from "./hidden";
 export * from "./icon-button";
