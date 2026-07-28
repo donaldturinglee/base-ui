@@ -13,6 +13,7 @@ export * from "./confirmation-dialog";
 export * from "./counter-label";
 export * from "./data-table";
 export * from "./dialog";
+export * from "./divider";
 export * from "./heading";
 export * from "./hidden";
 export * from "./icon-button";
