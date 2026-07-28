@@ -41,5 +41,6 @@ export * from "./text-input";
 export * from "./textarea";
 export * from "./timeline";
 export * from "./toggle-switch";
+export * from "./tooltip";
 export * from "./topic-tag";
 export * from "./truncate";

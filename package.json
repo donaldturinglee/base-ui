@@ -90,6 +90,7 @@
   },
   "dependencies": {
     "@gamecrafters/base-ui-icons": "^0.0.7",
+    "@oddbird/popover-polyfill": "^0.7.1",
     "clsx": "^2.1.1",
     "echarts": "^6.1.0",
     "react-is": "^19.2.8",

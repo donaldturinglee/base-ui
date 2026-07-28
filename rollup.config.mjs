@@ -36,5 +36,11 @@ export default {
         visualizer(),
         terser(),
     ],
-    external: ["react", "react-dom", "react-dom/client", "react-is"],
+    external: [
+        "react",
+        "react-dom",
+        "react-dom/client",
+        "react-is",
+        "@oddbird/popover-polyfill/fn",
+    ],
 };
