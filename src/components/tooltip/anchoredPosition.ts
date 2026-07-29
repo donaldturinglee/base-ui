@@ -9,6 +9,9 @@ export type AnchoredPositionOptions = {
     align: AnchorAlignment;
     // How far the floating element stands clear of the anchor
     anchorOffset?: number;
+    // How far the floating element is moved along the edge it lines up against, towards the
+    // middle of the anchor
+    alignmentOffset?: number;
 };
 
 export type AnchoredPosition = {
@@ -20,6 +23,8 @@ export type AnchoredPosition = {
 };
 
 const DEFAULT_ANCHOR_OFFSET = 4;
+
+const DEFAULT_ALIGNMENT_OFFSET = 0;
 
 const oppositeSide: Record<AnchorSide, AnchorSide> = {
     "outside-top": "outside-bottom",
@@ -56,22 +61,25 @@ const positionOnSide = (side: AnchorSide, anchor: Rect, floating: Rect, offset: 
     return anchor.right + offset;
 };
 
-// Where it sits along the other axis, which is what the alignment decides
+// Where it sits along the other axis, which is what the alignment decides. The offset is
+// counted towards the middle of the anchor, so it reads the same way whichever end the
+// floating element lines up against
 const positionOnAlignment = (
     align: AnchorAlignment,
     anchorStart: number,
     anchorSize: number,
     floatingSize: number,
+    offset: number,
 ) => {
     if (align === "start") {
-        return anchorStart;
+        return anchorStart + offset;
     }
 
     if (align === "end") {
-        return anchorStart + anchorSize - floatingSize;
+        return anchorStart + anchorSize - floatingSize - offset;
     }
 
-    return anchorStart + (anchorSize - floatingSize) / 2;
+    return anchorStart + (anchorSize - floatingSize) / 2 + offset;
 };
 
 // Works out where a floating element should stand against an anchor, turning it to the
@@ -81,7 +89,12 @@ const positionOnAlignment = (
 export const getAnchoredPosition = (
     floating: HTMLElement,
     anchor: HTMLElement,
-    { side, align, anchorOffset = DEFAULT_ANCHOR_OFFSET }: AnchoredPositionOptions,
+    {
+        side,
+        align,
+        anchorOffset = DEFAULT_ANCHOR_OFFSET,
+        alignmentOffset = DEFAULT_ALIGNMENT_OFFSET,
+    }: AnchoredPositionOptions,
 ): AnchoredPosition => {
     const anchorRect = anchor.getBoundingClientRect();
     const floatingRect = floating.getBoundingClientRect();
@@ -111,16 +124,28 @@ export const getAnchoredPosition = (
     const crossLimit = alongVerticalSide ? viewportWidth : viewportHeight;
 
     let anchorAlign = align;
-    let cross = positionOnAlignment(align, anchorStart, anchorSize, floatingSize);
+    let cross = positionOnAlignment(align, anchorStart, anchorSize, floatingSize, alignmentOffset);
 
     // Running off one end is answered by lining up against the other, which is the most it
     // can be moved and still point at the anchor
     if (cross < 0) {
         anchorAlign = "start";
-        cross = positionOnAlignment(anchorAlign, anchorStart, anchorSize, floatingSize);
+        cross = positionOnAlignment(
+            anchorAlign,
+            anchorStart,
+            anchorSize,
+            floatingSize,
+            alignmentOffset,
+        );
     } else if (cross + floatingSize > crossLimit) {
         anchorAlign = "end";
-        cross = positionOnAlignment(anchorAlign, anchorStart, anchorSize, floatingSize);
+        cross = positionOnAlignment(
+            anchorAlign,
+            anchorStart,
+            anchorSize,
+            floatingSize,
+            alignmentOffset,
+        );
     }
 
     // Whatever is left over is simply held inside the viewport

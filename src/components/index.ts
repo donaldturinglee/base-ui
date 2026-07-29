@@ -1,5 +1,6 @@
 export * from "./accordion";
 export * from "./alert";
+export * from "./anchored-overlay";
 export * from "./avatar";
 export * from "./avatar-stack";
 export * from "./banner";

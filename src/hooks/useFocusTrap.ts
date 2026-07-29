@@ -9,6 +9,9 @@ export type FocusTrapOptions = {
     initialFocusRef?: React.RefObject<HTMLElement | null>;
     // Where focus lands once the trap closes, in place of whatever held it beforehand
     returnFocusRef?: React.RefObject<HTMLElement | null>;
+    // Leaves focus where it is, for a container that is mounted before it is ready to hold
+    // it
+    disabled?: boolean;
 };
 
 // Every trap that is open, in the order they opened. Only the last one answers the tab
@@ -21,11 +24,12 @@ export const useFocusTrap = ({
     containerRef,
     initialFocusRef,
     returnFocusRef,
+    disabled,
 }: FocusTrapOptions) => {
     useEffect(() => {
         const container = containerRef.current;
 
-        if (!container) {
+        if (!container || disabled) {
             return;
         }
 
@@ -73,5 +77,5 @@ export const useFocusTrap = ({
                 returnFocus.focus();
             }
         };
-    }, [containerRef, initialFocusRef, returnFocusRef]);
+    }, [containerRef, initialFocusRef, returnFocusRef, disabled]);
 };
