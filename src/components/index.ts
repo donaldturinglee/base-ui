@@ -12,6 +12,7 @@ export * from "./checkbox-group";
 export * from "./confirmation-dialog";
 export * from "./counter-label";
 export * from "./data-table";
+export * from "./details";
 export * from "./dialog";
 export * from "./divider";
 export * from "./heading";
