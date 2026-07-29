@@ -38,6 +38,7 @@ export * from "./skeleton-text";
 export * from "./spinner";
 export * from "./stack";
 export * from "./state-label";
+export * from "./tabs";
 export * from "./text";
 export * from "./text-input";
 export * from "./textarea";
