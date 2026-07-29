@@ -1,4 +1,7 @@
 export * from "./accordion";
+export * from "./action-bar";
+export * from "./action-list";
+export * from "./action-menu";
 export * from "./alert";
 export * from "./anchored-overlay";
 export * from "./avatar";
