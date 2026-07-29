@@ -18,6 +18,7 @@ export * from "./divider";
 export * from "./heading";
 export * from "./hidden";
 export * from "./icon-button";
+export * from "./inline-message";
 export * from "./keybinding-hint";
 export * from "./label";
 export * from "./link";
