@@ -104,6 +104,12 @@ export type ActionListDividerProps = React.ComponentPropsWithoutRef<"li"> & {
     className?: string;
 };
 
+// A list nested within an item. It is drawn beside the row that opens it rather than
+// inside it, since a row that can be pressed is a button and a list cannot stand in one
+export type ActionListSubItemProps = {
+    children?: React.ReactNode;
+};
+
 export type ActionListVisualProps = React.ComponentPropsWithoutRef<"span"> & {
     className?: string;
 };

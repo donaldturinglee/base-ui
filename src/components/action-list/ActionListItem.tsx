@@ -6,6 +6,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Spinner } from "../spinner";
 import ActionListDescription from "./ActionListDescription";
 import ActionListLeadingVisual from "./ActionListLeadingVisual";
+import ActionListSubItem from "./ActionListSubItem";
 import ActionListTrailingAction from "./ActionListTrailingAction";
 import ActionListTrailingVisual from "./ActionListTrailingVisual";
 import { ActionListContainerContext } from "./ActionListContainerContext";
@@ -55,6 +56,7 @@ const slotsConfig = {
     trailingVisual: ActionListTrailingVisual,
     trailingAction: ActionListTrailingAction,
     description: ActionListDescription,
+    subItem: ActionListSubItem,
 };
 
 // The roles that stand for a single thing inside a list of them, which is what lets the
@@ -277,6 +279,7 @@ function ActionListItem<As extends React.ElementType = never>(
                 data-loading={loading ? "" : undefined}
                 data-has-description={slots.description ? "" : undefined}
                 data-has-trailing-action={trailingAction ? "" : undefined}
+                data-has-sub-item={slots.subItem ? "" : undefined}
                 {...(contentTakesProps
                     ? { role: itemRole ? "none" : undefined }
                     : { ...interactiveProps, ...rest })}
@@ -326,6 +329,9 @@ function ActionListItem<As extends React.ElementType = never>(
                     </span>
                 ) : null}
                 {trailingAction}
+                {/* Stands after the row rather than within it, so that a list nested in
+                    the item is not put inside the button the row is drawn as */}
+                {slots.subItem}
             </li>
         </ActionListItemContext.Provider>
     );

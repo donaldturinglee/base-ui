@@ -29,6 +29,7 @@ export * from "./keybinding-hint";
 export * from "./label";
 export * from "./link";
 export * from "./link-button";
+export * from "./nav-list";
 export * from "./page-layout";
 export * from "./pagination";
 export * from "./placeholder";

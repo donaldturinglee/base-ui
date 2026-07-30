@@ -1,8 +1,14 @@
 import * as React from "react";
 import { classNames } from "../../utilities/classnames";
+import { asSlot } from "../../utilities/slot";
 import { ActionListContext } from "./ActionListContext";
 import { ActionListGroupContext } from "./ActionListGroupContext";
 import type { ActionListGroupHeadingProps, ActionListGroupVariant } from "./ActionList.types";
+import type { FCWithSlotMarker, SlotMarker } from "../../utilities/types/slots";
+
+// Marks what stands as a group's heading, so that a component built on this one is still
+// found by the group it is written inside rather than left among the group's items
+export const groupHeadingSlot: SlotMarker = { __SLOT__: Symbol("ActionList.GroupHeading") };
 
 const classes = {
     wrap: "px-[var(--base-size-8)] py-[var(--base-size-6)]",
@@ -59,4 +65,9 @@ function ActionListGroupHeading(props: ActionListGroupHeadingProps) {
 
 ActionListGroupHeading.displayName = "ActionList.GroupHeading";
 
-export default ActionListGroupHeading;
+const GroupHeading: FCWithSlotMarker<ActionListGroupHeadingProps> = asSlot(
+    ActionListGroupHeading,
+    groupHeadingSlot,
+);
+
+export default GroupHeading;

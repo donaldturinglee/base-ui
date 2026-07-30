@@ -7,6 +7,7 @@ import ActionListHeading from "./ActionListHeading";
 import ActionListItem from "./ActionListItem";
 import ActionListLeadingVisual from "./ActionListLeadingVisual";
 import ActionListLinkItem from "./ActionListLinkItem";
+import ActionListSubItem from "./ActionListSubItem";
 import ActionListTrailingAction from "./ActionListTrailingAction";
 import ActionListTrailingVisual from "./ActionListTrailingVisual";
 
@@ -21,6 +22,7 @@ export const ActionList = Object.assign(ActionListBase, {
     LeadingVisual: ActionListLeadingVisual,
     TrailingVisual: ActionListTrailingVisual,
     TrailingAction: ActionListTrailingAction,
+    SubItem: ActionListSubItem,
 });
 
 export {
@@ -34,6 +36,7 @@ export {
     ActionListLeadingVisual,
     ActionListTrailingVisual,
     ActionListTrailingAction,
+    ActionListSubItem,
 };
 export { ActionListContext } from "./ActionListContext";
 export { ActionListItemContext } from "./ActionListItemContext";
