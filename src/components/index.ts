@@ -37,6 +37,7 @@ export * from "./radio";
 export * from "./radio-group";
 export * from "./relative-time";
 export * from "./scrollable-region";
+export * from "./segmented-control";
 export * from "./select";
 export * from "./skeleton-avatar";
 export * from "./skeleton-box";
