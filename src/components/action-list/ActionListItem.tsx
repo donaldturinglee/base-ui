@@ -38,8 +38,11 @@ const classes = {
         "cursor-not-allowed [color:var(--control-foreground-color-disabled)] hover:bg-transparent",
     inactive: "cursor-not-allowed [color:var(--foreground-color-muted)] hover:bg-transparent",
     loading: "cursor-default",
-    // The one item the list is currently showing carries more weight than the rest
-    active: "bg-[var(--control-transparent-background-color-active)] [font-weight:var(--base-text-weight-semibold)]",
+    // The one item the list is currently showing carries more weight than the rest. It is
+    // filled and marked in the margin so it can be picked out at a glance down a long list,
+    // and it keeps that fill under the pointer, which the hover of an ordinary item would
+    // otherwise wash out
+    active: "relative bg-[var(--control-transparent-background-color-selected)] hover:bg-[var(--control-transparent-background-color-selected)] [font-weight:var(--base-text-weight-semibold)] after:content-[''] after:absolute after:top-[calc(50%_-_var(--base-size-12))] after:left-[calc(-1_*_var(--base-size-8))] after:w-[var(--base-size-4)] after:h-[var(--base-size-24)] after:rounded-[var(--border-radius-medium)] after:bg-[var(--foreground-color-accent)]",
     // The label and everything read with it, which is the part that gives way when there is
     // not enough room
     main: "flex grow items-start min-w-0 gap-[var(--base-size-8)]",
