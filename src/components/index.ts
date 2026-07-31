@@ -48,6 +48,7 @@ export * from "./select-panel";
 export * from "./skeleton-avatar";
 export * from "./skeleton-box";
 export * from "./skeleton-text";
+export * from "./slider";
 export * from "./spinner";
 export * from "./stack";
 export * from "./state-label";
