@@ -38,6 +38,7 @@ export * from "./page-content";
 export * from "./page-footer";
 export * from "./page-header";
 export * from "./page-layout";
+export * from "./page-sidebar";
 export * from "./pagination";
 export * from "./placeholder";
 export * from "./portal";
