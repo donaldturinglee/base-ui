@@ -34,6 +34,7 @@ export * from "./label";
 export * from "./link";
 export * from "./link-button";
 export * from "./nav-list";
+export * from "./page-footer";
 export * from "./page-header";
 export * from "./page-layout";
 export * from "./pagination";
