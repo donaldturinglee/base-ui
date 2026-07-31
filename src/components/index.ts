@@ -21,6 +21,7 @@ export * from "./details";
 export * from "./dialog";
 export * from "./divider";
 export * from "./filtered-action-list";
+export * from "./form-control";
 export * from "./heading";
 export * from "./hidden";
 export * from "./icon-button";
