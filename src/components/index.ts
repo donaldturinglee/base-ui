@@ -4,6 +4,7 @@ export * from "./action-list";
 export * from "./action-menu";
 export * from "./alert";
 export * from "./anchored-overlay";
+export * from "./autocomplete";
 export * from "./avatar";
 export * from "./avatar-stack";
 export * from "./banner";
