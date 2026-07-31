@@ -21,6 +21,7 @@ export * from "./data-table";
 export * from "./details";
 export * from "./dialog";
 export * from "./divider";
+export * from "./empty-state";
 export * from "./filtered-action-list";
 export * from "./form-control";
 export * from "./heading";
