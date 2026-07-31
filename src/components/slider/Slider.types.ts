@@ -2,6 +2,10 @@ import type * as React from "react";
 
 export type SliderSize = "small" | "medium" | "large";
 
+// Which way the slider runs. A vertical slider is filled from the bottom up, the way a fader
+// is, rather than from the top down
+export type SliderOrientation = "horizontal" | "vertical";
+
 // `type` is fixed, and `size` is dropped because the native attribute takes a character count
 // rather than a step of the control scale. The value props are narrowed to numbers, since the
 // slider has to work out from them how far along its track it stands
@@ -18,7 +22,9 @@ export type SliderProps = Omit<
     // Where it starts out, where the slider keeps hold of the value itself
     defaultValue?: number;
     size?: SliderSize;
-    // Fills the width of whatever it stands in, rather than keeping its own
+    orientation?: SliderOrientation;
+    // Fills the width of whatever it stands in, or the height of it where the slider runs
+    // vertically, rather than keeping its own
     block?: boolean;
     // Called with the value the slider has moved to, and with the event that moved it
     onChange?: (value: number, event: React.ChangeEvent<HTMLInputElement>) => void;

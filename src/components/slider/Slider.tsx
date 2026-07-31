@@ -1,33 +1,55 @@
 import * as React from "react";
 import { classNames } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { SliderProps, SliderSize } from "./Slider.types";
+import type { SliderOrientation, SliderProps, SliderSize } from "./Slider.types";
 
 const classes = {
     // The browser's own track and thumb are taken away, and the pseudo-elements below stand
     // in for them. The fallback lives here, so a slider is drawn empty rather than unfilled
     // until it knows where it stands
     root: "m-0 p-0 appearance-none bg-transparent cursor-pointer [--slider-fill:0%] [--slider-disabled-opacity:0.5]",
-    block: "block w-full",
+    // Filling means the width of what it stands in lying down, and the height of it standing
+    // up
+    block: {
+        horizontal: "block w-full",
+        vertical: "block h-full",
+    } satisfies Record<SliderOrientation, string>,
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    // The size says how tall the control stands as well as how big the two pieces it is drawn
-    // from are, so the rules below only have to be written the once
+    // The thickness runs across the control and the length along it, so writing it against
+    // the block axis rather than against the height leaves the one rule serving both
+    // orientations
+    thickness: "[block-size:var(--slider-thickness)]",
+    // The size says how thick the control stands as well as how big the two pieces it is
+    // drawn from are, so the rules below only have to be written the once
     size: {
-        small: "h-[var(--base-size-12)] [--slider-thumb-size:var(--base-size-12)] [--slider-track-size:var(--base-size-4)]",
-        medium: "h-[var(--base-size-16)] [--slider-thumb-size:var(--base-size-16)] [--slider-track-size:var(--base-size-6)]",
-        large: "h-[var(--base-size-20)] [--slider-thumb-size:var(--base-size-20)] [--slider-track-size:var(--base-size-8)]",
+        small: "[--slider-thickness:var(--base-size-12)] [--slider-thumb-size:var(--base-size-12)] [--slider-track-size:var(--base-size-4)]",
+        medium: "[--slider-thickness:var(--base-size-16)] [--slider-thumb-size:var(--base-size-16)] [--slider-track-size:var(--base-size-6)]",
+        large: "[--slider-thickness:var(--base-size-20)] [--slider-thumb-size:var(--base-size-20)] [--slider-track-size:var(--base-size-8)]",
     } satisfies Record<SliderSize, string>,
+    // A vertical writing mode is what stands a range input on its end; the right-to-left
+    // inline direction is what puts the bottom of the range at the bottom of the track, the
+    // way a fader reads rather than the way a page does. A browser too old for either draws
+    // the slider lying down, which still works. The length is only a starting height, since
+    // nothing else would give a slider standing up one
+    orientation: {
+        horizontal: "[--slider-fill-direction:to_right]",
+        vertical:
+            "[writing-mode:vertical-lr] [direction:rtl] h-[var(--base-size-128)] [--slider-fill-direction:to_top]",
+    } satisfies Record<SliderOrientation, string>,
     colors: "[--slider-fill-color:var(--control-checked-background-color-rest)] [--slider-track-color:var(--control-track-background-color-rest)] [--slider-thumb-color:var(--control-knob-background-color-rest)] [--slider-thumb-border-color:var(--control-knob-border-color-rest)]",
     // A slider that cannot be used is faded rather than drained: where it stands is the whole
     // of what it says, and a track redrawn in grey would leave a reader working that out from
     // the shape of the thumb alone
     disabled: "disabled:cursor-not-allowed disabled:opacity-[var(--slider-disabled-opacity)]",
     // The part behind the thumb is filled and the rest is left as track, drawn as one gradient
-    // so that there is nothing laid over the track to keep in step with it
-    track: "[&::-webkit-slider-runnable-track]:h-[var(--slider-track-size)] [&::-webkit-slider-runnable-track]:rounded-[var(--border-radius-full)] [&::-webkit-slider-runnable-track]:[background-image:linear-gradient(to_right,var(--slider-fill-color)_var(--slider-fill),var(--slider-track-color)_var(--slider-fill))] [&::-moz-range-track]:h-[var(--slider-track-size)] [&::-moz-range-track]:rounded-[var(--border-radius-full)] [&::-moz-range-track]:[background-image:linear-gradient(to_right,var(--slider-fill-color)_var(--slider-fill),var(--slider-track-color)_var(--slider-fill))]",
-    // Webkit lays the thumb out from the top of the track, so it is pulled back up by half of
-    // what it stands over. Firefox centres it on the track already
-    thumb: "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:box-border [&::-webkit-slider-thumb]:size-[var(--slider-thumb-size)] [&::-webkit-slider-thumb]:[margin-top:calc((var(--slider-track-size)_-_var(--slider-thumb-size))/2)] [&::-webkit-slider-thumb]:rounded-[var(--border-radius-full)] [&::-webkit-slider-thumb]:bg-[var(--slider-thumb-color)] [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:border-[length:var(--border-width-thin)] [&::-webkit-slider-thumb]:border-[color:var(--slider-thumb-border-color)] [&::-webkit-slider-thumb]:[box-shadow:var(--shadow-resting-small)] [&::-moz-range-thumb]:box-border [&::-moz-range-thumb]:size-[var(--slider-thumb-size)] [&::-moz-range-thumb]:rounded-[var(--border-radius-full)] [&::-moz-range-thumb]:bg-[var(--slider-thumb-color)] [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:border-[length:var(--border-width-thin)] [&::-moz-range-thumb]:border-[color:var(--slider-thumb-border-color)] [&::-moz-range-thumb]:[box-shadow:var(--shadow-resting-small)]",
+    // so that there is nothing laid over the track to keep in step with it. Which way the
+    // gradient runs is the orientation's, since a gradient is drawn against the page rather
+    // than against the writing mode
+    track: "[&::-webkit-slider-runnable-track]:[block-size:var(--slider-track-size)] [&::-webkit-slider-runnable-track]:rounded-[var(--border-radius-full)] [&::-webkit-slider-runnable-track]:[background-image:linear-gradient(var(--slider-fill-direction),var(--slider-fill-color)_var(--slider-fill),var(--slider-track-color)_var(--slider-fill))] [&::-moz-range-track]:[block-size:var(--slider-track-size)] [&::-moz-range-track]:rounded-[var(--border-radius-full)] [&::-moz-range-track]:[background-image:linear-gradient(var(--slider-fill-direction),var(--slider-fill-color)_var(--slider-fill),var(--slider-track-color)_var(--slider-fill))]",
+    // Webkit lays the thumb out from the near edge of the track, so it is pulled back by half
+    // of what it stands over. Pulling it along the block axis centres it whichever way the
+    // slider runs. Firefox centres it on the track already
+    thumb: "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:box-border [&::-webkit-slider-thumb]:size-[var(--slider-thumb-size)] [&::-webkit-slider-thumb]:[margin-block-start:calc((var(--slider-track-size)_-_var(--slider-thumb-size))/2)] [&::-webkit-slider-thumb]:rounded-[var(--border-radius-full)] [&::-webkit-slider-thumb]:bg-[var(--slider-thumb-color)] [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:border-[length:var(--border-width-thin)] [&::-webkit-slider-thumb]:border-[color:var(--slider-thumb-border-color)] [&::-webkit-slider-thumb]:[box-shadow:var(--shadow-resting-small)] [&::-moz-range-thumb]:box-border [&::-moz-range-thumb]:size-[var(--slider-thumb-size)] [&::-moz-range-thumb]:rounded-[var(--border-radius-full)] [&::-moz-range-thumb]:bg-[var(--slider-thumb-color)] [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:border-[length:var(--border-width-thin)] [&::-moz-range-thumb]:border-[color:var(--slider-thumb-border-color)] [&::-moz-range-thumb]:[box-shadow:var(--shadow-resting-small)]",
     // A track drawn in colour says nothing in forced colours, so the fill is left to the
     // system and the thumb is drawn against it
     forcedColors:
@@ -56,6 +78,7 @@ function Slider(
         className,
         style,
         size = "medium",
+        orientation = "horizontal",
         block,
         min = 0,
         max = 100,
@@ -97,12 +120,14 @@ function Slider(
                 classes.root,
                 classes.colors,
                 classes.forcedColors,
+                classes.thickness,
                 classes.size[size],
+                classes.orientation[orientation],
                 classes.track,
                 classes.thumb,
                 classes.focus,
                 classes.disabled,
-                block && classes.block,
+                block && classes.block[orientation],
                 className,
             )}
             style={
@@ -111,8 +136,11 @@ function Slider(
                     "--slider-fill": `${getFill(currentValue, min, max)}%`,
                 } as React.CSSProperties
             }
+            // A slider is read as lying down unless it says otherwise
+            aria-orientation={orientation === "vertical" ? "vertical" : undefined}
             data-component="Slider"
             data-size={size}
+            data-orientation={orientation}
             data-block={block}
             data-disabled={disabled}
             {...rest}

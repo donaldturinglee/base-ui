@@ -163,11 +163,63 @@ describe("Slider", () => {
         });
     });
 
+    describe("which way it runs", () => {
+        it("lies down by default", () => {
+            render(<Slider aria-label="Volume" />);
+
+            expect(slider()).toHaveAttribute("data-orientation", "horizontal");
+            expect(slider()).not.toHaveAttribute("aria-orientation");
+        });
+
+        it("stands up when it is asked to", () => {
+            render(<Slider aria-label="Volume" orientation="vertical" />);
+
+            expect(slider()).toHaveAttribute("data-orientation", "vertical");
+            expect(slider()).toHaveAttribute("aria-orientation", "vertical");
+        });
+
+        it("turns the control on its end, with the bottom of the range at the bottom", () => {
+            render(<Slider aria-label="Volume" orientation="vertical" />);
+
+            expect(slider()).toHaveClass("[writing-mode:vertical-lr]");
+            expect(slider()).toHaveClass("[direction:rtl]");
+        });
+
+        it("fills the track along whichever way it runs", () => {
+            const { rerender } = render(<Slider aria-label="Volume" />);
+            expect(slider()).toHaveClass("[--slider-fill-direction:to_right]");
+
+            rerender(<Slider aria-label="Volume" orientation="vertical" />);
+            expect(slider()).toHaveClass("[--slider-fill-direction:to_top]");
+        });
+
+        it("works the fill out from the range whichever way it runs", () => {
+            render(<Slider aria-label="Volume" orientation="vertical" defaultValue={30} />);
+            expect(fill()).toBe("30%");
+        });
+
+        it("stands as thick as the size it is drawn at, whichever way it runs", () => {
+            render(<Slider aria-label="Volume" orientation="vertical" size="large" />);
+
+            expect(slider()).toHaveClass("[block-size:var(--slider-thickness)]");
+            expect(slider()).toHaveClass("[--slider-thickness:var(--base-size-20)]");
+        });
+    });
+
     it("fills the width of what it stands in when it is asked to", () => {
         render(<Slider aria-label="Volume" block />);
 
         expect(slider()).toHaveClass("w-full");
         expect(slider()).toHaveAttribute("data-block", "true");
+    });
+
+    it("fills the height of what it stands in when it is standing up", () => {
+        render(<Slider aria-label="Volume" orientation="vertical" block />);
+
+        expect(slider()).toHaveClass("h-full");
+        expect(slider()).not.toHaveClass("w-full");
+        // Filling stands over the height a slider standing up starts out with
+        expect(slider()).not.toHaveClass("h-[var(--base-size-128)]");
     });
 
     it("is named by a label pointing at it", () => {

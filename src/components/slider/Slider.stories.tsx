@@ -33,6 +33,7 @@ Playground.args = {
     step: 1,
     defaultValue: 50,
     size: "medium",
+    orientation: "horizontal",
     block: true,
     disabled: false,
 };
@@ -69,11 +70,19 @@ Playground.argTypes = {
         },
         description: "Where the slider starts out",
     },
+    orientation: {
+        control: {
+            type: "radio",
+        },
+        options: ["horizontal", "vertical"],
+        description: "Which way the slider runs",
+    },
     block: {
         control: {
             type: "boolean",
         },
-        description: "Fills the width of whatever the slider stands in",
+        description:
+            "Fills the width of whatever the slider stands in, or the height of it where the slider runs vertically",
     },
     disabled: {
         control: {

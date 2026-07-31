@@ -9,6 +9,13 @@ const classes = {
     field: "flex flex-col gap-[var(--base-size-4)]",
     label: "[font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
     row: "flex items-center justify-between",
+    // Sliders standing up are laid out along the row they are read across, each with whatever
+    // names it beneath
+    faders: "flex flex-row items-end gap-[var(--base-size-24)]",
+    fader: "flex flex-col items-center gap-[var(--base-size-8)]",
+    // Gives a slider standing up more room than it starts out with, so that filling the
+    // height it stands in shows as more than the height it already had
+    tall: "flex h-[12rem]",
 };
 
 const sizes: SliderSize[] = ["small", "medium", "large"];
@@ -39,6 +46,40 @@ export const Block: StoryFn<typeof Slider> = () => (
     <div className={classes.stack}>
         <Slider aria-label="Keeps its own width" defaultValue={50} />
         <Slider aria-label="Fills the width" defaultValue={50} block />
+    </div>
+);
+
+// Standing Up, which is filled from the bottom the way a fader is rather than from the top
+export const Vertical: StoryFn<typeof Slider> = () => (
+    <div className={classes.fader}>
+        <Slider aria-label="Volume" orientation="vertical" defaultValue={60} />
+        <Text size="small">Volume</Text>
+    </div>
+);
+
+// Standing Up At Each Size, which sets how thick the track stands and how big the thumb is
+// whichever way the slider runs
+export const VerticalSizes: StoryFn<typeof Slider> = () => (
+    <div className={classes.faders}>
+        {sizes.map((size) => (
+            <div key={size} className={classes.fader}>
+                <Slider aria-label={size} orientation="vertical" size={size} defaultValue={50} />
+                <Text size="small">{size}</Text>
+            </div>
+        ))}
+    </div>
+);
+
+// Filling The Height Of What It Stands In, which is what filling means for a slider standing
+// up
+export const VerticalBlock: StoryFn<typeof Slider> = () => (
+    <div className={classes.faders}>
+        <div className={classes.tall}>
+            <Slider aria-label="Keeps its own height" orientation="vertical" defaultValue={50} />
+        </div>
+        <div className={classes.tall}>
+            <Slider aria-label="Fills the height" orientation="vertical" defaultValue={50} block />
+        </div>
     </div>
 );
 
