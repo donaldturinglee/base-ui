@@ -156,6 +156,8 @@ export type ActionListContainerContextValue = {
     container?: string;
     listRole?: React.AriaRole;
     listLabelledBy?: string;
+    // Says how the items are picked, for a list that is not told so itself
+    selectionVariant?: ActionListSelectionVariant;
     selectionAttribute?: "aria-selected" | "aria-checked";
     // Called after an item is picked, so the container can close itself
     afterSelect?: (event: ActionListSelectEvent) => void;

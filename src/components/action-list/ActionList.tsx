@@ -57,10 +57,13 @@ function ActionList<As extends React.ElementType = "ul">(
     const {
         listRole: listRoleFromContainer,
         listLabelledBy,
+        selectionVariant: selectionVariantFromContainer,
         enableFocusZone: enableFocusZoneFromContainer,
     } = React.useContext(ActionListContainerContext);
 
     const listRole = role ?? listRoleFromContainer;
+    // A list inside a container is told how its items are picked, unless it says so itself
+    const listSelectionVariant = selectionVariant ?? selectionVariantFromContainer;
     // A list with a heading of its own is named by it; one inside a container is named by
     // whatever the container says names it
     const labelledBy = slots.heading ? (slots.heading.props.id ?? headingId) : listLabelledBy;
@@ -80,8 +83,14 @@ function ActionList<As extends React.ElementType = "ul">(
     });
 
     const listContextValue = React.useMemo(
-        () => ({ variant, selectionVariant, showDividers, role: listRole, headingId }),
-        [variant, selectionVariant, showDividers, listRole, headingId],
+        () => ({
+            variant,
+            selectionVariant: listSelectionVariant,
+            showDividers,
+            role: listRole,
+            headingId,
+        }),
+        [variant, listSelectionVariant, showDividers, listRole, headingId],
     );
 
     return (

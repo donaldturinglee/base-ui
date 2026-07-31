@@ -42,6 +42,7 @@ export * from "./relative-time";
 export * from "./scrollable-region";
 export * from "./segmented-control";
 export * from "./select";
+export * from "./select-panel";
 export * from "./skeleton-avatar";
 export * from "./skeleton-box";
 export * from "./skeleton-text";
