@@ -14,6 +14,7 @@ export * from "./button-group";
 export * from "./card";
 export * from "./checkbox";
 export * from "./checkbox-group";
+export * from "./collapsible";
 export * from "./confirmation-dialog";
 export * from "./counter-label";
 export * from "./data-table";
