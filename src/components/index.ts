@@ -19,6 +19,7 @@ export * from "./chart";
 export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./collapsible";
+export * from "./command-palette";
 export * from "./confirmation-dialog";
 export * from "./counter-label";
 export * from "./data-table";
