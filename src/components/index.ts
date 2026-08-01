@@ -64,6 +64,7 @@ export * from "./text";
 export * from "./text-input";
 export * from "./textarea";
 export * from "./timeline";
+export * from "./toast";
 export * from "./toggle-switch";
 export * from "./token";
 export * from "./tooltip";
