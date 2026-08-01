@@ -93,6 +93,7 @@
     "@oddbird/popover-polyfill": "^0.7.1",
     "@tanstack/react-virtual": "^3.14.9",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.21",
     "echarts": "^6.1.0",
     "react-is": "^19.2.8",
     "tailwind-merge": "^3.6.0"
