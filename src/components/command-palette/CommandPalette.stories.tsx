@@ -5,7 +5,7 @@ import { CommandPalette } from ".";
 import type { CommandPaletteProps } from "./CommandPalette.types";
 
 const classes = {
-    frame: "w-[var(--overlay-width-medium)] max-w-full",
+    frame: "w-[var(--overlay-width-large)] max-w-full",
 };
 
 export default {

@@ -7,7 +7,11 @@ import { CommandPaletteContext } from "./CommandPaletteContext";
 import type { CommandPaletteEntry, CommandPaletteProps } from "./CommandPalette.types";
 
 const classes = {
-    root: "flex flex-col overflow-hidden rounded-[var(--border-radius-large)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] bg-[var(--overlay-background-color)]",
+    // The palette takes whatever room it is given, up to the width a single line of command
+    // still reads across. Its own corners are what round the field standing at the top of it,
+    // since the field carries none of its own and is clipped to them. Nothing inside it can
+    // take focus, so it gives up its own ring
+    root: "flex w-full max-w-[var(--overlay-width-large)] flex-col overflow-hidden rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] bg-[var(--overlay-background-color)] focus:outline-none",
     hidden: "sr-only",
 };
 

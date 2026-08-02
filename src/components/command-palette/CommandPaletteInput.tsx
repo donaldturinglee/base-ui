@@ -8,8 +8,13 @@ import type { CommandPaletteInputProps } from "./CommandPalette.types";
 
 const classes = {
     // The field is the top of the panel rather than a control standing inside it, so it gives
-    // up its own border and takes a line under it instead
-    root: "shrink-0 rounded-none border-0 border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)] [box-shadow:none] focus-within:outline-none",
+    // up its border and its ring alike and nothing is drawn between it and the list: the room
+    // either side of them is what holds them apart. It is set larger and taller than an
+    // ordinary field, since it is the one thing on the panel that is typed into. It is stood
+    // off either edge far enough that the magnifier starts where the headings and the items
+    // below it start, and what is typed ends where their text ends, so the whole panel reads
+    // down one edge
+    root: "shrink-0 min-h-[var(--control-xlarge-size)] ps-[var(--base-size-16)] pe-[var(--base-size-8)] rounded-none border-0 [box-shadow:none] [font-size:var(--text-body-size-large)] focus-within:outline-none",
 };
 
 // What the palette is narrowed by. It keeps focus the whole time the palette is open and
@@ -30,6 +35,7 @@ function CommandPaletteInput(
         <TextInput
             ref={ref}
             type="text"
+            size="large"
             block
             role="combobox"
             aria-expanded="true"

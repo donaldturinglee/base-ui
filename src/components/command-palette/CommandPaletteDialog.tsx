@@ -13,7 +13,9 @@ const classes = {
     // for and read from the top down
     backdrop:
         "fixed inset-0 flex justify-center overflow-y-auto bg-[var(--overlay-backdrop-background-color)] p-[var(--base-size-16)] pt-[10dvh] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-duration-short)]",
-    panel: "h-fit w-[var(--overlay-width-medium)] max-w-full [box-shadow:var(--shadow-floating-medium)] motion-safe:animate-in motion-safe:slide-in-from-top-2 motion-safe:duration-[var(--motion-duration-short)]",
+    // It arrives where it stands rather than travelling there, growing the last of the way in
+    // from just under its own size, which reads as the page coming forward to meet the reader
+    panel: "h-fit w-[var(--overlay-width-large)] max-w-full [box-shadow:var(--shadow-floating-medium)] motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-[var(--motion-duration-short)]",
 };
 
 // The palette brought out over the page, which is how it is usually reached. Everything about

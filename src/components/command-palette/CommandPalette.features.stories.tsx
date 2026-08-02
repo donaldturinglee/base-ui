@@ -13,7 +13,7 @@ import { Text } from "../text";
 import { CommandPalette } from ".";
 
 const classes = {
-    frame: "w-[var(--overlay-width-medium)] max-w-full",
+    frame: "w-[var(--overlay-width-large)] max-w-full",
     item: "flex w-full items-center gap-[var(--base-size-8)]",
     icon: "size-[var(--base-size-16)] shrink-0 [color:var(--foreground-color-muted)]",
     trailing: "ms-auto",
@@ -29,6 +29,10 @@ const actions = [
     { name: "New project", icon: AddRegular, keywords: ["add", "make", "create"] },
     { name: "Invite a teammate", icon: PersonAddRegular, keywords: ["ask", "share"] },
 ];
+
+// More than the panel can hold at once, which is the state a palette is usually reached in:
+// there is too much to go looking through, so it is typed at or run down instead
+const files = Array.from({ length: 40 }, (_, index) => `src/components/Component${index + 1}.tsx`);
 
 export default {
     title: "Components/CommandPalette/Features",
@@ -153,6 +157,25 @@ export const Looping: StoryFn = () => (
                 {commands.map((command) => (
                     <CommandPalette.Item key={command.name}>{command.name}</CommandPalette.Item>
                 ))}
+            </CommandPalette.List>
+        </CommandPalette>
+    </div>
+);
+
+// More Than Can Be Seen At Once, where the list gives way at the height it was allowed rather
+// than running the panel off the screen. Whatever is in hand is brought back into view as the
+// arrows carry it past either edge of what is showing, so the reader never loses it
+export const Scrolling: StoryFn = () => (
+    <div className={classes.frame}>
+        <CommandPalette>
+            <CommandPalette.Input placeholder="Hold the down arrow to run past what is showing" />
+            <CommandPalette.List>
+                <CommandPalette.Empty />
+                <CommandPalette.Group heading="Files">
+                    {files.map((file) => (
+                        <CommandPalette.Item key={file}>{file}</CommandPalette.Item>
+                    ))}
+                </CommandPalette.Group>
             </CommandPalette.List>
         </CommandPalette>
     </div>

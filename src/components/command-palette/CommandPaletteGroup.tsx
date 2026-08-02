@@ -7,10 +7,13 @@ import type { CommandPaletteGroupProps } from "./CommandPalette.types";
 
 const classes = {
     // A column of its own, so that the items inside it can be laid out in the order they
-    // answered best in just as they are in the list itself
-    root: "flex flex-col",
+    // answered best in just as they are in the list itself. It holds them apart by the same
+    // gap the list does, so a group reads no differently from the items standing beside it
+    root: "flex flex-col gap-[var(--base-size-4)]",
+    // The heading names the run below it without standing over it: it is set small and muted
+    // rather than heavy, so the items are what the eye lands on going down the list
     heading:
-        "px-[var(--base-size-8)] pt-[var(--base-size-8)] pb-[var(--base-size-4)] [color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-small)]",
+        "flex select-none items-center px-[var(--base-size-8)] py-[var(--base-size-4)] [color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-medium)] [line-height:var(--text-body-line-height-small)]",
     hidden: "hidden",
 };
 
