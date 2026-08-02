@@ -1,12 +1,15 @@
 {
   "name": "@gamecrafters/base-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "build/main.cjs.js",
   "module": "build/main.esm.js",
   "types": "build/main.d.ts",
   "files": [
     "build"
+  ],
+  "sideEffects": [
+    "*.css"
   ],
   "scripts": {
     "build": "rollup -c",

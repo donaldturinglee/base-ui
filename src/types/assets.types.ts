@@ -3,6 +3,11 @@ declare module "*.module.css" {
     export default content;
 }
 
+declare module "*.css" {
+    const content: string;
+    export default content;
+}
+
 declare module "*.svg" {
     const content: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
     export default content;
