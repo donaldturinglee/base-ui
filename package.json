@@ -1,10 +1,19 @@
 {
   "name": "@gamecrafters/base-ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "build/main.cjs.js",
   "module": "build/main.esm.js",
   "types": "build/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/main.d.ts",
+      "import": "./build/main.esm.js",
+      "require": "./build/main.cjs.js"
+    },
+    "./main.css": "./build/styles/main.css",
+    "./package.json": "./package.json"
+  },
   "files": [
     "build"
   ],

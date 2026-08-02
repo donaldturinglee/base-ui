@@ -30,7 +30,7 @@ export default {
             exclude: ["./**/*.test.tsx", "./**/*.stories.tsx"],
         }),
         postcss({
-            extract: "main.css",
+            extract: "styles/main.css",
             minimize: true,
             autoModules: true,
             plugins: [tailwindcss()],
