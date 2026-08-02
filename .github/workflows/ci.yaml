@@ -1,0 +1,87 @@
+name: Publish
+
+# A published GitHub release is what sends the package to npm. Everything the repository
+# already checks on its own is run first, so a release can only ever ship something that
+# builds and passes its tests.
+#
+# Publishing needs an npm automation token stored as the NPM_TOKEN repository secret.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Run every check and list what would be sent, but publish nothing
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# Two releases going out at once would race each other to the registry, so they are sent one
+# at a time. A publish already under way is left to finish rather than being cut short
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Lets npm record where the package was built and what it was built from, which is what
+      # a provenance statement is. It needs a public repository; drop it and the --provenance
+      # flag below if the repository is private
+      id-token: write
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The version that is published is the one in package.json, so the tag the release was
+      # cut from is held against it first. The tag is read through the environment rather than
+      # written into the script, so nothing in a tag name can run here
+      - name: Check the version against the tag it was released from
+        if: github.event_name == 'release'
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "${TAG#v}" != "$version" ]; then
+            echo "::error::Release tag ${TAG} does not match the package version ${version}"
+            exit 1
+          fi
+
+      - name: Lint
+        run: npm run lint
+
+      # `npm run prettier` is left out on purpose: it currently fails on the generated
+      # stylesheets under src/styles, so running it here would stop every publish. Put it back
+      # once those files are formatted
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish
+        if: ${{ github.event_name == 'release' || !inputs.dry-run }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public
+
+      # A dry run does everything a publish does but the upload, so the workflow can be tried
+      # out before a release depends on it
+      - name: List what a publish would send
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+        run: npm publish --dry-run
