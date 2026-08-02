@@ -7,14 +7,19 @@ import { CommandPaletteContext } from "./CommandPaletteContext";
 import type { CommandPaletteInputProps } from "./CommandPalette.types";
 
 const classes = {
-    // The field is the top of the panel rather than a control standing inside it, so it gives
-    // up its border and its ring alike and nothing is drawn between it and the list: the room
-    // either side of them is what holds them apart. It is set larger and taller than an
-    // ordinary field, since it is the one thing on the panel that is typed into. It is stood
-    // off either edge far enough that the magnifier starts where the headings and the items
-    // below it start, and what is typed ends where their text ends, so the whole panel reads
+    // The field stands on the panel rather than being the top of it: a margin holds it off
+    // the top and either side, and a background of its own sets it apart from what it is
+    // standing on, so it reads as the one thing there to be typed into. Nothing is set under
+    // it, since the list below carries padding of its own that already holds the two apart.
+    // It is left to stretch to the panel rather than told to fill it: a field given the
+    // whole width would take that and its margins besides, and the panel would clip what ran
+    // past its end, leaving the far margin nowhere to be seen. Its corners are its own now
+    // that the panel's are no longer what clips it, but it gives up its border and its ring
+    // alike, since the background is what marks it out. It is set larger and taller than an
+    // ordinary field, and its padding stands inside its margin far enough that the magnifier
+    // still starts where the headings and the items below it start, so the whole panel reads
     // down one edge
-    root: "shrink-0 min-h-[var(--control-xlarge-size)] ps-[var(--base-size-16)] pe-[var(--base-size-8)] rounded-none border-0 [box-shadow:none] [font-size:var(--text-body-size-large)] focus-within:outline-none",
+    root: "shrink-0 w-auto mt-[var(--base-size-8)] mx-[var(--base-size-8)] min-h-[var(--control-xlarge-size)] ps-[var(--base-size-8)] pe-[var(--base-size-8)] border-0 bg-[var(--background-color-muted)] [box-shadow:none] [font-size:var(--text-body-size-large)] focus-within:outline-none",
 };
 
 // What the palette is narrowed by. It keeps focus the whole time the palette is open and

@@ -1,6 +1,4 @@
-import * as React from "react";
 import type { StoryFn, Meta } from "@storybook/react-vite";
-import { Text } from "../text";
 import { CommandPalette } from ".";
 import type { CommandPaletteProps } from "./CommandPalette.types";
 
@@ -29,22 +27,17 @@ const Items = () => (
     </>
 );
 
-export const Default: StoryFn<typeof CommandPalette> = () => {
-    const [picked, setPicked] = React.useState("");
-
-    return (
-        <div className={classes.frame}>
-            <CommandPalette onSelect={setPicked}>
-                <CommandPalette.Input />
-                <CommandPalette.List>
-                    <CommandPalette.Empty />
-                    <Items />
-                </CommandPalette.List>
-            </CommandPalette>
-            <Text>{picked === "" ? "Nothing picked yet" : `Picked ${picked}`}</Text>
-        </div>
-    );
-};
+export const Default: StoryFn<typeof CommandPalette> = () => (
+    <div className={classes.frame}>
+        <CommandPalette>
+            <CommandPalette.Input />
+            <CommandPalette.List>
+                <CommandPalette.Empty />
+                <Items />
+            </CommandPalette.List>
+        </CommandPalette>
+    </div>
+);
 
 export const Playground: StoryFn<CommandPaletteProps> = (args) => (
     <div className={classes.frame}>
