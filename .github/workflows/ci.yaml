@@ -76,8 +76,6 @@ jobs:
 
       - name: Publish
         if: ${{ github.event_name == 'release' || !inputs.dry-run }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --provenance --access public
 
       # A dry run does everything a publish does but the upload, so the workflow can be tried
