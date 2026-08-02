@@ -41,7 +41,7 @@ const classes = {
     bridge: "after:absolute after:inset-x-0 after:h-[calc(var(--toaster-gap)_+_1px)] after:content-['']",
     bridgeTop: "after:top-full",
     bridgeBottom: "after:bottom-full",
-    card: "rounded-[var(--border-radius-large)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--toast-border-color)] bg-[var(--toast-background-color)] [box-shadow:var(--shadow-floating-small)] [color:var(--toast-foreground-color)] [--toast-background-color:var(--overlay-background-color)] [--toast-border-color:var(--border-color-default)] [--toast-foreground-color:var(--foreground-color-default)] [--toast-icon-color:var(--foreground-color-muted)]",
+    card: "rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--toast-border-color)] bg-[var(--toast-background-color)] [box-shadow:var(--shadow-floating-small)] [color:var(--toast-foreground-color)] [--toast-background-color:var(--overlay-background-color)] [--toast-border-color:var(--border-color-default)] [--toast-foreground-color:var(--foreground-color-default)] [--toast-icon-color:var(--foreground-color-muted)]",
     // The icon carries what the toast is saying even where the toast keeps the colours of
     // every other one
     iconColor: {
