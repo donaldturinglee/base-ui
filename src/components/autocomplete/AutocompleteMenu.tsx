@@ -14,7 +14,7 @@ import type {
 const classes = {
     loading: "flex justify-center p-[var(--base-size-16)]",
     emptyState:
-        "p-[var(--base-size-16)] [font-size:var(--text-body-size-medium)] [color:var(--foreground-color-muted)]",
+        "p-[var(--base-size-16)] [font-size:var(--text-body-size-medium)] text-foreground-muted",
     hidden: "sr-only",
 };
 

@@ -77,7 +77,7 @@ describe("StateLabel", () => {
             );
             const state = screen.getByTestId("state");
             expect(state).toHaveClass(
-                `bg-[var(--background-color-${tones[status]}-emphasis)]`,
+                `bg-background-${tones[status]}-emphasis`,
                 `[box-shadow:var(--box-shadow-thin)_var(--border-color-${tones[status]}-emphasis)]`,
             );
             unmount();

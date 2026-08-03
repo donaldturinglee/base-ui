@@ -60,7 +60,7 @@ describe("Button", () => {
     it("drops the shape of a button for the link variant", () => {
         render(<Button variant="link">Save</Button>);
         const button = screen.getByRole("button");
-        expect(button).toHaveClass("[color:var(--foreground-color-accent)]");
+        expect(button).toHaveClass("text-foreground-accent");
         expect(button).toHaveClass("border-0");
     });
 

@@ -4,10 +4,10 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TableHeaderProps } from "./DataTable.types";
 
 const classes = {
-    root: "flex items-center text-start p-[var(--table-cell-padding-block)_var(--table-cell-padding-inline)] [font-weight:var(--base-text-weight-semibold)] [color:var(--foreground-color-muted)] bg-[var(--background-color-muted)] border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)] border-t-[length:var(--border-width-thin)] border-t-[color:var(--border-color-default)]",
+    root: "flex items-center text-start p-[var(--table-cell-padding-block)_var(--table-cell-padding-inline)] [font-weight:var(--base-text-weight-semibold)] text-foreground-muted bg-background-muted border-b-[length:var(--border-width-thin)] border-b-border-default border-t-[length:var(--border-width-thin)] border-t-border-default",
     end: "justify-end text-end",
     // A sorted column is the one the reader is looking at, so it is set in the plain colour
-    sorted: "aria-[sort=ascending]:[color:var(--foreground-color-default)] aria-[sort=descending]:[color:var(--foreground-color-default)]",
+    sorted: "aria-[sort=ascending]:text-foreground-default aria-[sort=descending]:text-foreground-default",
 };
 
 function TableHeader(

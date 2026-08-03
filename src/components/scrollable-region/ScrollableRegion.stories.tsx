@@ -5,7 +5,7 @@ import type { ScrollableRegionProps } from "./ScrollableRegion.types";
 
 const classes = {
     // Constrains the region so the content inside it actually overflows
-    region: "max-w-[20rem] max-h-[6rem] p-[var(--base-size-8)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+    region: "max-w-[20rem] max-h-[6rem] p-[var(--base-size-8)] border-solid border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
     nowrap: "block whitespace-nowrap",
 };
 

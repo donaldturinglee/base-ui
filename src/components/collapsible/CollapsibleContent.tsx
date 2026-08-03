@@ -5,7 +5,7 @@ import { CollapsibleContext } from "./CollapsibleContext";
 import type { CollapsibleContentProps } from "./Collapsible.types";
 
 const classes = {
-    root: "px-[var(--base-size-8)] pb-[var(--base-size-12)] [color:var(--foreground-color-default)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
+    root: "px-[var(--base-size-8)] pb-[var(--base-size-12)] text-foreground-default [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
     // The content eases in behind the trigger rather than appearing under it all at once.
     // There is nothing to see on the way out, since closed content is taken off the page
     open: "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 motion-safe:duration-short",

@@ -28,7 +28,7 @@ describe("Link", () => {
     it("uses the accent foreground colour and underlines on hover", () => {
         render(<Link data-testid="link" />);
         const link = screen.getByTestId("link");
-        expect(link).toHaveClass("[color:var(--foreground-color-accent)]");
+        expect(link).toHaveClass("text-foreground-accent");
         expect(link).toHaveClass("no-underline");
         expect(link).toHaveClass("hover:underline");
     });
@@ -42,8 +42,8 @@ describe("Link", () => {
         render(<Link muted data-testid="link" />);
         const link = screen.getByTestId("link");
         expect(link).toHaveAttribute("data-muted", "true");
-        expect(link).toHaveClass("[color:var(--foreground-color-muted)]");
-        expect(link).toHaveClass("hover:[color:var(--foreground-color-accent)]");
+        expect(link).toHaveClass("text-foreground-muted");
+        expect(link).toHaveClass("hover:text-foreground-accent");
     });
 
     it("drops the default hover underline when muted", () => {

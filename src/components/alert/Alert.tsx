@@ -4,15 +4,15 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { AlertProps, AlertVariant } from "./Alert.types";
 
 const classes = {
-    root: "relative mt-0 p-[var(--base-size-16)] [color:var(--foreground-color-default)] border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-medium)] [&_p:last-child]:mb-0 [&_svg]:mr-[var(--base-size-8)]",
+    root: "relative mt-0 p-[var(--base-size-16)] text-foreground-default border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-medium)] [&_p:last-child]:mb-0 [&_svg]:mr-[var(--base-size-8)]",
     variant: {
         default:
-            "bg-[var(--background-color-accent-muted)] border-[color:var(--border-color-accent-muted)] [&_svg]:[color:var(--foreground-color-accent)]",
+            "bg-background-accent-muted border-border-accent-muted [&_svg]:text-foreground-accent",
         success:
-            "bg-[var(--background-color-success-muted)] border-[color:var(--border-color-success-muted)] [&_svg]:[color:var(--foreground-color-success)]",
+            "bg-background-success-muted border-border-success-muted [&_svg]:text-foreground-success",
         warning:
-            "bg-[var(--background-color-attention-muted)] border-[color:var(--border-color-attention-muted)] [&_svg]:[color:var(--foreground-color-attention)]",
-        danger: "bg-[var(--background-color-danger-muted)] border-[color:var(--border-color-danger-muted)] [&_svg]:[color:var(--foreground-color-danger)]",
+            "bg-background-attention-muted border-border-attention-muted [&_svg]:text-foreground-attention",
+        danger: "bg-background-danger-muted border-border-danger-muted [&_svg]:text-foreground-danger",
     } satisfies Record<AlertVariant, string>,
 };
 

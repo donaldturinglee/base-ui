@@ -8,12 +8,12 @@ const classes = {
     root: "inline-block [font-size:var(--text-body-size-medium)] no-underline",
     focus: "focus-visible:rounded-[var(--border-radius-small)] focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)] focus-visible:no-underline",
     // A step of the trail reads as a link
-    normal: "[color:var(--foreground-color-accent)] hover:underline",
+    normal: "text-foreground-accent hover:underline",
     // The page the reader is already on is where they are rather than somewhere else to go
-    normalSelected: "[color:var(--foreground-color-default)] hover:no-underline",
+    normalSelected: "text-foreground-default hover:no-underline",
     // A spacious trail is drawn as a row of boxes rather than as a line of links
     spacious:
-        "px-[var(--base-size-6)] py-[var(--base-size-4)] rounded-[var(--border-radius-medium)] [color:var(--foreground-color-default)] hover:no-underline hover:bg-[var(--control-transparent-background-color-hover)]",
+        "px-[var(--base-size-6)] py-[var(--base-size-4)] rounded-[var(--border-radius-medium)] text-foreground-default hover:no-underline hover:bg-[var(--control-transparent-background-color-hover)]",
     spaciousSelected: "[font-weight:var(--base-text-weight-semibold)]",
 };
 

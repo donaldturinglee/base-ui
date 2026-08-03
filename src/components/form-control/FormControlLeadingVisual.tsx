@@ -7,7 +7,7 @@ import type { FormControlLeadingVisualProps } from "./FormControl.types";
 const classes = {
     // The visual stands between the box and the name beside it, and is sized from the line it
     // is set against rather than from the icon given to it
-    root: "flex items-center ms-[var(--base-size-8)] [--leading-visual-size:var(--base-size-16)] [color:var(--foreground-color-default)] [&>*]:min-w-[var(--leading-visual-size)] [&>*]:min-h-[var(--leading-visual-size)] [&>*]:fill-current",
+    root: "flex items-center ms-[var(--base-size-8)] [--leading-visual-size:var(--base-size-16)] text-foreground-default [&>*]:min-w-[var(--leading-visual-size)] [&>*]:min-h-[var(--leading-visual-size)] [&>*]:fill-current",
     disabled: "[color:var(--control-foreground-color-disabled)]",
     // A caption puts a second line under the name, so the visual grows to stand against both
     withCaption: "[--leading-visual-size:var(--base-size-24)]",

@@ -5,13 +5,13 @@ import { PortalContext } from "./PortalContext";
 import { registerPortalRoot } from "./portalRoot";
 
 const classes = {
-    outer: "p-[var(--base-size-12)] bg-[var(--background-color-danger-muted)]",
-    inner: "p-[var(--base-size-12)] bg-[var(--background-color-success-muted)]",
+    outer: "p-[var(--base-size-12)] bg-background-danger-muted",
+    inner: "p-[var(--base-size-12)] bg-background-success-muted",
     section: "m-[var(--base-size-8)] p-[var(--base-size-8)]",
-    default: "bg-[var(--background-color-accent-muted)]",
-    context: "bg-[var(--background-color-attention-muted)]",
-    override: "bg-[var(--background-color-success-muted)]",
-    target: "mt-[var(--base-size-8)] p-[var(--base-size-8)] bg-[var(--background-color-inset)] border-[length:var(--border-width-thin)] border-solid border-[color:var(--border-color-muted)]",
+    default: "bg-background-accent-muted",
+    context: "bg-background-attention-muted",
+    override: "bg-background-success-muted",
+    target: "mt-[var(--base-size-8)] p-[var(--base-size-8)] bg-background-inset border-[length:var(--border-width-thin)] border-solid border-border-muted",
 };
 
 export default {

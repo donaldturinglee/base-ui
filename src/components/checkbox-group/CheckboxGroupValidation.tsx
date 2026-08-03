@@ -17,8 +17,8 @@ const classes = {
     root: "flex [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [&_a]:underline [&_a]:[color:currentColor]",
     icon: "shrink-0 mt-[var(--base-size-2)] me-[var(--base-size-4)] size-[var(--base-size-12)]",
     variant: {
-        success: "[color:var(--foreground-color-success)]",
-        error: "[color:var(--foreground-color-danger)]",
+        success: "text-foreground-success",
+        error: "text-foreground-danger",
     } satisfies Record<CheckboxGroupValidationStatus, string>,
 };
 

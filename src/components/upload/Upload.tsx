@@ -15,20 +15,19 @@ const classes = {
     root: "grid gap-[var(--stack-gap-condensed)]",
     // The zone is a label, so anywhere in it opens the picker; the control inside it is what
     // the reader tabs to, and what the ring below is drawn for
-    zone: "relative flex flex-col items-center justify-center text-center cursor-pointer rounded-[var(--border-radius-medium)] border-dashed border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-[var(--background-color-default)] [color:var(--foreground-color-default)] [--upload-muted-color:var(--foreground-color-muted)] gap-[var(--upload-zone-gap)] p-[var(--upload-zone-padding)] [transition:border-color_var(--motion-transition-hover),background-color_var(--motion-transition-hover)]",
-    hover: "hover:border-[color:var(--border-color-accent-emphasis)] hover:bg-[var(--background-color-accent-muted)]",
-    focus: "focus-within:border-[color:var(--border-color-accent-emphasis)] focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
+    zone: "relative flex flex-col items-center justify-center text-center cursor-pointer rounded-[var(--border-radius-medium)] border-dashed border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [--upload-muted-color:var(--foreground-color-muted)] gap-[var(--upload-zone-gap)] p-[var(--upload-zone-padding)] [transition:border-color_var(--motion-transition-hover),background-color_var(--motion-transition-hover)]",
+    hover: "hover:border-border-accent-emphasis hover:bg-background-accent-muted",
+    focus: "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
     // A file held over the control is answered by the whole zone, since the pointer is
     // carrying something rather than aiming at anything. The border is drawn solid as well as
     // in colour, so the answer still reads where colour does not
-    dragging:
-        "border-solid border-[color:var(--border-color-accent-emphasis)] bg-[var(--background-color-accent-muted)]",
+    dragging: "border-solid border-border-accent-emphasis bg-background-accent-muted",
     validation: {
-        error: "border-[color:var(--border-color-danger-emphasis)]",
-        success: "border-[color:var(--background-color-success-emphasis)]",
+        error: "border-border-danger-emphasis",
+        success: "border-background-success-emphasis",
     } satisfies Record<UploadValidationStatus, string>,
     disabled:
-        "cursor-not-allowed [color:var(--foreground-color-disabled)] [--upload-muted-color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)]",
+        "cursor-not-allowed text-foreground-disabled [--upload-muted-color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)]",
     // The size sets how much room the zone keeps and how big the pieces it is drawn from are,
     // and it is written on the root so that the list below the zone is sized by it as well
     size: {

@@ -8,11 +8,10 @@ import type { ButtonVisual } from "../button";
 import type { TokenProps, TokenSize } from "./Token.types";
 
 const classes = {
-    root: "max-w-full [color:var(--foreground-color-muted)] bg-[var(--background-color-neutral-muted)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-muted)]",
+    root: "max-w-full text-foreground-muted bg-background-neutral-muted border-solid border-[length:var(--border-width-thin)] border-border-muted",
     // A token that answers the reader lifts as the pointer rests on it
-    interactive:
-        "hover:[color:var(--foreground-color-default)] hover:[box-shadow:var(--shadow-resting-medium)]",
-    selected: "[color:var(--foreground-color-default)] border-[color:var(--border-color-emphasis)]",
+    interactive: "hover:text-foreground-default hover:[box-shadow:var(--shadow-resting-medium)]",
+    selected: "text-foreground-default border-border-emphasis",
     // The remove button carries the room at that end, so the token gives up its own
     withRemoveButton: "pr-0",
     leadingVisual: "flex shrink-0 items-center leading-none",

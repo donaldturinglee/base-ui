@@ -94,8 +94,7 @@ const classes = {
     overflowWrapper: "grow",
     // The line above the footer is only there to say that the body has more to be read
     // past the end of the box
-    overflowWrapperBordered:
-        "border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)]",
+    overflowWrapperBordered: "border-b-[length:var(--border-width-thin)] border-b-border-default",
 };
 
 // Where the body is left with less room than this, the footer buttons are scrolled

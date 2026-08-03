@@ -2,7 +2,7 @@ import type { StoryFn } from "@storybook/react-vite";
 import { ThemeProvider, useColorSchemeVar, useTheme } from ".";
 
 const classes = {
-    panel: "p-[var(--base-size-16)] [border-radius:var(--border-radius-medium)] border-[length:var(--border-width-thin)] border-solid border-[color:var(--border-color-default)]",
+    panel: "p-[var(--base-size-16)] [border-radius:var(--border-radius-medium)] border-[length:var(--border-width-thin)] border-solid border-border-default",
     nested: "mt-[var(--base-size-16)]",
 };
 

@@ -71,7 +71,7 @@ describe("LinkButton", () => {
             </LinkButton>,
         );
         const link = screen.getByRole("link");
-        expect(link).toHaveClass("[color:var(--foreground-color-accent)]");
+        expect(link).toHaveClass("text-foreground-accent");
         expect(link).toHaveClass("p-0");
     });
 

@@ -15,12 +15,12 @@ const classes = {
     variant: {
         subtle: "",
         // A filled group is set apart from the items around it by what it is drawn on
-        filled: "bg-[var(--background-color-muted)] border-y-[length:var(--border-width-thin)] border-y-[color:var(--border-color-muted)] mt-[var(--base-size-8)]",
+        filled: "bg-background-muted border-y-[length:var(--border-width-thin)] border-y-border-muted mt-[var(--base-size-8)]",
     } satisfies Record<ActionListGroupVariant, string>,
     heading:
-        "m-0 [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-semibold)] [color:var(--foreground-color-muted)]",
+        "m-0 [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-semibold)] text-foreground-muted",
     auxiliary:
-        "[font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [color:var(--foreground-color-muted)]",
+        "[font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] text-foreground-muted",
 };
 
 // Names the group it stands at the top of. In a plain list that is a real heading, so it

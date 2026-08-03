@@ -9,7 +9,7 @@ const classes = {
     // against the label's own size to give a length
     root: "flex shrink-0 items-center justify-center min-w-[var(--base-size-16)] h-[calc(var(--text-body-line-height-medium)_*_1em)] [&_svg]:size-[var(--base-size-16)]",
     // A visual says the same thing the label does, so it is only ever coloured against it
-    muted: "[color:var(--foreground-color-muted)]",
+    muted: "text-foreground-muted",
     // Danger, disabled and inactive items are coloured as a whole, and the visual follows
     inherit: "[color:inherit]",
 };

@@ -18,7 +18,7 @@ const classes = {
     columns: "grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-[var(--base-size-16)]",
     column: "flex list-none flex-col gap-[var(--base-size-4)] m-0 p-0",
     columnTitle:
-        "m-0 pb-[var(--base-size-4)] [font-size:inherit] [font-weight:var(--base-text-weight-semibold)] [color:var(--foreground-color-default)]",
+        "m-0 pb-[var(--base-size-4)] [font-size:inherit] [font-weight:var(--base-text-weight-semibold)] text-foreground-default",
 };
 
 export default {

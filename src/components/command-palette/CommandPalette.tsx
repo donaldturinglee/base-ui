@@ -11,7 +11,7 @@ const classes = {
     // still reads across. Everything it holds is clipped to its own corners, so nothing
     // standing at either end of it rounds out past them. Nothing inside it can take focus, so
     // it gives up its own ring
-    root: "flex w-full max-w-[var(--overlay-width-large)] flex-col overflow-hidden rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] bg-[var(--overlay-background-color)] focus:outline-none",
+    root: "flex w-full max-w-[var(--overlay-width-large)] flex-col overflow-hidden rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-border-default bg-[var(--overlay-background-color)] focus:outline-none",
     hidden: "sr-only",
 };
 

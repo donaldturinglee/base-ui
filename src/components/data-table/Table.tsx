@@ -8,7 +8,7 @@ const classes = {
     wrapper: "[grid-area:table]",
     // The columns are laid out on the table's own grid, which the head, the body and each
     // row take part in as a subgrid
-    root: "grid w-full border-separate border-spacing-0 bg-[var(--background-color-default)] [grid-area:table] [grid-template-columns:var(--table-grid-template-columns)] [font-size:var(--text-body-size-small)] [line-height:calc(20/12)] [--table-border-radius:var(--border-radius-medium)]",
+    root: "grid w-full border-separate border-spacing-0 bg-background-default [grid-area:table] [grid-template-columns:var(--table-grid-template-columns)] [font-size:var(--text-body-size-small)] [line-height:calc(20/12)] [--table-border-radius:var(--border-radius-medium)]",
     cellPadding: {
         condensed:
             "[--table-cell-padding-block:var(--base-size-4)] [--table-cell-padding-inline:var(--base-size-8)]",
@@ -21,7 +21,7 @@ const classes = {
     // what the cell calls itself, because a sortable header reports itself as
     // Table.SortHeader and would otherwise be missed
     borders:
-        "[&_tr>*:first-child]:border-s-[length:var(--border-width-thin)] [&_tr>*:first-child]:border-s-[color:var(--border-color-default)] [&_tr>*:last-child]:border-e-[length:var(--border-width-thin)] [&_tr>*:last-child]:border-e-[color:var(--border-color-default)]",
+        "[&_tr>*:first-child]:border-s-[length:var(--border-width-thin)] [&_tr>*:first-child]:border-s-border-default [&_tr>*:last-child]:border-e-[length:var(--border-width-thin)] [&_tr>*:last-child]:border-e-border-default",
     // The top corners are rounded on the outermost cells of the head, so the border reads as
     // one box
     corners:

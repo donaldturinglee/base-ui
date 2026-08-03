@@ -21,7 +21,7 @@ const classes = {
     // A line is only drawn between two items that follow one another, so an item that comes
     // after a divider is not given a second one
     dividers:
-        "[&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-[length:var(--border-width-thin)] [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-[color:var(--border-color-muted)] [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:rounded-t-none",
+        "[&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-[length:var(--border-width-thin)] [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-border-muted [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:rounded-t-none",
 };
 
 const slotsConfig = {

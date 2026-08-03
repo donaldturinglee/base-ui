@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TableDividerProps } from "./DataTable.types";
 
 const classes = {
-    root: "w-full h-px mt-[var(--base-size-16)] mb-[var(--base-size-8)] bg-[var(--border-color-default)] [grid-area:divider]",
+    root: "w-full h-px mt-[var(--base-size-16)] mb-[var(--base-size-8)] bg-border-default [grid-area:divider]",
 };
 
 function TableDivider(

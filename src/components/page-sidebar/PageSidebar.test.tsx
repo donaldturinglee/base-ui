@@ -148,21 +148,21 @@ describe("PageSidebar", () => {
     describe("the line beside the sidebar", () => {
         it("draws no line unless it is asked for", () => {
             render(withTitle());
-            expect(sidebar()).not.toHaveClass("border-e-[color:var(--border-color-default)]");
+            expect(sidebar()).not.toHaveClass("border-e-border-default");
         });
 
         it("draws the line on the edge facing the content at the start", () => {
             render(withTitle({ hasBorder: true }));
 
             expect(sidebar()).toHaveAttribute("data-has-border", "");
-            expect(sidebar()).toHaveClass("border-e-[color:var(--border-color-default)]");
+            expect(sidebar()).toHaveClass("border-e-border-default");
         });
 
         it("turns the line around for a sidebar at the end", () => {
             render(withTitle({ position: "end", hasBorder: true }));
 
-            expect(sidebar()).toHaveClass("border-s-[color:var(--border-color-default)]");
-            expect(sidebar()).not.toHaveClass("border-e-[color:var(--border-color-default)]");
+            expect(sidebar()).toHaveClass("border-s-border-default");
+            expect(sidebar()).not.toHaveClass("border-e-border-default");
         });
     });
 

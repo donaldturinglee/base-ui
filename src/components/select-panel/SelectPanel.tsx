@@ -42,7 +42,7 @@ const classes = {
     } satisfies Record<SelectPanelNarrowVariant, string>,
     // The floor keeps the panel from closing up around a spinner or a line of text where the
     // list it would have held has nothing to show
-    root: "flex flex-col overflow-hidden max-w-[calc(100dvw_-_var(--base-size-32))] [--select-panel-body-min-height:var(--overlay-height-small)] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] [color:var(--foreground-color-default)] focus:outline-none motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
+    root: "flex flex-col overflow-hidden max-w-[calc(100dvw_-_var(--base-size-32))] [--select-panel-body-min-height:var(--overlay-height-small)] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] text-foreground-default focus:outline-none motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
     // Where it ends up is carried in variables rather than written straight onto the element,
     // so that a narrow viewport can put it somewhere else
     anchored: "absolute top-[var(--select-panel-top)] left-[var(--select-panel-left)]",

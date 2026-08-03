@@ -27,14 +27,14 @@ const classes = {
     // The columns are, in order: the step in from the edge, a leading action, the chevron,
     // the label, and anything standing at the end of the row
     container:
-        "relative grid w-full cursor-pointer rounded-[var(--border-radius-medium)] [overflow-clip-margin:var(--base-size-8)] [font-size:var(--text-body-size-medium)] [color:var(--foreground-color-default)] [--tree-view-toggle-width:1rem] [--tree-view-item-height:2rem] [--tree-view-item-line-height:1.3rem] [--tree-view-spacer-width:calc((var(--tree-view-level)_-_1)_*_(var(--tree-view-toggle-width)_/_2))] [grid-template-columns:var(--tree-view-spacer-width)_var(--tree-view-leading-action-width,0px)_var(--tree-view-toggle-width)_1fr_auto] hover:bg-[var(--control-transparent-background-color-hover)] [@media(pointer:coarse)]:[--tree-view-toggle-width:1.5rem] [@media(pointer:coarse)]:[--tree-view-item-height:2.75rem]",
+        "relative grid w-full cursor-pointer rounded-[var(--border-radius-medium)] [overflow-clip-margin:var(--base-size-8)] [font-size:var(--text-body-size-medium)] text-foreground-default [--tree-view-toggle-width:1rem] [--tree-view-item-height:2rem] [--tree-view-item-line-height:1.3rem] [--tree-view-spacer-width:calc((var(--tree-view-level)_-_1)_*_(var(--tree-view-toggle-width)_/_2))] [grid-template-columns:var(--tree-view-spacer-width)_var(--tree-view-leading-action-width,0px)_var(--tree-view-toggle-width)_1fr_auto] hover:bg-[var(--control-transparent-background-color-hover)] [@media(pointer:coarse)]:[--tree-view-toggle-width:1.5rem] [@media(pointer:coarse)]:[--tree-view-item-height:2.75rem]",
     // A flat tree draws every row against the same edge, since there is no depth to say
     flat: "[[data-omit-spacer='true']_&]:[grid-template-columns:0_var(--tree-view-leading-action-width,0px)_0_1fr_auto]",
     hasLeadingAction: "[--tree-view-leading-action-width:1.5rem]",
     // The row the reader is on is filled, and marked in the margin so it can be picked out
     // at a glance down a long tree
     current:
-        "bg-[var(--control-transparent-background-color-selected)] after:content-[''] after:absolute after:top-[calc(50%_-_var(--base-size-12))] after:left-[calc(-1_*_var(--base-size-8))] after:w-[var(--base-size-4)] after:h-[var(--base-size-24)] after:rounded-[var(--border-radius-medium)] after:bg-[var(--foreground-color-accent)]",
+        "bg-[var(--control-transparent-background-color-selected)] after:content-[''] after:absolute after:top-[calc(50%_-_var(--base-size-12))] after:left-[calc(-1_*_var(--base-size-8))] after:w-[var(--base-size-4)] after:h-[var(--base-size-24)] after:rounded-[var(--border-radius-medium)] after:bg-foreground-accent",
     // A row standing in for what is being fetched is not something to reach for
     loading: "[&:hover]:bg-transparent [&:hover]:cursor-default",
     spacer: "flex [grid-column:1]",
@@ -45,7 +45,7 @@ const classes = {
         "w-full h-full border-solid border-0 border-r-[length:var(--border-width-thin)] border-r-[color:var(--tree-view-line-color,transparent)]",
     // The chevron sits against the top of a row that runs to more than one line, so that it
     // stays beside the first line of the label
-    toggle: "flex [grid-column:3] h-full justify-center items-start pt-[calc(var(--tree-view-item-height)/2_-_var(--base-size-12)/2)] [color:var(--foreground-color-muted)]",
+    toggle: "flex [grid-column:3] h-full justify-center items-start pt-[calc(var(--tree-view-item-height)/2_-_var(--base-size-12)/2)] text-foreground-muted",
     toggleHover: "hover:bg-[var(--control-transparent-background-color-hover)]",
     // A chevron at the first level is flush with the start of the row, so it takes the
     // row's own corners

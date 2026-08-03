@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TableSubtitleProps } from "./DataTable.types";
 
 const classes = {
-    root: "m-0 [grid-area:subtitle] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] [line-height:var(--text-title-line-height-small)] [color:var(--foreground-color-default)]",
+    root: "m-0 [grid-area:subtitle] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] [line-height:var(--text-title-line-height-small)] text-foreground-default",
 };
 
 function TableSubtitle<As extends React.ElementType = "div">(

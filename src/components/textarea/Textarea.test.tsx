@@ -118,7 +118,7 @@ describe("Textarea", () => {
     it("recesses itself when contrast", () => {
         render(<Textarea aria-label="Notes" contrast />);
         expect(field()).toHaveAttribute("data-contrast", "true");
-        expect(field()).toHaveClass("bg-[var(--background-color-inset)]");
+        expect(field()).toHaveClass("bg-background-inset");
     });
 
     it("disables the control and dims the field", () => {

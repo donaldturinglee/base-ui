@@ -3,7 +3,7 @@ import { ThemeProvider, useTheme } from ".";
 import type { ThemeProviderProps } from "./Theme.types";
 
 const classes = {
-    panel: "p-[var(--base-size-16)] [border-radius:var(--border-radius-medium)] border-[length:var(--border-width-thin)] border-solid border-[color:var(--border-color-default)]",
+    panel: "p-[var(--base-size-16)] [border-radius:var(--border-radius-medium)] border-[length:var(--border-width-thin)] border-solid border-border-default",
 };
 
 export default {

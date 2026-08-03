@@ -6,7 +6,7 @@ import { SelectPanelContext } from "./SelectPanelContext";
 import type { SelectPanelFooterProps } from "./SelectPanel.types";
 
 const classes = {
-    root: "flex shrink-0 items-center justify-between min-h-[var(--base-size-44)] p-[var(--base-size-16)] border-solid border-t-[length:var(--border-width-thin)] border-t-[color:var(--border-color-default)]",
+    root: "flex shrink-0 items-center justify-between min-h-[var(--base-size-44)] p-[var(--base-size-16)] border-solid border-t-[length:var(--border-width-thin)] border-t-border-default",
     // With nothing to save, the footer is only there to hold whatever the caller put in it, so
     // it is drawn in closer and that content is given the width
     rootWithoutActions: "p-[var(--base-size-8)]",

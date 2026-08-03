@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { PlaceholderProps } from "./Placeholder.types";
 
 const classes = {
-    root: "grid place-items-center px-[var(--base-size-24)] py-[var(--base-size-4)] bg-[var(--background-color-inset)] rounded-[var(--border-radius-medium)] border-[length:var(--border-width-thin)] border-solid border-[color:var(--border-color-muted)]",
+    root: "grid place-items-center px-[var(--base-size-24)] py-[var(--base-size-4)] bg-background-inset rounded-[var(--border-radius-medium)] border-[length:var(--border-width-thin)] border-solid border-border-muted",
     dimensions: "w-[var(--placeholder-width,100%)] h-[var(--placeholder-height)]",
 };
 

@@ -42,7 +42,7 @@ describe("CounterLabel", () => {
         const counter = screen.getByTestId("counter");
         expect(counter).toHaveAttribute("data-variant", "secondary");
         expect(counter).toHaveClass("bg-[var(--counter-background-color-muted)]");
-        expect(counter).toHaveClass("[color:var(--foreground-color-default)]");
+        expect(counter).toHaveClass("text-foreground-default");
     });
 
     it("respects the primary variant", () => {
@@ -54,7 +54,7 @@ describe("CounterLabel", () => {
         const counter = screen.getByTestId("counter");
         expect(counter).toHaveAttribute("data-variant", "primary");
         expect(counter).toHaveClass("bg-[var(--counter-background-color-emphasis)]");
-        expect(counter).toHaveClass("[color:var(--foreground-color-on-emphasis)]");
+        expect(counter).toHaveClass("text-foreground-on-emphasis");
     });
 
     it("respects the secondary variant", () => {

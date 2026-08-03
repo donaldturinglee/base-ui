@@ -44,8 +44,8 @@ describe("TopicTag", () => {
             </TopicTag>,
         );
         const tag = screen.getByTestId("tag");
-        expect(tag).toHaveClass("bg-[var(--background-color-accent-muted)]");
-        expect(tag).toHaveClass("[color:var(--foreground-color-accent)]");
+        expect(tag).toHaveClass("bg-background-accent-muted");
+        expect(tag).toHaveClass("text-foreground-accent");
     });
 
     it("fills in on hover", () => {
@@ -55,8 +55,8 @@ describe("TopicTag", () => {
             </TopicTag>,
         );
         const tag = screen.getByTestId("tag");
-        expect(tag).toHaveClass("hover:bg-[var(--background-color-accent-emphasis)]");
-        expect(tag).toHaveClass("hover:[color:var(--foreground-color-on-emphasis)]");
+        expect(tag).toHaveClass("hover:bg-background-accent-emphasis");
+        expect(tag).toHaveClass("hover:text-foreground-on-emphasis");
     });
 
     it("rounds itself into a pill", () => {

@@ -9,7 +9,7 @@ import { Dialog } from ".";
 import type { DialogHeaderRenderProps, DialogRenderProps } from "./Dialog.types";
 
 const classes = {
-    custom: "bg-[var(--background-color-accent-muted)]",
+    custom: "bg-background-accent-muted",
 };
 
 const body = (

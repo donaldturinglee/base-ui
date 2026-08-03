@@ -12,7 +12,7 @@ const classes = {
     // Gives the list a box to sit in rather than the width and height of the page, since it
     // is only ever drawn inside a panel of some kind
     container:
-        "w-[20rem] h-[20rem] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)]",
+        "w-[20rem] h-[20rem] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-border-default",
 };
 
 export default {

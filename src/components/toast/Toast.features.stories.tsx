@@ -8,7 +8,7 @@ import type { ToastPosition, ToasterProps } from "./Toast.types";
 
 const classes = {
     row: "flex flex-wrap gap-[var(--base-size-8)]",
-    custom: "flex w-full items-center gap-[var(--base-size-8)] rounded-[var(--border-radius-medium)] bg-[var(--background-color-upsell-muted)] p-[var(--base-size-12)] [box-shadow:var(--shadow-floating-small)]",
+    custom: "flex w-full items-center gap-[var(--base-size-8)] rounded-[var(--border-radius-medium)] bg-background-upsell-muted p-[var(--base-size-12)] [box-shadow:var(--shadow-floating-small)]",
 };
 
 const positions: ToastPosition[] = [

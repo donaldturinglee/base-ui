@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TableTitleProps } from "./DataTable.types";
 
 const classes = {
-    root: "m-0 self-center [grid-area:title] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--base-size-20)] [color:var(--foreground-color-default)]",
+    root: "m-0 self-center [grid-area:title] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--base-size-20)] text-foreground-default",
 };
 
 function TableTitle<As extends React.ElementType = "h2">(

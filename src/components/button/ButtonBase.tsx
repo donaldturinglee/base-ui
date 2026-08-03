@@ -45,7 +45,7 @@ const classes = {
                 "[color:var(--control-foreground-color-disabled)] bg-[var(--button-default-background-color-disabled)] border-[color:var(--button-default-border-color-disabled)]",
         },
         primary: {
-            rest: "[color:var(--button-primary-foreground-color-rest)] bg-[var(--button-primary-background-color-rest)] border-[color:var(--button-primary-border-color-rest)] [box-shadow:var(--shadow-resting-small)] focus-visible:outline-[color:var(--foreground-color-on-emphasis)] aria-expanded:bg-[var(--button-primary-background-color-active)] aria-expanded:[box-shadow:var(--button-primary-shadow-selected)] hover:bg-[var(--button-primary-background-color-hover)] hover:border-[color:var(--button-primary-border-color-hover)] active:bg-[var(--button-primary-background-color-active)] active:[box-shadow:var(--button-primary-shadow-selected)]",
+            rest: "[color:var(--button-primary-foreground-color-rest)] bg-[var(--button-primary-background-color-rest)] border-[color:var(--button-primary-border-color-rest)] [box-shadow:var(--shadow-resting-small)] focus-visible:outline-foreground-on-emphasis aria-expanded:bg-[var(--button-primary-background-color-active)] aria-expanded:[box-shadow:var(--button-primary-shadow-selected)] hover:bg-[var(--button-primary-background-color-hover)] hover:border-[color:var(--button-primary-border-color-hover)] active:bg-[var(--button-primary-background-color-active)] active:[box-shadow:var(--button-primary-shadow-selected)]",
             disabled:
                 "[color:var(--button-primary-foreground-color-disabled)] bg-[var(--button-primary-background-color-disabled)] border-[color:var(--button-primary-border-color-disabled)]",
         },
@@ -60,7 +60,7 @@ const classes = {
                 "[color:var(--button-invisible-foreground-color-disabled)] bg-[var(--button-invisible-background-color-disabled)] border-[color:var(--button-invisible-border-color-disabled)]",
         },
         link: {
-            rest: "[color:var(--foreground-color-accent)] hover:underline",
+            rest: "text-foreground-accent hover:underline",
             disabled:
                 "[color:var(--control-foreground-color-disabled)] bg-transparent border-transparent",
         },
@@ -75,7 +75,7 @@ const classes = {
         "[color:var(--button-inactive-foreground-color)] cursor-auto bg-transparent border-transparent [box-shadow:none]",
     // An icon-only button has no visual wrapper to colour, so the icon follows the button itself
     iconTone: {
-        default: "[color:var(--foreground-color-muted)]",
+        default: "text-foreground-muted",
         primary: "",
         danger: "",
         invisible: "[color:var(--button-invisible-icon-color-rest)]",
@@ -122,11 +122,11 @@ const classes = {
     // Visuals take their colour from the variant, and fall back to the button's own colour once
     // it can no longer be used
     visual: {
-        default: "[color:var(--foreground-color-muted)]",
+        default: "text-foreground-muted",
         primary: "[color:var(--button-primary-foreground-color-rest)]",
         danger: "[color:var(--button-danger-icon-color-rest)] group-hover/button:[color:var(--button-danger-icon-color-hover)] group-active/button:[color:var(--button-danger-icon-color-hover)]",
         invisible: "[color:var(--button-invisible-icon-color-rest)]",
-        link: "[color:var(--foreground-color-accent)]",
+        link: "text-foreground-accent",
     } satisfies Record<ButtonVariant, string>,
     visualMuted: "[color:inherit]",
     counter: {

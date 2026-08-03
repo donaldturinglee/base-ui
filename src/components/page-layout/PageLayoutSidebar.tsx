@@ -22,7 +22,7 @@ const classes = {
     sticky: "data-[sticky]:sticky data-[sticky]:top-0 data-[sticky]:h-screen",
     // On a narrow screen a fullscreen sidebar covers the viewport the way a dialog does
     fullscreen:
-        "max-medium:data-[responsive-variant=fullscreen]:fixed max-medium:data-[responsive-variant=fullscreen]:inset-0 max-medium:data-[responsive-variant=fullscreen]:w-screen max-medium:data-[responsive-variant=fullscreen]:h-screen max-medium:data-[responsive-variant=fullscreen]:min-w-[unset] max-medium:data-[responsive-variant=fullscreen]:max-w-[unset] max-medium:data-[responsive-variant=fullscreen]:rounded-none max-medium:data-[responsive-variant=fullscreen]:z-999 max-medium:data-[responsive-variant=fullscreen]:bg-[var(--background-color-default)]",
+        "max-medium:data-[responsive-variant=fullscreen]:fixed max-medium:data-[responsive-variant=fullscreen]:inset-0 max-medium:data-[responsive-variant=fullscreen]:w-screen max-medium:data-[responsive-variant=fullscreen]:h-screen max-medium:data-[responsive-variant=fullscreen]:min-w-[unset] max-medium:data-[responsive-variant=fullscreen]:max-w-[unset] max-medium:data-[responsive-variant=fullscreen]:rounded-none max-medium:data-[responsive-variant=fullscreen]:z-999 max-medium:data-[responsive-variant=fullscreen]:bg-background-default",
     sidebar: "w-[var(--pane-width-size)] h-full overflow-auto p-[var(--spacing)]",
     sidebarResizable:
         "data-[resizable]:w-full medium:data-[resizable]:w-[clamp(var(--pane-min-width),var(--pane-width),var(--pane-max-width))]",

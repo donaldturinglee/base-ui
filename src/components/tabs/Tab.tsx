@@ -8,7 +8,7 @@ import type { TabProps } from "./Tabs.types";
 const classes = {
     // The line under the selected tab is the tab's own border, drawn over the rule the
     // tablist carries
-    root: "inline-flex items-center justify-center gap-[var(--base-size-8)] m-0 px-[var(--base-size-12)] py-[var(--base-size-8)] bg-transparent border-solid border-0 border-b-[length:var(--base-size-2)] border-b-transparent rounded-t-[var(--border-radius-medium)] cursor-pointer whitespace-nowrap [font-family:inherit] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)] [color:var(--foreground-color-default)] transition-[background-color,border-color] duration-micro ease-hover",
+    root: "inline-flex items-center justify-center gap-[var(--base-size-8)] m-0 px-[var(--base-size-12)] py-[var(--base-size-8)] bg-transparent border-solid border-0 border-b-[length:var(--base-size-2)] border-b-transparent rounded-t-[var(--border-radius-medium)] cursor-pointer whitespace-nowrap [font-family:inherit] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)] text-foreground-default transition-[background-color,border-color] duration-micro ease-hover",
     // A tablist standing beside the panels turns the line onto the other side, which the tabs
     // follow from the tablist rather than being told of it
     vertical:

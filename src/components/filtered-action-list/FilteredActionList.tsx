@@ -30,9 +30,8 @@ const classes = {
     virtualList: "relative",
     virtualItem: "absolute top-0 inset-x-0",
     selectAll:
-        "flex items-center gap-[var(--base-size-8)] px-[var(--base-size-16)] py-[var(--base-size-4)] bg-[var(--background-color-muted)] border-solid border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)]",
-    selectAllLabel:
-        "[font-size:var(--text-body-size-medium)] [color:var(--foreground-color-muted)]",
+        "flex items-center gap-[var(--base-size-8)] px-[var(--base-size-16)] py-[var(--base-size-4)] bg-background-muted border-solid border-b-[length:var(--border-width-thin)] border-b-border-default",
+    selectAllLabel: "[font-size:var(--text-body-size-medium)] text-foreground-muted",
     hidden: "sr-only",
 };
 

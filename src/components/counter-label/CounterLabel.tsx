@@ -10,10 +10,8 @@ const classes = {
     empty: "empty:hidden",
     srOnly: "sr-only",
     variant: {
-        primary:
-            "[color:var(--foreground-color-on-emphasis)] bg-[var(--counter-background-color-emphasis)]",
-        secondary:
-            "[color:var(--foreground-color-default)] bg-[var(--counter-background-color-muted)]",
+        primary: "text-foreground-on-emphasis bg-[var(--counter-background-color-emphasis)]",
+        secondary: "text-foreground-default bg-[var(--counter-background-color-muted)]",
     } satisfies Record<CounterLabelVariant, string>,
 };
 

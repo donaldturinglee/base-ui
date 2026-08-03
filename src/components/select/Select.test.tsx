@@ -202,9 +202,7 @@ describe("Select", () => {
         const select = screen.getByTestId("select");
         expect(select).toHaveAttribute("aria-invalid", "true");
         expect(select.parentElement).toHaveAttribute("data-validation", "error");
-        expect(select.parentElement).toHaveClass(
-            "border-[color:var(--border-color-danger-emphasis)]",
-        );
+        expect(select.parentElement).toHaveClass("border-border-danger-emphasis");
     });
 
     it("does not mark itself invalid for the success status", () => {

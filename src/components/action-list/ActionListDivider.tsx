@@ -5,7 +5,7 @@ import type { ActionListDividerProps } from "./ActionList.types";
 const classes = {
     // The line is drawn as a background rather than a border, so it keeps its own height
     // whatever the list is holding either side of it
-    root: "block h-[var(--border-width-thin)] my-[var(--base-size-8)] mx-0 p-0 list-none bg-[var(--border-color-muted)]",
+    root: "block h-[var(--border-width-thin)] my-[var(--base-size-8)] mx-0 p-0 list-none bg-border-muted",
 };
 
 // Sets items or groups apart from one another. It says nothing, so it is left out of the

@@ -19,7 +19,7 @@ import type {
 } from "./Card.types";
 
 const classes = {
-    root: "relative grid overflow-hidden [grid-auto-rows:max-content_auto] gap-[var(--stack-gap-normal)] bg-[var(--card-background-color)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] [box-shadow:var(--shadow-resting-small)]",
+    root: "relative grid overflow-hidden [grid-auto-rows:max-content_auto] gap-[var(--stack-gap-normal)] bg-[var(--card-background-color)] border-solid border-[length:var(--border-width-thin)] border-border-default [box-shadow:var(--shadow-resting-small)]",
     // A compact card lays its parts out in a row rather than stacking them
     compact: "flex items-start gap-[var(--stack-gap-condensed)]",
     borderRadius: {

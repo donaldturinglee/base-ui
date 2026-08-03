@@ -6,7 +6,7 @@ import { CollapsibleContext } from "./CollapsibleContext";
 import type { CollapsibleTriggerProps } from "./Collapsible.types";
 
 const classes = {
-    root: "flex items-center gap-[var(--base-size-8)] w-full m-0 px-[var(--base-size-8)] py-[var(--base-size-8)] text-start cursor-pointer appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] [color:var(--foreground-color-default)] [font-family:inherit] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)] transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-transparent-background-color-hover)]",
+    root: "flex items-center gap-[var(--base-size-8)] w-full m-0 px-[var(--base-size-8)] py-[var(--base-size-8)] text-start cursor-pointer appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] text-foreground-default [font-family:inherit] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)] transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-transparent-background-color-hover)]",
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
     disabled:
         "cursor-not-allowed [color:var(--control-foreground-color-disabled)] hover:bg-transparent",
@@ -14,7 +14,7 @@ const classes = {
     labelEnd: "min-w-0 grow",
     label: "min-w-0",
     indicator:
-        "shrink-0 size-[var(--base-size-16)] [color:var(--foreground-color-muted)] transition-transform duration-short ease-move motion-reduce:transition-none",
+        "shrink-0 size-[var(--base-size-16)] text-foreground-muted transition-transform duration-short ease-move motion-reduce:transition-none",
     // A chevron after the label turns over to point back the way the content came from
     indicatorOpen: "rotate-180",
     // One before the label points at what it opens, and turns down onto it

@@ -15,7 +15,7 @@ import type {
 const classes = {
     // Three columns: the mark, whatever room is left over for the closing line, and the
     // actions at the end of the row
-    root: "grid grid-cols-[auto_1fr_auto] [color:var(--foreground-color-muted)]",
+    root: "grid grid-cols-[auto_1fr_auto] text-foreground-muted",
     // The footer carries its own type, so that every part standing in it is set against the
     // same line
     text: "[font-size:var(--page-footer-text-size)] [font-weight:var(--base-text-weight-normal)] leading-[var(--page-footer-text-line-height)]",
@@ -39,12 +39,12 @@ const classes = {
         condensed:
             "xxlarge:[--page-footer-text-size:var(--text-body-size-small)] xxlarge:[--page-footer-text-line-height:var(--text-body-line-height-small)]",
     } satisfies Record<PageFooterVariant, string>,
-    border: "border-solid border-t-[length:var(--border-width-thin)] border-t-[color:var(--border-color-default)] pt-[var(--base-size-8)]",
+    border: "border-solid border-t-[length:var(--border-width-thin)] border-t-border-default pt-[var(--base-size-8)]",
     borderWhen: {
-        narrow: "max-medium:border-solid max-medium:border-t-[length:var(--border-width-thin)] max-medium:border-t-[color:var(--border-color-default)] max-medium:pt-[var(--base-size-8)]",
+        narrow: "max-medium:border-solid max-medium:border-t-[length:var(--border-width-thin)] max-medium:border-t-border-default max-medium:pt-[var(--base-size-8)]",
         regular:
-            "medium:max-xxlarge:border-solid medium:max-xxlarge:border-t-[length:var(--border-width-thin)] medium:max-xxlarge:border-t-[color:var(--border-color-default)] medium:max-xxlarge:pt-[var(--base-size-8)]",
-        wide: "xxlarge:border-solid xxlarge:border-t-[length:var(--border-width-thin)] xxlarge:border-t-[color:var(--border-color-default)] xxlarge:pt-[var(--base-size-8)]",
+            "medium:max-xxlarge:border-solid medium:max-xxlarge:border-t-[length:var(--border-width-thin)] medium:max-xxlarge:border-t-border-default medium:max-xxlarge:pt-[var(--base-size-8)]",
+        wide: "xxlarge:border-solid xxlarge:border-t-[length:var(--border-width-thin)] xxlarge:border-t-border-default xxlarge:pt-[var(--base-size-8)]",
     } satisfies Record<PageFooterViewport, string>,
 };
 

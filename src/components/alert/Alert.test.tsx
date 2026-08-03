@@ -29,7 +29,7 @@ describe("Alert", () => {
         render(<Alert data-testid="alert">Message</Alert>);
         const alert = screen.getByTestId("alert");
         expect(alert).toHaveAttribute("data-variant", "default");
-        expect(alert).toHaveClass("bg-[var(--background-color-accent-muted)]");
+        expect(alert).toHaveClass("bg-background-accent-muted");
     });
 
     it("respects the variant prop", () => {
@@ -48,8 +48,8 @@ describe("Alert", () => {
             );
             const alert = screen.getByTestId("alert");
             expect(alert).toHaveAttribute("data-variant", variant);
-            expect(alert).toHaveClass(`bg-[var(--background-color-${token}-muted)]`);
-            expect(alert).toHaveClass(`border-[color:var(--border-color-${token}-muted)]`);
+            expect(alert).toHaveClass(`bg-background-${token}-muted`);
+            expect(alert).toHaveClass(`border-border-${token}-muted`);
             unmount();
         }
     });
@@ -60,9 +60,7 @@ describe("Alert", () => {
                 Message
             </Alert>,
         );
-        expect(screen.getByTestId("alert")).toHaveClass(
-            "[&_svg]:[color:var(--foreground-color-danger)]",
-        );
+        expect(screen.getByTestId("alert")).toHaveClass("[&_svg]:text-foreground-danger");
     });
 
     it("spaces descendant icons from the message", () => {

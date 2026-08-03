@@ -5,7 +5,7 @@ import type { CarouselProps } from "./Carousel.types";
 const classes = {
     // A carousel fills its container, so the stories give it one to fill
     container: "w-[var(--overlay-width-medium)] max-w-full",
-    panel: "flex items-center justify-center h-[var(--base-size-128)] rounded-[var(--border-radius-medium)] bg-[var(--background-color-accent-muted)] [font-size:var(--text-title-size-small)] [font-weight:var(--base-text-weight-semibold)]",
+    panel: "flex items-center justify-center h-[var(--base-size-128)] rounded-[var(--border-radius-medium)] bg-background-accent-muted [font-size:var(--text-title-size-small)] [font-weight:var(--base-text-weight-semibold)]",
 };
 
 const withContainer: Decorator = (Story) => (

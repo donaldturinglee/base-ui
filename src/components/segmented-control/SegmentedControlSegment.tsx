@@ -11,7 +11,7 @@ const classes = {
     // The line between two segments is drawn by the one on the left, and stops short of the
     // track at both ends
     separator:
-        "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:absolute [&:not(:last-child)]:after:top-[var(--base-size-8)] [&:not(:last-child)]:after:bottom-[var(--base-size-8)] [&:not(:last-child)]:after:end-[calc(-1_*_var(--base-size-2))] [&:not(:last-child)]:after:w-px [&:not(:last-child)]:after:bg-[var(--border-color-default)]",
+        "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:absolute [&:not(:last-child)]:after:top-[var(--base-size-8)] [&:not(:last-child)]:after:bottom-[var(--base-size-8)] [&:not(:last-child)]:after:end-[calc(-1_*_var(--base-size-2))] [&:not(:last-child)]:after:w-px [&:not(:last-child)]:after:bg-border-default",
     // The segment being shown is already set apart by the knob it carries, so no line is
     // drawn on either side of it. Nor is one drawn where it would show through a focus ring
     separatorHidden:
@@ -27,7 +27,7 @@ const classes = {
     // The knob takes the room the button was inset by, so the label keeps its place as the
     // reader moves along the row
     buttonSelected: "p-0 [font-weight:var(--base-text-weight-semibold)]",
-    buttonDisabled: "cursor-not-allowed [color:var(--foreground-color-disabled)]",
+    buttonDisabled: "cursor-not-allowed text-foreground-disabled",
     // What is drawn inside the button: the knob where the segment is the one being shown, and
     // the hover and press states where it is not
     content:

@@ -6,7 +6,7 @@ import type { ActionBarDividerProps } from "./ActionBar.types";
 const classes = {
     // A standing line between one run of items and the next, drawn as a background so it
     // keeps its height whatever stands either side of it
-    root: "shrink-0 self-center w-[var(--border-width-thin)] h-[var(--base-size-16)] mx-[var(--base-size-4)] bg-[var(--border-color-muted)]",
+    root: "shrink-0 self-center w-[var(--border-width-thin)] h-[var(--base-size-16)] mx-[var(--base-size-4)] bg-border-muted",
     overflowing: "invisible",
 };
 

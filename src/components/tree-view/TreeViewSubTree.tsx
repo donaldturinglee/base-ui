@@ -22,7 +22,7 @@ const classes = {
     skeletonRow:
         "flex items-center gap-[var(--base-size-8)] h-[2rem] [@media(pointer:coarse)]:h-[2.75rem]",
     skeletonText: "w-[var(--tree-view-skeleton-width)]",
-    muted: "[color:var(--foreground-color-muted)]",
+    muted: "text-foreground-muted",
     hidden: "sr-only",
 };
 

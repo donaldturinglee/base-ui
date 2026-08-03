@@ -24,21 +24,21 @@ const getHiddenRanges = (showPages: boolean | Partial<Record<Range, boolean>>): 
 };
 
 const classes = {
-    root: "flex items-center justify-between gap-x-[var(--base-size-16)] w-full p-[var(--base-size-8)_var(--base-size-16)] border-solid border-[length:var(--border-width-thin)] border-t-0 border-[color:var(--border-color-default)] rounded-es-[var(--border-radius-medium)] rounded-ee-[var(--border-radius-medium)] [grid-area:footer]",
-    range: "m-0 [font-size:var(--text-body-size-small)] [color:var(--foreground-color-muted)]",
-    steps: "flex flex-wrap items-center list-none m-0 p-0 [font-size:var(--text-body-size-medium)] [color:var(--foreground-color-default)]",
+    root: "flex items-center justify-between gap-x-[var(--base-size-16)] w-full p-[var(--base-size-8)_var(--base-size-16)] border-solid border-[length:var(--border-width-thin)] border-t-0 border-border-default rounded-es-[var(--border-radius-medium)] rounded-ee-[var(--border-radius-medium)] [grid-area:footer]",
+    range: "m-0 [font-size:var(--text-body-size-small)] text-foreground-muted",
+    steps: "flex flex-wrap items-center list-none m-0 p-0 [font-size:var(--text-body-size-medium)] text-foreground-default",
     // The two ends stand away from the page numbers between them
     step: "first-of-type:me-[var(--base-size-16)] last-of-type:ms-[var(--base-size-16)]",
     button: "bg-transparent border-0 appearance-none select-none [font-family:inherit] [font-size:var(--text-body-size-medium)] [line-height:calc(20/14)] rounded-[var(--border-radius-medium)]",
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    action: "flex items-center gap-x-[var(--base-size-4)] p-[var(--base-size-8)] [color:var(--foreground-color-muted)]",
+    action: "flex items-center gap-x-[var(--base-size-4)] p-[var(--base-size-8)] text-foreground-muted",
     // A step with nowhere to go reads as text rather than as something to press
     actionEnabled:
-        "cursor-pointer [color:var(--foreground-color-accent)] hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
+        "cursor-pointer text-foreground-accent hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
     page: "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] py-[var(--base-size-8)] px-[calc((var(--base-size-32)_-_var(--base-size-20))/2)] cursor-pointer [color:inherit] hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
     // The ring is drawn inside the fill, so it still reads against it
     pageActive:
-        "bg-[var(--background-color-accent-emphasis)] [color:var(--foreground-color-on-emphasis)] hover:bg-[var(--background-color-accent-emphasis)] focus:bg-[var(--background-color-accent-emphasis)] focus-visible:[box-shadow:inset_0_0_0_var(--border-width-thicker)_var(--foreground-color-on-emphasis)]",
+        "bg-background-accent-emphasis text-foreground-on-emphasis hover:bg-background-accent-emphasis focus:bg-background-accent-emphasis focus-visible:[box-shadow:inset_0_0_0_var(--border-width-thicker)_var(--foreground-color-on-emphasis)]",
     truncation:
         "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] select-none",
     icon: "size-[var(--base-size-16)]",

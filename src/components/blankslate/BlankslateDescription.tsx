@@ -6,7 +6,7 @@ import type { BlankslateDescriptionProps } from "./Blankslate.types";
 const classes = {
     // Only the large size gives the description block margins, so the fallback keeps the
     // paragraph flush at the other sizes
-    root: "text-center [text-wrap:balance] [margin-inline:0] [margin-block:var(--blankslate-description-margin-block,0)] [font:var(--blankslate-description-text)] [color:var(--foreground-color-muted)]",
+    root: "text-center [text-wrap:balance] [margin-inline:0] [margin-block:var(--blankslate-description-margin-block,0)] [font:var(--blankslate-description-text)] text-foreground-muted",
 };
 
 function BlankslateDescription(

@@ -15,8 +15,8 @@ import type { TreeViewSubTreeState } from "./TreeView.types";
 const classes = {
     // Gives the tree a column to stand in rather than the width of the page
     container: "w-[20rem]",
-    success: "[color:var(--foreground-color-success)]",
-    danger: "[color:var(--foreground-color-danger)]",
+    success: "text-foreground-success",
+    danger: "text-foreground-danger",
 };
 
 export default {

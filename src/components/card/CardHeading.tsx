@@ -5,7 +5,7 @@ import { CardContext } from "./CardContext";
 import type { CardHeadingProps } from "./Card.types";
 
 const classes = {
-    root: "m-0 [color:var(--foreground-color-default)] [font-family:var(--font-stack-sans-serif)] [font-weight:var(--text-title-weight-small)] [font-size:var(--text-title-size-small)] [line-height:var(--text-title-line-height-small)]",
+    root: "m-0 text-foreground-default [font-family:var(--font-stack-sans-serif)] [font-weight:var(--text-title-weight-small)] [font-size:var(--text-title-size-small)] [line-height:var(--text-title-line-height-small)]",
     // A compact heading drops to body size and lifts to sit level with the icon beside it
     compact: "relative top-[calc(-1*var(--base-size-4))] [font-size:var(--text-body-size-medium)]",
 };

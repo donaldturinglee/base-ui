@@ -33,16 +33,16 @@ const classes = {
         "[font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
     grid: "border-collapse",
     weekday:
-        "p-0 pb-[var(--base-size-4)] [color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)]",
+        "p-0 pb-[var(--base-size-4)] text-foreground-muted [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)]",
     weekNumberHeader: "p-0",
     weekNumber:
-        "pe-[var(--base-size-8)] [color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums] [font-weight:var(--base-text-weight-normal)]",
+        "pe-[var(--base-size-8)] text-foreground-muted [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums] [font-weight:var(--base-text-weight-normal)]",
     // The room between one day and the next is given by the cell around it, so that the days
     // themselves stay square
     cell: "p-[var(--base-size-2)]",
     // The bar running from one end of a stretch of days to the other is drawn by the cells
     // rather than by the days, so that it runs unbroken across the room between them
-    rangeCell: "bg-[var(--background-color-accent-muted)]",
+    rangeCell: "bg-background-accent-muted",
     rangeCellStart: "rounded-s-[var(--border-radius-medium)]",
     rangeCellEnd: "rounded-e-[var(--border-radius-medium)]",
     hidden: "sr-only",

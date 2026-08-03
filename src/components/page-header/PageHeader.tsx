@@ -45,12 +45,12 @@ const classes = {
         medium: "xxlarge:[--page-header-title-size:var(--text-title-size-medium)] xxlarge:[--page-header-title-weight:var(--base-text-weight-semibold)] xxlarge:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
         large: "xxlarge:[--page-header-title-size:var(--text-title-size-large)] xxlarge:[--page-header-title-weight:var(--base-text-weight-normal)] xxlarge:[--page-header-title-line-height:var(--text-title-line-height-large)]",
     } satisfies Record<PageHeaderTitleVariant, string>,
-    border: "border-solid border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)] pb-[var(--base-size-8)]",
+    border: "border-solid border-b-[length:var(--border-width-thin)] border-b-border-default pb-[var(--base-size-8)]",
     borderWhen: {
-        narrow: "max-medium:border-solid max-medium:border-b-[length:var(--border-width-thin)] max-medium:border-b-[color:var(--border-color-default)] max-medium:pb-[var(--base-size-8)]",
+        narrow: "max-medium:border-solid max-medium:border-b-[length:var(--border-width-thin)] max-medium:border-b-border-default max-medium:pb-[var(--base-size-8)]",
         regular:
-            "medium:max-xxlarge:border-solid medium:max-xxlarge:border-b-[length:var(--border-width-thin)] medium:max-xxlarge:border-b-[color:var(--border-color-default)] medium:max-xxlarge:pb-[var(--base-size-8)]",
-        wide: "xxlarge:border-solid xxlarge:border-b-[length:var(--border-width-thin)] xxlarge:border-b-[color:var(--border-color-default)] xxlarge:pb-[var(--base-size-8)]",
+            "medium:max-xxlarge:border-solid medium:max-xxlarge:border-b-[length:var(--border-width-thin)] medium:max-xxlarge:border-b-border-default medium:max-xxlarge:pb-[var(--base-size-8)]",
+        wide: "xxlarge:border-solid xxlarge:border-b-[length:var(--border-width-thin)] xxlarge:border-b-border-default xxlarge:pb-[var(--base-size-8)]",
     } satisfies Record<PageHeaderViewport, string>,
 };
 

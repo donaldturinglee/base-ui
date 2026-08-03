@@ -91,14 +91,14 @@ describe("PageFooter", () => {
     describe("the line above the footer", () => {
         it("draws no line unless it is asked for", () => {
             render(withCopyright());
-            expect(footer()).not.toHaveClass("border-t-[color:var(--border-color-default)]");
+            expect(footer()).not.toHaveClass("border-t-border-default");
         });
 
         it("draws a line where there is no navigation", () => {
             render(withCopyright({ hasBorder: true }));
 
             expect(footer()).toHaveAttribute("data-has-border", "");
-            expect(footer()).toHaveClass("border-t-[color:var(--border-color-default)]");
+            expect(footer()).toHaveClass("border-t-border-default");
         });
 
         it("leaves the line off where a navigation is showing", () => {
@@ -110,7 +110,7 @@ describe("PageFooter", () => {
             );
 
             expect(footer()).toHaveAttribute("data-has-navigation", "");
-            expect(footer()).not.toHaveClass("border-t-[color:var(--border-color-default)]");
+            expect(footer()).not.toHaveClass("border-t-border-default");
         });
 
         it("draws the line only where the navigation is hidden", () => {
@@ -123,8 +123,8 @@ describe("PageFooter", () => {
                 </PageFooter>,
             );
 
-            expect(footer()).toHaveClass("max-medium:border-t-[color:var(--border-color-default)]");
-            expect(footer()).not.toHaveClass("border-t-[color:var(--border-color-default)]");
+            expect(footer()).toHaveClass("max-medium:border-t-border-default");
+            expect(footer()).not.toHaveClass("border-t-border-default");
         });
 
         it("reads a navigation through a fragment", () => {

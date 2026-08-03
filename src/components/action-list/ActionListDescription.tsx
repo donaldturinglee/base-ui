@@ -4,7 +4,7 @@ import { ActionListItemContext } from "./ActionListItemContext";
 import type { ActionListDescriptionProps } from "./ActionList.types";
 
 const classes = {
-    root: "[color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-normal)]",
+    root: "text-foreground-muted [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-normal)]",
     // Standing beside the label, the description gives way first when there is not enough
     // room for both
     inline: "min-w-0 truncate",

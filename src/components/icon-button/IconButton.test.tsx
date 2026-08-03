@@ -54,7 +54,7 @@ describe("IconButton", () => {
 
     it("mutes the icon on a default button", () => {
         render(<IconButton icon={Icon} aria-label="Close" />);
-        expect(screen.getByRole("button")).toHaveClass("[color:var(--foreground-color-muted)]");
+        expect(screen.getByRole("button")).toHaveClass("text-foreground-muted");
     });
 
     it("respects the variant", () => {

@@ -12,12 +12,12 @@ import { EmptyState } from ".";
 import type { EmptyStateSize } from "./EmptyState.types";
 
 const classes = {
-    box: "w-[var(--overlay-width-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+    box: "w-[var(--overlay-width-medium)] border-solid border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
     stack: "flex w-[var(--overlay-width-medium)] flex-col gap-[var(--base-size-16)]",
     // A panel that holds a list, so the message can be seen standing where the list would
-    panel: "flex w-[var(--overlay-width-small)] flex-col overflow-hidden border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+    panel: "flex w-[var(--overlay-width-small)] flex-col overflow-hidden border-solid border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
     panelHeader:
-        "p-[var(--base-size-8)] border-solid border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
+        "p-[var(--base-size-8)] border-solid border-b-[length:var(--border-width-thin)] border-b-border-default [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
 };
 
 const sizes: EmptyStateSize[] = ["small", "medium"];

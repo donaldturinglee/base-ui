@@ -86,7 +86,7 @@ describe("TextInput", () => {
     it("recesses itself when contrast", () => {
         render(<TextInput aria-label="Name" contrast />);
         expect(field()).toHaveAttribute("data-contrast", "true");
-        expect(field()).toHaveClass("bg-[var(--background-color-inset)]");
+        expect(field()).toHaveClass("bg-background-inset");
     });
 
     it("sets the typing area in the monospace stack", () => {
@@ -279,22 +279,18 @@ describe("TextInput trailing action", () => {
 
         // A field with an action inside it cannot use focus-within, which the action would
         // light up as well
-        expect(field()).not.toHaveClass(
-            "focus-within:border-[color:var(--border-color-accent-emphasis)]",
-        );
+        expect(field()).not.toHaveClass("focus-within:border-border-accent-emphasis");
 
         fireEvent.focus(input());
-        expect(field()).toHaveClass("border-[color:var(--border-color-accent-emphasis)]");
+        expect(field()).toHaveClass("border-border-accent-emphasis");
 
         fireEvent.blur(input());
-        expect(field()).not.toHaveClass("border-[color:var(--border-color-accent-emphasis)]");
+        expect(field()).not.toHaveClass("border-border-accent-emphasis");
     });
 
     it("uses focus-within where there is no action to press", () => {
         render(<TextInput aria-label="Name" />);
-        expect(field()).toHaveClass(
-            "focus-within:border-[color:var(--border-color-accent-emphasis)]",
-        );
+        expect(field()).toHaveClass("focus-within:border-border-accent-emphasis");
     });
 
     it("leaves the field's trailing padding to the action", () => {

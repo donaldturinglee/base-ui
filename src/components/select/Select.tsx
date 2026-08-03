@@ -8,19 +8,19 @@ const classes = {
     // The wrapper carries the field styling so the native control underneath can stay
     // transparent and keep its own dropdown behaviour. The indicator's size and inset live
     // here so the control below can reserve exactly the room it takes up
-    field: "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-[var(--background-color-default)] [color:var(--foreground-color-default)] [box-shadow:var(--shadow-inset)] [--select-indicator-size:var(--base-size-16)] [--select-indicator-inset:var(--base-size-4)] [&_select]:cursor-pointer forced-colors:[&_svg]:[fill:FieldText]",
-    focus: "focus-within:border-[color:var(--border-color-accent-emphasis)] focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
+    field: "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)] [--select-indicator-size:var(--base-size-16)] [--select-indicator-inset:var(--base-size-4)] [&_select]:cursor-pointer forced-colors:[&_svg]:[fill:FieldText]",
+    focus: "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
     block: "flex w-full self-stretch",
     disabled:
-        "[color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_select]:cursor-not-allowed forced-colors:[&_svg]:[fill:GrayText]",
+        "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_select]:cursor-not-allowed forced-colors:[&_svg]:[fill:GrayText]",
     size: {
         small: "min-h-[var(--control-small-size)] py-[var(--control-small-padding-block)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-small)]",
         medium: "min-h-[var(--control-medium-size)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-medium)]",
         large: "min-h-[var(--control-large-size)] py-[var(--control-large-padding-block)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-medium)]",
     } satisfies Record<SelectSize, string>,
     validation: {
-        error: "border-[color:var(--border-color-danger-emphasis)] focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
-        success: "border-[color:var(--background-color-success-emphasis)]",
+        error: "border-border-danger-emphasis focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
+        success: "border-background-success-emphasis",
     } satisfies Record<SelectValidationStatus, string>,
     // The 1px margins keep the field's inset focus outline from being covered, and the
     // inherited background is what Firefox reads to colour its own dropdown menu. The right

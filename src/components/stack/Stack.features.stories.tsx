@@ -8,7 +8,7 @@ export default {
 };
 
 const ScaleLabel = ({ label }: { label: string }) => (
-    <Text size="small" className="text-[var(--foreground-color-muted)]">
+    <Text size="small" className="text-foreground-muted">
         {label}
     </Text>
 );
@@ -44,7 +44,7 @@ export const PaddingScale: StoryFn<typeof Stack> = () => (
         {(["none", "tight", "condensed", "cozy", "normal", "spacious"] as const).map((padding) => (
             <Stack key={padding}>
                 <ScaleLabel label={`padding="${padding}"`} />
-                <Stack padding={padding} className="bg-[var(--background-color-inset)]">
+                <Stack padding={padding} className="bg-background-inset">
                     <Placeholder height="48px" label="Content" />
                 </Stack>
             </Stack>
@@ -55,21 +55,13 @@ export const PaddingScale: StoryFn<typeof Stack> = () => (
 // Directional Padding
 export const DirectionalPadding: StoryFn<typeof Stack> = () => (
     <Stack gap="normal">
-        <Stack padding="normal" className="bg-[var(--background-color-inset)]">
+        <Stack padding="normal" className="bg-background-inset">
             <Placeholder height="48px" label='padding="normal" (all sides)' />
         </Stack>
-        <Stack
-            padding="normal"
-            paddingInline="spacious"
-            className="bg-[var(--background-color-inset)]"
-        >
+        <Stack padding="normal" paddingInline="spacious" className="bg-background-inset">
             <Placeholder height="48px" label='padding="normal" paddingInline="spacious"' />
         </Stack>
-        <Stack
-            paddingBlock="condensed"
-            paddingInline="spacious"
-            className="bg-[var(--background-color-inset)]"
-        >
+        <Stack paddingBlock="condensed" paddingInline="spacious" className="bg-background-inset">
             <Placeholder height="48px" label='paddingBlock="condensed" paddingInline="spacious"' />
         </Stack>
     </Stack>

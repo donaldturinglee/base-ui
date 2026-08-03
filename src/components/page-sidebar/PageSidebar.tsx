@@ -24,8 +24,8 @@ const classes = {
     // The line falls on whichever edge faces the content, so it always reads as the join
     // between the sidebar and the page rather than as an edge of the viewport
     border: {
-        start: "border-solid border-e-[length:var(--border-width-thin)] border-e-[color:var(--border-color-default)]",
-        end: "border-solid border-s-[length:var(--border-width-thin)] border-s-[color:var(--border-color-default)]",
+        start: "border-solid border-e-[length:var(--border-width-thin)] border-e-border-default",
+        end: "border-solid border-s-[length:var(--border-width-thin)] border-s-border-default",
     } satisfies Record<PageSidebarPosition, string>,
     // A sidebar that stays put is as tall as the viewport, so anything past that has to
     // scroll within it. Where the content of a sidebar runs long enough to matter, wrap it

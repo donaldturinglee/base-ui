@@ -6,7 +6,7 @@ import type { CalendarDayProps } from "./Calendar.types";
 const classes = {
     // Every day takes the same square whatever it holds, so the grid keeps its shape from one
     // month to the next
-    root: "grid size-[var(--control-medium-size)] cursor-pointer appearance-none place-items-center rounded-[var(--border-radius-medium)] border-0 bg-transparent p-0 [color:var(--foreground-color-default)] [font-family:inherit] [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums]",
+    root: "grid size-[var(--control-medium-size)] cursor-pointer appearance-none place-items-center rounded-[var(--border-radius-medium)] border-0 bg-transparent p-0 text-foreground-default [font-family:inherit] [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums]",
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[calc(-1_*_var(--border-width-thin))]",
     interactive:
         "hover:bg-[var(--control-transparent-background-color-hover)] active:bg-[var(--control-transparent-background-color-active)]",
@@ -16,8 +16,8 @@ const classes = {
     selected:
         "bg-[var(--control-checked-background-color-rest)] [color:var(--control-checked-foreground-color-rest)] [font-weight:var(--base-text-weight-semibold)] hover:bg-[var(--control-checked-background-color-hover)] active:bg-[var(--control-checked-background-color-active)]",
     between: "[font-weight:var(--base-text-weight-semibold)]",
-    outside: "[color:var(--foreground-color-muted)]",
-    unavailable: "cursor-not-allowed [color:var(--foreground-color-disabled)]",
+    outside: "text-foreground-muted",
+    unavailable: "cursor-not-allowed text-foreground-disabled",
     // The day of the month is what is read on the page; the whole date is what is read out
     hidden: "sr-only",
 };

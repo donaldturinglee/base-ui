@@ -15,7 +15,7 @@ import { CommandPalette } from ".";
 const classes = {
     frame: "w-[var(--overlay-width-large)] max-w-full",
     item: "flex w-full items-center gap-[var(--base-size-8)]",
-    icon: "size-[var(--base-size-16)] shrink-0 [color:var(--foreground-color-muted)]",
+    icon: "size-[var(--base-size-16)] shrink-0 text-foreground-muted",
     trailing: "ms-auto",
 };
 

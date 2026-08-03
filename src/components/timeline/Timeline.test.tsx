@@ -118,7 +118,7 @@ describe("Timeline.Item", () => {
 
     it("draws the rail beside itself", () => {
         render(<Timeline.Item />);
-        expect(screen.getByRole("listitem")).toHaveClass("before:bg-[var(--border-color-muted)]");
+        expect(screen.getByRole("listitem")).toHaveClass("before:bg-border-muted");
     });
 
     it("is not condensed by default", () => {
@@ -190,7 +190,7 @@ describe("Timeline.Badge", () => {
 
     it("sets its contents against the fill a variant gives it", () => {
         const { container } = render(<Timeline.Badge variant="done" />);
-        expect(badge(container)).toHaveClass("[color:var(--foreground-color-on-emphasis)]");
+        expect(badge(container)).toHaveClass("text-foreground-on-emphasis");
     });
 
     it("forwards a ref to the badge rather than to its wrapper", () => {

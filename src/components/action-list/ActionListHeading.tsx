@@ -6,7 +6,7 @@ import { ActionListContext } from "./ActionListContext";
 import type { ActionListHeadingProps } from "./ActionList.types";
 
 const classes = {
-    root: "px-[var(--base-size-8)] py-[var(--base-size-6)] [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-semibold)] [color:var(--foreground-color-muted)]",
+    root: "px-[var(--base-size-8)] py-[var(--base-size-6)] [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-semibold)] text-foreground-muted",
     // Still read, but no longer drawn, for a list that is named for a screen reader alone
     hidden: "sr-only",
 };

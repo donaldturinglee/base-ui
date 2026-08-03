@@ -170,13 +170,13 @@ describe("KeybindingHint", () => {
         expect(hint()).toHaveAttribute("data-format", "condensed");
         expect(hint()).toHaveAttribute("data-variant", "normal");
         expect(hint()).toHaveAttribute("data-size", "normal");
-        expect(chords()[0]).toHaveClass("[color:var(--foreground-color-muted)]");
+        expect(chords()[0]).toHaveClass("text-foreground-muted");
         expect(chords()[0]).toHaveClass("min-w-[var(--base-size-20)]");
     });
 
     it("respects the variant prop", () => {
         const variants = {
-            normal: "[color:var(--foreground-color-muted)]",
+            normal: "text-foreground-muted",
             onEmphasis: "bg-[var(--counter-background-color-emphasis)]",
             onPrimary: "bg-[var(--button-primary-background-color-active)]",
         } as const;

@@ -8,12 +8,12 @@ import type { Platform } from "./KeybindingHint.types";
 const classes = {
     // Stands the hint on something dark enough to need the emphasis colours
     emphasis:
-        "inline-flex p-[var(--base-size-12)] rounded-[var(--border-radius-medium)] bg-[var(--background-color-black)]",
+        "inline-flex p-[var(--base-size-12)] rounded-[var(--border-radius-medium)] bg-background-black",
     primary:
         "inline-flex p-[var(--base-size-12)] rounded-[var(--border-radius-medium)] bg-[var(--button-primary-background-color-rest)]",
     table: "border-collapse",
-    cell: "py-[var(--base-size-8)] px-[var(--base-size-12)] text-left border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)]",
-    header: "[color:var(--foreground-color-muted)] [font-weight:var(--base-text-weight-semibold)]",
+    cell: "py-[var(--base-size-8)] px-[var(--base-size-12)] text-left border-solid border-[length:var(--border-width-thin)] border-border-default",
+    header: "text-foreground-muted [font-weight:var(--base-text-weight-semibold)]",
     prose: "max-w-[24rem]",
 };
 

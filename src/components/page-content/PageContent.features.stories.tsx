@@ -11,8 +11,7 @@ import { PageContent } from ".";
 const classes = {
     page: "p-[var(--base-size-16)]",
     section: "flex flex-col gap-[var(--stack-gap-condensed)]",
-    outline:
-        "border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)]",
+    outline: "border-solid border-[length:var(--border-width-thin)] border-border-default",
     navigation: "flex list-none flex-wrap gap-[var(--base-size-16)] m-0 p-0",
 };
 

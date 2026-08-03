@@ -13,7 +13,7 @@ const classes = {
     // The heading names the run below it without standing over it: it is set small and muted
     // rather than heavy, so the items are what the eye lands on going down the list
     heading:
-        "flex select-none items-center px-[var(--base-size-8)] py-[var(--base-size-4)] [color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-medium)] [line-height:var(--text-body-line-height-small)]",
+        "flex select-none items-center px-[var(--base-size-8)] py-[var(--base-size-4)] text-foreground-muted [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-medium)] [line-height:var(--text-body-line-height-small)]",
     hidden: "hidden",
 };
 

@@ -5,7 +5,7 @@ import { FormControlContext } from "./FormControlContext";
 import type { FormControlLabelElement, FormControlLabelProps } from "./FormControl.types";
 
 const classes = {
-    root: "block self-start cursor-pointer [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [color:var(--foreground-color-default)]",
+    root: "block self-start cursor-pointer [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] text-foreground-default",
     disabled: "cursor-not-allowed [color:var(--control-foreground-color-disabled)]",
     hidden: "sr-only",
     required: "flex gap-[var(--base-size-4)]",

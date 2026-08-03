@@ -17,7 +17,7 @@ const classes = {
     itemMenu: "whitespace-normal",
     // The last step of the trail leads nowhere, so nothing is drawn after it
     separator:
-        "flex self-center justify-center select-none whitespace-nowrap [color:var(--foreground-color-muted)] group-last/crumb:hidden",
+        "flex self-center justify-center select-none whitespace-nowrap text-foreground-muted group-last/crumb:hidden",
 };
 
 // The width a small icon button takes, used until the menu button has been measured

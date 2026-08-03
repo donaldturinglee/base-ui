@@ -8,7 +8,7 @@ import { Drawer } from ".";
 import type { DrawerNamedSize, DrawerPosition } from "./Drawer.types";
 
 const classes = {
-    custom: "bg-[var(--background-color-accent-muted)]",
+    custom: "bg-background-accent-muted",
     row: "flex flex-wrap gap-[var(--base-size-8)]",
 };
 

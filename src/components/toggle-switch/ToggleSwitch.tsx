@@ -24,8 +24,8 @@ const classes = {
         end: "ms-[var(--base-size-8)]",
     },
     statusText: {
-        root: "relative mx-[var(--base-size-8)] cursor-pointer [color:var(--foreground-color-default)]",
-        disabled: "cursor-not-allowed [color:var(--foreground-color-muted)]",
+        root: "relative mx-[var(--base-size-8)] cursor-pointer text-foreground-default",
+        disabled: "cursor-not-allowed text-foreground-muted",
         size: {
             small: "[font-size:var(--text-body-size-small)]",
             medium: "[font-size:var(--text-body-size-medium)]",

@@ -11,7 +11,7 @@ const classes = {
     unselected: "invisible",
     checkmark: "size-[var(--base-size-16)]",
     checkbox:
-        "flex items-center justify-center size-[var(--base-size-16)] rounded-[var(--border-radius-small)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-emphasis)] [&_svg]:size-[var(--base-size-12)] [&_svg]:[color:var(--foreground-color-on-emphasis)]",
+        "flex items-center justify-center size-[var(--base-size-16)] rounded-[var(--border-radius-small)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-emphasis)] [&_svg]:size-[var(--base-size-12)] [&_svg]:text-foreground-on-emphasis",
     // The fill doubles as the border colour, so the box does not shift as it is picked
     checkboxSelected:
         "bg-[var(--control-checked-background-color-rest)] border-[color:var(--control-checked-background-color-rest)]",

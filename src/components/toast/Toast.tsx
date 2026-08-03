@@ -78,7 +78,7 @@ const classes = {
     content: "flex min-w-0 grow flex-col gap-[var(--base-size-2)]",
     title: "[font-weight:var(--base-text-weight-semibold)]",
     description:
-        "[color:var(--foreground-color-muted)] [font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
+        "text-foreground-muted [font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
     actions: "flex shrink-0 items-center gap-[var(--base-size-8)]",
 };
 

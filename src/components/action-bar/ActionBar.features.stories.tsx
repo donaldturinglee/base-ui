@@ -13,8 +13,8 @@ import { ActionBar } from ".";
 
 const classes = {
     // A narrow container is what puts the later items of the bar into the overflow menu
-    wide: "w-[26rem] border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
-    narrow: "w-[12rem] border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+    wide: "w-[26rem] border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
+    narrow: "w-[12rem] border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
 };
 
 export default {

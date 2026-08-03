@@ -6,7 +6,7 @@ import type { RadioGroupLabelProps } from "./RadioGroup.types";
 
 const classes = {
     root: "block [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
-    disabled: "[color:var(--foreground-color-muted)]",
+    disabled: "text-foreground-muted",
     hidden: "sr-only",
     required: "ms-[var(--base-size-4)]",
 };

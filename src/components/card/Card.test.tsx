@@ -230,7 +230,7 @@ describe("Card", () => {
             </Card>,
         );
         expect(container.querySelector('[data-component="Card.Icon"]')).not.toHaveClass(
-            "bg-[var(--background-color-muted)]",
+            "bg-background-muted",
         );
     });
 
@@ -242,7 +242,7 @@ describe("Card", () => {
             </Card>,
         );
         expect(container.querySelector('[data-component="Card.Icon"]')).toHaveClass(
-            "bg-[var(--background-color-muted)]",
+            "bg-background-muted",
         );
     });
 

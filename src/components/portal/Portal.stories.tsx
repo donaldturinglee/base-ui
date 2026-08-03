@@ -5,8 +5,8 @@ import { registerPortalRoot } from "./portalRoot";
 import type { PortalProps } from "./Portal.types";
 
 const classes = {
-    outer: "p-[var(--base-size-12)] bg-[var(--background-color-danger-muted)]",
-    inner: "p-[var(--base-size-12)] bg-[var(--background-color-success-muted)]",
+    outer: "p-[var(--base-size-12)] bg-background-danger-muted",
+    inner: "p-[var(--base-size-12)] bg-background-success-muted",
 };
 
 export default {

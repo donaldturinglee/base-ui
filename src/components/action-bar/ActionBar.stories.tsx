@@ -13,7 +13,7 @@ const classes = {
     // The bar is only as wide as it is given room for, which is what decides how much of it
     // is moved into the overflow menu
     container:
-        "w-[24rem] border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+        "w-[24rem] border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
 };
 
 export default {

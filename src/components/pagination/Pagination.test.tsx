@@ -152,9 +152,9 @@ describe("Pagination", () => {
         // Clicking a page leaves it focused, so the fill has to survive both states or the
         // page a reader just picked reads as unselected
         expect(current).toHaveClass(
-            "bg-[var(--background-color-accent-emphasis)]",
-            "hover:bg-[var(--background-color-accent-emphasis)]",
-            "focus:bg-[var(--background-color-accent-emphasis)]",
+            "bg-background-accent-emphasis",
+            "hover:bg-background-accent-emphasis",
+            "focus:bg-background-accent-emphasis",
         );
         expect(current).not.toHaveClass(
             "hover:bg-[var(--control-transparent-background-color-hover)]",

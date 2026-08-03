@@ -8,7 +8,7 @@ const classes = {
     // wrapper is what the container queries below measure
     container: "@container/blankslate",
     root: "grid justify-items-center p-[var(--blankslate-padding)]",
-    border: "border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+    border: "border-solid border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
     narrow: "max-w-[485px] mx-auto",
     size: {
         small: "[--blankslate-heading-text:var(--text-title-shorthand-small)] [--blankslate-heading-margin-block:0_var(--base-size-4)] [--blankslate-description-text:var(--text-body-shorthand-medium)] [--blankslate-action-margin-block-end:var(--base-size-12)] [--blankslate-visual-size:var(--base-size-24)]",

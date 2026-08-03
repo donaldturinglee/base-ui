@@ -8,10 +8,10 @@ import { Carousel } from ".";
 const classes = {
     // A carousel fills its container, so the stories give it one to fill
     container: "w-[var(--overlay-width-medium)] max-w-full",
-    panel: "flex items-center justify-center h-[var(--base-size-128)] rounded-[var(--border-radius-medium)] bg-[var(--background-color-accent-muted)] [font-size:var(--text-title-size-small)] [font-weight:var(--base-text-weight-semibold)]",
+    panel: "flex items-center justify-center h-[var(--base-size-128)] rounded-[var(--border-radius-medium)] bg-background-accent-muted [font-size:var(--text-title-size-small)] [font-weight:var(--base-text-weight-semibold)]",
     // A bar of the caller's own, with the steps pushed to either end of it
     spread: "justify-between",
-    caption: "text-center [color:var(--foreground-color-muted)]",
+    caption: "text-center text-foreground-muted",
 };
 
 const withContainer: Decorator = (Story) => (

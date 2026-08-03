@@ -14,15 +14,15 @@ export const DEFAULT_TEXTAREA_RESIZE: TextareaResize = "both";
 const classes = {
     // The wrapper carries the field styling so the native control can stay transparent and
     // keep its own resize handle
-    field: "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-[var(--background-color-default)] [color:var(--foreground-color-default)] [box-shadow:var(--shadow-inset)] [font-size:var(--text-body-size-medium)] leading-[var(--base-size-20)]",
-    focus: "focus-within:border-[color:var(--border-color-accent-emphasis)] focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
+    field: "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)] [font-size:var(--text-body-size-medium)] leading-[var(--base-size-20)]",
+    focus: "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
     block: "flex w-full self-stretch",
-    contrast: "bg-[var(--background-color-inset)]",
+    contrast: "bg-background-inset",
     disabled:
-        "[color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_textarea]:cursor-not-allowed",
+        "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_textarea]:cursor-not-allowed",
     validation: {
-        error: "border-[color:var(--border-color-danger-emphasis)] focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
-        success: "border-[color:var(--background-color-success-emphasis)]",
+        error: "border-border-danger-emphasis focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
+        success: "border-background-success-emphasis",
     } satisfies Record<TextareaValidationStatus, string>,
     // The field owns the focus ring, so the control inside it drops its own
     textarea:
@@ -33,9 +33,8 @@ const classes = {
         horizontal: "resize-x",
         vertical: "resize-y",
     } satisfies Record<TextareaResize, string>,
-    counter:
-        "flex items-center gap-[var(--control-xsmall-gap)] [color:var(--foreground-color-muted)]",
-    counterOverLimit: "[color:var(--foreground-color-danger)]",
+    counter: "flex items-center gap-[var(--control-xsmall-gap)] text-foreground-muted",
+    counterOverLimit: "text-foreground-danger",
     counterIcon: "shrink-0 size-[var(--base-size-16)]",
     hidden: "sr-only",
 };

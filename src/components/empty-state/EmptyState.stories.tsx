@@ -5,7 +5,7 @@ import { EmptyState } from ".";
 import type { EmptyStateProps } from "./EmptyState.types";
 
 const classes = {
-    box: "w-[var(--overlay-width-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+    box: "w-[var(--overlay-width-medium)] border-solid border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
 };
 
 export default {

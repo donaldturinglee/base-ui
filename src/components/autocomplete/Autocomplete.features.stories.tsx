@@ -14,11 +14,11 @@ const classes = {
     stage: "min-h-[20rem]",
     // Stands the list against a box of the caller's own rather than against the field inside
     // it
-    anchor: "inline-flex p-[var(--base-size-8)] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)]",
+    anchor: "inline-flex p-[var(--base-size-8)] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-border-default",
     // A list drawn where it stands rather than on a surface over the page needs a box of its
     // own to be told apart from what is around it
     inlineMenu:
-        "w-[var(--overlay-width-small)] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)]",
+        "w-[var(--overlay-width-small)] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-border-default",
 };
 
 const topics: AutocompleteItem[] = [

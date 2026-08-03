@@ -16,7 +16,7 @@ const classes = {
     // the table having to know how many rows the data will bring
     cell: "p-0",
     items: "flex flex-col w-full",
-    item: "p-[var(--table-cell-padding-block)_var(--table-cell-padding-inline)] not-last:border-b-[length:var(--border-width-thin)] not-last:border-b-[color:var(--border-color-default)] [&_[data-component='SkeletonText']]:w-[var(--table-skeleton-item-width)]",
+    item: "p-[var(--table-cell-padding-block)_var(--table-cell-padding-inline)] not-last:border-b-[length:var(--border-width-thin)] not-last:border-b-border-default [&_[data-component='SkeletonText']]:w-[var(--table-skeleton-item-width)]",
     // The lines run to different widths, so a column of them reads as text rather than as a
     // block of bars
     itemWidths:

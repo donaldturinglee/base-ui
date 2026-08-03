@@ -4,11 +4,10 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TableCellProps } from "./DataTable.types";
 
 const classes = {
-    root: "flex items-center text-start p-[var(--table-cell-padding-block)_var(--table-cell-padding-inline)] border-b-[length:var(--border-width-thin)] border-b-[color:var(--border-color-default)]",
+    root: "flex items-center text-start p-[var(--table-cell-padding-block)_var(--table-cell-padding-inline)] border-b-[length:var(--border-width-thin)] border-b-border-default",
     end: "justify-end text-end",
     // A cell that names its row reads as a heading for it, so it is set apart the same way
-    rowHeader:
-        "[font-weight:var(--base-text-weight-semibold)] [color:var(--foreground-color-default)]",
+    rowHeader: "[font-weight:var(--base-text-weight-semibold)] text-foreground-default",
 };
 
 function TableCell(

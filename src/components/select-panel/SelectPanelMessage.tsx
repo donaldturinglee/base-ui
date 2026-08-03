@@ -12,19 +12,18 @@ const classes = {
     fullTitle:
         "[font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-medium)]",
     fullContent:
-        "flex flex-col items-center gap-[var(--stack-gap-condensed)] [font-size:var(--text-body-size-medium)] [color:var(--foreground-color-muted)]",
+        "flex flex-col items-center gap-[var(--stack-gap-condensed)] [font-size:var(--text-body-size-medium)] text-foreground-muted",
     // An inline message stands above the list rather than in place of it
     inline: "flex gap-[var(--stack-gap-condensed)] px-[var(--base-size-16)] py-[var(--base-size-12)] [font-size:var(--text-body-size-small)] border-solid border-b-[length:var(--border-width-thin)] [&_a]:[color:inherit] [&_a]:underline",
     inlineIcon: "shrink-0 mt-[var(--base-size-2)] size-[var(--base-size-16)]",
     variant: {
-        warning: "[color:var(--foreground-color-attention)]",
-        error: "[color:var(--foreground-color-danger)]",
+        warning: "text-foreground-attention",
+        error: "text-foreground-danger",
         empty: "",
     } satisfies Record<SelectPanelMessageVariant, string>,
     inlineVariant: {
-        warning:
-            "bg-[var(--background-color-attention-muted)] border-b-[color:var(--border-color-attention-muted)]",
-        error: "bg-[var(--background-color-danger-muted)] border-b-[color:var(--border-color-danger-muted)]",
+        warning: "bg-background-attention-muted border-b-border-attention-muted",
+        error: "bg-background-danger-muted border-b-border-danger-muted",
         empty: "",
     } satisfies Record<SelectPanelMessageVariant, string>,
 };

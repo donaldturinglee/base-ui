@@ -6,7 +6,7 @@ import type { RadioProps } from "./Radio.types";
 
 const classes = {
     // The top margin centres the circle against a 20px line of label text beside it
-    root: "relative grid place-content-center size-[var(--base-size-16)] m-0 mt-[var(--base-size-2)] cursor-pointer appearance-none rounded-[var(--border-radius-full)] bg-[var(--background-color-default)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-emphasis)] transition-[background-color,border-color] duration-micro ease-hover",
+    root: "relative grid place-content-center size-[var(--base-size-16)] m-0 mt-[var(--base-size-2)] cursor-pointer appearance-none rounded-[var(--border-radius-full)] bg-background-default border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-emphasis)] transition-[background-color,border-color] duration-micro ease-hover",
     // The dot is the fill left showing inside a thickened border rather than a mark of its
     // own, because an input cannot have children. The border doubles as the filled circle so
     // the shape does not shift in dark high contrast

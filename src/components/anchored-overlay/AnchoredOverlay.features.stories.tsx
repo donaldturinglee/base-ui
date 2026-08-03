@@ -14,7 +14,7 @@ const classes = {
     // Gives the content a width to sit in rather than the width of the page
     content: "w-[18rem]",
     scrollingRegion:
-        "relative h-[15rem] overflow-auto border-[length:var(--border-width-thin)] border-[color:var(--border-color-default)] rounded-[var(--border-radius-medium)]",
+        "relative h-[15rem] overflow-auto border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
     scrollingContent: "h-[40rem] p-[var(--base-size-16)]",
 };
 
