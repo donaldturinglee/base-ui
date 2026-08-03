@@ -29,6 +29,7 @@ export * from "./date-picker";
 export * from "./details";
 export * from "./dialog";
 export * from "./drawer";
+export * from "./em";
 export * from "./empty-state";
 export * from "./filtered-action-list";
 export * from "./form-control";

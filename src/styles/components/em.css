@@ -1,0 +1,39 @@
+@layer components {
+    /* The stress is carried by the slope of the letters alone, so a word marked out inside a
+       line keeps the family, the size and the weight of the line it is read in. The classes
+       below are only there for the caller who asks for one of them */
+    .em {
+        font-style: italic;
+    }
+
+    .em-size-large {
+        font-size: var(--text-body-size-large);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    .em-size-medium {
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .em-size-small {
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .em-weight-light {
+        font-weight: var(--base-text-weight-light);
+    }
+
+    .em-weight-normal {
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .em-weight-medium {
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .em-weight-semibold {
+        font-weight: var(--base-text-weight-semibold);
+    }
+}
