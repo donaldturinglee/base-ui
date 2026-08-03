@@ -127,14 +127,14 @@ describe("ProgressBar", () => {
         render(<ProgressBar progress={50} animated />);
         const item = screen.getByRole("progressbar");
         expect(item).toHaveAttribute("data-animated", "true");
-        expect(item).toHaveClass("motion-safe:animate-shimmer");
+        expect(item).toHaveClass("motion-safe:shimmer");
     });
 
     it("leaves the item unanimated by default", () => {
         render(<ProgressBar progress={50} />);
         const item = screen.getByRole("progressbar");
         expect(item).not.toHaveAttribute("data-animated");
-        expect(item).not.toHaveClass("motion-safe:animate-shimmer");
+        expect(item).not.toHaveClass("motion-safe:shimmer");
     });
 
     it("renders the children in place of the generated item", () => {

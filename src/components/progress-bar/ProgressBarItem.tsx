@@ -6,8 +6,7 @@ import type { ProgressBarItemProps, ProgressBarVariant } from "./ProgressBar.typ
 const classes = {
     // The fallback lives in the class, so leaving the progress unset renders an empty segment
     root: "w-[var(--progress-bar-item-width,0%)]",
-    shimmer:
-        "motion-safe:[mask-image:linear-gradient(75deg,#000_30%,rgb(0,0,0,0.65)_80%)] motion-safe:[mask-size:200%] motion-safe:animate-shimmer",
+    shimmer: "motion-safe:shimmer",
     forcedColors: "forced-colors:[forced-color-adjust:none] forced-colors:bg-[color:LinkText]",
     variant: {
         accent: "bg-[var(--progress-bar-background-color-accent)]",

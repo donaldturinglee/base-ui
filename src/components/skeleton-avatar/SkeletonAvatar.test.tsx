@@ -96,7 +96,7 @@ describe("SkeletonAvatar", () => {
         render(<SkeletonAvatar data-testid="skeleton" />);
         const skeleton = screen.getByTestId("skeleton");
         expect(skeleton).toHaveClass("bg-[var(--skeleton-loader-background-color)]");
-        expect(skeleton).toHaveClass("motion-safe:animate-shimmer");
+        expect(skeleton).toHaveClass("motion-safe:shimmer");
     });
 
     it("merges a custom style onto the root element", () => {

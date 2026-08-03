@@ -11,3 +11,11 @@
     }
   }
 }
+
+/* Class name for the shimmer animation. It carries the masked surface the token describes,
+   which the keyframes sweep across, so the whole effect arrives as one class */
+@utility shimmer {
+  mask-image: linear-gradient(75deg, #000 30%, rgb(0, 0, 0, 0.65) 80%);
+  mask-size: 200%;
+  animation: var(--animate-shimmer);
+}

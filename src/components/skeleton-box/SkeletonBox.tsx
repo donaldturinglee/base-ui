@@ -6,8 +6,7 @@ import type { SkeletonBoxProps } from "./SkeletonBox.types";
 const classes = {
     root: "block bg-[var(--skeleton-loader-background-color)] rounded-[var(--border-radius-small)]",
     dimensions: "w-[var(--skeleton-box-width,auto)] h-[var(--skeleton-box-height,1rem)]",
-    shimmer:
-        "motion-safe:[mask-image:linear-gradient(75deg,#000_30%,rgb(0,0,0,0.65)_80%)] motion-safe:[mask-size:200%] motion-safe:animate-shimmer",
+    shimmer: "motion-safe:shimmer",
     forcedColors:
         "forced-colors:outline-1 forced-colors:outline-transparent forced-colors:-outline-offset-1",
 };

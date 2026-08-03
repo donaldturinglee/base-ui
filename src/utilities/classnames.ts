@@ -4,8 +4,9 @@ import { extendTailwindMerge } from "tailwind-merge";
 // The semantic typography classes from styles/typography.css each set the whole font
 // shorthand, so one has to replace another. Grouping them also stops tailwind-merge from
 // reading them as text colours and dropping them when a colour class travels alongside.
-// The semantic motion and z-index classes from styles/variables.css carry names tailwind-merge
-// cannot recognise on its own, so they join the built-in groups they belong to
+// The semantic motion and z-index classes from styles/variables.css, and the shimmer class from
+// styles/motion.css, carry names tailwind-merge cannot recognise on its own, so they join the
+// built-in groups they belong to
 const twMerge = extendTailwindMerge<"typography">({
     extend: {
         classGroups: {
@@ -22,6 +23,7 @@ const twMerge = extendTailwindMerge<"typography">({
                 "text-title-medium",
                 "text-title-small",
             ],
+            animate: ["shimmer"],
             duration: ["duration-micro", "duration-short", "duration-medium", "duration-long"],
             ease: ["ease-enter", "ease-exit", "ease-hover", "ease-move"],
             z: [
