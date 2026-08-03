@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { Portal } from "../portal";
 import { getAnchoredPosition } from "../tooltip/anchoredPosition";
 import { AutocompleteContext } from "./AutocompleteContext";
@@ -14,41 +14,52 @@ import type {
 } from "./Autocomplete.types";
 
 const classes = {
-    // The surface is laid out against the viewport, because that is what the field it stands
-    // under is measured against. Where it ends up is carried in variables rather than written
-    // straight onto the element, so that a narrow viewport can put it somewhere else
-    root: "fixed transition-none top-[var(--autocomplete-overlay-top)] left-[var(--autocomplete-overlay-left)] overflow-auto bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] focus:outline-none forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
-    // It arrives from the edge of the field it stands off, which says where it came from
-    animation:
-        "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2",
-    // Held back until it has been placed, so it is never seen where it does not belong
-    unplaced: "invisible",
-    width: {
-        xsmall: "w-[var(--overlay-width-xsmall)]",
-        small: "w-[var(--overlay-width-small)]",
-        medium: "w-[var(--overlay-width-medium)]",
-        large: "w-[var(--overlay-width-large)]",
-        xlarge: "w-[var(--overlay-width-xlarge)]",
-        auto: "w-auto",
-        // As wide as the field it stands under, which is where a reader looks for the list
-        // belonging to a field
-        anchor: "w-[var(--autocomplete-overlay-anchor-width)]",
-    } satisfies Record<AutocompleteOverlayWidth, string>,
-    height: {
-        small: "h-[var(--overlay-height-small)]",
-        medium: "h-[var(--overlay-height-medium)]",
-        large: "h-[var(--overlay-height-large)]",
-        xlarge: "h-[var(--overlay-height-xlarge)]",
-        auto: "h-auto",
-    } satisfies Record<AutocompleteOverlayHeight, string>,
-    maxHeight: {
-        small: "max-h-[var(--overlay-height-small)]",
-        medium: "max-h-[var(--overlay-height-medium)]",
-        large: "max-h-[var(--overlay-height-large)]",
-        xlarge: "max-h-[var(--overlay-height-xlarge)]",
-    } satisfies Record<AutocompleteOverlayMaxHeight, string>,
     hidden: "sr-only",
 };
+
+const autocompleteOverlayVariants = cva(
+    [
+        // The surface is laid out against the viewport, because that is what the field it stands
+        // under is measured against. Where it ends up is carried in variables rather than
+        // written straight onto the element, so that a narrow viewport can put it somewhere else
+        "fixed transition-none top-[var(--autocomplete-overlay-top)] left-[var(--autocomplete-overlay-left)] overflow-auto bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] focus:outline-none forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
+        // It arrives from the edge of the field it stands off, which says where it came from
+        "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2",
+    ],
+    {
+        variants: {
+            width: {
+                xsmall: "w-[var(--overlay-width-xsmall)]",
+                small: "w-[var(--overlay-width-small)]",
+                medium: "w-[var(--overlay-width-medium)]",
+                large: "w-[var(--overlay-width-large)]",
+                xlarge: "w-[var(--overlay-width-xlarge)]",
+                auto: "w-auto",
+                // As wide as the field it stands under, which is where a reader looks for the
+                // list belonging to a field
+                anchor: "w-[var(--autocomplete-overlay-anchor-width)]",
+            } satisfies Record<AutocompleteOverlayWidth, string>,
+            height: {
+                small: "h-[var(--overlay-height-small)]",
+                medium: "h-[var(--overlay-height-medium)]",
+                large: "h-[var(--overlay-height-large)]",
+                xlarge: "h-[var(--overlay-height-xlarge)]",
+                auto: "h-auto",
+            } satisfies Record<AutocompleteOverlayHeight, string>,
+            maxHeight: {
+                small: "max-h-[var(--overlay-height-small)]",
+                medium: "max-h-[var(--overlay-height-medium)]",
+                large: "max-h-[var(--overlay-height-large)]",
+                xlarge: "max-h-[var(--overlay-height-xlarge)]",
+            } satisfies Record<AutocompleteOverlayMaxHeight, string>,
+            // Held back until it has been placed, so it is never seen where it does not belong
+            unplaced: {
+                true: "invisible",
+                false: "",
+            },
+        },
+    },
+);
 
 // Where the surface was last placed, and how wide the field it was placed against was, since
 // a surface that follows the field's width has to be drawn again when the field changes
@@ -202,14 +213,12 @@ function AutocompleteOverlay(props: AutocompleteOverlayProps) {
                 aria-hidden={showMenu ? undefined : "true"}
                 className={classNames(
                     showMenu
-                        ? [
-                              classes.root,
-                              classes.animation,
-                              classes.width[width],
-                              classes.height[height],
-                              classes.maxHeight[maxHeight],
-                              !placement && classes.unplaced,
-                          ]
+                        ? autocompleteOverlayVariants({
+                              width,
+                              height,
+                              maxHeight,
+                              unplaced: !placement,
+                          })
                         : classes.hidden,
                     className,
                 )}

@@ -1,15 +1,22 @@
 import * as React from "react";
 import { isValidElementType } from "react-is";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { EmptyStateProps, EmptyStateSize, EmptyStateVisual } from "./EmptyState.types";
 
+const emptyStateVariants = cva(
+    "flex flex-col items-center justify-center text-center text-foreground-default",
+    {
+        variants: {
+            size: {
+                small: "gap-[var(--base-size-4)] p-[var(--base-size-16)] [--empty-state-icon-size:var(--base-size-20)] [--empty-state-title-size:var(--text-body-size-medium)] [--empty-state-description-size:var(--text-body-size-small)]",
+                medium: "gap-[var(--base-size-8)] p-[var(--base-size-24)] [--empty-state-icon-size:var(--base-size-24)] [--empty-state-title-size:var(--text-title-size-small)] [--empty-state-description-size:var(--text-body-size-medium)]",
+            } satisfies Record<EmptyStateSize, string>,
+        },
+    },
+);
+
 const classes = {
-    root: "flex flex-col items-center justify-center text-center text-foreground-default",
-    size: {
-        small: "gap-[var(--base-size-4)] p-[var(--base-size-16)] [--empty-state-icon-size:var(--base-size-20)] [--empty-state-title-size:var(--text-body-size-medium)] [--empty-state-description-size:var(--text-body-size-small)]",
-        medium: "gap-[var(--base-size-8)] p-[var(--base-size-24)] [--empty-state-icon-size:var(--base-size-24)] [--empty-state-title-size:var(--text-title-size-small)] [--empty-state-description-size:var(--text-body-size-medium)]",
-    } satisfies Record<EmptyStateSize, string>,
     icon: "flex items-center justify-center text-foreground-muted [&>svg]:size-[var(--empty-state-icon-size)]",
     title: "m-0 [font-size:var(--empty-state-title-size)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)]",
     description:
@@ -54,7 +61,7 @@ function EmptyState<As extends React.ElementType = "div">(
     return (
         <Component
             ref={ref}
-            className={classNames(classes.root, classes.size[size], className)}
+            className={classNames(emptyStateVariants({ size }), className)}
             data-component="EmptyState"
             data-size={size}
             {...rest}

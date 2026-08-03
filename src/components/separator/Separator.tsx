@@ -1,25 +1,30 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SeparatorOrientation, SeparatorProps, SeparatorVariant } from "./Separator.types";
 
-const classes = {
+const separatorVariants = cva(
     // The line is drawn as a fill rather than as a border, so one set of rules serves both
     // orientations. Its colour comes through a custom property, so a caller can repaint the
     // line without having to unpick the class it came with
-    root: "shrink-0 m-0 p-0 border-0 bg-[var(--separator-color)]",
-    orientation: {
-        horizontal: "w-full h-[var(--border-width-thin)]",
-        // A vertical line takes its height from whatever it stands beside, and keeps a
-        // minimum of its own so it is still there where nothing stretches it
-        vertical: "self-stretch w-[var(--border-width-thin)] h-auto min-h-[var(--base-size-16)]",
-    } satisfies Record<SeparatorOrientation, string>,
-    variant: {
-        subtle: "[--separator-color:var(--border-color-muted)]",
-        default: "[--separator-color:var(--border-color-default)]",
-        emphasis: "[--separator-color:var(--border-color-emphasis)]",
-    } satisfies Record<SeparatorVariant, string>,
-};
+    "shrink-0 m-0 p-0 border-0 bg-[var(--separator-color)]",
+    {
+        variants: {
+            orientation: {
+                horizontal: "w-full h-[var(--border-width-thin)]",
+                // A vertical line takes its height from whatever it stands beside, and keeps a
+                // minimum of its own so it is still there where nothing stretches it
+                vertical:
+                    "self-stretch w-[var(--border-width-thin)] h-auto min-h-[var(--base-size-16)]",
+            } satisfies Record<SeparatorOrientation, string>,
+            variant: {
+                subtle: "[--separator-color:var(--border-color-muted)]",
+                default: "[--separator-color:var(--border-color-default)]",
+                emphasis: "[--separator-color:var(--border-color-emphasis)]",
+            } satisfies Record<SeparatorVariant, string>,
+        },
+    },
+);
 
 function Separator<As extends React.ElementType = "div">(
     props: SeparatorProps<As>,
@@ -42,12 +47,7 @@ function Separator<As extends React.ElementType = "div">(
             // be given `role="presentation"` instead
             role="separator"
             aria-orientation={orientation}
-            className={classNames(
-                classes.root,
-                classes.orientation[orientation],
-                classes.variant[variant],
-                className,
-            )}
+            className={classNames(separatorVariants({ orientation, variant }), className)}
             data-component="Separator"
             data-orientation={orientation}
             data-variant={variant}

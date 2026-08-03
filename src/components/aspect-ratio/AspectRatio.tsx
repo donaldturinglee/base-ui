@@ -1,24 +1,30 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { AspectRatioProps, AspectRatioRatio } from "./AspectRatio.types";
 
-const classes = {
-    // The box takes its height from the width it is given, so it holds its place on the page
-    // before whatever goes in it has loaded
-    root: "block relative overflow-hidden aspect-[var(--aspect-ratio)]",
-    // Whatever is put inside is laid over the whole box and cropped to it, so an image of any
-    // size sits where it should without a caller having to measure it first
-    content: "[&>*]:absolute [&>*]:inset-0 [&>*]:w-full [&>*]:h-full [&>*]:object-cover",
-    ratio: {
-        "1:1": "[--aspect-ratio:1/1]",
-        "16:9": "[--aspect-ratio:16/9]",
-        "4:3": "[--aspect-ratio:4/3]",
-        // A custom shape comes from the width and height beside it, so there is nothing for
-        // the class to say
-        custom: "",
-    } satisfies Record<AspectRatioRatio, string>,
-};
+const aspectRatioVariants = cva(
+    [
+        // The box takes its height from the width it is given, so it holds its place on the page
+        // before whatever goes in it has loaded
+        "block relative overflow-hidden aspect-[var(--aspect-ratio)]",
+        // Whatever is put inside is laid over the whole box and cropped to it, so an image of any
+        // size sits where it should without a caller having to measure it first
+        "[&>*]:absolute [&>*]:inset-0 [&>*]:w-full [&>*]:h-full [&>*]:object-cover",
+    ],
+    {
+        variants: {
+            ratio: {
+                "1:1": "[--aspect-ratio:1/1]",
+                "16:9": "[--aspect-ratio:16/9]",
+                "4:3": "[--aspect-ratio:4/3]",
+                // A custom shape comes from the width and height beside it, so there is nothing
+                // for the class to say
+                custom: "",
+            } satisfies Record<AspectRatioRatio, string>,
+        },
+    },
+);
 
 function AspectRatio<As extends React.ElementType = "div">(
     props: AspectRatioProps<As>,
@@ -40,7 +46,7 @@ function AspectRatio<As extends React.ElementType = "div">(
     return (
         <Component
             ref={ref}
-            className={classNames(classes.root, classes.content, classes.ratio[ratio], className)}
+            className={classNames(aspectRatioVariants({ ratio }), className)}
             style={
                 {
                     ...style,

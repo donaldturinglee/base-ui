@@ -1,20 +1,24 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { StackItemProps } from "./Stack.types";
 
-const classes = {
+const stackItemVariants = cva(
     // `flex-initial` keeps items at their own size until `grow` or `shrink` opts out
-    root: "flex-initial min-w-0",
-    grow: {
-        true: "grow",
-        false: "grow-0",
-    } satisfies Record<`${boolean}`, string>,
-    shrink: {
-        true: "shrink",
-        false: "shrink-0",
-    } satisfies Record<`${boolean}`, string>,
-};
+    "flex-initial min-w-0",
+    {
+        variants: {
+            grow: {
+                true: "grow",
+                false: "grow-0",
+            },
+            shrink: {
+                true: "shrink",
+                false: "shrink-0",
+            },
+        },
+    },
+);
 
 function StackItem<As extends React.ElementType = "div">(
     props: StackItemProps<As>,
@@ -32,12 +36,7 @@ function StackItem<As extends React.ElementType = "div">(
     return (
         <Component
             ref={ref}
-            className={classNames(
-                classes.root,
-                grow !== undefined && classes.grow[`${grow}`],
-                shrink !== undefined && classes.shrink[`${shrink}`],
-                className,
-            )}
+            className={classNames(stackItemVariants({ grow, shrink }), className)}
             data-component="StackItem"
             data-grow={grow}
             data-shrink={shrink}

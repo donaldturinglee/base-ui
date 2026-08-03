@@ -1,19 +1,23 @@
 import * as React from "react";
 import { ArrowClockwiseRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SpinnerProps, SpinnerSize } from "./Spinner.types";
 
 const classes = {
     root: "inline-flex flex-col items-center",
-    icon: "motion-safe:animate-spin",
     srOnly: "sr-only",
-    size: {
-        small: "size-[var(--spinner-size-small)]",
-        medium: "size-[var(--spinner-size-medium)]",
-        large: "size-[var(--spinner-size-large)]",
-    } satisfies Record<SpinnerSize, string>,
 };
+
+const spinnerIconVariants = cva("motion-safe:animate-spin", {
+    variants: {
+        size: {
+            small: "size-[var(--spinner-size-small)]",
+            medium: "size-[var(--spinner-size-medium)]",
+            large: "size-[var(--spinner-size-large)]",
+        } satisfies Record<SpinnerSize, string>,
+    },
+});
 
 function Spinner<As extends React.ElementType = "span">(
     props: SpinnerProps<As>,
@@ -39,7 +43,7 @@ function Spinner<As extends React.ElementType = "span">(
             {...rest}
         >
             <ArrowClockwiseRegular
-                className={classNames(classes.icon, classes.size[size])}
+                className={classNames(spinnerIconVariants({ size }))}
                 aria-hidden="true"
             />
             {srText !== null && ariaLabel === undefined ? (

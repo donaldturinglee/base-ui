@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import TokenBase, { DEFAULT_TOKEN_SIZE, isTokenInteractive } from "./TokenBase";
 import TokenRemoveButton from "./TokenRemoveButton";
@@ -8,21 +8,41 @@ import type { ButtonVisual } from "../button";
 import type { TokenProps, TokenSize } from "./Token.types";
 
 const classes = {
-    root: "max-w-full text-foreground-muted bg-background-neutral-muted border-solid border-[length:var(--border-width-thin)] border-border-muted",
-    // A token that answers the reader lifts as the pointer rests on it
-    interactive: "hover:text-foreground-default hover:[box-shadow:var(--shadow-resting-medium)]",
-    selected: "text-foreground-default border-border-emphasis",
-    // The remove button carries the room at that end, so the token gives up its own
-    withRemoveButton: "pr-0",
-    leadingVisual: "flex shrink-0 items-center leading-none",
-    leadingVisualGap: {
-        small: "",
-        medium: "mr-[var(--base-size-4)]",
-        large: "mr-[var(--base-size-6)]",
-        xlarge: "mr-[var(--base-size-6)]",
-    } satisfies Record<TokenSize, string>,
     srOnly: "sr-only",
 };
+
+const tokenVariants = cva(
+    "max-w-full text-foreground-muted bg-background-neutral-muted border-solid border-[length:var(--border-width-thin)] border-border-muted",
+    {
+        variants: {
+            // A token that answers the reader lifts as the pointer rests on it
+            interactive: {
+                true: "hover:text-foreground-default hover:[box-shadow:var(--shadow-resting-medium)]",
+                false: "",
+            },
+            selected: {
+                true: "text-foreground-default border-border-emphasis",
+                false: "",
+            },
+            // The remove button carries the room at that end, so the token gives up its own
+            withRemoveButton: {
+                true: "pr-0",
+                false: "",
+            },
+        },
+    },
+);
+
+const tokenLeadingVisualVariants = cva("flex shrink-0 items-center leading-none", {
+    variants: {
+        size: {
+            small: "",
+            medium: "mr-[var(--base-size-4)]",
+            large: "mr-[var(--base-size-6)]",
+            xlarge: "mr-[var(--base-size-6)]",
+        } satisfies Record<TokenSize, string>,
+    },
+});
 
 const renderVisual = (visual: NonNullable<ButtonVisual>) => {
     if (React.isValidElement(visual)) {
@@ -82,10 +102,11 @@ function Token<As extends React.ElementType = "span">(
             isSelected={isSelected}
             onRemove={onRemove}
             className={classNames(
-                classes.root,
-                interactive && classes.interactive,
-                isSelected && classes.selected,
-                showRemoveButton && classes.withRemoveButton,
+                tokenVariants({
+                    interactive,
+                    selected: isSelected,
+                    withRemoveButton: showRemoveButton,
+                }),
                 className,
             )}
             data-has-remove-button={showRemoveButton ? "" : undefined}
@@ -94,7 +115,7 @@ function Token<As extends React.ElementType = "span">(
         >
             {leadingVisual && size !== "small" ? (
                 <span
-                    className={classNames(classes.leadingVisual, classes.leadingVisualGap[size])}
+                    className={classNames(tokenLeadingVisualVariants({ size }))}
                     data-component="Token.LeadingVisual"
                 >
                     {renderVisual(leadingVisual)}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { PageLayoutContext } from "./PageLayoutContext";
 import PageLayoutFooter from "./PageLayoutFooter";
@@ -9,31 +9,44 @@ import PageLayoutSidebar from "./PageLayoutSidebar";
 import type { PageLayoutProps, PageLayoutWidth } from "./PageLayout.types";
 
 const classes = {
-    // The scale every region reads its spacing from, and the order the regions fall into
-    // once the page wraps
-    root: "p-[var(--spacing)] [--page-layout-spacing-none:0px] [--page-layout-spacing-condensed:var(--base-size-16)] [--page-layout-spacing-normal:var(--base-size-16)] large:[--page-layout-spacing-normal:var(--base-size-24)] [--region-order-header:0] [--region-order-pane-start:1] [--region-order-content:2] [--region-order-pane-end:3] [--region-order-footer:4]",
-    // A pane is as wide as the page until there is room beside the content for it
-    paneWidths:
-        "[--pane-width-small:100%] [--pane-width-medium:100%] [--pane-width-large:100%] medium:[--pane-width-small:240px] medium:[--pane-width-medium:256px] medium:[--pane-width-large:256px] large:[--pane-width-small:256px] large:[--pane-width-medium:296px] large:[--pane-width-large:320px]",
-    // How much of the viewport a resizable region has to leave for everything beside it.
-    // A sidebar reserves less, since nothing else has to fit alongside
-    maxWidthDiff:
-        "[--pane-max-width-diff:511px] [--sidebar-max-width-diff:256px] xlarge:[--pane-max-width-diff:959px]",
-    // A sidebar stands beside everything else, so the page container is laid out in a row
-    // around it
-    hasSidebar:
-        "flex flex-row [&>[data-page-layout-wrapper]]:shrink [&>[data-page-layout-wrapper]]:min-w-0",
-    wrapper: "flex flex-wrap w-full h-full mx-auto",
-    width: {
-        full: "max-w-full",
-        medium: "max-w-[768px]",
-        large: "max-w-[1012px]",
-        xlarge: "max-w-[1280px]",
-    } satisfies Record<PageLayoutWidth, string>,
     // The header, the content and the footer share a line with the panes, which take their
-    // place in it through the region order above
+    // place in it through the region order below
     content: "flex flex-wrap flex-1 basis-full max-w-full max-medium:flex-col",
 };
+
+const pageLayoutVariants = cva(
+    [
+        // The scale every region reads its spacing from, and the order the regions fall into
+        // once the page wraps
+        "p-[var(--spacing)] [--page-layout-spacing-none:0px] [--page-layout-spacing-condensed:var(--base-size-16)] [--page-layout-spacing-normal:var(--base-size-16)] large:[--page-layout-spacing-normal:var(--base-size-24)] [--region-order-header:0] [--region-order-pane-start:1] [--region-order-content:2] [--region-order-pane-end:3] [--region-order-footer:4]",
+        // A pane is as wide as the page until there is room beside the content for it
+        "[--pane-width-small:100%] [--pane-width-medium:100%] [--pane-width-large:100%] medium:[--pane-width-small:240px] medium:[--pane-width-medium:256px] medium:[--pane-width-large:256px] large:[--pane-width-small:256px] large:[--pane-width-medium:296px] large:[--pane-width-large:320px]",
+        // How much of the viewport a resizable region has to leave for everything beside it.
+        // A sidebar reserves less, since nothing else has to fit alongside
+        "[--pane-max-width-diff:511px] [--sidebar-max-width-diff:256px] xlarge:[--pane-max-width-diff:959px]",
+    ],
+    {
+        variants: {
+            // A sidebar stands beside everything else, so the page container is laid out in a
+            // row around it
+            hasSidebar: {
+                true: "flex flex-row [&>[data-page-layout-wrapper]]:shrink [&>[data-page-layout-wrapper]]:min-w-0",
+                false: "",
+            },
+        },
+    },
+);
+
+const pageLayoutWrapperVariants = cva("flex flex-wrap w-full h-full mx-auto", {
+    variants: {
+        width: {
+            full: "max-w-full",
+            medium: "max-w-[768px]",
+            large: "max-w-[1012px]",
+            xlarge: "max-w-[1280px]",
+        } satisfies Record<PageLayoutWidth, string>,
+    },
+});
 
 // Lays a page out as a header, a body of content with panes either side of it, and a
 // footer, with an optional sidebar standing outside the lot
@@ -82,10 +95,7 @@ function PageLayout(
             <div
                 ref={ref}
                 className={classNames(
-                    classes.root,
-                    classes.paneWidths,
-                    classes.maxWidthDiff,
-                    slots.sidebar && classes.hasSidebar,
+                    pageLayoutVariants({ hasSidebar: Boolean(slots.sidebar) }),
                     className,
                 )}
                 style={
@@ -101,7 +111,7 @@ function PageLayout(
                 {slots.sidebar}
                 <div
                     ref={sidebarContentWrapperRef}
-                    className={classNames(classes.wrapper, classes.width[containerWidth])}
+                    className={classNames(pageLayoutWrapperVariants({ width: containerWidth }))}
                     data-page-layout-wrapper=""
                     data-width={containerWidth}
                 >

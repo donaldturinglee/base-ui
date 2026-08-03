@@ -3,26 +3,29 @@ import { useFocusZone } from "../../hooks/useFocusZone";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import ActionListHeading from "./ActionListHeading";
 import { ActionListContainerContext } from "./ActionListContainerContext";
 import { ActionListContext } from "./ActionListContext";
 import type { ActionListProps, ActionListVariant } from "./ActionList.types";
 
-const classes = {
-    root: "list-none m-0",
-    variant: {
-        // The items are held in from the edges, so the box a hovered item is drawn in never
-        // meets the edge of whatever the list is standing on
-        inset: "p-[var(--base-size-8)]",
-        full: "p-0",
-    } satisfies Record<ActionListVariant, string>,
-    // A line is only drawn between two items that follow one another, so an item that comes
-    // after a divider is not given a second one
-    dividers:
-        "[&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-[length:var(--border-width-thin)] [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-border-muted [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:rounded-t-none",
-};
+const actionListVariants = cva("list-none m-0", {
+    variants: {
+        variant: {
+            // The items are held in from the edges, so the box a hovered item is drawn in never
+            // meets the edge of whatever the list is standing on
+            inset: "p-[var(--base-size-8)]",
+            full: "p-0",
+        } satisfies Record<ActionListVariant, string>,
+        // A line is only drawn between two items that follow one another, so an item that comes
+        // after a divider is not given a second one
+        dividers: {
+            true: "[&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-[length:var(--border-width-thin)] [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-border-muted [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:rounded-t-none",
+            false: "",
+        },
+    },
+});
 
 const slotsConfig = {
     heading: ActionListHeading,
@@ -101,9 +104,7 @@ function ActionList<As extends React.ElementType = "ul">(
                 role={listRole}
                 aria-labelledby={labelledBy}
                 className={classNames(
-                    classes.root,
-                    classes.variant[variant],
-                    showDividers && classes.dividers,
+                    actionListVariants({ variant, dividers: showDividers }),
                     className,
                 )}
                 data-component="ActionList"

@@ -1,21 +1,25 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import ButtonBase from "../button/ButtonBase";
 import type { ButtonSize } from "../button";
 import type { IconButtonElementProps, IconButtonProps } from "./IconButton.types";
 
-const classes = {
+const iconButtonVariants = cva(
     // An icon button is square, with the icon centred rather than laid out on a grid. The
     // centring is spelled out longhand so that it replaces the button's own alignment rather
     // than sitting beside it
-    root: "inline-grid justify-center content-center shrink-0 min-w-[unset] p-0",
-    size: {
-        small: "w-[var(--control-small-size)]",
-        medium: "w-[var(--control-medium-size)]",
-        large: "w-[var(--control-large-size)]",
-    } satisfies Record<ButtonSize, string>,
-};
+    "inline-grid justify-center content-center shrink-0 min-w-[unset] p-0",
+    {
+        variants: {
+            size: {
+                small: "w-[var(--control-small-size)]",
+                medium: "w-[var(--control-medium-size)]",
+                large: "w-[var(--control-large-size)]",
+            } satisfies Record<ButtonSize, string>,
+        },
+    },
+);
 
 function IconButton<As extends React.ElementType = "button">(
     props: IconButtonProps<As>,
@@ -36,7 +40,7 @@ function IconButton<As extends React.ElementType = "button">(
             type="button"
             size={size}
             data-component="IconButton"
-            className={classNames(classes.root, classes.size[size], className)}
+            className={classNames(iconButtonVariants({ size }), className)}
             {...rest}
         />
     );

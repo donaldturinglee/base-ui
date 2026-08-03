@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isResponsiveValue } from "../../hooks/useResponsive";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { ActionList } from "../action-list";
 import { ActionMenu } from "../action-menu";
@@ -18,31 +18,35 @@ import type {
 } from "./SegmentedControl.types";
 
 const classes = {
-    // The track the segments stand in. `group/control` lets a segment answer the fallback the
-    // control was given for the range it is being read at
-    root: "group/control inline-flex w-auto h-[var(--control-medium-size)] m-0 p-0 list-none [--segment-icon-width:var(--control-medium-size)] [font-size:var(--text-body-size-medium)] bg-[var(--control-track-background-color-rest)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-track-border-color-rest)] rounded-[var(--border-radius-medium)]",
-    size: {
-        small: "h-[var(--control-small-size)] [font-size:var(--text-body-size-small)]",
-        medium: "",
-    } satisfies Record<SegmentedControlSize, string>,
-    // A control that fills its container hands the room out to its segments, and lets an icon
-    // segment give up the square it would otherwise keep to. Each range says what it wants in
-    // full, since Tailwind draws them in breakpoint order and so the wider one is what lands
-    fullWidth:
-        "data-[full-width=true]:w-full data-[full-width=true]:[--segment-icon-width:100%] data-[full-width=false]:w-auto data-[full-width=false]:[--segment-icon-width:var(--control-medium-size)]",
-    fullWidthNarrow:
-        "max-medium:data-[full-width-narrow=true]:w-full max-medium:data-[full-width-narrow=true]:[--segment-icon-width:100%] max-medium:data-[full-width-narrow=false]:w-auto max-medium:data-[full-width-narrow=false]:[--segment-icon-width:var(--control-medium-size)]",
-    fullWidthRegular:
-        "medium:data-[full-width-regular=true]:w-full medium:data-[full-width-regular=true]:[--segment-icon-width:100%] medium:data-[full-width-regular=false]:w-auto medium:data-[full-width-regular=false]:[--segment-icon-width:var(--control-medium-size)]",
-    fullWidthWide:
-        "xxlarge:data-[full-width-wide=true]:w-full xxlarge:data-[full-width-wide=true]:[--segment-icon-width:100%] xxlarge:data-[full-width-wide=false]:w-auto xxlarge:data-[full-width-wide=false]:[--segment-icon-width:var(--control-medium-size)]",
-    // Wherever the menu stands in for the control, the row of segments is put away
-    replaced:
-        "data-[variant=dropdown]:hidden max-medium:data-[variant-narrow=dropdown]:hidden medium:data-[variant-regular=dropdown]:hidden xxlarge:data-[variant-wide=dropdown]:hidden",
     // ...and only there is the menu drawn in its place
     dropdown:
         "hidden data-[variant=dropdown]:block max-medium:data-[variant-narrow=dropdown]:block medium:data-[variant-regular=dropdown]:block xxlarge:data-[variant-wide=dropdown]:block",
 };
+
+const segmentedControlVariants = cva(
+    [
+        // The track the segments stand in. `group/control` lets a segment answer the fallback the
+        // control was given for the range it is being read at
+        "group/control inline-flex w-auto h-[var(--control-medium-size)] m-0 p-0 list-none [--segment-icon-width:var(--control-medium-size)] [font-size:var(--text-body-size-medium)] bg-[var(--control-track-background-color-rest)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-track-border-color-rest)] rounded-[var(--border-radius-medium)]",
+        // A control that fills its container hands the room out to its segments, and lets an icon
+        // segment give up the square it would otherwise keep to. Each range says what it wants in
+        // full, since Tailwind draws them in breakpoint order and so the wider one is what lands
+        "data-[full-width=true]:w-full data-[full-width=true]:[--segment-icon-width:100%] data-[full-width=false]:w-auto data-[full-width=false]:[--segment-icon-width:var(--control-medium-size)]",
+        "max-medium:data-[full-width-narrow=true]:w-full max-medium:data-[full-width-narrow=true]:[--segment-icon-width:100%] max-medium:data-[full-width-narrow=false]:w-auto max-medium:data-[full-width-narrow=false]:[--segment-icon-width:var(--control-medium-size)]",
+        "medium:data-[full-width-regular=true]:w-full medium:data-[full-width-regular=true]:[--segment-icon-width:100%] medium:data-[full-width-regular=false]:w-auto medium:data-[full-width-regular=false]:[--segment-icon-width:var(--control-medium-size)]",
+        "xxlarge:data-[full-width-wide=true]:w-full xxlarge:data-[full-width-wide=true]:[--segment-icon-width:100%] xxlarge:data-[full-width-wide=false]:w-auto xxlarge:data-[full-width-wide=false]:[--segment-icon-width:var(--control-medium-size)]",
+        // Wherever the menu stands in for the control, the row of segments is put away
+        "data-[variant=dropdown]:hidden max-medium:data-[variant-narrow=dropdown]:hidden medium:data-[variant-regular=dropdown]:hidden xxlarge:data-[variant-wide=dropdown]:hidden",
+    ],
+    {
+        variants: {
+            size: {
+                small: "h-[var(--control-small-size)] [font-size:var(--text-body-size-small)]",
+                medium: "",
+            } satisfies Record<SegmentedControlSize, string>,
+        },
+    },
+);
 
 type SegmentedControlChild = React.ReactElement<
     SegmentedControlButtonProps | SegmentedControlIconButtonProps
@@ -149,16 +153,7 @@ function SegmentedControl(props: SegmentedControlProps) {
         <ul
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
-            className={classNames(
-                classes.root,
-                classes.size[size],
-                classes.fullWidth,
-                classes.fullWidthNarrow,
-                classes.fullWidthRegular,
-                classes.fullWidthWide,
-                classes.replaced,
-                className,
-            )}
+            className={classNames(segmentedControlVariants({ size }), className)}
             data-component="SegmentedControl"
             data-size={size}
             {...getResponsiveAttributes("full-width", fullWidth)}

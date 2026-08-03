@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { PageLayoutContext } from "./PageLayoutContext";
@@ -16,14 +16,18 @@ const classes = {
     // A drag holds the content still, so the browser has less to work out on every move
     dragging:
         "data-[dragging=true]:[contain:layout_style_paint] data-[dragging=true]:pointer-events-none",
-    content: "w-full grow mx-auto p-[var(--spacing)]",
-    width: {
-        full: "max-w-full",
-        medium: "max-w-[768px]",
-        large: "max-w-[1012px]",
-        xlarge: "max-w-[1280px]",
-    } satisfies Record<PageLayoutWidth, string>,
 };
+
+const pageLayoutContentVariants = cva("w-full grow mx-auto p-[var(--spacing)]", {
+    variants: {
+        width: {
+            full: "max-w-full",
+            medium: "max-w-[768px]",
+            large: "max-w-[1012px]",
+            xlarge: "max-w-[1280px]",
+        } satisfies Record<PageLayoutWidth, string>,
+    },
+});
 
 function PageLayoutContent(
     props: PageLayoutContentProps,
@@ -54,7 +58,7 @@ function PageLayoutContent(
             {...rest}
         >
             <div
-                className={classNames(classes.content, classes.width[width])}
+                className={classNames(pageLayoutContentVariants({ width }))}
                 data-width={width}
                 style={
                     {

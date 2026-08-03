@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ErrorCircleRegular } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Text } from "../text";
 import { getCharacterCount, SCREEN_READER_DELAY } from "./characterCount";
@@ -12,32 +12,56 @@ export const DEFAULT_TEXTAREA_COLS = 30;
 export const DEFAULT_TEXTAREA_RESIZE: TextareaResize = "both";
 
 const classes = {
-    // The wrapper carries the field styling so the native control can stay transparent and
-    // keep its own resize handle
-    field: "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)] [font-size:var(--text-body-size-medium)] leading-[var(--base-size-20)]",
-    focus: "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
-    block: "flex w-full self-stretch",
-    contrast: "bg-background-inset",
-    disabled:
-        "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_textarea]:cursor-not-allowed",
-    validation: {
-        error: "border-border-danger-emphasis focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
-        success: "border-background-success-emphasis",
-    } satisfies Record<TextareaValidationStatus, string>,
-    // The field owns the focus ring, so the control inside it drops its own
-    textarea:
-        "w-full p-[var(--base-size-12)] bg-transparent border-0 outline-none appearance-none focus:outline-0 disabled:resize-none [font-family:inherit] [font-size:inherit] [color:inherit]",
-    resize: {
-        none: "resize-none",
-        both: "resize",
-        horizontal: "resize-x",
-        vertical: "resize-y",
-    } satisfies Record<TextareaResize, string>,
     counter: "flex items-center gap-[var(--control-xsmall-gap)] text-foreground-muted",
     counterOverLimit: "text-foreground-danger",
     counterIcon: "shrink-0 size-[var(--base-size-16)]",
     hidden: "sr-only",
 };
+
+const textareaFieldVariants = cva(
+    [
+        // The wrapper carries the field styling so the native control can stay transparent and
+        // keep its own resize handle
+        "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)] [font-size:var(--text-body-size-medium)] leading-[var(--base-size-20)]",
+        "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
+    ],
+    {
+        variants: {
+            block: {
+                true: "flex w-full self-stretch",
+                false: "",
+            },
+            contrast: {
+                true: "bg-background-inset",
+                false: "",
+            },
+            disabled: {
+                true: "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_textarea]:cursor-not-allowed",
+                false: "",
+            },
+            // Last, so a field that is both disabled and invalid still reads as invalid
+            validation: {
+                error: "border-border-danger-emphasis focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
+                success: "border-background-success-emphasis",
+            } satisfies Record<TextareaValidationStatus, string>,
+        },
+    },
+);
+
+const textareaControlVariants = cva(
+    // The field owns the focus ring, so the control inside it drops its own
+    "w-full p-[var(--base-size-12)] bg-transparent border-0 outline-none appearance-none focus:outline-0 disabled:resize-none [font-family:inherit] [font-size:inherit] [color:inherit]",
+    {
+        variants: {
+            resize: {
+                none: "resize-none",
+                both: "resize",
+                horizontal: "resize-x",
+                vertical: "resize-y",
+            } satisfies Record<TextareaResize, string>,
+        },
+    },
+);
 
 function Textarea(
     props: TextareaProps,
@@ -113,14 +137,7 @@ function Textarea(
         <>
             <span
                 className={classNames(
-                    classes.field,
-                    classes.focus,
-                    block && classes.block,
-                    contrast && classes.contrast,
-                    disabled && classes.disabled,
-                    // Last, so a field that is both disabled and invalid still reads as
-                    // invalid
-                    status && classes.validation[status],
+                    textareaFieldVariants({ block, contrast, disabled, validation: status }),
                     className,
                 )}
                 data-component="Textarea"
@@ -145,7 +162,7 @@ function Textarea(
                             : ariaDescribedBy
                     }
                     onChange={handleChange}
-                    className={classNames(classes.textarea, classes.resize[resize])}
+                    className={classNames(textareaControlVariants({ resize }))}
                     style={{ minHeight, maxHeight, ...style }}
                     data-resize={resize}
                     {...rest}

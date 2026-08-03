@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CheckmarkCircleRegular, ErrorCircleRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { RadioGroupContext } from "./RadioGroupContext";
 import type { RadioGroupValidationProps, RadioGroupValidationStatus } from "./RadioGroup.types";
@@ -11,13 +11,20 @@ const icons = {
 } satisfies Record<RadioGroupValidationStatus, React.ElementType>;
 
 const classes = {
-    root: "flex [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [&_a]:underline [&_a]:[color:currentColor]",
     icon: "shrink-0 mt-[var(--base-size-2)] me-[var(--base-size-4)] size-[var(--base-size-12)]",
-    variant: {
-        success: "text-foreground-success",
-        error: "text-foreground-danger",
-    } satisfies Record<RadioGroupValidationStatus, string>,
 };
+
+const radioGroupValidationVariants = cva(
+    "flex [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [&_a]:underline [&_a]:[color:currentColor]",
+    {
+        variants: {
+            variant: {
+                success: "text-foreground-success",
+                error: "text-foreground-danger",
+            } satisfies Record<RadioGroupValidationStatus, string>,
+        },
+    },
+);
 
 function RadioGroupValidation(
     props: RadioGroupValidationProps,
@@ -31,7 +38,7 @@ function RadioGroupValidation(
     return (
         <span
             ref={ref}
-            className={classNames(classes.root, classes.variant[variant], className)}
+            className={classNames(radioGroupValidationVariants({ variant }), className)}
             data-component="RadioGroup.Validation"
             data-validation-status={variant}
             {...rest}

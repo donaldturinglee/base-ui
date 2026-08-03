@@ -5,7 +5,7 @@ import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { ActionListContainerContext } from "../action-list";
@@ -26,58 +26,78 @@ import type {
 } from "./SelectPanel.types";
 
 const classes = {
-    // The page behind the panel is covered whichever way the panel is drawn, so that a click
-    // that lands anywhere else can dismiss it. Only a modal tints what it covers
-    backdrop: "fixed inset-0 flex",
-    backdropVariant: {
-        anchored: "",
-        modal: "items-center justify-center bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
-    } satisfies Record<SelectPanelVariant, string>,
-    backdropNarrowVariant: {
-        anchored: "",
-        modal: "max-medium:items-center max-medium:justify-center max-medium:bg-[var(--overlay-backdrop-background-color)]",
-        "full-screen": "",
-        "bottom-sheet":
-            "max-medium:items-end max-medium:justify-center max-medium:bg-[var(--overlay-backdrop-background-color)]",
-    } satisfies Record<SelectPanelNarrowVariant, string>,
-    // The floor keeps the panel from closing up around a spinner or a line of text where the
-    // list it would have held has nothing to show
-    root: "flex flex-col overflow-hidden max-w-[calc(100dvw_-_var(--base-size-32))] [--select-panel-body-min-height:var(--overlay-height-small)] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] text-foreground-default focus:outline-none motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
-    // Where it ends up is carried in variables rather than written straight onto the element,
-    // so that a narrow viewport can put it somewhere else
-    anchored: "absolute top-[var(--select-panel-top)] left-[var(--select-panel-left)]",
-    // Held back until it has been placed, so it is never seen where it does not belong
-    unplaced: "invisible",
-    narrowVariant: {
-        anchored:
-            "max-medium:absolute max-medium:top-[var(--select-panel-top)] max-medium:left-[var(--select-panel-left)]",
-        modal: "max-medium:static",
-        // The whole screen, which is what a narrow viewport has room for and nothing else
-        "full-screen":
-            "max-medium:static max-medium:w-dvw max-medium:max-w-none max-medium:h-dvh max-medium:max-h-none max-medium:rounded-none",
-        // The foot of the screen, within reach of a thumb
-        "bottom-sheet":
-            "max-medium:static max-medium:w-dvw max-medium:max-w-none max-medium:max-h-[calc(100dvh_-_var(--base-size-64))] max-medium:rounded-b-none",
-    } satisfies Record<SelectPanelNarrowVariant, string>,
-    width: {
-        small: "w-[var(--overlay-width-small)]",
-        medium: "w-[var(--overlay-width-medium)]",
-        large: "w-[var(--overlay-width-large)]",
-        xlarge: "w-[var(--overlay-width-xlarge)]",
-        auto: "w-auto",
-    } satisfies Record<SelectPanelWidth, string>,
-    maxHeight: {
-        small: "max-h-[var(--overlay-height-small)]",
-        medium: "max-h-[var(--overlay-height-medium)]",
-        large: "max-h-[var(--overlay-height-large)]",
-        xlarge: "max-h-[var(--overlay-height-xlarge)]",
-        "fit-content": "max-h-[calc(100dvh_-_var(--base-size-64))]",
-    } satisfies Record<SelectPanelMaxHeight, string>,
     form: "flex w-full grow flex-col overflow-hidden",
     // The list scrolls within the panel rather than the panel growing to hold it
     container:
         "flex grow flex-col justify-between overflow-hidden [&_ul]:grow [&_ul]:overflow-y-auto",
 };
+
+const selectPanelBackdropVariants = cva(
+    // The page behind the panel is covered whichever way the panel is drawn, so that a click
+    // that lands anywhere else can dismiss it. Only a modal tints what it covers
+    "fixed inset-0 flex",
+    {
+        variants: {
+            variant: {
+                anchored: "",
+                modal: "items-center justify-center bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
+            } satisfies Record<SelectPanelVariant, string>,
+            narrowVariant: {
+                anchored: "",
+                modal: "max-medium:items-center max-medium:justify-center max-medium:bg-[var(--overlay-backdrop-background-color)]",
+                "full-screen": "",
+                "bottom-sheet":
+                    "max-medium:items-end max-medium:justify-center max-medium:bg-[var(--overlay-backdrop-background-color)]",
+            } satisfies Record<SelectPanelNarrowVariant, string>,
+        },
+    },
+);
+
+const selectPanelVariants = cva(
+    // The floor keeps the panel from closing up around a spinner or a line of text where the
+    // list it would have held has nothing to show
+    "flex flex-col overflow-hidden max-w-[calc(100dvw_-_var(--base-size-32))] [--select-panel-body-min-height:var(--overlay-height-small)] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] text-foreground-default focus:outline-none motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
+    {
+        variants: {
+            width: {
+                small: "w-[var(--overlay-width-small)]",
+                medium: "w-[var(--overlay-width-medium)]",
+                large: "w-[var(--overlay-width-large)]",
+                xlarge: "w-[var(--overlay-width-xlarge)]",
+                auto: "w-auto",
+            } satisfies Record<SelectPanelWidth, string>,
+            maxHeight: {
+                small: "max-h-[var(--overlay-height-small)]",
+                medium: "max-h-[var(--overlay-height-medium)]",
+                large: "max-h-[var(--overlay-height-large)]",
+                xlarge: "max-h-[var(--overlay-height-xlarge)]",
+                "fit-content": "max-h-[calc(100dvh_-_var(--base-size-64))]",
+            } satisfies Record<SelectPanelMaxHeight, string>,
+            variant: {
+                // Where it ends up is carried in variables rather than written straight onto the
+                // element, so that a narrow viewport can put it somewhere else
+                anchored: "absolute top-[var(--select-panel-top)] left-[var(--select-panel-left)]",
+                modal: "",
+            } satisfies Record<SelectPanelVariant, string>,
+            narrowVariant: {
+                anchored:
+                    "max-medium:absolute max-medium:top-[var(--select-panel-top)] max-medium:left-[var(--select-panel-left)]",
+                modal: "max-medium:static",
+                // The whole screen, which is what a narrow viewport has room for and nothing else
+                "full-screen":
+                    "max-medium:static max-medium:w-dvw max-medium:max-w-none max-medium:h-dvh max-medium:max-h-none max-medium:rounded-none",
+                // The foot of the screen, within reach of a thumb
+                "bottom-sheet":
+                    "max-medium:static max-medium:w-dvw max-medium:max-w-none max-medium:max-h-[calc(100dvh_-_var(--base-size-64))] max-medium:rounded-b-none",
+            } satisfies Record<SelectPanelNarrowVariant, string>,
+            // Held back until it has been placed, so it is never seen where it does not belong
+            unplaced: {
+                true: "invisible",
+                false: "",
+            },
+        },
+    },
+);
 
 const defaultVariant: SelectPanelResponsiveVariant = { regular: "anchored", narrow: "full-screen" };
 
@@ -364,9 +384,10 @@ function SelectPanel(
                 <Portal>
                     <div
                         className={classNames(
-                            classes.backdrop,
-                            classes.backdropVariant[regularVariant],
-                            narrowVariant && classes.backdropNarrowVariant[narrowVariant],
+                            selectPanelBackdropVariants({
+                                variant: regularVariant,
+                                narrowVariant,
+                            }),
                         )}
                         onClick={(event) => {
                             if (event.target === event.currentTarget) {
@@ -383,12 +404,13 @@ function SelectPanel(
                             aria-labelledby={`${panelId}-title`}
                             aria-describedby={description ? `${panelId}-description` : undefined}
                             className={classNames(
-                                classes.root,
-                                classes.width[width],
-                                classes.maxHeight[maxHeight],
-                                regularVariant === "anchored" && classes.anchored,
-                                narrowVariant && classes.narrowVariant[narrowVariant],
-                                isAnchored && !position && classes.unplaced,
+                                selectPanelVariants({
+                                    width,
+                                    maxHeight,
+                                    variant: regularVariant,
+                                    narrowVariant,
+                                    unplaced: isAnchored && !position,
+                                }),
                                 className,
                             )}
                             style={

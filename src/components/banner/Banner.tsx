@@ -7,7 +7,7 @@ import {
     WarningRegular,
 } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { IconButton } from "../icon-button";
 import { BannerContext } from "./BannerContext";
@@ -20,39 +20,6 @@ const classes = {
     // own query container. The three columns hold the icon, the content and the dismiss
     // button
     container: "@container/banner",
-    root: "grid grid-cols-[auto_minmax(0,1fr)_auto] items-start rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] bg-[var(--banner-background-color)] border-[color:var(--banner-border-color)]",
-    layout: {
-        default: "p-[var(--base-size-8)]",
-        compact: "p-[var(--base-size-4)]",
-    } satisfies Record<BannerLayout, string>,
-    // A flush banner spans whatever holds it, so the edges it meets are given up
-    flush: "border-x-0 rounded-none",
-    variant: {
-        critical:
-            "[--banner-background-color:var(--background-color-danger-muted)] [--banner-border-color:var(--border-color-danger-muted)] [--banner-icon-color:var(--foreground-color-danger)]",
-        info: "[--banner-background-color:var(--background-color-accent-muted)] [--banner-border-color:var(--border-color-accent-muted)] [--banner-icon-color:var(--foreground-color-accent)]",
-        success:
-            "[--banner-background-color:var(--background-color-success-muted)] [--banner-border-color:var(--border-color-success-muted)] [--banner-icon-color:var(--foreground-color-success)]",
-        upsell: "[--banner-background-color:var(--background-color-upsell-muted)] [--banner-border-color:var(--border-color-upsell-muted)] [--banner-icon-color:var(--foreground-color-upsell)]",
-        warning:
-            "[--banner-background-color:var(--background-color-attention-muted)] [--banner-border-color:var(--border-color-attention-muted)] [--banner-icon-color:var(--foreground-color-attention)]",
-    } satisfies Record<BannerVariant, string>,
-    // The icon stands as tall as the line box of the action buttons beside it
-    icon: "grid place-items-center p-[var(--base-size-8)] [&_svg]:h-[var(--base-size-20)] [&_svg]:[color:var(--banner-icon-color)]",
-    // With nothing but a description to sit beside, the icon comes down to the height of a
-    // line of text
-    iconTight: "[&_svg]:h-[var(--base-size-16)]",
-    body: "flex flex-wrap items-start justify-between gap-[var(--base-size-4)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
-    // Where the actions drop below the content there is only ever one column
-    bodyStacked: "flex-col flex-nowrap",
-    // An inline banner keeps its actions beside the content until the viewport is narrow
-    bodyInline: "flex-nowrap max-medium:flex-col",
-    // Otherwise it is the banner's own width that decides
-    bodyResponsive: "@max-[500px]/banner:flex-col @max-[500px]/banner:flex-nowrap",
-    content: "grid gap-y-[var(--base-size-4)] col-start-1 my-[var(--base-size-8)] small:flex-1",
-    // A banner with no visible title and nothing to act on is only a line of text, so it
-    // sits closer to its edges
-    contentTight: "my-[var(--base-size-6)]",
     actions: "flex items-center gap-x-[var(--base-size-12)] my-[var(--base-size-2)]",
     actionsInline: "flex-none",
     // Where the actions drop below the content they are given room beneath them
@@ -65,11 +32,93 @@ const classes = {
         responsiveLeading: "hidden @max-[500px]/banner:flex",
         responsiveTrailing: "flex @max-[500px]/banner:hidden",
     },
-    dismiss:
-        "grid place-items-center p-[var(--base-size-8)] ms-[var(--base-size-4)] [&_svg]:[color:var(--banner-icon-color)]",
-    dismissWithActions: "my-[var(--base-size-2)]",
     hidden: "sr-only",
 };
+
+const bannerVariants = cva(
+    "grid grid-cols-[auto_minmax(0,1fr)_auto] items-start rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] bg-[var(--banner-background-color)] border-[color:var(--banner-border-color)]",
+    {
+        variants: {
+            layout: {
+                default: "p-[var(--base-size-8)]",
+                compact: "p-[var(--base-size-4)]",
+            } satisfies Record<BannerLayout, string>,
+            variant: {
+                critical:
+                    "[--banner-background-color:var(--background-color-danger-muted)] [--banner-border-color:var(--border-color-danger-muted)] [--banner-icon-color:var(--foreground-color-danger)]",
+                info: "[--banner-background-color:var(--background-color-accent-muted)] [--banner-border-color:var(--border-color-accent-muted)] [--banner-icon-color:var(--foreground-color-accent)]",
+                success:
+                    "[--banner-background-color:var(--background-color-success-muted)] [--banner-border-color:var(--border-color-success-muted)] [--banner-icon-color:var(--foreground-color-success)]",
+                upsell: "[--banner-background-color:var(--background-color-upsell-muted)] [--banner-border-color:var(--border-color-upsell-muted)] [--banner-icon-color:var(--foreground-color-upsell)]",
+                warning:
+                    "[--banner-background-color:var(--background-color-attention-muted)] [--banner-border-color:var(--border-color-attention-muted)] [--banner-icon-color:var(--foreground-color-attention)]",
+            } satisfies Record<BannerVariant, string>,
+            // A flush banner spans whatever holds it, so the edges it meets are given up
+            flush: {
+                true: "border-x-0 rounded-none",
+                false: "",
+            },
+        },
+    },
+);
+
+const bannerIconVariants = cva(
+    // The icon stands as tall as the line box of the action buttons beside it
+    "grid place-items-center p-[var(--base-size-8)] [&_svg]:h-[var(--base-size-20)] [&_svg]:[color:var(--banner-icon-color)]",
+    {
+        variants: {
+            // With nothing but a description to sit beside, the icon comes down to the height of
+            // a line of text
+            tight: {
+                true: "[&_svg]:h-[var(--base-size-16)]",
+                false: "",
+            },
+        },
+    },
+);
+
+const bannerBodyVariants = cva(
+    "flex flex-wrap items-start justify-between gap-[var(--base-size-4)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
+    {
+        variants: {
+            actions: {
+                // Where the actions drop below the content there is only ever one column
+                stacked: "flex-col flex-nowrap",
+                // An inline banner keeps its actions beside the content until the viewport is
+                // narrow
+                inline: "flex-nowrap max-medium:flex-col",
+                // Otherwise it is the banner's own width that decides
+                responsive: "@max-[500px]/banner:flex-col @max-[500px]/banner:flex-nowrap",
+            },
+        },
+    },
+);
+
+const bannerContentVariants = cva(
+    "grid gap-y-[var(--base-size-4)] col-start-1 my-[var(--base-size-8)] small:flex-1",
+    {
+        variants: {
+            // A banner with no visible title and nothing to act on is only a line of text, so it
+            // sits closer to its edges
+            tight: {
+                true: "my-[var(--base-size-6)]",
+                false: "",
+            },
+        },
+    },
+);
+
+const bannerDismissVariants = cva(
+    "grid place-items-center p-[var(--base-size-8)] ms-[var(--base-size-4)] [&_svg]:[color:var(--banner-icon-color)]",
+    {
+        variants: {
+            withActions: {
+                true: "my-[var(--base-size-2)]",
+                false: "",
+            },
+        },
+    },
+);
 
 const iconForVariant = {
     critical: ErrorCircleRegular,
@@ -176,13 +225,7 @@ function Banner(
                     aria-labelledby={ariaLabelledBy ?? (ariaLabel ? undefined : titleId)}
                     aria-label={ariaLabelledBy ? undefined : ariaLabel}
                     tabIndex={-1}
-                    className={classNames(
-                        classes.root,
-                        classes.layout[layout],
-                        classes.variant[variant],
-                        flush && classes.flush,
-                        className,
-                    )}
+                    className={classNames(bannerVariants({ layout, variant, flush }), className)}
                     data-component="Banner"
                     data-variant={variant}
                     data-layout={layout}
@@ -194,7 +237,7 @@ function Banner(
                     {...rest}
                 >
                     <div
-                        className={classNames(classes.icon, isTight && classes.iconTight)}
+                        className={classNames(bannerIconVariants({ tight: isTight }))}
                         data-component="Banner.Icon"
                     >
                         {visual}
@@ -202,16 +245,17 @@ function Banner(
 
                     <div
                         className={classNames(
-                            classes.body,
-                            isStacked
-                                ? classes.bodyStacked
-                                : actionsLayout === "inline"
-                                  ? classes.bodyInline
-                                  : classes.bodyResponsive,
+                            bannerBodyVariants({
+                                actions: isStacked
+                                    ? "stacked"
+                                    : actionsLayout === "inline"
+                                      ? "inline"
+                                      : "responsive",
+                            }),
                         )}
                     >
                         <div
-                            className={classNames(classes.content, isTight && classes.contentTight)}
+                            className={classNames(bannerContentVariants({ tight: isTight }))}
                             data-component="Banner.Content"
                         >
                             {heading ? (
@@ -248,8 +292,7 @@ function Banner(
                             variant="invisible"
                             onClick={onDismiss}
                             className={classNames(
-                                classes.dismiss,
-                                hasActions && classes.dismissWithActions,
+                                bannerDismissVariants({ withActions: hasActions }),
                             )}
                             data-component="Banner.Dismiss"
                         />

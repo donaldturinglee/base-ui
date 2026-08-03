@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import CardAction from "./CardAction";
 import { CardContext } from "./CardContext";
@@ -19,35 +19,57 @@ import type {
 } from "./Card.types";
 
 const classes = {
-    root: "relative grid overflow-hidden [grid-auto-rows:max-content_auto] gap-[var(--stack-gap-normal)] bg-[var(--card-background-color)] border-solid border-[length:var(--border-width-thin)] border-border-default [box-shadow:var(--shadow-resting-small)]",
-    // A compact card lays its parts out in a row rather than stacking them
-    compact: "flex items-start gap-[var(--stack-gap-condensed)]",
-    borderRadius: {
-        medium: "rounded-[var(--border-radius-medium)]",
-        large: "rounded-[var(--border-radius-large)]",
-    } satisfies Record<CardBorderRadius, string>,
-    // A compact card pulls its normal padding in by a step
-    padding: {
-        default: {
-            none: "p-0",
-            condensed: "p-[var(--stack-padding-condensed)]",
-            normal: "p-[var(--stack-padding-spacious)]",
-        },
-        compact: {
-            none: "p-0",
-            condensed: "p-[var(--stack-padding-condensed)]",
-            normal: "p-[var(--stack-padding-normal)]",
-        },
-    } satisfies Record<CardLayout, Record<CardPadding, string>>,
-    header: "block w-full h-auto",
-    // An image runs to the card's edges, so the header cancels the padding around it
-    headerEdgeToEdge:
-        "mt-[calc(-1*var(--stack-padding-spacious))] mx-[calc(-1*var(--stack-padding-spacious))] w-[calc(100%+2*var(--stack-padding-spacious))]",
-    headerCompact: "flex-none w-auto",
-    body: "grid gap-[var(--stack-gap-normal)]",
-    bodyCompact: "flex-auto",
     content: "grid gap-[var(--stack-gap-condensed)]",
 };
+
+const cardVariants = cva(
+    "relative grid overflow-hidden [grid-auto-rows:max-content_auto] gap-[var(--stack-gap-normal)] bg-[var(--card-background-color)] border-solid border-[length:var(--border-width-thin)] border-border-default [box-shadow:var(--shadow-resting-small)]",
+    {
+        variants: {
+            borderRadius: {
+                medium: "rounded-[var(--border-radius-medium)]",
+                large: "rounded-[var(--border-radius-large)]",
+            } satisfies Record<CardBorderRadius, string>,
+            // A compact card lays its parts out in a row rather than stacking them
+            layout: {
+                default: "",
+                compact: "flex items-start gap-[var(--stack-gap-condensed)]",
+            } satisfies Record<CardLayout, string>,
+            padding: {
+                none: "p-0",
+                condensed: "p-[var(--stack-padding-condensed)]",
+                normal: "p-[var(--stack-padding-spacious)]",
+            } satisfies Record<CardPadding, string>,
+        },
+        // A compact card pulls its normal padding in by a step
+        compoundVariants: [
+            { layout: "compact", padding: "normal", class: "p-[var(--stack-padding-normal)]" },
+        ],
+    },
+);
+
+const cardHeaderVariants = cva("block w-full h-auto", {
+    variants: {
+        // An image runs to the card's edges, so the header cancels the padding around it
+        edgeToEdge: {
+            true: "mt-[calc(-1*var(--stack-padding-spacious))] mx-[calc(-1*var(--stack-padding-spacious))] w-[calc(100%+2*var(--stack-padding-spacious))]",
+            false: "",
+        },
+        layout: {
+            default: "",
+            compact: "flex-none w-auto",
+        } satisfies Record<CardLayout, string>,
+    },
+});
+
+const cardBodyVariants = cva("grid gap-[var(--stack-gap-normal)]", {
+    variants: {
+        layout: {
+            default: "",
+            compact: "flex-auto",
+        } satisfies Record<CardLayout, string>,
+    },
+});
 
 function Card<As extends CardElement = "div">(
     props: CardProps<As>,
@@ -99,13 +121,7 @@ function Card<As extends CardElement = "div">(
                 ref={ref}
                 aria-label={ariaLabel}
                 aria-labelledby={labelledBy}
-                className={classNames(
-                    classes.root,
-                    classes.borderRadius[borderRadius],
-                    classes.padding[layout][padding],
-                    layout === "compact" && classes.compact,
-                    className,
-                )}
+                className={classNames(cardVariants({ borderRadius, layout, padding }), className)}
                 data-component="Card"
                 data-padding={padding}
                 data-border-radius={borderRadius}
@@ -117,20 +133,16 @@ function Card<As extends CardElement = "div">(
                         {header ? (
                             <div
                                 className={classNames(
-                                    classes.header,
-                                    slots.image && classes.headerEdgeToEdge,
-                                    layout === "compact" && classes.headerCompact,
+                                    cardHeaderVariants({
+                                        edgeToEdge: Boolean(slots.image),
+                                        layout,
+                                    }),
                                 )}
                             >
                                 {header}
                             </div>
                         ) : null}
-                        <div
-                            className={classNames(
-                                classes.body,
-                                layout === "compact" && classes.bodyCompact,
-                            )}
-                        >
+                        <div className={classNames(cardBodyVariants({ layout }))}>
                             <div className={classes.content}>
                                 {slots.heading}
                                 {slots.description}

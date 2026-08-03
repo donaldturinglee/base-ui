@@ -41,3 +41,8 @@ const twMerge = extendTailwindMerge<"typography">({
 });
 
 export const classNames = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+
+// class-variance-authority builds a variant's class list but leaves conflicting classes sitting
+// next to one another, so a component hands the result to classNames and lets the extended
+// tailwind-merge above settle it against whatever className the caller passed
+export { cva } from "class-variance-authority";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { splitChord } from "./chords";
 import KeybindingHintKey from "./KeybindingHintKey";
 import type {
@@ -8,22 +8,26 @@ import type {
     KeybindingHintVariant,
 } from "./KeybindingHint.types";
 
-const classes = {
-    root: "inline-flex justify-center overflow-hidden gap-[0.5ch] p-[var(--base-size-4)] align-baseline border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-default)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] leading-[10px] [box-shadow:none]",
-    variant: {
-        normal: "bg-background-transparent text-foreground-muted border-border-default",
-        onEmphasis:
-            "bg-[var(--counter-background-color-emphasis)] text-foreground-on-emphasis border-transparent",
-        onPrimary:
-            "bg-[var(--button-primary-background-color-active)] text-foreground-on-emphasis border-transparent",
-    } satisfies Record<KeybindingHintVariant, string>,
-    // A width the box will not fall below keeps a run of single keys from being drawn as a run
-    // of boxes of different sizes
-    size: {
-        normal: "min-w-[var(--base-size-20)]",
-        small: "p-[var(--base-size-2)] rounded-[var(--border-radius-small)] [font-size:11px] leading-[var(--base-size-8)] min-w-[var(--base-size-16)]",
-    } satisfies Record<KeybindingHintSize, string>,
-};
+const keybindingHintChordVariants = cva(
+    "inline-flex justify-center overflow-hidden gap-[0.5ch] p-[var(--base-size-4)] align-baseline border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-default)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] leading-[10px] [box-shadow:none]",
+    {
+        variants: {
+            variant: {
+                normal: "bg-background-transparent text-foreground-muted border-border-default",
+                onEmphasis:
+                    "bg-[var(--counter-background-color-emphasis)] text-foreground-on-emphasis border-transparent",
+                onPrimary:
+                    "bg-[var(--button-primary-background-color-active)] text-foreground-on-emphasis border-transparent",
+            } satisfies Record<KeybindingHintVariant, string>,
+            // A width the box will not fall below keeps a run of single keys from being drawn as
+            // a run of boxes of different sizes
+            size: {
+                normal: "min-w-[var(--base-size-20)]",
+                small: "p-[var(--base-size-2)] rounded-[var(--border-radius-small)] [font-size:11px] leading-[var(--base-size-8)] min-w-[var(--base-size-16)]",
+            } satisfies Record<KeybindingHintSize, string>,
+        },
+    },
+);
 
 // The keys that are held down together, drawn as the one box they are pressed as
 function KeybindingHintChord(props: KeybindingHintChordProps) {
@@ -31,7 +35,7 @@ function KeybindingHintChord(props: KeybindingHintChordProps) {
 
     return (
         <span
-            className={classNames(classes.root, classes.variant[variant], classes.size[size])}
+            className={classNames(keybindingHintChordVariants({ variant, size }))}
             data-component="KeybindingHint.Chord"
         >
             {splitChord(keys).map((key, index) => (

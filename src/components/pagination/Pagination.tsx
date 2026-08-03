@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronLeftRegular, ChevronRightRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { buildPaginationModel, buildPaginationPageData } from "./paginationModel";
 import type { PaginationPage, PaginationPageProps, PaginationProps } from "./Pagination.types";
@@ -12,22 +12,6 @@ type Range = (typeof ranges)[number];
 const classes = {
     root: "mt-[var(--base-size-20)] mb-[var(--base-size-16)] text-center",
     steps: "inline-block",
-    page: "inline-flex items-center justify-center min-w-[var(--control-medium-size)] h-[var(--control-medium-size)] py-[var(--base-size-8)] px-[var(--base-size-6)] me-[var(--base-size-4)] last:me-0 rounded-[var(--border-radius-medium)] bg-transparent not-italic leading-none text-center no-underline whitespace-nowrap align-middle cursor-pointer select-none text-foreground-default transition-[background-color] duration-short ease-hover",
-    pageHover:
-        "hover:no-underline hover:outline-0 hover:bg-[var(--control-transparent-background-color-hover)] hover:duration-micro focus:no-underline focus:outline-0 focus:bg-[var(--control-transparent-background-color-hover)] focus:duration-micro",
-    pageFocus:
-        "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    // The icons scale with the inherited font size rather than a fixed step
-    step: {
-        previous: "text-foreground-accent [&>svg]:size-[1em] [&>svg]:me-[var(--base-size-4)]",
-        next: "text-foreground-accent [&>svg]:size-[1em] [&>svg]:ms-[var(--base-size-4)]",
-    },
-    // The hover and focus backgrounds are restated so the page a reader has just clicked
-    // keeps its fill: a bare `bg-*` would lose to the `:hover` and `:focus` rules above it.
-    // The ring is drawn inside the fill, so the focus outline still reads against it
-    current:
-        "text-foreground-on-emphasis bg-background-accent-emphasis hover:bg-background-accent-emphasis focus:bg-background-accent-emphasis focus-visible:[box-shadow:var(--box-shadow-thicker)_var(--foreground-color-on-emphasis)]",
-    inert: "cursor-default text-foreground-disabled bg-transparent hover:bg-transparent focus:bg-transparent",
     // Only the previous and next steps survive once the page numbers are hidden, so the
     // margin between them comes off too
     hidden: {
@@ -37,6 +21,35 @@ const classes = {
         wide: "xxlarge:[&>*:not(:first-child):not(:last-child)]:hidden xxlarge:[&>*:first-child]:me-0 xxlarge:[&>*:last-child]:ms-0",
     } satisfies Record<Range, string>,
 };
+
+const paginationPageVariants = cva(
+    [
+        "inline-flex items-center justify-center min-w-[var(--control-medium-size)] h-[var(--control-medium-size)] py-[var(--base-size-8)] px-[var(--base-size-6)] me-[var(--base-size-4)] last:me-0 rounded-[var(--border-radius-medium)] bg-transparent not-italic leading-none text-center no-underline whitespace-nowrap align-middle cursor-pointer select-none text-foreground-default transition-[background-color] duration-short ease-hover",
+        "hover:no-underline hover:outline-0 hover:bg-[var(--control-transparent-background-color-hover)] hover:duration-micro focus:no-underline focus:outline-0 focus:bg-[var(--control-transparent-background-color-hover)] focus:duration-micro",
+        "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
+    ],
+    {
+        variants: {
+            // The icons scale with the inherited font size rather than a fixed step
+            step: {
+                previous:
+                    "text-foreground-accent [&>svg]:size-[1em] [&>svg]:me-[var(--base-size-4)]",
+                next: "text-foreground-accent [&>svg]:size-[1em] [&>svg]:ms-[var(--base-size-4)]",
+            },
+            // The hover and focus backgrounds are restated so the page a reader has just clicked
+            // keeps its fill: a bare `bg-*` would lose to the `:hover` and `:focus` rules above
+            // it. The ring is drawn inside the fill, so the focus outline still reads against it
+            current: {
+                true: "text-foreground-on-emphasis bg-background-accent-emphasis hover:bg-background-accent-emphasis focus:bg-background-accent-emphasis focus-visible:[box-shadow:var(--box-shadow-thicker)_var(--foreground-color-on-emphasis)]",
+                false: "",
+            },
+            inert: {
+                true: "cursor-default text-foreground-disabled bg-transparent hover:bg-transparent focus:bg-transparent",
+                false: "",
+            },
+        },
+    },
+);
 
 // Which viewports the page numbers are hidden at, given the `showPages` prop
 const getHiddenRanges = (showPages: boolean | Partial<Record<Range, boolean>>): Range[] => {
@@ -108,12 +121,11 @@ function Pagination<As extends React.ElementType = "nav">(
         const isInert = Boolean(presentational) || Boolean(pageProps["aria-hidden"]);
 
         const pageClassName = classNames(
-            classes.page,
-            classes.pageHover,
-            classes.pageFocus,
-            isStep && classes.step[page.type as "previous" | "next"],
-            page.selected && classes.current,
-            isInert && classes.inert,
+            paginationPageVariants({
+                step: isStep ? (page.type as "previous" | "next") : undefined,
+                current: page.selected,
+                inert: isInert,
+            }),
         );
 
         // A break leads nowhere, so it never becomes a consumer's link

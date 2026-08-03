@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronLeftRegular, ChevronRightRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { buildPaginationModel } from "../pagination/paginationModel";
 import type { TablePaginationProps, TablePaginationState } from "./DataTable.types";
@@ -31,14 +31,6 @@ const classes = {
     step: "first-of-type:me-[var(--base-size-16)] last-of-type:ms-[var(--base-size-16)]",
     button: "bg-transparent border-0 appearance-none select-none [font-family:inherit] [font-size:var(--text-body-size-medium)] [line-height:calc(20/14)] rounded-[var(--border-radius-medium)]",
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    action: "flex items-center gap-x-[var(--base-size-4)] p-[var(--base-size-8)] text-foreground-muted",
-    // A step with nowhere to go reads as text rather than as something to press
-    actionEnabled:
-        "cursor-pointer text-foreground-accent hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
-    page: "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] py-[var(--base-size-8)] px-[calc((var(--base-size-32)_-_var(--base-size-20))/2)] cursor-pointer [color:inherit] hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
-    // The ring is drawn inside the fill, so it still reads against it
-    pageActive:
-        "bg-background-accent-emphasis text-foreground-on-emphasis hover:bg-background-accent-emphasis focus:bg-background-accent-emphasis focus-visible:[box-shadow:inset_0_0_0_var(--border-width-thicker)_var(--foreground-color-on-emphasis)]",
     truncation:
         "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] select-none",
     icon: "size-[var(--base-size-16)]",
@@ -52,6 +44,40 @@ const classes = {
     } satisfies Record<Range, string>,
     hidden: "sr-only",
 };
+
+const tablePaginationActionVariants = cva(
+    [
+        classes.button,
+        classes.focus,
+        "flex items-center gap-x-[var(--base-size-4)] p-[var(--base-size-8)] text-foreground-muted",
+    ],
+    {
+        variants: {
+            // A step with nowhere to go reads as text rather than as something to press
+            enabled: {
+                true: "cursor-pointer text-foreground-accent hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
+                false: "",
+            },
+        },
+    },
+);
+
+const tablePaginationPageVariants = cva(
+    [
+        classes.button,
+        classes.focus,
+        "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] py-[var(--base-size-8)] px-[calc((var(--base-size-32)_-_var(--base-size-20))/2)] cursor-pointer [color:inherit] hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
+    ],
+    {
+        variants: {
+            // The ring is drawn inside the fill, so it still reads against it
+            active: {
+                true: "bg-background-accent-emphasis text-foreground-on-emphasis hover:bg-background-accent-emphasis focus:bg-background-accent-emphasis focus-visible:[box-shadow:inset_0_0_0_var(--border-width-thicker)_var(--foreground-color-on-emphasis)]",
+                false: "",
+            },
+        },
+    },
+);
 
 // Holds which page is showing, and works out what is on it
 const usePagination = ({
@@ -158,10 +184,7 @@ function TablePagination(
                     <button
                         type="button"
                         className={classNames(
-                            classes.button,
-                            classes.focus,
-                            classes.action,
-                            hasPreviousPage && classes.actionEnabled,
+                            tablePaginationActionVariants({ enabled: hasPreviousPage }),
                         )}
                         data-has-page={hasPreviousPage || undefined}
                         aria-disabled={!hasPreviousPage || undefined}
@@ -193,10 +216,7 @@ function TablePagination(
                             <button
                                 type="button"
                                 className={classNames(
-                                    classes.button,
-                                    classes.focus,
-                                    classes.page,
-                                    page.selected && classes.pageActive,
+                                    tablePaginationPageVariants({ active: page.selected }),
                                 )}
                                 data-active={page.selected || undefined}
                                 aria-current={page.selected || undefined}
@@ -217,10 +237,7 @@ function TablePagination(
                     <button
                         type="button"
                         className={classNames(
-                            classes.button,
-                            classes.focus,
-                            classes.action,
-                            hasNextPage && classes.actionEnabled,
+                            tablePaginationActionVariants({ enabled: hasNextPage }),
                         )}
                         data-has-page={hasNextPage || undefined}
                         aria-disabled={!hasNextPage || undefined}

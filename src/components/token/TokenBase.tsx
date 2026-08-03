@@ -1,19 +1,25 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TokenBaseProps, TokenInteractiveProps, TokenSize } from "./Token.types";
 
-const classes = {
-    root: "relative inline-flex items-center whitespace-nowrap no-underline rounded-[var(--border-radius-full)] [font-family:inherit] [font-weight:var(--base-text-weight-semibold)] leading-none",
-    size: {
-        small: "h-[var(--base-size-16)] px-[var(--base-size-4)] [font-size:var(--text-body-size-small)]",
-        medium: "h-[var(--base-size-20)] px-[var(--base-size-6)] [font-size:var(--text-body-size-small)]",
-        large: "h-[var(--base-size-24)] px-[var(--base-size-8)] [font-size:var(--text-body-size-medium)]",
-        xlarge: "h-[var(--base-size-32)] px-[var(--base-size-12)] [font-size:var(--text-body-size-medium)]",
-    } satisfies Record<TokenSize, string>,
-    interactive: "cursor-pointer",
-    inert: "cursor-auto",
-};
+const tokenBaseVariants = cva(
+    "relative inline-flex items-center whitespace-nowrap no-underline rounded-[var(--border-radius-full)] [font-family:inherit] [font-weight:var(--base-text-weight-semibold)] leading-none",
+    {
+        variants: {
+            size: {
+                small: "h-[var(--base-size-16)] px-[var(--base-size-4)] [font-size:var(--text-body-size-small)]",
+                medium: "h-[var(--base-size-20)] px-[var(--base-size-6)] [font-size:var(--text-body-size-small)]",
+                large: "h-[var(--base-size-24)] px-[var(--base-size-8)] [font-size:var(--text-body-size-medium)]",
+                xlarge: "h-[var(--base-size-32)] px-[var(--base-size-12)] [font-size:var(--text-body-size-medium)]",
+            } satisfies Record<TokenSize, string>,
+            interactive: {
+                true: "cursor-pointer",
+                false: "cursor-auto",
+            },
+        },
+    },
+);
 
 export const DEFAULT_TOKEN_SIZE: TokenSize = "medium";
 
@@ -71,12 +77,7 @@ function TokenBase<As extends React.ElementType = "span">(
         <Component
             ref={ref}
             onKeyDown={handleKeyDown}
-            className={classNames(
-                classes.root,
-                classes.size[size],
-                interactive ? classes.interactive : classes.inert,
-                className,
-            )}
+            className={classNames(tokenBaseVariants({ size, interactive }), className)}
             data-component="Token"
             data-size={size}
             data-interactive={interactive ? "" : undefined}

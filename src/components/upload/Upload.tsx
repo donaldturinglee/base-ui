@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { triageFiles } from "./files";
 import { UploadContext } from "./UploadContext";
@@ -12,33 +12,54 @@ import UploadList from "./UploadList";
 import type { UploadProps, UploadSize, UploadSource, UploadValidationStatus } from "./Upload.types";
 
 const classes = {
-    root: "grid gap-[var(--stack-gap-condensed)]",
-    // The zone is a label, so anywhere in it opens the picker; the control inside it is what
-    // the reader tabs to, and what the ring below is drawn for
-    zone: "relative flex flex-col items-center justify-center text-center cursor-pointer rounded-[var(--border-radius-medium)] border-dashed border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [--upload-muted-color:var(--foreground-color-muted)] gap-[var(--upload-zone-gap)] p-[var(--upload-zone-padding)] [transition:border-color_var(--motion-transition-hover),background-color_var(--motion-transition-hover)]",
-    hover: "hover:border-border-accent-emphasis hover:bg-background-accent-muted",
-    focus: "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
-    // A file held over the control is answered by the whole zone, since the pointer is
-    // carrying something rather than aiming at anything. The border is drawn solid as well as
-    // in colour, so the answer still reads where colour does not
-    dragging: "border-solid border-border-accent-emphasis bg-background-accent-muted",
-    validation: {
-        error: "border-border-danger-emphasis",
-        success: "border-background-success-emphasis",
-    } satisfies Record<UploadValidationStatus, string>,
-    disabled:
-        "cursor-not-allowed text-foreground-disabled [--upload-muted-color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)]",
-    // The size sets how much room the zone keeps and how big the pieces it is drawn from are,
-    // and it is written on the root so that the list below the zone is sized by it as well
-    size: {
-        small: "[--upload-zone-gap:var(--base-size-4)] [--upload-zone-padding:var(--stack-padding-normal)] [--upload-icon-size:var(--base-size-20)] [--upload-label-size:var(--text-body-size-small)] [--upload-description-size:var(--text-body-size-small)] [--upload-item-icon-size:var(--base-size-16)]",
-        medium: "[--upload-zone-gap:var(--base-size-8)] [--upload-zone-padding:var(--stack-padding-spacious)] [--upload-icon-size:var(--base-size-24)] [--upload-label-size:var(--text-body-size-medium)] [--upload-description-size:var(--text-body-size-small)] [--upload-item-icon-size:var(--base-size-20)]",
-        large: "[--upload-zone-gap:var(--base-size-8)] [--upload-zone-padding:var(--base-size-32)] [--upload-icon-size:var(--base-size-32)] [--upload-label-size:var(--text-title-size-small)] [--upload-description-size:var(--text-body-size-medium)] [--upload-item-icon-size:var(--base-size-20)]",
-    } satisfies Record<UploadSize, string>,
     // The control is what the picker opens from and what the reader tabs to, so it is taken
     // out of sight rather than out of the page
     input: "sr-only",
 };
+
+const uploadVariants = cva("grid gap-[var(--stack-gap-condensed)]", {
+    variants: {
+        // The size sets how much room the zone keeps and how big the pieces it is drawn from
+        // are, and it is written on the root so that the list below the zone is sized by it too
+        size: {
+            small: "[--upload-zone-gap:var(--base-size-4)] [--upload-zone-padding:var(--stack-padding-normal)] [--upload-icon-size:var(--base-size-20)] [--upload-label-size:var(--text-body-size-small)] [--upload-description-size:var(--text-body-size-small)] [--upload-item-icon-size:var(--base-size-16)]",
+            medium: "[--upload-zone-gap:var(--base-size-8)] [--upload-zone-padding:var(--stack-padding-spacious)] [--upload-icon-size:var(--base-size-24)] [--upload-label-size:var(--text-body-size-medium)] [--upload-description-size:var(--text-body-size-small)] [--upload-item-icon-size:var(--base-size-20)]",
+            large: "[--upload-zone-gap:var(--base-size-8)] [--upload-zone-padding:var(--base-size-32)] [--upload-icon-size:var(--base-size-32)] [--upload-label-size:var(--text-title-size-small)] [--upload-description-size:var(--text-body-size-medium)] [--upload-item-icon-size:var(--base-size-20)]",
+        } satisfies Record<UploadSize, string>,
+    },
+});
+
+const uploadZoneVariants = cva(
+    [
+        // The zone is a label, so anywhere in it opens the picker; the control inside it is what
+        // the reader tabs to, and what the ring below is drawn for
+        "relative flex flex-col items-center justify-center text-center cursor-pointer rounded-[var(--border-radius-medium)] border-dashed border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [--upload-muted-color:var(--foreground-color-muted)] gap-[var(--upload-zone-gap)] p-[var(--upload-zone-padding)] [transition:border-color_var(--motion-transition-hover),background-color_var(--motion-transition-hover)]",
+        "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
+    ],
+    {
+        variants: {
+            // A file held over the control is answered by the whole zone, since the pointer is
+            // carrying something rather than aiming at anything. The border is drawn solid as
+            // well as in colour, so the answer still reads where colour does not
+            dragging: {
+                true: "border-solid border-border-accent-emphasis bg-background-accent-muted",
+                false: "",
+            },
+            // Only a control that can still be used answers the pointer, so the hover rules are
+            // the other side of this same variant
+            disabled: {
+                true: "cursor-not-allowed text-foreground-disabled [--upload-muted-color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)]",
+                false: "hover:border-border-accent-emphasis hover:bg-background-accent-muted",
+            },
+            // The validation colours come last, so a control that is both disabled and invalid
+            // still reads as invalid
+            validation: {
+                error: "border-border-danger-emphasis",
+                success: "border-background-success-emphasis",
+            } satisfies Record<UploadValidationStatus, string>,
+        },
+    },
+);
 
 // A drop lands on the control rather than in it, so what was dropped is written into the
 // control as well. That leaves it holding what the reader can see, and leaves a form posting
@@ -181,7 +202,7 @@ function Upload(
         <UploadContext.Provider value={{ labelId, descriptionId }}>
             <div
                 ref={ref}
-                className={classNames(classes.root, classes.size[size], className)}
+                className={classNames(uploadVariants({ size }), className)}
                 data-component="Upload"
                 data-size={size}
                 data-disabled={disabled}
@@ -191,14 +212,11 @@ function Upload(
             >
                 <label
                     className={classNames(
-                        classes.zone,
-                        classes.focus,
-                        !disabled && classes.hover,
-                        isDragging && classes.dragging,
-                        disabled && classes.disabled,
-                        // The validation colours come last, so a control that is both disabled
-                        // and invalid still reads as invalid
-                        validationStatus && classes.validation[validationStatus],
+                        uploadZoneVariants({
+                            dragging: isDragging,
+                            disabled: Boolean(disabled),
+                            validation: validationStatus,
+                        }),
                     )}
                     onDragEnter={handleDragEnter}
                     onDragOver={handleDragOver}

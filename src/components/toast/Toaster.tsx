@@ -1,27 +1,31 @@
 import * as React from "react";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Portal } from "../portal";
 import Toast from "./Toast";
 import { getServerToasts, getToasts, subscribeToToasts } from "./toastStore";
 import type { ToastPlace, ToastPosition, ToastSwipeDirection, ToasterProps } from "./Toast.types";
 
-const classes = {
+const toasterVariants = cva(
     // The stack is laid over everything else on the page, since it says what has happened
     // wherever the reader happens to be
-    root: "fixed m-0 list-none p-0 z-popover w-[var(--toaster-width)] max-w-[calc(100dvw_-_2_*_var(--toaster-offset))] [--toaster-offset:var(--toaster-viewport-offset)] max-small:[--toaster-offset:var(--toaster-mobile-offset)]",
-    // Every toast is laid at the anchored edge of the stack, so the list itself takes up no
-    // room and catches nothing that is not a toast
-    position: {
-        "top-left": "top-[var(--toaster-offset)] left-[var(--toaster-offset)]",
-        "top-center": "top-[var(--toaster-offset)] left-1/2 -translate-x-1/2",
-        "top-right": "top-[var(--toaster-offset)] right-[var(--toaster-offset)]",
-        "bottom-left": "bottom-[var(--toaster-offset)] left-[var(--toaster-offset)]",
-        "bottom-center": "bottom-[var(--toaster-offset)] left-1/2 -translate-x-1/2",
-        "bottom-right": "bottom-[var(--toaster-offset)] right-[var(--toaster-offset)]",
-    } satisfies Record<ToastPosition, string>,
-};
+    "fixed m-0 list-none p-0 z-popover w-[var(--toaster-width)] max-w-[calc(100dvw_-_2_*_var(--toaster-offset))] [--toaster-offset:var(--toaster-viewport-offset)] max-small:[--toaster-offset:var(--toaster-mobile-offset)]",
+    {
+        variants: {
+            // Every toast is laid at the anchored edge of the stack, so the list itself takes up
+            // no room and catches nothing that is not a toast
+            position: {
+                "top-left": "top-[var(--toaster-offset)] left-[var(--toaster-offset)]",
+                "top-center": "top-[var(--toaster-offset)] left-1/2 -translate-x-1/2",
+                "top-right": "top-[var(--toaster-offset)] right-[var(--toaster-offset)]",
+                "bottom-left": "bottom-[var(--toaster-offset)] left-[var(--toaster-offset)]",
+                "bottom-center": "bottom-[var(--toaster-offset)] left-1/2 -translate-x-1/2",
+                "bottom-right": "bottom-[var(--toaster-offset)] right-[var(--toaster-offset)]",
+            } satisfies Record<ToastPosition, string>,
+        },
+    },
+);
 
 // What a toast is given where neither it nor the Toaster around it says otherwise
 const DEFAULT_DURATION = 4000;
@@ -216,7 +220,7 @@ function Toaster(
                 <ol
                     ref={mergedRef}
                     tabIndex={-1}
-                    className={classNames(classes.root, classes.position[position], className)}
+                    className={classNames(toasterVariants({ position }), className)}
                     style={
                         {
                             ...style,

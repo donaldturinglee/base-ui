@@ -1,16 +1,17 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { HeadingProps, HeadingSize } from "./Heading.types";
 
-const classes = {
-    root: "m-0",
-    size: {
-        large: "text-title-large",
-        medium: "text-title-medium",
-        small: "text-title-small",
-    } satisfies Record<HeadingSize, string>,
-};
+const headingVariants = cva("m-0", {
+    variants: {
+        size: {
+            large: "text-title-large",
+            medium: "text-title-medium",
+            small: "text-title-small",
+        } satisfies Record<HeadingSize, string>,
+    },
+});
 
 function Heading<As extends React.ElementType = "h2">(
     props: HeadingProps<As>,
@@ -27,7 +28,7 @@ function Heading<As extends React.ElementType = "h2">(
     return (
         <Component
             ref={ref}
-            className={classNames(classes.root, classes.size[size], className)}
+            className={classNames(headingVariants({ size }), className)}
             data-component="Heading"
             data-size={size}
             {...rest}

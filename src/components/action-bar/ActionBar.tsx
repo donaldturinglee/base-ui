@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MoreHorizontalRegular } from "@gamecrafters/base-ui-icons";
 import { useFocusZone } from "../../hooks/useFocusZone";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { ActionList } from "../action-list";
 import { ActionMenu } from "../action-menu";
 import { IconButton } from "../icon-button";
@@ -15,23 +15,11 @@ import { ActionBarMenuItems } from "./ActionBarMenuItems";
 import type { ActionBarGap, ActionBarProps, ActionBarSize } from "./ActionBar.types";
 
 const classes = {
-    root: "flex items-center min-w-0",
-    // A bar that is not flush is held in from the edges of whatever it is drawn on
-    padded: "px-[var(--base-size-8)]",
-    toolbar: "flex grow items-center min-w-0",
-    // The items are laid out as one row that is allowed to wrap. The row is only as tall as
-    // one line of them, so whatever wraps below is cut off, and being cut off is how an item
-    // knows it no longer fits
-    items: "flex grow flex-wrap items-center content-start min-w-0 overflow-hidden",
     size: {
         small: "h-[var(--control-small-size)]",
         medium: "h-[var(--control-medium-size)]",
         large: "h-[var(--control-large-size)]",
     } satisfies Record<ActionBarSize, string>,
-    gap: {
-        none: "gap-0",
-        condensed: "gap-[var(--base-size-4)]",
-    } satisfies Record<ActionBarGap, string>,
     // Nothing at all, standing before the first item so that it too has somewhere to wrap to
     // once there is no longer room for it
     spacer: "shrink-0",
@@ -39,6 +27,38 @@ const classes = {
     // items are measured against never changes as they come and go
     moreButtonEmpty: "invisible",
 };
+
+const actionBarVariants = cva("flex items-center min-w-0", {
+    variants: {
+        // A bar that is not flush is held in from the edges of whatever it is drawn on
+        flush: {
+            true: "",
+            false: "px-[var(--base-size-8)]",
+        },
+    },
+});
+
+const actionBarToolbarVariants = cva("flex grow items-center min-w-0", {
+    variants: {
+        size: classes.size,
+    },
+});
+
+const actionBarItemsVariants = cva(
+    // The items are laid out as one row that is allowed to wrap. The row is only as tall as
+    // one line of them, so whatever wraps below is cut off, and being cut off is how an item
+    // knows it no longer fits
+    "flex grow flex-wrap items-center content-start min-w-0 overflow-hidden",
+    {
+        variants: {
+            size: classes.size,
+            gap: {
+                none: "gap-0",
+                condensed: "gap-[var(--base-size-4)]",
+            } satisfies Record<ActionBarGap, string>,
+        },
+    },
+);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ActionBarChild = React.ReactElement<any>;
@@ -171,7 +191,7 @@ function ActionBar(props: ActionBarProps) {
     return (
         <ActionBarContext.Provider value={barContextValue}>
             <div
-                className={classNames(classes.root, !flush && classes.padded, className)}
+                className={classNames(actionBarVariants({ flush }), className)}
                 data-component="ActionBar"
                 data-flush={flush ? "" : undefined}
             >
@@ -180,14 +200,14 @@ function ActionBar(props: ActionBarProps) {
                     role="toolbar"
                     aria-label={ariaLabel}
                     aria-labelledby={ariaLabelledBy}
-                    className={classNames(classes.toolbar, classes.size[size])}
+                    className={classNames(actionBarToolbarVariants({ size }))}
                     data-size={size}
                     data-gap={gap}
                     data-has-overflow={overflowItems.length > 0 ? "" : undefined}
                 >
                     <div
                         ref={itemsRef}
-                        className={classNames(classes.items, classes.size[size], classes.gap[gap])}
+                        className={classNames(actionBarItemsVariants({ size, gap }))}
                     >
                         <div className={classes.spacer} />
                         {childArray.map((child, index) => (

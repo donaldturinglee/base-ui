@@ -1,24 +1,33 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { ProgressBarItemProps, ProgressBarVariant } from "./ProgressBar.types";
 
-const classes = {
-    // The fallback lives in the class, so leaving the progress unset renders an empty segment
-    root: "w-[var(--progress-bar-item-width,0%)]",
-    shimmer: "motion-safe:shimmer",
-    forcedColors: "forced-colors:[forced-color-adjust:none] forced-colors:bg-[color:LinkText]",
-    variant: {
-        accent: "bg-[var(--progress-bar-background-color-accent)]",
-        attention: "bg-[var(--progress-bar-background-color-attention)]",
-        danger: "bg-[var(--progress-bar-background-color-danger)]",
-        done: "bg-[var(--progress-bar-background-color-done)]",
-        neutral: "bg-[var(--progress-bar-background-color-neutral)]",
-        severe: "bg-[var(--progress-bar-background-color-severe)]",
-        sponsors: "bg-[var(--progress-bar-background-color-sponsors)]",
-        success: "bg-[var(--progress-bar-background-color-success)]",
-    } satisfies Record<ProgressBarVariant, string>,
-};
+const progressBarItemVariants = cva(
+    [
+        // The fallback lives in the class, so leaving the progress unset renders an empty segment
+        "w-[var(--progress-bar-item-width,0%)]",
+        "forced-colors:[forced-color-adjust:none] forced-colors:bg-[color:LinkText]",
+    ],
+    {
+        variants: {
+            variant: {
+                accent: "bg-[var(--progress-bar-background-color-accent)]",
+                attention: "bg-[var(--progress-bar-background-color-attention)]",
+                danger: "bg-[var(--progress-bar-background-color-danger)]",
+                done: "bg-[var(--progress-bar-background-color-done)]",
+                neutral: "bg-[var(--progress-bar-background-color-neutral)]",
+                severe: "bg-[var(--progress-bar-background-color-severe)]",
+                sponsors: "bg-[var(--progress-bar-background-color-sponsors)]",
+                success: "bg-[var(--progress-bar-background-color-success)]",
+            } satisfies Record<ProgressBarVariant, string>,
+            animated: {
+                true: "motion-safe:shimmer",
+                false: "",
+            },
+        },
+    },
+);
 
 function ProgressBarItem<As extends React.ElementType = "span">(
     props: ProgressBarItemProps<As>,
@@ -43,13 +52,7 @@ function ProgressBarItem<As extends React.ElementType = "span">(
             aria-valuenow={ariaValueNow ?? Math.round(Math.max(progress, 0))}
             aria-valuemin={0}
             aria-valuemax={100}
-            className={classNames(
-                classes.root,
-                classes.variant[variant],
-                animated && classes.shimmer,
-                classes.forcedColors,
-                className,
-            )}
+            className={classNames(progressBarItemVariants({ variant, animated }), className)}
             style={
                 {
                     ...style,
