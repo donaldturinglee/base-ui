@@ -10,7 +10,7 @@ import type { ToastPlace, ToastPosition, ToastSwipeDirection, ToasterProps } fro
 const classes = {
     // The stack is laid over everything else on the page, since it says what has happened
     // wherever the reader happens to be
-    root: "fixed m-0 list-none p-0 [z-index:var(--z-index-popover)] w-[var(--toaster-width)] max-w-[calc(100dvw_-_2_*_var(--toaster-offset))] [--toaster-offset:var(--toaster-viewport-offset)] max-small:[--toaster-offset:var(--toaster-mobile-offset)]",
+    root: "fixed m-0 list-none p-0 z-popover w-[var(--toaster-width)] max-w-[calc(100dvw_-_2_*_var(--toaster-offset))] [--toaster-offset:var(--toaster-viewport-offset)] max-small:[--toaster-offset:var(--toaster-mobile-offset)]",
     // Every toast is laid at the anchored edge of the stack, so the list itself takes up no
     // room and catches nothing that is not a toast
     position: {

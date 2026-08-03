@@ -45,7 +45,7 @@ const classes = {
         expandable: "group absolute flex hover:w-auto focus-within:w-auto",
     },
     item: {
-        root: "relative flex shrink-0 overflow-hidden w-[var(--avatar-stack-size)] h-[var(--avatar-stack-size)] [--avatar-size-regular:var(--avatar-stack-size)] transition-[margin,opacity,mask-position,mask-size] duration-[var(--motion-duration-short)] ease-[var(--motion-easing-move)]",
+        root: "relative flex shrink-0 overflow-hidden w-[var(--avatar-stack-size)] h-[var(--avatar-stack-size)] [--avatar-size-regular:var(--avatar-stack-size)] transition-[margin,opacity,mask-position,mask-size] duration-short ease-move",
         first: "ms-0",
         // The padding keeps a hairline of the underlying element from showing at the edges
         overlapped:

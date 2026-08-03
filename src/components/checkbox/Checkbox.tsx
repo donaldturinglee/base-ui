@@ -17,7 +17,7 @@ const marks = {
 
 const classes = {
     // The top margin centres the box against a 20px line of label text beside it
-    root: "relative grid place-content-center size-[var(--base-size-16)] m-0 mt-[var(--base-size-2)] cursor-pointer appearance-none rounded-[var(--border-radius-small)] bg-[var(--background-color-default)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-emphasis)] transition-[background-color,border-color] duration-[var(--motion-duration-micro)] ease-[var(--motion-easing-hover)]",
+    root: "relative grid place-content-center size-[var(--base-size-16)] m-0 mt-[var(--base-size-2)] cursor-pointer appearance-none rounded-[var(--border-radius-small)] bg-[var(--background-color-default)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-emphasis)] transition-[background-color,border-color] duration-micro ease-hover",
     mark: "before:content-[''] before:invisible before:size-[var(--base-size-16)] before:bg-[var(--foreground-color-on-emphasis)] before:[mask-image:var(--checkbox-mark)] before:[mask-size:75%] before:[mask-repeat:no-repeat] before:[mask-position:center]",
     // The fill doubles as the border colour so the box does not shift in dark high contrast
     checked:

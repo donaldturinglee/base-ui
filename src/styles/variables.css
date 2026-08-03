@@ -77,6 +77,13 @@
   --motion-transition-hover: var(--motion-duration-micro) var(--motion-easing-hover); /** Transition for hover state changes on interactive elements like buttons and links. */
   --motion-transition-state-change: var(--motion-duration-short) var(--motion-easing-move); /** Transition for state changes like toggles, expand/collapse, and visibility changes. */
 
+  /* Motion: class names for the semantic easings, which Tailwind builds from this namespace */
+  --ease-enter: var(--motion-easing-enter);
+  --ease-exit: var(--motion-easing-exit);
+  --ease-hover: var(--motion-easing-hover);
+  --ease-linear: var(--motion-easing-linear);
+  --ease-move: var(--motion-easing-move);
+
   /* Borders, focus outline and box shadows */
   --border-width-thick: 0.125rem; /** Scale token: 2px border width for emphasis or focus states. */
   --border-width-thicker: 0.25rem; /** Scale token: 4px border width for strong emphasis. */
@@ -171,7 +178,7 @@
   --stack-padding-normal: 1rem;
   --stack-padding-spacious: 1.5rem;
 
-  /* Semantic z-index */
+  /* Semantic z-index: class names are the z-* utilities Tailwind builds from this namespace */
   --z-index-behind: -1; /** Place element behind base content. Use for decorative backgrounds or canvas elements. */
   --z-index-default: 0; /** Default stacking order. No elevation above surrounding content. */
   --z-index-dropdown: 200; /** Dropdown menus and select panels that appear above page content. */
@@ -207,4 +214,27 @@
     --control-stack-medium-gap-auto: 0.5rem; /** Gap between stacked controls in medium density layouts for mouse interfaces */
     --control-stack-small-gap-auto: 0.5rem; /** Gap between stacked controls in small density layouts for mouse interfaces */
   }
+}
+
+/* Motion: class names for the semantic durations, which have no Tailwind namespace to build
+   from. Each sets --tw-duration alongside the property, the way the built-in duration-*
+   utilities do, so animate-* utilities read the same duration as a transition does */
+@utility duration-micro {
+  --tw-duration: var(--motion-duration-micro);
+  transition-duration: var(--motion-duration-micro);
+}
+
+@utility duration-short {
+  --tw-duration: var(--motion-duration-short);
+  transition-duration: var(--motion-duration-short);
+}
+
+@utility duration-medium {
+  --tw-duration: var(--motion-duration-medium);
+  transition-duration: var(--motion-duration-medium);
+}
+
+@utility duration-long {
+  --tw-duration: var(--motion-duration-long);
+  transition-duration: var(--motion-duration-long);
 }

@@ -8,7 +8,7 @@ const classes = {
     root: "pb-[var(--base-size-12)] px-[var(--base-size-8)] [color:var(--foreground-color-default)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
     // The panel eases in behind the header rather than appearing under it all at once. There
     // is nothing to see on the way out, since a closed panel is taken off the page
-    open: "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 motion-safe:duration-[var(--motion-duration-short)]",
+    open: "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 motion-safe:duration-short",
 };
 
 function AccordionPanel<As extends React.ElementType = "div">(

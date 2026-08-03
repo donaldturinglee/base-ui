@@ -28,7 +28,7 @@ const classes = {
     root: "fixed transition-none top-[var(--anchored-overlay-top)] left-[var(--anchored-overlay-left)] overflow-auto min-w-[var(--overlay-width-xsmall)] max-h-[100dvh] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] focus:outline-none forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
     // It arrives from the edge of the anchor it stands off, which says where it came from
     animation:
-        "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-duration-short)] motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2 motion-safe:data-[side=outside-right]:slide-in-from-left-2 motion-safe:data-[side=outside-left]:slide-in-from-right-2",
+        "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2 motion-safe:data-[side=outside-right]:slide-in-from-left-2 motion-safe:data-[side=outside-left]:slide-in-from-right-2",
     // Held back until it has been placed, so it is never seen where it does not belong
     unplaced: "invisible",
     // Narrowed to what the viewport has room for, rather than standing at its own width

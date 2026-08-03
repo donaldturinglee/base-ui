@@ -23,7 +23,7 @@ const classes = {
     // The layer the drawer is laid out in covers the page and pushes the panel to whichever
     // edge it settles against, filling the other way of its own accord
     backdrop:
-        "fixed inset-0 flex bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-duration-short)]",
+        "fixed inset-0 flex bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
     // A modeless drawer leaves the page behind it to be used, so the layer takes no colour and
     // catches nothing; the panel standing in it is the only part that answers a pointer
     backdropModeless: "bg-transparent pointer-events-none",
@@ -33,7 +33,7 @@ const classes = {
         top: "flex-col justify-start",
         bottom: "flex-col justify-end",
     } satisfies Record<DrawerPosition, string>,
-    root: "flex flex-col overflow-hidden bg-[var(--overlay-background-color)] [box-shadow:var(--shadow-floating-small)] motion-safe:animate-in motion-safe:duration-[var(--motion-duration-short)]",
+    root: "flex flex-col overflow-hidden bg-[var(--overlay-background-color)] [box-shadow:var(--shadow-floating-small)] motion-safe:animate-in motion-safe:duration-short",
     rootModeless: "pointer-events-auto",
     // A drawer runs the whole way along the edge it settles against, gives up the two corners
     // it meets there, and arrives from that edge

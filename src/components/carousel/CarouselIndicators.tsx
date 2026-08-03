@@ -6,7 +6,7 @@ import type { CarouselIndicatorsProps } from "./Carousel.types";
 
 const classes = {
     root: "flex items-center justify-center gap-[var(--base-size-4)]",
-    dot: "shrink-0 p-0 m-0 size-[var(--base-size-8)] appearance-none border-0 rounded-[var(--border-radius-full)] bg-[var(--control-track-background-color-rest)] cursor-pointer transition-[background-color] duration-[var(--motion-duration-micro)] ease-[var(--motion-easing-hover)] hover:bg-[var(--control-track-background-color-hover)]",
+    dot: "shrink-0 p-0 m-0 size-[var(--base-size-8)] appearance-none border-0 rounded-[var(--border-radius-full)] bg-[var(--control-track-background-color-rest)] cursor-pointer transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-track-background-color-hover)]",
     // The ring is drawn outside the dot, which is too small to hold one within it
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--base-size-2)]",
     // The hover fill is restated so the slide being shown keeps its colour under the pointer

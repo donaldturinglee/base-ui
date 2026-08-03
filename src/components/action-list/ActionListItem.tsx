@@ -26,7 +26,7 @@ const classes = {
     // than inside it
     root: "relative list-none rounded-[var(--border-radius-medium)] data-[has-trailing-action]:flex data-[has-trailing-action]:flex-nowrap data-[has-trailing-action]:items-center data-[has-trailing-action]:pr-[var(--base-size-4)]",
     content:
-        "flex grow items-start w-full gap-[var(--base-size-8)] min-w-0 px-[var(--control-medium-padding-inline-condensed)] py-[var(--control-medium-padding-block)] m-0 text-left no-underline appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] cursor-pointer [font-family:inherit] [font-size:var(--text-body-size-medium)] leading-[var(--text-body-line-height-medium)] [color:var(--foreground-color-default)] transition-[background-color] duration-[var(--motion-duration-micro)] ease-[var(--motion-easing-hover)] hover:bg-[var(--control-transparent-background-color-hover)]",
+        "flex grow items-start w-full gap-[var(--base-size-8)] min-w-0 px-[var(--control-medium-padding-inline-condensed)] py-[var(--control-medium-padding-block)] m-0 text-left no-underline appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] cursor-pointer [font-family:inherit] [font-size:var(--text-body-size-medium)] leading-[var(--text-body-line-height-medium)] [color:var(--foreground-color-default)] transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-transparent-background-color-hover)]",
     focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[calc(-1_*_var(--focus-outline-width))]",
     size: {
         medium: "",

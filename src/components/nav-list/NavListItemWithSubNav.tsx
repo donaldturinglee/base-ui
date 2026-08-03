@@ -12,7 +12,7 @@ const classes = {
     // Turns over as the item opens, so that the arrow always points the way the list will
     // go rather than the way it has been
     chevron:
-        "transition-transform duration-[var(--motion-duration-short)] ease-[var(--motion-easing-move)] motion-reduce:transition-none [[aria-expanded='true']_&]:-scale-y-100",
+        "transition-transform duration-short ease-move motion-reduce:transition-none [[aria-expanded='true']_&]:-scale-y-100",
 };
 
 export type NavListItemWithSubNavProps = {

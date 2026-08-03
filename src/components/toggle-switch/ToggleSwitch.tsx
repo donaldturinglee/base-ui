@@ -36,7 +36,7 @@ const classes = {
         itemHidden: "invisible h-0",
     },
     button: {
-        root: "relative block overflow-hidden p-0 cursor-pointer select-none appearance-none no-underline rounded-[var(--border-radius-default)] border-solid border-[length:var(--border-width-thin)] transition-[background-color,border-color] duration-[var(--motion-duration-micro)] ease-[var(--motion-easing-move)] motion-reduce:transition-none",
+        root: "relative block overflow-hidden p-0 cursor-pointer select-none appearance-none no-underline rounded-[var(--border-radius-default)] border-solid border-[length:var(--border-width-thin)] transition-[background-color,border-color] duration-micro ease-move motion-reduce:transition-none",
         // The focus ring is drawn outside the track rather than inset, where the fill behind
         // it would swallow it
         focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--base-size-2)]",
@@ -60,7 +60,7 @@ const classes = {
         // Each icon takes half the track, so the pair slides by exactly its own width. The
         // icon is centred in that half by the container rather than laid out as a line of
         // text, which would leave it sitting on a baseline with the descender space below it
-        root: "flex items-center justify-center grow shrink-0 basis-1/2 transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-easing-move)] motion-reduce:transition-none",
+        root: "flex items-center justify-center grow shrink-0 basis-1/2 transition-transform duration-micro ease-move motion-reduce:transition-none",
         // The bar follows the knob in from the start of the track as the switch goes on, and
         // the ring leaves at the end of it
         line: "[color:var(--control-checked-foreground-color-rest)]",
@@ -74,7 +74,7 @@ const classes = {
     },
     knob: {
         // The knob sits inside the track's border, so its own radius comes in by as much
-        root: "absolute z-1 top-px bottom-px left-px w-1/2 bg-[var(--control-knob-background-color-rest)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-knob-border-color-rest)] rounded-[calc(var(--border-radius-default)-var(--border-width-thick))] transition-transform duration-[var(--motion-duration-micro)] ease-[var(--motion-easing-move)] motion-reduce:transition-none",
+        root: "absolute z-1 top-px bottom-px left-px w-1/2 bg-[var(--control-knob-background-color-rest)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-knob-border-color-rest)] rounded-[calc(var(--border-radius-default)-var(--border-width-thick))] transition-transform duration-micro ease-move motion-reduce:transition-none",
         // The travel is short by the borders the knob is inset from
         on: "translate-x-[calc(100%-2px)] bg-[var(--control-knob-background-color-checked)] border-[color:var(--control-knob-border-color-checked)]",
         off: "translate-x-0",

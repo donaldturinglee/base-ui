@@ -34,7 +34,7 @@ import type {
 
 const classes = {
     backdrop:
-        "fixed inset-0 flex bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-duration-short)]",
+        "fixed inset-0 flex bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
     backdropPosition: {
         center: "items-center justify-center",
         left: "items-center justify-start",
@@ -57,7 +57,7 @@ const classes = {
         center: "max-medium:items-center",
         bottom: "max-medium:items-end",
     } satisfies Record<DialogAlign, string>,
-    root: "flex flex-col min-w-[var(--overlay-width-xsmall)] max-w-[calc(100dvw_-_var(--base-size-64))] max-h-[calc(100dvh_-_var(--base-size-64))] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] motion-safe:animate-in motion-safe:duration-[var(--motion-duration-short)]",
+    root: "flex flex-col min-w-[var(--overlay-width-xsmall)] max-w-[calc(100dvw_-_var(--base-size-64))] max-h-[calc(100dvh_-_var(--base-size-64))] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] motion-safe:animate-in motion-safe:duration-short",
     width: {
         small: "w-[var(--overlay-width-small)]",
         medium: "w-[var(--overlay-width-medium)]",

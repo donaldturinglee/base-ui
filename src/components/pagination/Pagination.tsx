@@ -12,9 +12,9 @@ type Range = (typeof ranges)[number];
 const classes = {
     root: "mt-[var(--base-size-20)] mb-[var(--base-size-16)] text-center",
     steps: "inline-block",
-    page: "inline-flex items-center justify-center min-w-[var(--control-medium-size)] h-[var(--control-medium-size)] py-[var(--base-size-8)] px-[var(--base-size-6)] me-[var(--base-size-4)] last:me-0 rounded-[var(--border-radius-medium)] bg-transparent not-italic leading-none text-center no-underline whitespace-nowrap align-middle cursor-pointer select-none [color:var(--foreground-color-default)] transition-[background-color] duration-[var(--motion-duration-short)] ease-[var(--motion-easing-hover)]",
+    page: "inline-flex items-center justify-center min-w-[var(--control-medium-size)] h-[var(--control-medium-size)] py-[var(--base-size-8)] px-[var(--base-size-6)] me-[var(--base-size-4)] last:me-0 rounded-[var(--border-radius-medium)] bg-transparent not-italic leading-none text-center no-underline whitespace-nowrap align-middle cursor-pointer select-none [color:var(--foreground-color-default)] transition-[background-color] duration-short ease-hover",
     pageHover:
-        "hover:no-underline hover:outline-0 hover:bg-[var(--control-transparent-background-color-hover)] hover:duration-[var(--motion-duration-micro)] focus:no-underline focus:outline-0 focus:bg-[var(--control-transparent-background-color-hover)] focus:duration-[var(--motion-duration-micro)]",
+        "hover:no-underline hover:outline-0 hover:bg-[var(--control-transparent-background-color-hover)] hover:duration-micro focus:no-underline focus:outline-0 focus:bg-[var(--control-transparent-background-color-hover)] focus:duration-micro",
     pageFocus:
         "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
     // The icons scale with the inherited font size rather than a fixed step

@@ -8,7 +8,7 @@ const classes = {
     root: "px-[var(--base-size-8)] pb-[var(--base-size-12)] [color:var(--foreground-color-default)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
     // The content eases in behind the trigger rather than appearing under it all at once.
     // There is nothing to see on the way out, since closed content is taken off the page
-    open: "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 motion-safe:duration-[var(--motion-duration-short)]",
+    open: "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 motion-safe:duration-short",
 };
 
 // What the disclosure holds. It stays on the page while it is closed, so that the trigger

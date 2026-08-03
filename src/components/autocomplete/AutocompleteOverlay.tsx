@@ -20,7 +20,7 @@ const classes = {
     root: "fixed transition-none top-[var(--autocomplete-overlay-top)] left-[var(--autocomplete-overlay-left)] overflow-auto bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] focus:outline-none forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
     // It arrives from the edge of the field it stands off, which says where it came from
     animation:
-        "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-[var(--motion-duration-short)] motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2",
+        "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2",
     // Held back until it has been placed, so it is never seen where it does not belong
     unplaced: "invisible",
     width: {
