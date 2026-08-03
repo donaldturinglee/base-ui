@@ -1,0 +1,43 @@
+@layer components {
+    /* The quotation is set apart by a rule down its leading edge rather than by quote marks, so
+       one set of rules serves a page whichever way its text runs. The rule's colour comes
+       through a custom property, so a caller can repaint it without having to unpick the class
+       it came with */
+    .blockquote {
+        margin: 0;
+        padding-inline-start: var(--base-size-16);
+        border-inline-start-style: solid;
+        border-inline-start-width: var(--border-width-thicker);
+        border-inline-start-color: var(--blockquote-border-color);
+        color: var(--foreground-color-muted);
+        font-family: var(--font-stack-sans-serif);
+        font-weight: var(--text-body-weight);
+    }
+
+    .blockquote-large {
+        font-size: var(--text-body-size-large);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    .blockquote-medium {
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .blockquote-small {
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .blockquote-subtle {
+        --blockquote-border-color: var(--border-color-muted);
+    }
+
+    .blockquote-default {
+        --blockquote-border-color: var(--border-color-default);
+    }
+
+    .blockquote-emphasis {
+        --blockquote-border-color: var(--border-color-emphasis);
+    }
+}

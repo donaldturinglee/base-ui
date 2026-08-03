@@ -10,6 +10,7 @@ export * from "./avatar";
 export * from "./avatar-stack";
 export * from "./banner";
 export * from "./blankslate";
+export * from "./blockquote";
 export * from "./breadcrumbs";
 export * from "./button";
 export * from "./button-group";
