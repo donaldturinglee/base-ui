@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-// The two schemes `styles/themes.css` defines. Anything outside this set has no design
+// The two schemes `styles/themes` defines. Anything outside this set has no design
 // tokens standing behind it, so `[data-theme]` would resolve to nothing
 export type ColorScheme = "light" | "dark";
 

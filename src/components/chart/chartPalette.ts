@@ -2,8 +2,8 @@
 // the third series is always purple whether or not the first two are still on the chart, so
 // that filtering a chart never repaints what is left standing.
 //
-// Every one of them is a step of the display scale, which themes.css turns the other way up
-// for the dark theme, so the same step reads against either surface. The six checks a
+// Every one of them is a step of the display scale, which styles/themes/dark.css turns the
+// other way up, so the same step reads against either surface. The six checks a
 // categorical palette has to pass — lightness band, chroma floor, separation under colour
 // blindness, separation under full colour vision, and contrast against the surface — were run
 // over both themes and pass for all five.

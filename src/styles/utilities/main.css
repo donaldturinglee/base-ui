@@ -1,0 +1,5 @@
+/* The tokens everything else is measured against: the size, spacing, motion, depth and
+   border scales, and the shape a control is drawn to. Alongside them sit the few class names
+   Tailwind has no namespace of its own to build, and the control sizes that answer the
+   pointer, which are media queries and so cannot live among the tokens */
+@import "./variables.css";

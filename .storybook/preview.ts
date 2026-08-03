@@ -3,7 +3,7 @@ import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import "../src/styles/main.css";
 
 const preview: Preview = {
-    // The design tokens in themes.css are scoped to [data-theme], so stories only
+    // The design tokens in styles/themes are scoped to [data-theme], so stories only
     // resolve them once the attribute is set on the preview
     decorators: [
         withThemeByDataAttribute<Renderer>({

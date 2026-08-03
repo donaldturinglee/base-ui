@@ -1,0 +1,9 @@
+/* What a page is drawn on before any component has said anything: the motion it carries, the
+   type it is set in, and the reset its elements start from.
+
+   Only the reset brings rules of its own, and they are drawn into the base layer so that a
+   utility or a component class still wins over them. The other two bring tokens and class
+   names, which are placed by the layers those belong to rather than by this import */
+@import "./animations.css";
+@import "./typography.css";
+@import "./reset.css" layer(base);
