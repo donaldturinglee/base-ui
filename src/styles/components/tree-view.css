@@ -1,0 +1,236 @@
+@layer components {
+    .tree-view {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* The lines running down the tree are only drawn while it is being used, so that a tree
+       at rest reads as a list rather than as a diagram. One inherited property is flipped
+       rather than every line being matched again, which a tree of thousands of rows feels */
+    .tree-view-hover {
+        @media (hover: hover) {
+            --tree-view-line-color: transparent;
+
+            &:hover,
+            &:focus-within {
+                --tree-view-line-color: var(--border-color-muted);
+            }
+        }
+    }
+
+    .tree-view-coarse {
+        @media (pointer: coarse) {
+            --tree-view-line-color: var(--border-color-muted);
+        }
+    }
+
+    /* The row itself carries no focus ring; the box drawn inside it does, so that the ring
+       follows what can be seen rather than the whole width of the tree */
+    .tree-view-item {
+        list-style: none;
+        overflow-clip-margin: var(--base-size-8);
+        outline: none;
+
+        &:focus-visible > span {
+            box-shadow: 0 0 0 var(--border-width-thick) var(--foreground-color-accent);
+        }
+    }
+
+    /* The columns are, in order: the step in from the edge, a leading action, the chevron,
+       the label, and anything standing at the end of the row */
+    .tree-view-item-container {
+        --tree-view-toggle-width: 1rem;
+        --tree-view-item-height: 2rem;
+        --tree-view-item-line-height: 1.3rem;
+        --tree-view-spacer-width: calc(
+            (var(--tree-view-level) - 1) * (var(--tree-view-toggle-width) / 2)
+        );
+
+        position: relative;
+        display: grid;
+        grid-template-columns:
+            var(--tree-view-spacer-width) var(--tree-view-leading-action-width, 0px)
+            var(--tree-view-toggle-width) 1fr auto;
+        width: 100%;
+        cursor: pointer;
+        overflow-clip-margin: var(--base-size-8);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+
+        &:hover {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        @media (pointer: coarse) {
+            --tree-view-toggle-width: 1.5rem;
+            --tree-view-item-height: 2.75rem;
+        }
+    }
+
+    /* A flat tree draws every row against the same edge, since there is no depth to say */
+    [data-omit-spacer="true"] .tree-view-item-container-flat {
+        grid-template-columns: 0 var(--tree-view-leading-action-width, 0px) 0 1fr auto;
+    }
+
+    .tree-view-item-container-has-leading-action {
+        --tree-view-leading-action-width: 1.5rem;
+    }
+
+    /* The row the reader is on is filled, and marked in the margin so it can be picked out at
+       a glance down a long tree */
+    .tree-view-item-container-current {
+        background-color: var(--control-transparent-background-color-selected);
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: calc(50% - var(--base-size-12));
+            left: calc(-1 * var(--base-size-8));
+            width: var(--base-size-4);
+            height: var(--base-size-24);
+            background-color: var(--foreground-color-accent);
+            border-radius: var(--border-radius-medium);
+        }
+    }
+
+    /* A row standing in for what is being fetched is not something to reach for */
+    .tree-view-item-container-loading:hover {
+        cursor: default;
+        background-color: transparent;
+    }
+
+    .tree-view-item-spacer {
+        grid-column: 1;
+        display: flex;
+    }
+
+    .tree-view-item-level-lines {
+        display: flex;
+        width: 100%;
+    }
+
+    /* Only ever drawn while the tree is being used, so that a tree at rest reads as a list
+       rather than as a diagram */
+    .tree-view-item-level-line {
+        width: 100%;
+        height: 100%;
+        border-style: solid;
+        border-width: 0;
+        border-right-width: var(--border-width-thin);
+        border-right-color: var(--tree-view-line-color, transparent);
+    }
+
+    /* The chevron sits against the top of a row that runs to more than one line, so that it
+       stays beside the first line of the label */
+    .tree-view-item-toggle {
+        grid-column: 3;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        height: 100%;
+        padding-top: calc(var(--tree-view-item-height) / 2 - var(--base-size-12) / 2);
+        color: var(--foreground-color-muted);
+    }
+
+    .tree-view-item-toggle-hover:hover {
+        background-color: var(--control-transparent-background-color-hover);
+    }
+
+    /* A chevron at the first level is flush with the start of the row, so it takes the row's
+       own corners */
+    .tree-view-item-toggle-end {
+        border-start-start-radius: var(--border-radius-medium);
+        border-end-start-radius: var(--border-radius-medium);
+    }
+
+    .tree-view-item-content {
+        grid-column: 4;
+        display: flex;
+        gap: var(--stack-gap-condensed);
+        height: 100%;
+        padding-block: calc((var(--tree-view-item-height) - var(--tree-view-item-line-height)) / 2);
+        padding-inline: var(--base-size-8);
+        line-height: var(--tree-view-item-line-height);
+    }
+
+    /* A long label either runs off the end of the row or onto another line, which the tree as
+       a whole decides */
+    .tree-view-item-label {
+        flex-grow: 1;
+        flex-basis: auto;
+        width: 0;
+
+        [data-truncate-text="true"] & {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        [data-truncate-text="false"] & {
+            word-break: break-word;
+        }
+    }
+
+    /* As tall as one line of the label, so a visual sits on the label's first line however
+       many lines the item runs to */
+    .tree-view-visual {
+        display: flex;
+        align-items: center;
+        height: var(--tree-view-item-line-height);
+        color: var(--foreground-color-muted);
+    }
+
+    .tree-view-directory-icon {
+        display: grid;
+        color: var(--tree-view-item-leading-visual-icon-color-rest);
+    }
+
+    /* Stands in the row's second column, which is only given a width where there is a leading
+       action to put in it */
+    .tree-view-leading-action {
+        grid-column: 2;
+        display: flex;
+        color: var(--foreground-color-muted);
+
+        & > button {
+            flex-shrink: 1;
+        }
+    }
+
+    /* Stands at the end of the row, in the column left over once everything else has been
+       given its width */
+    .tree-view-trailing-action {
+        grid-column: 5;
+        display: flex;
+        color: var(--foreground-color-muted);
+    }
+
+    .tree-view-sub-tree {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* A row standing in for one still being fetched, drawn at the height a real row would
+       stand at so that the tree does not jump as they arrive */
+    .tree-view-skeleton-row {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        height: 2rem;
+
+        @media (pointer: coarse) {
+            height: 2.75rem;
+        }
+    }
+
+    .tree-view-skeleton-text {
+        width: var(--tree-view-skeleton-width);
+    }
+
+    .tree-view-muted {
+        color: var(--foreground-color-muted);
+    }
+}

@@ -6,27 +6,18 @@ import type { AvatarProps, AvatarShape } from "./Avatar.types";
 
 export const DEFAULT_AVATAR_SIZE = 20;
 
-const avatarVariants = cva(
-    [
-        // `overflow-hidden` keeps the page layout intact in Firefox should the image fail to load
-        "inline-block overflow-hidden align-middle leading-none [box-shadow:0_0_0_var(--border-width-thin)_var(--avatar-border-color)]",
-        "size-[var(--avatar-size-regular)]",
-    ],
-    {
-        variants: {
-            shape: {
-                circle: "rounded-[var(--border-radius-full)]",
-                // The radius grows with the avatar, so small squares stay only slightly rounded
-                square: "rounded-[clamp(var(--base-size-4),calc(var(--avatar-size-regular)_-_var(--base-size-24)),var(--border-radius-medium))]",
-            } satisfies Record<AvatarShape, string>,
-            // The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular one
-            responsive: {
-                true: "max-medium:size-[var(--avatar-size-narrow,var(--avatar-size-regular))] xxlarge:size-[var(--avatar-size-wide,var(--avatar-size-regular))]",
-                false: "",
-            },
+const avatarVariants = cva("avatar", {
+    variants: {
+        shape: {
+            circle: "avatar-circle",
+            square: "avatar-square",
+        } satisfies Record<AvatarShape, string>,
+        responsive: {
+            true: "avatar-responsive",
+            false: "",
         },
     },
-);
+});
 
 function Avatar<As extends React.ElementType = "img">(
     props: AvatarProps<As>,

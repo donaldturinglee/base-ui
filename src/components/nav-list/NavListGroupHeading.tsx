@@ -9,9 +9,7 @@ import type { FCWithSlotMarker } from "../../utilities/types/slots";
 import type { NavListGroupHeadingProps } from "./NavList.types";
 
 const classes = {
-    // A heading that is a link is still read as a heading, so it is left looking like one
-    // until it is reached for
-    root: "[&_a]:[color:inherit] [&_a]:[text-decoration:inherit] [&_a:hover]:underline",
+    root: "nav-list-group-heading",
 };
 
 // Names a group. This is what `NavList.Group`'s `title` builds, and is written out instead

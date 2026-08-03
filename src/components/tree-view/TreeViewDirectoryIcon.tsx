@@ -3,7 +3,7 @@ import { FolderOpenRegular, FolderRegular } from "@gamecrafters/base-ui-icons";
 import { TreeViewItemContext } from "./TreeViewContext";
 
 const classes = {
-    root: "grid [color:var(--tree-view-item-leading-visual-icon-color-rest)]",
+    root: "tree-view-directory-icon",
 };
 
 // A folder that stands open while the item it names is open, which is how a tree of files

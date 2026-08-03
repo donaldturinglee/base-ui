@@ -1,0 +1,80 @@
+@layer components {
+    .radio-group {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .radio-group-legend {
+        padding: 0;
+    }
+
+    .radio-group-legend-visible {
+        margin-bottom: var(--base-size-8);
+    }
+
+    /* The circles stack, each one spaced from the last */
+    .radio-group-body {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        & > * + * {
+            margin-top: var(--base-size-8);
+        }
+    }
+
+    .radio-group-label {
+        display: block;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .radio-group-label-disabled {
+        color: var(--foreground-color-muted);
+    }
+
+    .radio-group-label-required {
+        margin-inline-start: var(--base-size-4);
+    }
+
+    .radio-group-caption {
+        display: block;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* The wrapper the group stands the validation message in */
+    .radio-group-validation-slot {
+        margin-top: var(--base-size-8);
+    }
+
+    .radio-group-validation {
+        display: flex;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+
+        & a {
+            text-decoration: underline;
+            color: currentcolor;
+        }
+    }
+
+    .radio-group-validation-success {
+        color: var(--foreground-color-success);
+    }
+
+    .radio-group-validation-error {
+        color: var(--foreground-color-danger);
+    }
+
+    .radio-group-validation-icon {
+        flex-shrink: 0;
+        width: var(--base-size-12);
+        height: var(--base-size-12);
+        margin-top: var(--base-size-2);
+        margin-inline-end: var(--base-size-4);
+    }
+}

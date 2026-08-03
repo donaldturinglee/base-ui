@@ -4,11 +4,10 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { HiddenProps, HiddenViewport } from "./Hidden.types";
 
 const classes = {
-    // The ranges are exclusive, so hiding at one viewport leaves the other two untouched
     when: {
-        narrow: "max-medium:hidden",
-        regular: "medium:max-xxlarge:hidden",
-        wide: "xxlarge:hidden",
+        narrow: "hidden-narrow",
+        regular: "hidden-regular",
+        wide: "hidden-wide",
     } satisfies Record<HiddenViewport, string>,
 };
 

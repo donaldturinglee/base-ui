@@ -234,7 +234,7 @@ describe("AnchoredOverlay", () => {
         // The overlay is measured as it opens, so its coordinates always change once. A
         // transition would carry it into place from the corner it was first rendered in
         renderAnchoredOverlay();
-        expect(overlay()).toHaveClass("transition-none");
+        expect(overlay()).toHaveClass("anchored-overlay");
     });
 
     it("tags the width and height it was given", () => {

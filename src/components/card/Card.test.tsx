@@ -108,7 +108,7 @@ describe("Card", () => {
             </Card>,
         );
         const header = container.querySelector('[data-component="Card.Image"]')?.parentElement;
-        expect(header).toHaveClass("mt-[calc(-1*var(--stack-padding-spacious))]");
+        expect(header).toHaveClass("card-header-edge-to-edge");
     });
 
     it("keeps the padding around an icon", () => {
@@ -119,7 +119,7 @@ describe("Card", () => {
             </Card>,
         );
         const header = container.querySelector('[data-component="Card.Icon"]')?.parentElement;
-        expect(header).not.toHaveClass("mt-[calc(-1*var(--stack-padding-spacious))]");
+        expect(header).not.toHaveClass("card-header-edge-to-edge");
     });
 
     it("renders metadata", () => {
@@ -182,8 +182,8 @@ describe("Card", () => {
         expect(card).toHaveAttribute("data-padding", "normal");
         expect(card).toHaveAttribute("data-border-radius", "large");
         expect(card).toHaveAttribute("data-layout", "default");
-        expect(card).toHaveClass("p-[var(--stack-padding-spacious)]");
-        expect(card).toHaveClass("rounded-[var(--border-radius-large)]");
+        expect(card).toHaveClass("card-padding-normal");
+        expect(card).toHaveClass("card-radius-large");
     });
 
     it("respects the padding prop", () => {
@@ -194,7 +194,7 @@ describe("Card", () => {
         );
         const card = screen.getByTestId("card");
         expect(card).toHaveAttribute("data-padding", "none");
-        expect(card).toHaveClass("p-0");
+        expect(card).toHaveClass("card-padding-none");
     });
 
     it("respects the borderRadius prop", () => {
@@ -205,7 +205,7 @@ describe("Card", () => {
         );
         const card = screen.getByTestId("card");
         expect(card).toHaveAttribute("data-border-radius", "medium");
-        expect(card).toHaveClass("rounded-[var(--border-radius-medium)]");
+        expect(card).toHaveClass("card-radius-medium");
     });
 
     it("lays a compact card out in a row with tighter padding", () => {
@@ -217,9 +217,8 @@ describe("Card", () => {
         );
         const card = screen.getByTestId("card");
         expect(card).toHaveAttribute("data-layout", "compact");
-        expect(card).toHaveClass("flex", "items-start");
-        expect(card).toHaveClass("p-[var(--stack-padding-normal)]");
-        expect(card).not.toHaveClass("p-[var(--stack-padding-spacious)]");
+        expect(card).toHaveClass("card-compact");
+        expect(card).toHaveClass("card-compact-padding-normal");
     });
 
     it("drops the icon tile in a compact card", () => {
@@ -230,7 +229,7 @@ describe("Card", () => {
             </Card>,
         );
         expect(container.querySelector('[data-component="Card.Icon"]')).not.toHaveClass(
-            "bg-background-muted",
+            "card-icon-tile",
         );
     });
 
@@ -242,7 +241,7 @@ describe("Card", () => {
             </Card>,
         );
         expect(container.querySelector('[data-component="Card.Icon"]')).toHaveClass(
-            "bg-background-muted",
+            "card-icon-tile",
         );
     });
 
@@ -253,7 +252,7 @@ describe("Card", () => {
             </Card>,
         );
         expect(container.querySelector('[data-component="Card.Heading"]')).toHaveClass(
-            "[font-size:var(--text-body-size-medium)]",
+            "card-heading-compact",
         );
     });
 

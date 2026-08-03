@@ -4,9 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DetailsSummaryProps } from "./Details.types";
 
 const classes = {
-    // The marker is taken away here as well as on the disclosure, so a summary that is not a
-    // child of one is left with only what it is made of either way
-    root: "cursor-pointer list-none [&::-webkit-details-marker]:hidden",
+    root: "details-summary",
 };
 
 // What the disclosure is opened and closed from, and the one part of it that is always read

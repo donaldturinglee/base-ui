@@ -5,9 +5,7 @@ import { BannerContext } from "./BannerContext";
 import type { BannerTitleProps } from "./Banner.types";
 
 const classes = {
-    // The type is the banner's own, so only the weight sets the title apart from the text
-    // below it
-    root: "m-0 [font-size:inherit] [font-weight:var(--base-text-weight-semibold)]",
+    root: "banner-title",
 };
 
 function BannerTitle(

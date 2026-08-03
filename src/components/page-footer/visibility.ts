@@ -4,11 +4,12 @@ export const viewports: PageFooterViewport[] = ["narrow", "regular", "wide"];
 
 const classes = {
     all: "hidden",
-    // The ranges are exclusive, so hiding at one viewport leaves the other two untouched
+    // The same ranges the Hidden component is drawn from, since taking a part of the footer
+    // off the screen at a viewport is the same thing said in another place
     when: {
-        narrow: "max-medium:hidden",
-        regular: "medium:max-xxlarge:hidden",
-        wide: "xxlarge:hidden",
+        narrow: "hidden-narrow",
+        regular: "hidden-regular",
+        wide: "hidden-wide",
     } satisfies Record<PageFooterViewport, string>,
 };
 

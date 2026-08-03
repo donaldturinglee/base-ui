@@ -6,18 +6,13 @@ import { BreadcrumbsContext } from "./BreadcrumbsContext";
 import type { BreadcrumbsOverflow, BreadcrumbsProps } from "./Breadcrumbs.types";
 
 const classes = {
-    root: "flex w-full justify-between",
-    list: "flex items-center list-none m-0 p-0",
-    // A trail that wraps runs onto as many lines as it needs; one that collapses is held to
-    // a single line, and whatever no longer fits is moved into the menu
-    listWrap: "flex-wrap",
-    listMenu: "flex-nowrap whitespace-nowrap",
-    item: "group/crumb inline-grid grid-flow-col items-center [flex:0_99999_auto] [min-width:auto] whitespace-nowrap list-none",
-    // The menu is the one step that is allowed to run onto another line
-    itemMenu: "whitespace-normal",
-    // The last step of the trail leads nowhere, so nothing is drawn after it
-    separator:
-        "flex self-center justify-center select-none whitespace-nowrap text-foreground-muted group-last/crumb:hidden",
+    root: "breadcrumbs",
+    list: "breadcrumbs-list",
+    listWrap: "breadcrumbs-list-wrap",
+    listMenu: "breadcrumbs-list-menu",
+    item: "breadcrumbs-item",
+    itemMenu: "breadcrumbs-item-menu",
+    separator: "breadcrumbs-separator",
 };
 
 // The width a small icon button takes, used until the menu button has been measured

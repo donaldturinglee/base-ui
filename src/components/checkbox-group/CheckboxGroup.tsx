@@ -12,12 +12,11 @@ import CheckboxGroupValidation from "./CheckboxGroupValidation";
 import type { CheckboxGroupProps } from "./CheckboxGroup.types";
 
 const classes = {
-    root: "p-0 m-0 border-none",
-    legend: "p-0",
-    legendVisible: "mb-[var(--base-size-8)]",
-    // The boxes stack, each one spaced from the last
-    body: "flex flex-col list-none p-0 m-0 [&>*+*]:mt-[var(--base-size-8)]",
-    validation: "mt-[var(--base-size-8)]",
+    root: "checkbox-group",
+    legend: "checkbox-group-legend",
+    legendVisible: "checkbox-group-legend-visible",
+    body: "checkbox-group-body",
+    validation: "checkbox-group-validation-slot",
     hidden: "sr-only",
 };
 

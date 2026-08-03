@@ -85,33 +85,28 @@ const iconLabels = {
     alertDismissed: "Alert",
 } satisfies Record<StateLabelStatus, string>;
 
-const stateLabelVariants = cva(
-    "inline-flex items-center text-center leading-[1rem] rounded-[var(--border-radius-full)] text-foreground-on-emphasis [font-weight:var(--base-text-weight-semibold)]",
-    {
-        variants: {
-            size: {
-                small: "px-[var(--base-size-8)] py-[var(--base-size-4)] [font-size:var(--text-body-size-small)]",
-                medium: "px-[var(--base-size-12)] py-[var(--base-size-8)] [font-size:var(--text-body-size-medium)]",
-            } satisfies Record<StateLabelSize, string>,
-            tone: {
-                open: "bg-background-open-emphasis [box-shadow:var(--box-shadow-thin)_var(--border-color-open-emphasis)]",
-                closed: "bg-background-closed-emphasis [box-shadow:var(--box-shadow-thin)_var(--border-color-closed-emphasis)]",
-                done: "bg-background-done-emphasis [box-shadow:var(--box-shadow-thin)_var(--border-color-done-emphasis)]",
-                draft: "bg-background-draft-emphasis [box-shadow:var(--box-shadow-thin)_var(--border-color-draft-emphasis)]",
-                attention:
-                    "bg-background-attention-emphasis [box-shadow:var(--box-shadow-thin)_var(--border-color-attention-emphasis)]",
-                neutral:
-                    "bg-background-neutral-emphasis [box-shadow:var(--box-shadow-thin)_var(--border-color-neutral-emphasis)]",
-            } satisfies Record<StateLabelTone, string>,
-        },
-    },
-);
-
-const stateLabelIconVariants = cva("mr-[var(--base-size-4)]", {
+const stateLabelVariants = cva("state-label", {
     variants: {
         size: {
-            small: "size-[1em]",
-            medium: "size-[var(--base-size-16)]",
+            small: "state-label-small",
+            medium: "state-label-medium",
+        } satisfies Record<StateLabelSize, string>,
+        tone: {
+            open: "state-label-open",
+            closed: "state-label-closed",
+            done: "state-label-done",
+            draft: "state-label-draft",
+            attention: "state-label-attention",
+            neutral: "state-label-neutral",
+        } satisfies Record<StateLabelTone, string>,
+    },
+});
+
+const stateLabelIconVariants = cva("state-label-visual", {
+    variants: {
+        size: {
+            small: "state-label-visual-small",
+            medium: "state-label-visual-medium",
         } satisfies Record<StateLabelSize, string>,
     },
 });

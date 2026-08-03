@@ -3,22 +3,16 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { AlertProps, AlertVariant } from "./Alert.types";
 
-const alertVariants = cva(
-    "relative mt-0 p-[var(--base-size-16)] text-foreground-default border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-medium)] [&_p:last-child]:mb-0 [&_svg]:mr-[var(--base-size-8)]",
-    {
-        variants: {
-            variant: {
-                default:
-                    "bg-background-accent-muted border-border-accent-muted [&_svg]:text-foreground-accent",
-                success:
-                    "bg-background-success-muted border-border-success-muted [&_svg]:text-foreground-success",
-                warning:
-                    "bg-background-attention-muted border-border-attention-muted [&_svg]:text-foreground-attention",
-                danger: "bg-background-danger-muted border-border-danger-muted [&_svg]:text-foreground-danger",
-            } satisfies Record<AlertVariant, string>,
-        },
+const alertVariants = cva("alert", {
+    variants: {
+        variant: {
+            default: "alert-default",
+            success: "alert-success",
+            warning: "alert-warning",
+            danger: "alert-danger",
+        } satisfies Record<AlertVariant, string>,
     },
-);
+});
 
 function Alert<As extends React.ElementType = "div">(
     props: AlertProps<As>,

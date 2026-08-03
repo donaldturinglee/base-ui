@@ -15,34 +15,15 @@ import { usePaneWidth } from "./usePaneWidth";
 import type { PageLayoutPaneProps } from "./PageLayout.types";
 
 const classes = {
-    wrapper: "flex w-full mx-0",
-    hidden: "data-[is-hidden=true]:hidden max-medium:data-[is-hidden-narrow=true]:hidden medium:data-[is-hidden-regular=true]:hidden xxlarge:data-[is-hidden-wide=true]:hidden",
-    // Below the regular range the pane stacks with the content rather than standing beside
-    // it, so the position decides which side of the fold it falls on
-    narrowPosition:
-        "max-medium:data-[position=end]:mt-[var(--spacing-row)] max-medium:data-[position=end]:flex-col max-medium:data-[position=end]:[order:var(--region-order-pane-end)] max-medium:data-[position=start]:mb-[var(--spacing-row)] max-medium:data-[position=start]:flex-col-reverse max-medium:data-[position=start]:[order:var(--region-order-pane-start)] max-medium:data-[position-narrow=end]:mt-[var(--spacing-row)] max-medium:data-[position-narrow=end]:flex-col max-medium:data-[position-narrow=end]:[order:var(--region-order-pane-end)] max-medium:data-[position-narrow=start]:mb-[var(--spacing-row)] max-medium:data-[position-narrow=start]:flex-col-reverse max-medium:data-[position-narrow=start]:[order:var(--region-order-pane-start)]",
-    // From the regular range up it takes only the width it needs, and stands beside the
-    // content on whichever side it was given
-    regular: "medium:w-auto medium:my-0",
-    regularPosition:
-        "medium:data-[position=end]:ms-[var(--spacing-column)] medium:data-[position=end]:flex-row-reverse medium:data-[position=end]:[order:var(--region-order-pane-end)] medium:data-[position=start]:me-[var(--spacing-column)] medium:data-[position=start]:flex-row medium:data-[position=start]:[order:var(--region-order-pane-start)] medium:data-[position-regular=end]:ms-[var(--spacing-column)] medium:data-[position-regular=end]:flex-row-reverse medium:data-[position-regular=end]:[order:var(--region-order-pane-end)] medium:data-[position-regular=start]:me-[var(--spacing-column)] medium:data-[position-regular=start]:flex-row medium:data-[position-regular=start]:[order:var(--region-order-pane-start)]",
-    widePosition:
-        "xxlarge:data-[position-wide=end]:ms-[var(--spacing-column)] xxlarge:data-[position-wide=end]:flex-row-reverse xxlarge:data-[position-wide=end]:[order:var(--region-order-pane-end)] xxlarge:data-[position-wide=start]:me-[var(--spacing-column)] xxlarge:data-[position-wide=start]:flex-row xxlarge:data-[position-wide=start]:[order:var(--region-order-pane-start)]",
-    sticky: "medium:data-[sticky]:sticky medium:data-[sticky]:top-[var(--offset-header)] medium:data-[sticky]:max-h-screen",
-    // The pane scrolls on its own only once it stands beside the content
-    pane: "w-[var(--pane-width-size)] p-[var(--spacing)] medium:overflow-auto",
-    // A pane the reader can resize is held between its bounds, which JavaScript keeps up to
-    // date as the viewport changes
-    paneResizable:
-        "data-[resizable]:w-full medium:data-[resizable]:w-[clamp(var(--pane-min-width),var(--pane-width),var(--pane-max-width))]",
-    dragging:
-        "data-[dragging=true]:[contain:layout_style_paint] data-[dragging=true]:pointer-events-none",
-    // The horizontal divider only shows where the pane has stacked, so its spacing follows
-    // the side it stacked on
-    horizontalDivider:
-        "data-[position=start]:mt-[var(--spacing)] data-[position=end]:mb-[var(--spacing)] max-medium:data-[position-narrow=start]:mt-[var(--spacing)] max-medium:data-[position-narrow=start]:mb-0 max-medium:data-[position-narrow=end]:mb-[var(--spacing)] max-medium:data-[position-narrow=end]:mt-0 medium:data-[position-regular=start]:mt-[var(--spacing)] medium:data-[position-regular=start]:mb-0 medium:data-[position-regular=end]:mb-[var(--spacing)] medium:data-[position-regular=end]:mt-0 xxlarge:data-[position-wide=start]:mt-[var(--spacing)] xxlarge:data-[position-wide=start]:mb-0 xxlarge:data-[position-wide=end]:mb-[var(--spacing)] xxlarge:data-[position-wide=end]:mt-0",
-    verticalDivider:
-        "data-[position=start]:ms-[var(--spacing)] data-[position=end]:me-[var(--spacing)] max-medium:data-[position-narrow=start]:ms-[var(--spacing)] max-medium:data-[position-narrow=start]:me-0 max-medium:data-[position-narrow=end]:me-[var(--spacing)] max-medium:data-[position-narrow=end]:ms-0 medium:data-[position-regular=start]:ms-[var(--spacing)] medium:data-[position-regular=start]:me-0 medium:data-[position-regular=end]:me-[var(--spacing)] medium:data-[position-regular=end]:ms-0 xxlarge:data-[position-wide=start]:ms-[var(--spacing)] xxlarge:data-[position-wide=start]:me-0 xxlarge:data-[position-wide=end]:me-[var(--spacing)] xxlarge:data-[position-wide=end]:ms-0",
+    wrapper: "page-layout-pane-wrapper",
+    hidden: "page-layout-hidden",
+    position: "page-layout-pane-position",
+    sticky: "page-layout-pane-sticky",
+    pane: "page-layout-pane",
+    paneResizable: "page-layout-pane-resizable",
+    dragging: "page-layout-dragging",
+    horizontalDivider: "page-layout-pane-horizontal-divider",
+    verticalDivider: "page-layout-pane-vertical-divider",
 };
 
 function PageLayoutPane(
@@ -133,10 +114,7 @@ function PageLayoutPane(
             className={classNames(
                 classes.wrapper,
                 classes.hidden,
-                classes.narrowPosition,
-                classes.regular,
-                classes.regularPosition,
-                classes.widePosition,
+                classes.position,
                 classes.sticky,
                 className,
             )}

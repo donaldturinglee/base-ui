@@ -4,15 +4,9 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TimelineClipSidebar, TimelineProps } from "./Timeline.types";
 
 const classes = {
-    // The timeline responds to the room it is given rather than to the viewport, so it reads
-    // the same inside a side panel as it does across a page
-    root: "@container/timeline flex flex-col list-none p-0 m-0",
-    // The rail runs the height of each item, so clipping it means taking the padding off the
-    // item at that end and bringing its avatar back up to meet the badge
-    clipStart:
-        "[&>[data-timeline-item]:first-child]:pt-0 [&>[data-timeline-item]:first-child_[data-component='Timeline.Avatar']]:top-[var(--base-size-16)] [&>[data-timeline-item][data-condensed]:first-child]:before:top-[var(--base-size-12)] [&>[data-timeline-item][data-condensed]:first-child_[data-component='Timeline.Avatar']]:top-[calc(var(--base-size-8)_+_var(--base-size-8))]",
-    clipEnd:
-        "[&>[data-timeline-item]:last-child]:pb-0 [&>[data-timeline-item][data-condensed]:last-child]:before:h-[var(--base-size-12)]",
+    root: "timeline",
+    clipStart: "timeline-clip-start",
+    clipEnd: "timeline-clip-end",
 };
 
 // `true` trims both ends, and either end can be named on its own

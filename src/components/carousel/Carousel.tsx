@@ -9,13 +9,9 @@ import CarouselSlide from "./CarouselSlide";
 import type { CarouselChangeReason, CarouselProps } from "./Carousel.types";
 
 const classes = {
-    root: "flex flex-col gap-[var(--stack-gap-condensed)]",
-    // The window shows one slide and clips the rest of the run standing either side of it
-    viewport: "relative overflow-hidden rounded-[var(--border-radius-medium)]",
-    // The slides are laid out in one long row and the row is moved along by a slide at a time.
-    // Which way it moves is the reading direction's, so the run is stepped through the way the
-    // page is read rather than always leftwards
-    track: "flex [--carousel-step:-1] rtl:[--carousel-step:1] [translate:calc(var(--carousel-step)_*_var(--carousel-index)_*_100%)]",
+    root: "carousel",
+    viewport: "carousel-viewport",
+    track: "carousel-track",
     // The run moves where a reader is happy to watch it move, and cuts straight to the slide
     // where they are not
     motion: "motion-safe:[transition:translate_var(--motion-transition-state-change)]",

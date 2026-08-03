@@ -6,8 +6,7 @@ import { AccordionContext } from "./AccordionContext";
 import type { AccordionProps } from "./Accordion.types";
 
 const classes = {
-    // A rule above the first item, with each item carrying the one below it, closes the set off
-    root: "block border-t-[length:var(--border-width-thin)] border-t-border-muted",
+    root: "accordion",
 };
 
 const accordionSelector = "[data-component='Accordion']";

@@ -1,0 +1,54 @@
+@layer components {
+    /* The top margin centres the circle against a 20px line of label text beside it */
+    .radio {
+        position: relative;
+        display: grid;
+        place-content: center;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        margin: 0;
+        margin-top: var(--base-size-2);
+        cursor: pointer;
+        appearance: none;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-emphasis);
+        border-radius: var(--border-radius-full);
+        transition:
+            background-color var(--motion-transition-hover),
+            border-color var(--motion-transition-hover);
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* The dot is the fill left showing inside a thickened border rather than a mark of its
+       own, because an input cannot have children. The border doubles as the filled circle so
+       the shape does not shift in dark high contrast */
+    .radio-checked:checked {
+        background-color: var(--control-checked-foreground-color-rest);
+        border-width: var(--border-width-thicker);
+        border-color: var(--control-checked-background-color-rest);
+
+        @media (forced-colors: active) {
+            background-color: canvastext;
+            border-color: canvastext;
+        }
+    }
+
+    .radio-disabled {
+        &:disabled {
+            cursor: not-allowed;
+            background-color: var(--control-background-color-disabled);
+            border-color: var(--control-border-color-disabled);
+        }
+
+        &:checked:disabled {
+            background-color: var(--control-checked-foreground-color-disabled);
+            border-color: var(--control-checked-background-color-disabled);
+        }
+    }
+}

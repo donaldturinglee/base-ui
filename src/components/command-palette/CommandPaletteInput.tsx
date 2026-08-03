@@ -19,7 +19,7 @@ const classes = {
     // ordinary field, and its padding stands inside its margin far enough that the magnifier
     // still starts where the headings and the items below it start, so the whole panel reads
     // down one edge
-    root: "shrink-0 w-auto mt-[var(--base-size-8)] mx-[var(--base-size-8)] min-h-[var(--control-xlarge-size)] ps-[var(--base-size-8)] pe-[var(--base-size-8)] border-0 bg-background-muted [box-shadow:none] [font-size:var(--text-body-size-large)] focus-within:outline-none",
+    root: "command-palette-input",
 };
 
 // What the palette is narrowed by. It keeps focus the whole time the palette is open and

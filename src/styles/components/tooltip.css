@@ -1,0 +1,85 @@
+@layer components {
+    /* The tooltip lives in the top layer as a popover, so it is laid out against the viewport
+       and the coordinates the component works out are all it needs */
+    .tooltip {
+        display: none;
+        position: absolute;
+        inset: auto;
+        margin: auto;
+        width: max-content;
+        max-width: 250px;
+        overflow: visible;
+        padding: var(--overlay-padding-block-condensed) var(--overlay-padding-condensed);
+        text-align: center;
+        text-wrap: balance;
+        white-space: normal;
+        overflow-wrap: break-word;
+        background-color: var(--tooltip-background-color);
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        color: var(--tooltip-foreground-color);
+        font: var(--text-body-shorthand-small);
+        -webkit-font-smoothing: subpixel-antialiased;
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    .tooltip-open:popover-open {
+        display: block;
+    }
+
+    /* A browser without the popover API is served by the polyfill, which marks an open
+       popover with a class named `:popover-open` rather than with the pseudo-class. It
+       rewrites the selectors it is asked for at runtime, but not the ones already in a
+       stylesheet, so that state is matched here as well. The class is matched as an attribute
+       rather than with `.\:popover-open`, since the escape a class selector needs does not
+       survive being written as a class name of its own */
+    .tooltip-open-polyfilled[class~=":popover-open"] {
+        display: block;
+    }
+
+    /* The bridge spans the gap the tooltip stands off by, so the pointer can travel from the
+       trigger onto the tooltip without it closing on the way */
+    .tooltip-bridge::after {
+        content: "";
+        position: absolute;
+        display: block;
+        inset-inline: 0;
+        height: var(--overlay-offset);
+    }
+
+    .tooltip-bridge-vertical {
+        &[data-direction="n"]::after,
+        &[data-direction="ne"]::after,
+        &[data-direction="nw"]::after {
+            top: 100%;
+        }
+
+        &[data-direction="s"]::after,
+        &[data-direction="se"]::after,
+        &[data-direction="sw"]::after {
+            bottom: 100%;
+        }
+    }
+
+    /* Standing to one side, the bridge runs down the tooltip rather than across it */
+    .tooltip-bridge-horizontal {
+        &[data-direction="e"]::after {
+            inset-inline: auto;
+            right: 100%;
+            bottom: 0;
+            width: var(--overlay-offset);
+            height: 100%;
+        }
+
+        &[data-direction="w"]::after {
+            inset-inline: auto;
+            left: 100%;
+            bottom: 0;
+            width: var(--overlay-offset);
+            height: 100%;
+        }
+    }
+}

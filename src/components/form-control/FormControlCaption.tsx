@@ -5,8 +5,8 @@ import { FormControlContext } from "./FormControlContext";
 import type { FormControlCaptionProps } from "./FormControl.types";
 
 const classes = {
-    root: "block [font-size:var(--text-body-size-small)] text-foreground-muted",
-    disabled: "[color:var(--control-foreground-color-disabled)]",
+    root: "form-control-caption",
+    disabled: "form-control-caption-disabled",
 };
 
 function FormControlCaption(

@@ -7,9 +7,8 @@ import type { NavListSubNavProps } from "./NavList.types";
 const classes = {
     // Stepped in from the item that opens it, so that a glance down the list says which
     // items belong to which. The step compounds as the lists nest
-    root: "list-none m-0 p-0 mt-[var(--base-size-2)] ps-[var(--base-size-16)]",
-    // An item standing under another is drawn a little quieter than the one that opens it
-    items: "[&_[data-component='ActionList.Item.Label']]:[font-size:var(--text-body-size-small)]",
+    root: "nav-list-sub-nav",
+    items: "nav-list-sub-nav-items",
 };
 
 // How deep the lists are allowed to nest. Past this an information architecture is better

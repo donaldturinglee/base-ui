@@ -40,10 +40,7 @@ describe("SkeletonAvatar", () => {
         expect(skeleton).toHaveStyle({ "--avatar-size-narrow": "16px" });
         expect(skeleton).toHaveStyle({ "--avatar-size-regular": "24px" });
         expect(skeleton).toHaveStyle({ "--avatar-size-wide": "32px" });
-        expect(skeleton).toHaveClass(
-            "max-medium:size-[var(--avatar-size-narrow,var(--avatar-size-regular))]",
-            "xxlarge:size-[var(--avatar-size-wide,var(--avatar-size-regular))]",
-        );
+        expect(skeleton).toHaveClass("skeleton-avatar-responsive");
     });
 
     it("falls back to the default size when a responsive value leaves out a range", () => {
@@ -57,45 +54,34 @@ describe("SkeletonAvatar", () => {
         render(<SkeletonAvatar data-testid="skeleton" />);
         const skeleton = screen.getByTestId("skeleton");
         expect(skeleton).not.toHaveAttribute("data-responsive");
-        expect(skeleton).not.toHaveClass(
-            "max-medium:size-[var(--avatar-size-narrow,var(--avatar-size-regular))]",
-        );
+        expect(skeleton).not.toHaveClass("skeleton-avatar-responsive");
     });
 
     it("rounds the avatar into a circle by default", () => {
         render(<SkeletonAvatar data-testid="skeleton" />);
         const skeleton = screen.getByTestId("skeleton");
         expect(skeleton).toHaveAttribute("data-shape", "circle");
-        expect(skeleton).toHaveClass("rounded-[var(--border-radius-full)]");
+        expect(skeleton).toHaveClass("skeleton-avatar-circle");
     });
 
     it("scales the corner radius with the avatar for the square shape", () => {
         render(<SkeletonAvatar shape="square" data-testid="skeleton" />);
         const skeleton = screen.getByTestId("skeleton");
         expect(skeleton).toHaveAttribute("data-shape", "square");
-        expect(skeleton).toHaveClass(
-            "rounded-[clamp(var(--base-size-4),calc(var(--avatar-size-regular)_-_var(--base-size-24)),var(--border-radius-medium))]",
-        );
+        expect(skeleton).toHaveClass("skeleton-avatar-square");
     });
 
-    it("drops the skeleton box radius in favour of the avatar shape", () => {
-        render(<SkeletonAvatar data-testid="skeleton" />);
-        expect(screen.getByTestId("skeleton")).not.toHaveClass(
-            "rounded-[var(--border-radius-small)]",
-        );
-    });
-
-    it("lays the avatar out inline rather than as a block", () => {
+    it("lays the avatar out inline, and rounds it, in place of what the box says", () => {
         render(<SkeletonAvatar data-testid="skeleton" />);
         const skeleton = screen.getByTestId("skeleton");
-        expect(skeleton).toHaveClass("inline-block");
-        expect(skeleton).not.toHaveClass("block");
+        expect(skeleton).toHaveClass("skeleton-box");
+        expect(skeleton).toHaveClass("skeleton-avatar");
     });
 
     it("keeps the loading treatment from the skeleton box", () => {
         render(<SkeletonAvatar data-testid="skeleton" />);
         const skeleton = screen.getByTestId("skeleton");
-        expect(skeleton).toHaveClass("bg-[var(--skeleton-loader-background-color)]");
+        expect(skeleton).toHaveClass("skeleton-box");
         expect(skeleton).toHaveClass("motion-safe:shimmer");
     });
 

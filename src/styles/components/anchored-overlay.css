@@ -1,0 +1,109 @@
+@layer components {
+    /* The overlay is laid out against the viewport, because that is what the anchor it
+       stands against is measured against. Where it ends up is carried in variables rather
+       than written straight onto the element, so that a narrow viewport can put it
+       somewhere else. Nothing on it is transitioned: it is measured as it opens, and a
+       transition would carry it into place from the corner it was first rendered in rather
+       than let it appear where it belongs */
+    .anchored-overlay {
+        position: fixed;
+        top: var(--anchored-overlay-top);
+        left: var(--anchored-overlay-left);
+        overflow: auto;
+        min-width: var(--overlay-width-xsmall);
+        max-height: 100dvh;
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        transition: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    .anchored-overlay-width-xsmall {
+        width: var(--overlay-width-xsmall);
+    }
+
+    .anchored-overlay-width-small {
+        width: var(--overlay-width-small);
+    }
+
+    .anchored-overlay-width-medium {
+        width: var(--overlay-width-medium);
+    }
+
+    .anchored-overlay-width-large {
+        width: var(--overlay-width-large);
+    }
+
+    .anchored-overlay-width-xlarge {
+        width: var(--overlay-width-xlarge);
+    }
+
+    .anchored-overlay-width-auto {
+        width: auto;
+    }
+
+    .anchored-overlay-height-small {
+        height: var(--overlay-height-small);
+    }
+
+    .anchored-overlay-height-medium {
+        height: var(--overlay-height-medium);
+    }
+
+    .anchored-overlay-height-large {
+        height: var(--overlay-height-large);
+    }
+
+    .anchored-overlay-height-xlarge {
+        height: var(--overlay-height-xlarge);
+    }
+
+    .anchored-overlay-height-auto {
+        height: auto;
+    }
+
+    /* Narrowed to what the viewport has room for, rather than standing at its own width */
+    .anchored-overlay-reflow {
+        max-width: calc(100dvw - var(--base-size-32));
+    }
+
+    /* A narrow viewport gives the overlay the whole screen, since there is no room left to
+       stand beside the anchor. The width matches --breakpoint-medium in variables.css */
+    .anchored-overlay-fullscreen {
+        @media (width < 48rem) {
+            top: 0;
+            left: 0;
+            width: 100dvw;
+            max-width: none;
+            height: 100dvh;
+            max-height: none;
+            border-radius: 0;
+        }
+    }
+
+    .anchored-overlay-close-button-container {
+        position: relative;
+    }
+
+    /* The button is only there on the screens the overlay fills, since anywhere else it is
+       closed by clicking off it. It is named from the overlay so that what it says here
+       stands over the icon button it is drawn as */
+    .anchored-overlay .anchored-overlay-close-button {
+        display: none;
+        position: absolute;
+        top: var(--base-size-8);
+        right: var(--base-size-8);
+
+        @media (width < 48rem) {
+            display: inline-grid;
+        }
+    }
+}

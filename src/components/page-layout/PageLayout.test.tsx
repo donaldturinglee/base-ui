@@ -122,7 +122,7 @@ describe("PageLayout", () => {
 
         const wrapper = container.querySelector("[data-page-layout-wrapper]") as HTMLElement;
         expect(wrapper).toHaveAttribute("data-width", "medium");
-        expect(wrapper).toHaveClass("max-w-[768px]");
+        expect(wrapper).toHaveClass("page-layout-width-medium");
     });
 
     it("reads its spacing from the scale the padding names", () => {
@@ -141,7 +141,7 @@ describe("PageLayout", () => {
         );
 
         expect(layout()).toHaveAttribute("data-has-sidebar", "");
-        expect(layout()).toHaveClass("flex-row");
+        expect(layout()).toHaveClass("page-layout-has-sidebar");
     });
 
     it("says nothing about a sidebar it does not hold", () => {
@@ -189,7 +189,7 @@ describe("PageLayout.Content", () => {
 
         const inner = part(container, "Content").firstElementChild as HTMLElement;
         expect(inner).toHaveAttribute("data-width", "large");
-        expect(inner).toHaveClass("max-w-[1012px]");
+        expect(inner).toHaveClass("page-layout-content-width-large");
     });
 
     it("can be taken away for good or one viewport range at a time", () => {

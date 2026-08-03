@@ -44,8 +44,7 @@ describe("TopicTag", () => {
             </TopicTag>,
         );
         const tag = screen.getByTestId("tag");
-        expect(tag).toHaveClass("bg-background-accent-muted");
-        expect(tag).toHaveClass("text-foreground-accent");
+        expect(tag).toHaveClass("topic-tag");
     });
 
     it("fills in on hover", () => {
@@ -55,8 +54,7 @@ describe("TopicTag", () => {
             </TopicTag>,
         );
         const tag = screen.getByTestId("tag");
-        expect(tag).toHaveClass("hover:bg-background-accent-emphasis");
-        expect(tag).toHaveClass("hover:text-foreground-on-emphasis");
+        expect(tag).toHaveClass("topic-tag-hover");
     });
 
     it("rounds itself into a pill", () => {
@@ -65,7 +63,7 @@ describe("TopicTag", () => {
                 react
             </TopicTag>,
         );
-        expect(screen.getByTestId("tag")).toHaveClass("rounded-[var(--border-radius-full)]");
+        expect(screen.getByTestId("tag")).toHaveClass("topic-tag");
     });
 
     it("drops the underline an anchor brings with it", () => {
@@ -74,7 +72,7 @@ describe("TopicTag", () => {
                 react
             </TopicTag>,
         );
-        expect(screen.getByTestId("tag")).toHaveClass("no-underline");
+        expect(screen.getByTestId("tag")).toHaveClass("topic-tag");
     });
 
     it("resets what a button brings with it", () => {
@@ -84,8 +82,7 @@ describe("TopicTag", () => {
             </TopicTag>,
         );
         const tag = screen.getByTestId("tag");
-        expect(tag).toHaveClass("m-0", "appearance-none", "text-start");
-        expect(tag).toHaveClass("[font-family:inherit]");
+        expect(tag).toHaveClass("topic-tag");
     });
 
     it("only reads as clickable when it leads somewhere", () => {
@@ -94,7 +91,7 @@ describe("TopicTag", () => {
                 react
             </TopicTag>,
         );
-        expect(screen.getByTestId("tag")).toHaveClass("[&:is(a,button)]:cursor-pointer");
+        expect(screen.getByTestId("tag")).toHaveClass("topic-tag-interactive");
     });
 
     it("forwards element specific props to the element passed to the as prop", () => {
@@ -163,8 +160,7 @@ describe("TopicTag.Group", () => {
             </TopicTag.Group>,
         );
         const group = screen.getByTestId("group");
-        expect(group).toHaveClass("flex", "flex-wrap");
-        expect(group).toHaveClass("gap-x-[var(--base-size-2)]", "gap-y-[var(--base-size-8)]");
+        expect(group).toHaveClass("topic-tag-group");
     });
 
     it("renders its tags", () => {

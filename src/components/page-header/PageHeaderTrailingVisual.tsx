@@ -5,9 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    // As tall as a line of the title, so it sits against the title's first line however many
-    // lines the title runs to
-    root: "order-3 flex items-center h-[calc(var(--page-header-title-line-height)_*_1em)]",
+    root: "page-header-trailing-visual",
 };
 
 // Stands after the title and says something about the page itself: that it is in beta, say

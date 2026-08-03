@@ -4,14 +4,11 @@ import SegmentedControlSegment, { renderSegmentVisual } from "./SegmentedControl
 import type { SegmentedControlButtonProps } from "./SegmentedControl.types";
 
 const classes = {
-    visual: "flex shrink-0 items-center me-[var(--base-size-4)] text-foreground-muted",
-    visualDisabled: "text-foreground-disabled",
-    text: "after:block after:h-0 after:overflow-hidden after:invisible after:pointer-events-none after:select-none after:content-[attr(data-text)] after:[font-weight:var(--base-text-weight-semibold)]",
-    // Where the control was told to drop its labels, the icons are all that is left of the
-    // segments. The label is still there to be read, only not drawn
-    textHidden:
-        "group-data-[variant=hideLabels]/control:hidden max-medium:group-data-[variant-narrow=hideLabels]/control:hidden medium:group-data-[variant-regular=hideLabels]/control:hidden xxlarge:group-data-[variant-wide=hideLabels]/control:hidden",
-    counter: "flex items-center ms-[var(--base-size-8)]",
+    visual: "segmented-control-visual",
+    visualDisabled: "segmented-control-visual-disabled",
+    text: "segmented-control-text",
+    textHidden: "segmented-control-text-hidden",
+    counter: "segmented-control-counter",
 };
 
 // One segment of the control, carrying a label and whatever is read with it

@@ -8,11 +8,9 @@ import type { CheckboxProps } from "../checkbox";
 import type { SelectPanelSecondaryActionProps } from "./SelectPanel.types";
 
 const classes = {
-    small: "[font-size:var(--text-body-size-small)]",
-    checkbox: "flex items-center gap-[var(--stack-gap-condensed)]",
-    // The box is centred against the single line of text beside it rather than against a
-    // label standing above a field
-    box: "mt-0",
+    small: "select-panel-secondary-action-small",
+    checkbox: "select-panel-secondary-action-checkbox",
+    box: "select-panel-secondary-action-box",
 };
 
 const SecondaryCheckbox = (props: CheckboxProps) => {

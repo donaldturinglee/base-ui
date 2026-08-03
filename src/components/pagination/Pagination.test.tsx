@@ -151,26 +151,14 @@ describe("Pagination", () => {
 
         // Clicking a page leaves it focused, so the fill has to survive both states or the
         // page a reader just picked reads as unselected
-        expect(current).toHaveClass(
-            "bg-background-accent-emphasis",
-            "hover:bg-background-accent-emphasis",
-            "focus:bg-background-accent-emphasis",
-        );
-        expect(current).not.toHaveClass(
-            "hover:bg-[var(--control-transparent-background-color-hover)]",
-        );
-        expect(current).not.toHaveClass(
-            "focus:bg-[var(--control-transparent-background-color-hover)]",
-        );
+        expect(current).toHaveClass("pagination-step-current");
     });
 
     it("keeps the other pages tinted on hover and focus", () => {
         render(<Pagination pageCount={5} currentPage={3} />);
         const other = screen.getByRole("link", { name: "Page 2" });
-        expect(other).toHaveClass(
-            "hover:bg-[var(--control-transparent-background-color-hover)]",
-            "focus:bg-[var(--control-transparent-background-color-hover)]",
-        );
+        expect(other).toHaveClass("pagination-step");
+        expect(other).not.toHaveClass("pagination-step-current");
     });
 
     it("says a run continues in the label of the page before an ellipsis", () => {
@@ -225,8 +213,8 @@ describe("Pagination", () => {
         );
         const steps = container.querySelector("[data-hidden-viewport-ranges]");
         expect(steps).toHaveAttribute("data-hidden-viewport-ranges", "narrow");
-        expect(steps).toHaveClass("max-medium:[&>*:not(:first-child):not(:last-child)]:hidden");
-        expect(steps).not.toHaveClass("xxlarge:[&>*:not(:first-child):not(:last-child)]:hidden");
+        expect(steps).toHaveClass("pagination-hidden-narrow");
+        expect(steps).not.toHaveClass("pagination-hidden-wide");
     });
 
     it("keeps the pages at every viewport by default", () => {

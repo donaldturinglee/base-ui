@@ -3,31 +3,28 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TextProps, TextSize, TextWeight, TextWhiteSpace } from "./Text.types";
 
-const textVariants = cva(
-    "[font-family:var(--font-stack-sans-serif)] [font-weight:var(--text-body-weight)]",
-    {
-        variants: {
-            size: {
-                large: "[font-size:var(--text-body-size-large)] [line-height:var(--text-body-line-height-large)]",
-                medium: "[font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
-                small: "[font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
-            } satisfies Record<TextSize, string>,
-            weight: {
-                light: "[font-weight:var(--base-text-weight-light)]",
-                normal: "[font-weight:var(--base-text-weight-normal)]",
-                medium: "[font-weight:var(--base-text-weight-medium)]",
-                semibold: "[font-weight:var(--base-text-weight-semibold)]",
-            } satisfies Record<TextWeight, string>,
-            whiteSpace: {
-                pre: "whitespace-pre",
-                normal: "whitespace-normal",
-                nowrap: "whitespace-nowrap",
-                "pre-wrap": "whitespace-pre-wrap",
-                "pre-line": "whitespace-pre-line",
-            } satisfies Record<TextWhiteSpace, string>,
-        },
+const textVariants = cva("text", {
+    variants: {
+        size: {
+            large: "text-size-large",
+            medium: "text-size-medium",
+            small: "text-size-small",
+        } satisfies Record<TextSize, string>,
+        weight: {
+            light: "text-weight-light",
+            normal: "text-weight-normal",
+            medium: "text-weight-medium",
+            semibold: "text-weight-semibold",
+        } satisfies Record<TextWeight, string>,
+        whiteSpace: {
+            pre: "whitespace-pre",
+            normal: "whitespace-normal",
+            nowrap: "whitespace-nowrap",
+            "pre-wrap": "whitespace-pre-wrap",
+            "pre-line": "whitespace-pre-line",
+        } satisfies Record<TextWhiteSpace, string>,
     },
-);
+});
 
 function Text<As extends React.ElementType = "span">(
     props: TextProps<As>,

@@ -16,22 +16,18 @@ import type {
 } from "./FilteredActionList.types";
 
 const classes = {
-    root: "flex flex-col overflow-hidden",
-    // The list scrolls within the box rather than the box growing to hold it
-    container: "flex grow h-full overflow-auto",
-    list: "grow",
+    root: "filtered-action-list",
+    container: "filtered-action-list-container",
+    list: "filtered-action-list-list",
     // A message stands in place of the list, so it is given the room the list would have
     // had. Without a width of its own it would be laid out against its own text, and
     // anything measuring itself against the room it has been given — a container query, say
     // — would find there is none
-    message: "grow min-w-0",
-    // Only the items in view are drawn, so the list is given the height the whole of it
-    // would take and each item is placed within that
-    virtualList: "relative",
-    virtualItem: "absolute top-0 inset-x-0",
-    selectAll:
-        "flex items-center gap-[var(--base-size-8)] px-[var(--base-size-16)] py-[var(--base-size-4)] bg-background-muted border-solid border-b-[length:var(--border-width-thin)] border-b-border-default",
-    selectAllLabel: "[font-size:var(--text-body-size-medium)] text-foreground-muted",
+    message: "filtered-action-list-message",
+    virtualList: "filtered-action-list-virtual-list",
+    virtualItem: "filtered-action-list-virtual-item",
+    selectAll: "filtered-action-list-select-all",
+    selectAllLabel: "filtered-action-list-select-all-label",
     hidden: "sr-only",
 };
 

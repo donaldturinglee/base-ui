@@ -5,8 +5,8 @@ import { Stack } from "../stack";
 import type { FilteredActionListBodyLoaderProps } from "./FilteredActionList.types";
 
 const classes = {
-    spinner: "grow h-full p-[var(--base-size-16)] content-center text-center",
-    skeleton: "grow p-[var(--base-size-8)]",
+    spinner: "filtered-action-list-spinner",
+    skeleton: "filtered-action-list-skeleton",
 };
 
 // How tall a skeleton row stands, which is what says how many of them fill the room there is

@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TableActionsProps } from "./DataTable.types";
 
 const classes = {
-    root: "flex items-center gap-x-[var(--base-size-8)] justify-self-end [grid-area:actions]",
+    root: "data-table-actions",
 };
 
 function TableActions(

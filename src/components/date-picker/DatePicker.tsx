@@ -23,12 +23,9 @@ import type {
 } from "./DatePicker.types";
 
 const classes = {
-    root: "inline-block",
-    // A field that fills whatever holds it needs every wrapper between the two to fill it too
-    block: "block w-full",
-    // The calendar is given room of its own inside the overlay, which brings nothing but the
-    // surface it stands on
-    overlay: "p-[var(--overlay-padding-normal)]",
+    root: "date-picker",
+    block: "date-picker-block",
+    overlay: "date-picker-overlay",
 };
 
 // A field for a date, or for a stretch of days from one to another, with a calendar behind a

@@ -57,14 +57,14 @@ describe("TextInput", () => {
     it("falls back to the medium size", () => {
         render(<TextInput aria-label="Name" />);
         expect(field()).toHaveAttribute("data-size", "medium");
-        expect(field()).toHaveClass("min-h-[var(--control-medium-size)]");
+        expect(field()).toHaveClass("input-medium");
     });
 
     it("respects the size prop", () => {
         const sizes = {
-            small: "min-h-[var(--control-small-size)]",
-            medium: "min-h-[var(--control-medium-size)]",
-            large: "min-h-[var(--control-large-size)]",
+            small: "input-small",
+            medium: "input-medium",
+            large: "input-large",
         } as const;
 
         for (const [size, expected] of Object.entries(sizes)) {
@@ -80,26 +80,26 @@ describe("TextInput", () => {
     it("fills its container when block", () => {
         render(<TextInput aria-label="Name" block />);
         expect(field()).toHaveAttribute("data-block", "true");
-        expect(field()).toHaveClass("w-full");
+        expect(field()).toHaveClass("input-block");
     });
 
     it("recesses itself when contrast", () => {
         render(<TextInput aria-label="Name" contrast />);
         expect(field()).toHaveAttribute("data-contrast", "true");
-        expect(field()).toHaveClass("bg-background-inset");
+        expect(field()).toHaveClass("input-contrast");
     });
 
     it("sets the typing area in the monospace stack", () => {
         render(<TextInput aria-label="Name" monospace />);
         expect(field()).toHaveAttribute("data-monospace", "true");
-        expect(field()).toHaveClass("[font-family:var(--font-stack-monospace)]");
+        expect(field()).toHaveClass("input-monospace");
     });
 
     it("disables the control and dims the field", () => {
         render(<TextInput aria-label="Name" disabled />);
         expect(input()).toBeDisabled();
         expect(field()).toHaveAttribute("data-disabled", "true");
-        expect(field()).toHaveClass("[&_input]:cursor-not-allowed");
+        expect(field()).toHaveClass("input-disabled");
     });
 
     it("marks itself required for assistive technology", () => {
@@ -237,20 +237,20 @@ describe("TextInput visuals", () => {
 
     it("hands the padding to the field where there is a visual to stand in it", () => {
         render(<TextInput aria-label="Amount" leadingVisual="$" />);
-        expect(field()).toHaveClass("ps-[var(--base-size-8)]");
-        expect(input()).not.toHaveClass("ps-[var(--base-size-8)]");
-        expect(input()).toHaveClass("pe-[var(--base-size-8)]");
+        expect(field()).toHaveClass("input-leading-visual-padding");
+        expect(input()).not.toHaveClass("input-control-pad-start");
+        expect(input()).toHaveClass("input-control-pad-end");
     });
 
     it("keeps the padding on the typing area where there is no visual at all", () => {
         render(<TextInput aria-label="Name" />);
-        expect(input()).toHaveClass("ps-[var(--base-size-12)]");
-        expect(input()).toHaveClass("pe-[var(--base-size-12)]");
+        expect(input()).toHaveClass("input-control-pad-start-wide");
+        expect(input()).toHaveClass("input-control-pad-end-wide");
     });
 
     it("widens the field's padding at the large size", () => {
         render(<TextInput aria-label="Amount" size="large" leadingVisual="$" />);
-        expect(field()).toHaveClass("ps-[var(--base-size-12)]");
+        expect(field()).toHaveClass("input-leading-visual-padding-wide");
     });
 });
 
@@ -279,18 +279,18 @@ describe("TextInput trailing action", () => {
 
         // A field with an action inside it cannot use focus-within, which the action would
         // light up as well
-        expect(field()).not.toHaveClass("focus-within:border-border-accent-emphasis");
+        expect(field()).not.toHaveClass("input-focus");
 
         fireEvent.focus(input());
-        expect(field()).toHaveClass("border-border-accent-emphasis");
+        expect(field()).toHaveClass("input-focus-tracked");
 
         fireEvent.blur(input());
-        expect(field()).not.toHaveClass("border-border-accent-emphasis");
+        expect(field()).not.toHaveClass("input-focus-tracked");
     });
 
     it("uses focus-within where there is no action to press", () => {
         render(<TextInput aria-label="Name" />);
-        expect(field()).toHaveClass("focus-within:border-border-accent-emphasis");
+        expect(field()).toHaveClass("input-focus");
     });
 
     it("leaves the field's trailing padding to the action", () => {
@@ -301,7 +301,7 @@ describe("TextInput trailing action", () => {
                 trailingAction={clear(() => {})}
             />,
         );
-        expect(field()).not.toHaveClass("pe-[var(--base-size-8)]");
+        expect(field()).not.toHaveClass("input-trailing-visual-padding");
     });
 });
 

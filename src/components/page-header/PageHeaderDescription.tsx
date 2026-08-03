@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-span-full row-start-3 flex flex-row items-center pt-[var(--base-size-8)] gap-[var(--stack-gap-condensed)] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-normal)] leading-[var(--text-body-line-height-medium)]",
+    root: "page-header-description",
 };
 
 // Says more about whatever the page is about, standing under the title

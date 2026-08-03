@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DrawerBodyProps } from "./Drawer.types";
 
 const classes = {
-    root: "grow p-[var(--base-size-16)] overflow-auto",
+    root: "drawer-body",
 };
 
 function DrawerBody<As extends React.ElementType = "div">(

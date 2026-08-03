@@ -4,20 +4,12 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { CalendarDayProps } from "./Calendar.types";
 
 const classes = {
-    // Every day takes the same square whatever it holds, so the grid keeps its shape from one
-    // month to the next
-    root: "grid size-[var(--control-medium-size)] cursor-pointer appearance-none place-items-center rounded-[var(--border-radius-medium)] border-0 bg-transparent p-0 text-foreground-default [font-family:inherit] [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums]",
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[calc(-1_*_var(--border-width-thin))]",
-    interactive:
-        "hover:bg-[var(--control-transparent-background-color-hover)] active:bg-[var(--control-transparent-background-color-active)]",
-    // The day that has been picked takes the colours a chosen control takes anywhere else.
-    // Only the two ends of a range are filled in; the days between them are carried by the bar
-    // the cells around them draw
-    selected:
-        "bg-[var(--control-checked-background-color-rest)] [color:var(--control-checked-foreground-color-rest)] [font-weight:var(--base-text-weight-semibold)] hover:bg-[var(--control-checked-background-color-hover)] active:bg-[var(--control-checked-background-color-active)]",
-    between: "[font-weight:var(--base-text-weight-semibold)]",
-    outside: "text-foreground-muted",
-    unavailable: "cursor-not-allowed text-foreground-disabled",
+    root: "calendar-day",
+    interactive: "calendar-day-interactive",
+    selected: "calendar-day-selected",
+    between: "calendar-day-between",
+    outside: "calendar-day-outside",
+    unavailable: "calendar-day-unavailable",
     // The day of the month is what is read on the page; the whole date is what is read out
     hidden: "sr-only",
 };
@@ -59,7 +51,6 @@ function CalendarDay(
             aria-disabled={unavailable || undefined}
             className={classNames(
                 classes.root,
-                classes.focus,
                 !unavailable && !selected && classes.interactive,
                 outside && classes.outside,
                 isBetween && classes.between,

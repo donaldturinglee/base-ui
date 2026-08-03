@@ -1,0 +1,133 @@
+@layer components {
+    /* The wrapper carries the field styling so the native control underneath can stay
+       transparent and keep its own dropdown behaviour. The indicator's size and inset live
+       here so the control below can reserve exactly the room it takes up */
+    .select {
+        --select-indicator-size: var(--base-size-16);
+        --select-indicator-inset: var(--base-size-4);
+
+        position: relative;
+        display: inline-flex;
+        align-items: stretch;
+        overflow: hidden;
+        vertical-align: middle;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-inset);
+        color: var(--foreground-color-default);
+
+        & select {
+            cursor: pointer;
+        }
+
+        &:focus-within {
+            border-color: var(--border-color-accent-emphasis);
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: -1px;
+        }
+
+        @media (forced-colors: active) {
+            & svg {
+                fill: FieldText;
+            }
+        }
+    }
+
+    .select-small {
+        min-height: var(--control-small-size);
+        padding-block: var(--control-small-padding-block);
+        font-size: var(--text-body-size-small);
+        line-height: var(--base-size-20);
+    }
+
+    .select-medium {
+        min-height: var(--control-medium-size);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+    }
+
+    .select-large {
+        min-height: var(--control-large-size);
+        padding-block: var(--control-large-padding-block);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+    }
+
+    .select-block {
+        display: flex;
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .select-disabled {
+        background-color: var(--control-background-color-disabled);
+        border-color: var(--control-border-color-disabled);
+        box-shadow: none;
+        color: var(--foreground-color-disabled);
+
+        & select {
+            cursor: not-allowed;
+        }
+
+        @media (forced-colors: active) {
+            & svg {
+                fill: GrayText;
+            }
+        }
+    }
+
+    /* Last, so a field that is both disabled and invalid still reads as invalid */
+    .select-error {
+        border-color: var(--border-color-danger-emphasis);
+
+        &:focus-within {
+            border-color: var(--control-border-color-danger);
+            outline-color: var(--control-border-color-danger);
+        }
+    }
+
+    .select-success {
+        border-color: var(--background-color-success-emphasis);
+    }
+
+    /* The 1px margins keep the field's inset focus outline from being covered, and the
+       inherited background is what Firefox reads to colour its own dropdown menu. The end
+       padding clears the indicator, so a long option never runs underneath it */
+    .select-control {
+        width: 100%;
+        margin-block: 1px;
+        margin-left: 1px;
+        padding-left: var(--base-size-12);
+        padding-right: calc(
+            var(--select-indicator-inset) + var(--select-indicator-size) + var(--base-size-4)
+        );
+        appearance: none;
+        background-color: inherit;
+        border: 0;
+        border-radius: inherit;
+        outline: none;
+        color: currentcolor;
+        font-size: inherit;
+
+        &:disabled {
+            background-color: transparent;
+
+            @media (forced-colors: active) {
+                background-color: -moz-combobox;
+            }
+        }
+    }
+
+    .select-indicator {
+        position: absolute;
+        top: 50%;
+        right: var(--select-indicator-inset);
+        width: var(--select-indicator-size);
+        height: var(--select-indicator-size);
+        translate: 0 -50%;
+        pointer-events: none;
+    }
+}

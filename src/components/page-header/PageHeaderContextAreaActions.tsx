@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "order-3 flex grow flex-row items-center justify-end gap-[var(--stack-gap-condensed)]",
+    root: "page-header-context-area-actions",
 };
 
 // What can be done from the context area, standing at the far end of it

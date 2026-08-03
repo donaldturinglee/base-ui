@@ -5,7 +5,7 @@ import { UploadContext } from "./UploadContext";
 import type { UploadLabelProps } from "./Upload.types";
 
 const classes = {
-    root: "[font-size:var(--upload-label-size,var(--text-body-size-medium))] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)]",
+    root: "upload-label",
 };
 
 function UploadLabel(

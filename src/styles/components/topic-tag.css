@@ -1,0 +1,45 @@
+@layer components {
+    /* The reset is part of the tag, so an anchor keeps none of its underline and a button
+       none of its own type or alignment */
+    .topic-tag {
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        padding-block: var(--base-size-2);
+        padding-inline: var(--base-size-12);
+        white-space: nowrap;
+        text-align: start;
+        text-decoration: none;
+        appearance: none;
+        background-color: var(--background-color-accent-muted);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--topic-tag-border-color);
+        border-radius: var(--border-radius-full);
+        color: var(--foreground-color-accent);
+        font-family: inherit;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* Only a tag that leads somewhere reads as something to click */
+    .topic-tag-interactive:is(a, button) {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .topic-tag-hover:hover {
+        background-color: var(--background-color-accent-emphasis);
+        color: var(--foreground-color-on-emphasis);
+    }
+
+    /* Tags wrap onto as many lines as they need, with more room between the lines than
+       between the tags on one */
+    .topic-tag-group {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: var(--base-size-2);
+        row-gap: var(--base-size-8);
+    }
+}

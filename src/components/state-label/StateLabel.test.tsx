@@ -76,10 +76,7 @@ describe("StateLabel", () => {
                 </StateLabel>,
             );
             const state = screen.getByTestId("state");
-            expect(state).toHaveClass(
-                `bg-background-${tones[status]}-emphasis`,
-                `[box-shadow:var(--box-shadow-thin)_var(--border-color-${tones[status]}-emphasis)]`,
-            );
+            expect(state).toHaveClass(`state-label-${tones[status]}`);
             unmount();
         }
     });
@@ -92,8 +89,7 @@ describe("StateLabel", () => {
         );
         const state = screen.getByTestId("state");
         expect(state).toHaveAttribute("data-size", "medium");
-        expect(state).toHaveClass("[font-size:var(--text-body-size-medium)]");
-        expect(state).toHaveClass("px-[var(--base-size-12)]");
+        expect(state).toHaveClass("state-label-medium");
     });
 
     it("respects the small size", () => {
@@ -104,8 +100,7 @@ describe("StateLabel", () => {
         );
         const state = screen.getByTestId("state");
         expect(state).toHaveAttribute("data-size", "small");
-        expect(state).toHaveClass("[font-size:var(--text-body-size-small)]");
-        expect(state).toHaveClass("px-[var(--base-size-8)]");
+        expect(state).toHaveClass("state-label-small");
     });
 
     it("rounds itself into a pill", () => {
@@ -114,7 +109,7 @@ describe("StateLabel", () => {
                 Open
             </StateLabel>,
         );
-        expect(screen.getByTestId("state")).toHaveClass("rounded-[var(--border-radius-full)]");
+        expect(screen.getByTestId("state")).toHaveClass("state-label");
     });
 
     it("leaves the generic statuses without an icon", () => {
@@ -153,7 +148,7 @@ describe("StateLabel", () => {
                 Open
             </StateLabel>,
         );
-        expect(container.querySelector("svg")).toHaveClass("size-[1em]");
+        expect(container.querySelector("svg")).toHaveClass("state-label-visual-small");
     });
 
     it("does not leak the status and size props onto the element", () => {

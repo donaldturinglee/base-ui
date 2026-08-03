@@ -5,16 +5,16 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SpinnerProps, SpinnerSize } from "./Spinner.types";
 
 const classes = {
-    root: "inline-flex flex-col items-center",
+    root: "spinner",
     srOnly: "sr-only",
 };
 
 const spinnerIconVariants = cva("motion-safe:animate-spin", {
     variants: {
         size: {
-            small: "size-[var(--spinner-size-small)]",
-            medium: "size-[var(--spinner-size-medium)]",
-            large: "size-[var(--spinner-size-large)]",
+            small: "spinner-small",
+            medium: "spinner-medium",
+            large: "spinner-large",
         } satisfies Record<SpinnerSize, string>,
     },
 });

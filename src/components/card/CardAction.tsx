@@ -4,8 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { CardActionProps } from "./Card.types";
 
 const classes = {
-    // Sits over the card's own content in the top corner
-    root: "absolute top-[var(--base-size-16)] right-[var(--base-size-16)] z-1",
+    root: "card-action",
 };
 
 function CardAction(

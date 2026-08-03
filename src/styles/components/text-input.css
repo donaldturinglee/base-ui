@@ -1,0 +1,245 @@
+@layer components {
+    /* The wrapper carries the field styling so the native control can stay transparent, and
+       so the visuals beside it can sit within the border. The action size lives here as well,
+       so an action inside the field is sized by the field it stands in */
+    .input {
+        position: relative;
+        display: inline-flex;
+        align-items: stretch;
+        gap: var(--base-size-8);
+        overflow: hidden;
+        vertical-align: middle;
+        cursor: text;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-inset);
+        color: var(--foreground-color-default);
+    }
+
+    .input-small {
+        --text-input-action-size: var(--base-size-20);
+
+        min-height: var(--control-small-size);
+        padding-block: var(--control-small-padding-block);
+        font-size: var(--text-body-size-small);
+        line-height: var(--base-size-20);
+    }
+
+    .input-medium {
+        --text-input-action-size: var(--base-size-24);
+
+        min-height: var(--control-medium-size);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+    }
+
+    .input-large {
+        --text-input-action-size: var(--base-size-28);
+
+        min-height: var(--control-large-size);
+        padding-block: var(--control-large-padding-block);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+    }
+
+    .input-focus:focus-within {
+        border-color: var(--border-color-accent-emphasis);
+        outline: var(--focus-outline-width) solid var(--focus-outline-color);
+        outline-offset: -1px;
+    }
+
+    /* With an action inside the field, the ring follows the typing area alone, so reaching
+       for the action does not light the whole field up */
+    .input-focus-tracked {
+        border-color: var(--border-color-accent-emphasis);
+        outline: var(--focus-outline-width) solid var(--focus-outline-color);
+        outline-offset: -1px;
+    }
+
+    .input-block {
+        display: flex;
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .input-contrast {
+        background-color: var(--background-color-inset);
+    }
+
+    .input-monospace {
+        font-family: var(--font-stack-monospace);
+    }
+
+    .input-disabled {
+        background-color: var(--control-background-color-disabled);
+        border-color: var(--control-border-color-disabled);
+        box-shadow: none;
+        color: var(--foreground-color-disabled);
+
+        & input {
+            cursor: not-allowed;
+        }
+    }
+
+    .input-error {
+        border-color: var(--border-color-danger-emphasis);
+    }
+
+    .input-success {
+        border-color: var(--background-color-success-emphasis);
+    }
+
+    /* An invalid field keeps its own colour in the ring, drawn the same two ways */
+    .input-validation-focus:focus-within {
+        border-color: var(--control-border-color-danger);
+        outline-color: var(--control-border-color-danger);
+    }
+
+    .input-validation-focus-tracked {
+        border-color: var(--control-border-color-danger);
+        outline-color: var(--control-border-color-danger);
+    }
+
+    /* A visual stands within the field's own padding; the typing area takes over the padding
+       on whichever side has no visual to stand in it */
+    .input-leading-visual-padding {
+        padding-inline-start: var(--base-size-8);
+    }
+
+    .input-leading-visual-padding-wide {
+        padding-inline-start: var(--base-size-12);
+    }
+
+    .input-trailing-visual-padding {
+        padding-inline-end: var(--base-size-8);
+    }
+
+    .input-trailing-visual-padding-wide {
+        padding-inline-end: var(--base-size-12);
+    }
+
+    /* The field owns the focus ring, so the control inside it drops its own. A flex item is
+       allowed to shrink past the width an input asks for */
+    .input-control {
+        width: 100%;
+        min-width: 0;
+        padding: 0;
+        cursor: text;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        outline: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &::placeholder {
+            color: var(--foreground-color-muted);
+        }
+    }
+
+    .input-control-pad-start {
+        padding-inline-start: var(--base-size-8);
+    }
+
+    .input-control-pad-start-wide {
+        padding-inline-start: var(--base-size-12);
+    }
+
+    .input-control-pad-end {
+        padding-inline-end: var(--base-size-8);
+    }
+
+    .input-control-pad-end-wide {
+        padding-inline-end: var(--base-size-12);
+    }
+
+    .input-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-self: center;
+        color: var(--foreground-color-muted);
+    }
+
+    /* The spinner is laid over the visual it stands in for, so the field keeps its width as
+       the wait starts and ends */
+    .input-visual-box {
+        position: relative;
+        display: flex;
+    }
+
+    .input-spinner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        max-width: 100%;
+        height: 100%;
+    }
+
+    .input-spinner-leading {
+        left: 0;
+    }
+
+    .input-counter {
+        display: flex;
+        align-items: center;
+        gap: var(--control-xsmall-gap);
+        color: var(--foreground-color-muted);
+    }
+
+    .input-counter-over-limit {
+        color: var(--foreground-color-danger);
+    }
+
+    .input-counter-icon {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+
+    /* Zero line height keeps the button from standing taller than the icon inside it */
+    .input-action {
+        flex-shrink: 0;
+        align-self: center;
+        margin-inline: var(--base-size-4);
+        line-height: 0;
+    }
+
+    /* The field sets the size, so an action in a small or large field is sized to match */
+    .button.input-action-button {
+        position: relative;
+        width: var(--text-input-action-size);
+        height: var(--text-input-action-size);
+        padding: var(--base-size-4);
+        background-color: transparent;
+        color: var(--foreground-color-muted);
+
+        &:hover,
+        &:focus {
+            color: var(--foreground-color-default);
+        }
+
+        /* A coarse pointer is given a target as tall as the field to aim at */
+        @media (pointer: coarse) {
+            &::after {
+                content: "";
+                position: absolute;
+                inset-inline: 0;
+                top: 50%;
+                translate: 0 -50%;
+                min-height: var(--control-min-target-coarse);
+            }
+        }
+    }
+}

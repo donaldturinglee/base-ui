@@ -1,0 +1,55 @@
+@layer components {
+    .alert {
+        position: relative;
+        margin-top: 0;
+        padding: var(--base-size-16);
+        color: var(--foreground-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-radius: var(--border-radius-medium);
+
+        & p:last-child {
+            margin-bottom: 0;
+        }
+
+        & svg {
+            margin-right: var(--base-size-8);
+        }
+    }
+
+    .alert-default {
+        background-color: var(--background-color-accent-muted);
+        border-color: var(--border-color-accent-muted);
+
+        & svg {
+            color: var(--foreground-color-accent);
+        }
+    }
+
+    .alert-success {
+        background-color: var(--background-color-success-muted);
+        border-color: var(--border-color-success-muted);
+
+        & svg {
+            color: var(--foreground-color-success);
+        }
+    }
+
+    .alert-warning {
+        background-color: var(--background-color-attention-muted);
+        border-color: var(--border-color-attention-muted);
+
+        & svg {
+            color: var(--foreground-color-attention);
+        }
+    }
+
+    .alert-danger {
+        background-color: var(--background-color-danger-muted);
+        border-color: var(--border-color-danger-muted);
+
+        & svg {
+            color: var(--foreground-color-danger);
+        }
+    }
+}

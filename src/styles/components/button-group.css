@@ -1,0 +1,43 @@
+@layer components {
+    /* `isolation` keeps a raised item stacking against the group rather than the rest of the page */
+    .button-group {
+        display: inline-flex;
+        vertical-align: middle;
+        isolation: isolate;
+    }
+
+    /* Neighbouring items overlap by their border so that the two share a single line, and
+     whichever one is being used is raised so its border and focus ring are drawn whole */
+    .button-group-item {
+        position: relative;
+        margin-inline-end: -1px;
+
+        & button,
+        & a {
+            border-radius: 0;
+        }
+
+        &:hover,
+        &:focus-within,
+        &:active {
+            z-index: 1;
+        }
+    }
+
+    /* Only the outer edges of the group stay rounded */
+    .button-group-item-first {
+        & button,
+        & a {
+            border-start-start-radius: var(--border-radius-medium);
+            border-end-start-radius: var(--border-radius-medium);
+        }
+    }
+
+    .button-group-item-last {
+        & button,
+        & a {
+            border-start-end-radius: var(--border-radius-medium);
+            border-end-end-radius: var(--border-radius-medium);
+        }
+    }
+}

@@ -10,18 +10,14 @@ import { ActionListContainerContext } from "./ActionListContainerContext";
 import { ActionListContext } from "./ActionListContext";
 import type { ActionListProps, ActionListVariant } from "./ActionList.types";
 
-const actionListVariants = cva("list-none m-0", {
+const actionListVariants = cva("action-list", {
     variants: {
         variant: {
-            // The items are held in from the edges, so the box a hovered item is drawn in never
-            // meets the edge of whatever the list is standing on
-            inset: "p-[var(--base-size-8)]",
-            full: "p-0",
+            inset: "action-list-inset",
+            full: "action-list-full",
         } satisfies Record<ActionListVariant, string>,
-        // A line is only drawn between two items that follow one another, so an item that comes
-        // after a divider is not given a second one
         dividers: {
-            true: "[&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-[length:var(--border-width-thin)] [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:border-t-border-muted [&>li[data-component='ActionList.Item']+li[data-component='ActionList.Item']]:rounded-t-none",
+            true: "action-list-dividers",
             false: "",
         },
     },

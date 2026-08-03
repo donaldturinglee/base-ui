@@ -1,0 +1,56 @@
+@layer components {
+    /* The icon stands in a column of its own, so a message running onto a second line keeps
+       clear of it rather than wrapping underneath it */
+    .inline-message {
+        --inline-message-foreground-color: var(--foreground-color-default);
+
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: start;
+        column-gap: var(--base-size-8);
+        color: var(--inline-message-foreground-color);
+        font-size: var(--inline-message-font-size);
+        line-height: var(--inline-message-line-height);
+    }
+
+    .inline-message-small {
+        --inline-message-font-size: var(--text-body-size-small);
+        --inline-message-line-height: var(--text-body-line-height-small);
+        --inline-message-icon-size: var(--base-size-12);
+    }
+
+    .inline-message-medium {
+        --inline-message-font-size: var(--text-body-size-medium);
+        --inline-message-line-height: var(--text-body-line-height-medium);
+        --inline-message-icon-size: var(--base-size-16);
+    }
+
+    .inline-message-critical {
+        --inline-message-foreground-color: var(--foreground-color-danger);
+    }
+
+    .inline-message-success {
+        --inline-message-foreground-color: var(--foreground-color-success);
+    }
+
+    .inline-message-unavailable {
+        --inline-message-foreground-color: var(--foreground-color-muted);
+    }
+
+    .inline-message-warning {
+        --inline-message-foreground-color: var(--foreground-color-attention);
+    }
+
+    /* The icon is held to the height of a line of the text beside it, so it stands against
+       the first line rather than above or below it */
+    .inline-message-icon {
+        display: grid;
+        place-items: center;
+        min-height: calc(var(--inline-message-line-height) * var(--inline-message-font-size));
+
+        & > svg {
+            width: var(--inline-message-icon-size);
+            height: var(--inline-message-icon-size);
+        }
+    }
+}

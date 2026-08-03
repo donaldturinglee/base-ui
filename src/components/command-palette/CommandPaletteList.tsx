@@ -5,10 +5,7 @@ import { CommandPaletteContext } from "./CommandPaletteContext";
 import type { CommandPaletteListProps } from "./CommandPalette.types";
 
 const classes = {
-    // A column laid out by flex, so that the items can be put in the order they answered best
-    // in without any of them being moved in the tree. The gap is what holds the items apart,
-    // so nothing that stands down leaves the space it was taking behind it
-    root: "flex flex-col gap-[var(--base-size-4)] overflow-y-auto overscroll-contain scroll-p-[var(--base-size-8)] p-[var(--base-size-8)]",
+    root: "command-palette-list",
 };
 
 const DEFAULT_MAX_HEIGHT = 400;

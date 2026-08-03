@@ -5,10 +5,10 @@ import { FormControlContext } from "./FormControlContext";
 import type { FormControlLabelElement, FormControlLabelProps } from "./FormControl.types";
 
 const classes = {
-    root: "block self-start cursor-pointer [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] text-foreground-default",
-    disabled: "cursor-not-allowed [color:var(--control-foreground-color-disabled)]",
+    root: "form-control-label",
+    disabled: "form-control-label-disabled",
     hidden: "sr-only",
-    required: "flex gap-[var(--base-size-4)]",
+    required: "form-control-label-required",
 };
 
 function FormControlLabel<As extends FormControlLabelElement = "label">(

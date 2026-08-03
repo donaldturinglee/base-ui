@@ -31,28 +31,24 @@ describe("Text", () => {
 
     it("applies the medium size by default", () => {
         render(<Text>Body text</Text>);
-        expect(screen.getByText("Body text")).toHaveClass(
-            "[font-size:var(--text-body-size-medium)]",
-        );
+        expect(screen.getByText("Body text")).toHaveClass("text-size-medium");
     });
 
     it("applies the requested size", () => {
         render(<Text size="small">Body text</Text>);
-        expect(screen.getByText("Body text")).toHaveClass(
-            "[font-size:var(--text-body-size-small)]",
-        );
+        expect(screen.getByText("Body text")).toHaveClass("text-size-small");
     });
 
     it("applies the default body weight when no weight is provided", () => {
         render(<Text>Body text</Text>);
-        expect(screen.getByText("Body text")).toHaveClass("[font-weight:var(--text-body-weight)]");
+        const text = screen.getByText("Body text");
+        expect(text).toHaveClass("text");
+        expect(text.className).not.toMatch(/\btext-weight-/);
     });
 
     it("replaces the default body weight when a weight is provided", () => {
         render(<Text weight="semibold">Body text</Text>);
-        const text = screen.getByText("Body text");
-        expect(text).toHaveClass("[font-weight:var(--base-text-weight-semibold)]");
-        expect(text).not.toHaveClass("[font-weight:var(--text-body-weight)]");
+        expect(screen.getByText("Body text")).toHaveClass("text-weight-semibold");
     });
 
     it("applies the requested white space handling", () => {

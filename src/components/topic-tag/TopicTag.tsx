@@ -4,13 +4,11 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TopicTagProps } from "./TopicTag.types";
 
 const classes = {
-    root: "inline-flex items-center whitespace-nowrap px-[var(--base-size-12)] py-[var(--base-size-2)] rounded-[var(--border-radius-full)] bg-background-accent-muted text-foreground-accent [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-small)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--topic-tag-border-color)]",
-    // Resets what an anchor and a button bring with them, so the tag looks the same however
-    // it is rendered
-    reset: "no-underline m-0 appearance-none text-start [font-family:inherit]",
-    // Only a tag that leads somewhere reads as something to click
-    interactive: "[&:is(a,button)]:cursor-pointer [&:is(a,button)]:select-none",
-    hover: "hover:bg-background-accent-emphasis hover:text-foreground-on-emphasis",
+    // The reset for an anchor or a button travels with the root class, so the tag looks the
+    // same however it is rendered
+    root: "topic-tag",
+    interactive: "topic-tag-interactive",
+    hover: "topic-tag-hover",
 };
 
 function TopicTag<As extends React.ElementType = "a">(
@@ -23,13 +21,7 @@ function TopicTag<As extends React.ElementType = "a">(
     return (
         <Component
             ref={ref}
-            className={classNames(
-                classes.root,
-                classes.reset,
-                classes.interactive,
-                classes.hover,
-                className,
-            )}
+            className={classNames(classes.root, classes.interactive, classes.hover, className)}
             data-component="TopicTag"
             {...rest}
         />

@@ -11,18 +11,15 @@ import type { FCWithSlotMarker, SlotMarker } from "../../utilities/types/slots";
 export const groupHeadingSlot: SlotMarker = { __SLOT__: Symbol("ActionList.GroupHeading") };
 
 const classes = {
-    heading:
-        "m-0 [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] [font-weight:var(--base-text-weight-semibold)] text-foreground-muted",
-    auxiliary:
-        "[font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)] text-foreground-muted",
+    heading: "action-list-group-heading-label",
+    auxiliary: "action-list-group-heading-auxiliary",
 };
 
-const actionListGroupHeadingVariants = cva("px-[var(--base-size-8)] py-[var(--base-size-6)]", {
+const actionListGroupHeadingVariants = cva("action-list-group-heading", {
     variants: {
         variant: {
             subtle: "",
-            // A filled group is set apart from the items around it by what it is drawn on
-            filled: "bg-background-muted border-y-[length:var(--border-width-thin)] border-y-border-muted mt-[var(--base-size-8)]",
+            filled: "action-list-group-heading-filled",
         } satisfies Record<ActionListGroupVariant, string>,
     },
 });

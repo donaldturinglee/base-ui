@@ -1,0 +1,130 @@
+@layer components {
+    /* Reading down: the name, then the control, then whatever is said about it, each spaced
+       from the last. The row after a label is left alone, so the name sits against its field */
+    .form-control-vertical {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        & > *:not(label) + * {
+            margin-top: var(--base-size-4);
+        }
+    }
+
+    .form-control-vertical-with-label {
+        & > * + * {
+            margin-top: var(--base-size-4);
+        }
+    }
+
+    /* Reading across: the box, then the name beside it. This is what a checkbox or a radio
+       always reads as, whatever layout was asked for */
+    .form-control-horizontal {
+        display: flex;
+    }
+
+    .form-control-horizontal-with-leading-visual {
+        align-items: center;
+    }
+
+    /* The box brings its own spacing from the label container beside it */
+    .form-control-choice-input {
+        & > input {
+            margin-inline: 0;
+        }
+    }
+
+    /* A name standing beside a box is not the heading of a field, so it is set in the weight
+       of the text around it */
+    .form-control-label-container {
+        & > * {
+            padding-inline-start: var(--stack-gap-condensed);
+        }
+
+        & > label {
+            font-weight: var(--base-text-weight-normal);
+        }
+    }
+
+    .form-control-label {
+        display: block;
+        align-self: flex-start;
+        cursor: pointer;
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .form-control-label-disabled {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+    }
+
+    .form-control-label-required {
+        display: flex;
+        gap: var(--base-size-4);
+    }
+
+    .form-control-caption {
+        display: block;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    .form-control-caption-disabled {
+        color: var(--control-foreground-color-disabled);
+    }
+
+    /* The visual stands between the box and the name beside it, and is sized from the line it
+       is set against rather than from the icon given to it */
+    .form-control-leading-visual {
+        --leading-visual-size: var(--base-size-16);
+
+        display: flex;
+        align-items: center;
+        margin-inline-start: var(--base-size-8);
+        color: var(--foreground-color-default);
+
+        & > * {
+            min-width: var(--leading-visual-size);
+            min-height: var(--leading-visual-size);
+            fill: currentcolor;
+        }
+    }
+
+    .form-control-leading-visual-disabled {
+        color: var(--control-foreground-color-disabled);
+    }
+
+    /* A caption puts a second line under the name, so the visual grows to stand against both */
+    .form-control-leading-visual-with-caption {
+        --leading-visual-size: var(--base-size-24);
+    }
+
+    .form-control-validation {
+        display: flex;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+
+        & a {
+            text-decoration: underline;
+            color: currentcolor;
+        }
+    }
+
+    .form-control-validation-success {
+        color: var(--foreground-color-success);
+    }
+
+    .form-control-validation-error {
+        color: var(--foreground-color-danger);
+    }
+
+    .form-control-validation-icon {
+        flex-shrink: 0;
+        width: var(--base-size-12);
+        height: var(--base-size-12);
+        margin-top: var(--base-size-2);
+        margin-inline-end: var(--base-size-4);
+    }
+}

@@ -7,7 +7,7 @@ import { AccordionItemContext } from "./AccordionItemContext";
 import type { AccordionItemProps } from "./Accordion.types";
 
 const classes = {
-    root: "border-b-[length:var(--border-width-thin)] border-b-border-muted",
+    root: "accordion-item",
 };
 
 function AccordionItem<As extends React.ElementType = "div">(

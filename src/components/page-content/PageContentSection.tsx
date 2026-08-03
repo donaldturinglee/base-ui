@@ -5,8 +5,7 @@ import { getHiddenAttribute, getHiddenClassName, getHiddenViewports } from "./vi
 import type { PageContentSectionProps } from "./PageContent.types";
 
 const classes = {
-    // A run cannot be pushed wider than the page by anything inside it that overflows
-    root: "min-w-0",
+    root: "page-content-section",
 };
 
 // A run of the content, which can be taken off the screen at whichever viewport ranges it

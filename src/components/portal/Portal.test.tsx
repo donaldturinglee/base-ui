@@ -32,7 +32,7 @@ describe("Portal", () => {
 
     it("gives the portal node its own stacking context", () => {
         render(<Portal>portaled content</Portal>);
-        expect(getPortalNode(getDefaultRoot())).toHaveClass("relative", "z-1");
+        expect(getPortalNode(getDefaultRoot())).toHaveClass("portal");
     });
 
     it("appends the generated root to a data-portal-root element when one exists", () => {

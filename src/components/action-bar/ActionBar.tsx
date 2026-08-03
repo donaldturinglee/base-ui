@@ -16,9 +16,9 @@ import type { ActionBarGap, ActionBarProps, ActionBarSize } from "./ActionBar.ty
 
 const classes = {
     size: {
-        small: "h-[var(--control-small-size)]",
-        medium: "h-[var(--control-medium-size)]",
-        large: "h-[var(--control-large-size)]",
+        small: "action-bar-size-small",
+        medium: "action-bar-size-medium",
+        large: "action-bar-size-large",
     } satisfies Record<ActionBarSize, string>,
     // Nothing at all, standing before the first item so that it too has somewhere to wrap to
     // once there is no longer room for it
@@ -28,37 +28,30 @@ const classes = {
     moreButtonEmpty: "invisible",
 };
 
-const actionBarVariants = cva("flex items-center min-w-0", {
+const actionBarVariants = cva("action-bar", {
     variants: {
-        // A bar that is not flush is held in from the edges of whatever it is drawn on
         flush: {
             true: "",
-            false: "px-[var(--base-size-8)]",
+            false: "action-bar-inset",
         },
     },
 });
 
-const actionBarToolbarVariants = cva("flex grow items-center min-w-0", {
+const actionBarToolbarVariants = cva("action-bar-toolbar", {
     variants: {
         size: classes.size,
     },
 });
 
-const actionBarItemsVariants = cva(
-    // The items are laid out as one row that is allowed to wrap. The row is only as tall as
-    // one line of them, so whatever wraps below is cut off, and being cut off is how an item
-    // knows it no longer fits
-    "flex grow flex-wrap items-center content-start min-w-0 overflow-hidden",
-    {
-        variants: {
-            size: classes.size,
-            gap: {
-                none: "gap-0",
-                condensed: "gap-[var(--base-size-4)]",
-            } satisfies Record<ActionBarGap, string>,
-        },
+const actionBarItemsVariants = cva("action-bar-items", {
+    variants: {
+        size: classes.size,
+        gap: {
+            none: "action-bar-gap-none",
+            condensed: "action-bar-gap-condensed",
+        } satisfies Record<ActionBarGap, string>,
     },
-);
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ActionBarChild = React.ReactElement<any>;

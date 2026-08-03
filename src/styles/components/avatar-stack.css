@@ -1,0 +1,213 @@
+@layer components {
+    .avatar-stack {
+        --avatar-stack-border-width: 1px;
+        --avatar-stack-mask-size: calc(100% + (var(--avatar-stack-border-width) * 2));
+        --avatar-stack-opacity-step: 15%;
+
+        position: relative;
+        display: flex;
+        isolation: isolate;
+        height: var(--avatar-stack-size);
+        min-width: var(--avatar-stack-size);
+    }
+
+    /* The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular
+       one. The widths match --breakpoint-medium and --breakpoint-xxlarge in variables.css */
+    .avatar-stack-responsive {
+        @media (width < 48rem) {
+            --avatar-stack-size: var(--avatar-stack-size-narrow);
+        }
+
+        @media (48rem <= width < 87.5rem) {
+            --avatar-stack-size: var(--avatar-stack-size-regular);
+        }
+
+        @media (width >= 87.5rem) {
+            --avatar-stack-size: var(--avatar-stack-size-wide);
+        }
+    }
+
+    /* The mask slides to the opposite edge when the stack runs right to left */
+    .avatar-stack-align-left {
+        --avatar-stack-mask-start: -1;
+    }
+
+    .avatar-stack-align-right {
+        --avatar-stack-mask-start: 1;
+
+        direction: rtl;
+    }
+
+    .avatar-stack-cascade {
+        --avatar-stack-overlap: calc(var(--avatar-stack-size) * 0.55);
+        --avatar-stack-overlap-large: calc(var(--avatar-stack-size) * 0.85);
+    }
+
+    .avatar-stack-stack {
+        --avatar-stack-overlap: calc(var(--avatar-stack-size) * 0.55);
+        --avatar-stack-overlap-large: calc(var(--avatar-stack-size) * 0.55);
+    }
+
+    /* One avatar per visible slot, so the track widens by the uncovered part of each one */
+    .avatar-stack-cascade-two,
+    .avatar-stack-stack-two {
+        min-width: calc(
+            var(--avatar-stack-size) + (var(--avatar-stack-size) - var(--avatar-stack-overlap))
+        );
+    }
+
+    .avatar-stack-cascade-three {
+        min-width: calc(
+            var(--avatar-stack-size) + (var(--avatar-stack-size) - var(--avatar-stack-overlap)) +
+                (var(--avatar-stack-size) - var(--avatar-stack-overlap-large))
+        );
+    }
+
+    .avatar-stack-cascade-more {
+        min-width: calc(
+            var(--avatar-stack-size) + (var(--avatar-stack-size) - var(--avatar-stack-overlap)) +
+                (var(--avatar-stack-size) - var(--avatar-stack-overlap-large)) * 2
+        );
+    }
+
+    .avatar-stack-stack-three {
+        min-width: calc(
+            var(--avatar-stack-size) +
+                (var(--avatar-stack-size) - var(--avatar-stack-overlap-large)) * 2
+        );
+    }
+
+    .avatar-stack-stack-more {
+        --avatar-stack-overlap: var(--avatar-stack-overlap-large);
+
+        min-width: calc(
+            var(--avatar-stack-size) +
+                (var(--avatar-stack-size) - var(--avatar-stack-overlap-large)) * 3
+        );
+    }
+
+    .avatar-stack-body {
+        position: relative;
+        display: flex;
+    }
+
+    /* An expandable stack lets the avatars answer the whole stack being hovered or focused */
+    .avatar-stack-body-expandable {
+        position: absolute;
+        display: flex;
+
+        &:hover,
+        &:focus-within {
+            width: auto;
+        }
+    }
+
+    .avatar-stack-item {
+        --avatar-size-regular: var(--avatar-stack-size);
+
+        position: relative;
+        display: flex;
+        flex-shrink: 0;
+        overflow: hidden;
+        width: var(--avatar-stack-size);
+        height: var(--avatar-stack-size);
+        transition:
+            margin var(--motion-transition-state-change),
+            opacity var(--motion-transition-state-change),
+            mask-position var(--motion-transition-state-change),
+            mask-size var(--motion-transition-state-change);
+    }
+
+    .avatar-stack-item-first {
+        margin-inline-start: 0;
+    }
+
+    /* The padding keeps a hairline of the underlying element from showing at the edges */
+    .avatar-stack-item-overlapped {
+        margin-inline-start: calc(var(--avatar-stack-overlap) * -1);
+        padding: 0.1px;
+        mask-repeat: no-repeat, no-repeat;
+        mask-composite: exclude;
+        mask-size:
+            var(--avatar-stack-mask-size) var(--avatar-stack-mask-size),
+            auto;
+        mask-position:
+            calc(
+                    (var(--avatar-stack-size) - var(--avatar-stack-overlap)) *
+                        var(--avatar-stack-mask-start) - var(--avatar-stack-border-width)
+                )
+                center,
+            0 0;
+    }
+
+    /* Punches the next avatar's outline out of this one, so the two never touch */
+    .avatar-stack-item-mask {
+        mask-image:
+            radial-gradient(at 50% 50%, rgb(0, 0, 0) 70%, rgb(0, 0, 0, 0) 71%),
+            linear-gradient(rgb(0, 0, 0) 0 0);
+    }
+
+    .avatar-stack-item-circle {
+        border-radius: var(--border-radius-full);
+    }
+
+    .avatar-stack-item-square {
+        border-radius: clamp(
+            var(--base-size-4),
+            calc(var(--avatar-stack-size) - var(--base-size-24)),
+            var(--border-radius-medium)
+        );
+    }
+
+    /* Square avatars cannot be masked into each other, so a hairline separates them */
+    .avatar-stack-item-edge-circle:is(img) {
+        box-shadow: 0 0 0 var(--avatar-stack-border-width) transparent;
+    }
+
+    .avatar-stack-item-edge-square:is(img) {
+        box-shadow: 1px 0 var(--avatar-border-color);
+    }
+
+    .avatar-stack-item-edge-align-right:is(img) {
+        box-shadow: -1px 0 var(--avatar-border-color);
+    }
+
+    /* Named by child position: the first two stay solid, then each avatar fades a step
+       further back */
+    .avatar-stack-item-fade-third {
+        --avatar-stack-overlap: var(--avatar-stack-overlap-large);
+
+        opacity: calc(100% - 2 * var(--avatar-stack-opacity-step));
+    }
+
+    .avatar-stack-item-fade-fourth {
+        opacity: calc(100% - 3 * var(--avatar-stack-opacity-step));
+    }
+
+    .avatar-stack-item-fade-fifth {
+        opacity: calc(100% - 4 * var(--avatar-stack-opacity-step));
+    }
+
+    .avatar-stack-item-overflow {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    /* Everything the stack was holding back comes out as it expands */
+    .avatar-stack-body-expandable:hover .avatar-stack-item-expanded,
+    .avatar-stack-body-expandable:focus-within .avatar-stack-item-expanded {
+        --avatar-stack-mask-size: 100%;
+
+        visibility: visible;
+        margin-inline-start: var(--base-size-4);
+        opacity: 1;
+        mask-position:
+            calc(var(--avatar-stack-size) * var(--avatar-stack-mask-start)) center,
+            0 0;
+    }
+
+    .avatar-stack-body-expandable:hover .avatar-stack-item-expanded-first,
+    .avatar-stack-body-expandable:focus-within .avatar-stack-item-expanded-first {
+        margin-inline-start: 0;
+    }
+}

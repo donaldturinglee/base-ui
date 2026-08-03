@@ -11,35 +11,31 @@ const classes = {
     srOnly: "sr-only",
 };
 
-const tokenVariants = cva(
-    "max-w-full text-foreground-muted bg-background-neutral-muted border-solid border-[length:var(--border-width-thin)] border-border-muted",
-    {
-        variants: {
-            // A token that answers the reader lifts as the pointer rests on it
-            interactive: {
-                true: "hover:text-foreground-default hover:[box-shadow:var(--shadow-resting-medium)]",
-                false: "",
-            },
-            selected: {
-                true: "text-foreground-default border-border-emphasis",
-                false: "",
-            },
-            // The remove button carries the room at that end, so the token gives up its own
-            withRemoveButton: {
-                true: "pr-0",
-                false: "",
-            },
+const tokenVariants = cva("token-default", {
+    variants: {
+        interactive: {
+            true: "token-default-interactive",
+            false: "",
+        },
+        selected: {
+            true: "token-default-selected",
+            false: "",
+        },
+        withRemoveButton: {
+            true: "token-with-remove-button",
+            false: "",
         },
     },
-);
+});
 
-const tokenLeadingVisualVariants = cva("flex shrink-0 items-center leading-none", {
+const tokenLeadingVisualVariants = cva("token-visual", {
     variants: {
         size: {
+            // A small token has no room to spare between its visual and its text
             small: "",
-            medium: "mr-[var(--base-size-4)]",
-            large: "mr-[var(--base-size-6)]",
-            xlarge: "mr-[var(--base-size-6)]",
+            medium: "token-visual-medium",
+            large: "token-visual-large",
+            xlarge: "token-visual-xlarge",
         } satisfies Record<TokenSize, string>,
     },
 });

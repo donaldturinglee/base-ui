@@ -6,16 +6,14 @@ import type { AvatarShape } from "../avatar/Avatar.types";
 import SkeletonBox from "../skeleton-box/SkeletonBox";
 import type { SkeletonAvatarProps } from "./SkeletonAvatar.types";
 
-const skeletonAvatarVariants = cva("inline-block leading-none", {
+const skeletonAvatarVariants = cva("skeleton-avatar", {
     variants: {
         shape: {
-            circle: "rounded-[var(--border-radius-full)]",
-            // The radius grows with the avatar, so small squares stay only slightly rounded
-            square: "rounded-[clamp(var(--base-size-4),calc(var(--avatar-size-regular)_-_var(--base-size-24)),var(--border-radius-medium))]",
+            circle: "skeleton-avatar-circle",
+            square: "skeleton-avatar-square",
         } satisfies Record<AvatarShape, string>,
-        // The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular one
         responsive: {
-            true: "max-medium:size-[var(--avatar-size-narrow,var(--avatar-size-regular))] xxlarge:size-[var(--avatar-size-wide,var(--avatar-size-regular))]",
+            true: "skeleton-avatar-responsive",
             false: "",
         },
     },

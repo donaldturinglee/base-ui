@@ -20,41 +20,20 @@ import type { TreeViewItemContextValue } from "./TreeViewContext";
 import type { TreeViewItemProps } from "./TreeView.types";
 
 const classes = {
-    // The row itself carries no focus ring; the box drawn inside it does, so that the ring
-    // follows what can be seen rather than the whole width of the tree
-    root: "list-none outline-none [overflow-clip-margin:var(--base-size-8)]",
-    focus: "focus-visible:[&>span]:[box-shadow:0_0_0_var(--border-width-thick)_var(--foreground-color-accent)]",
-    // The columns are, in order: the step in from the edge, a leading action, the chevron,
-    // the label, and anything standing at the end of the row
-    container:
-        "relative grid w-full cursor-pointer rounded-[var(--border-radius-medium)] [overflow-clip-margin:var(--base-size-8)] [font-size:var(--text-body-size-medium)] text-foreground-default [--tree-view-toggle-width:1rem] [--tree-view-item-height:2rem] [--tree-view-item-line-height:1.3rem] [--tree-view-spacer-width:calc((var(--tree-view-level)_-_1)_*_(var(--tree-view-toggle-width)_/_2))] [grid-template-columns:var(--tree-view-spacer-width)_var(--tree-view-leading-action-width,0px)_var(--tree-view-toggle-width)_1fr_auto] hover:bg-[var(--control-transparent-background-color-hover)] [@media(pointer:coarse)]:[--tree-view-toggle-width:1.5rem] [@media(pointer:coarse)]:[--tree-view-item-height:2.75rem]",
-    // A flat tree draws every row against the same edge, since there is no depth to say
-    flat: "[[data-omit-spacer='true']_&]:[grid-template-columns:0_var(--tree-view-leading-action-width,0px)_0_1fr_auto]",
-    hasLeadingAction: "[--tree-view-leading-action-width:1.5rem]",
-    // The row the reader is on is filled, and marked in the margin so it can be picked out
-    // at a glance down a long tree
-    current:
-        "bg-[var(--control-transparent-background-color-selected)] after:content-[''] after:absolute after:top-[calc(50%_-_var(--base-size-12))] after:left-[calc(-1_*_var(--base-size-8))] after:w-[var(--base-size-4)] after:h-[var(--base-size-24)] after:rounded-[var(--border-radius-medium)] after:bg-foreground-accent",
-    // A row standing in for what is being fetched is not something to reach for
-    loading: "[&:hover]:bg-transparent [&:hover]:cursor-default",
-    spacer: "flex [grid-column:1]",
-    levelLines: "flex w-full",
-    // Only ever drawn while the tree is being used, so that a tree at rest reads as a list
-    // rather than as a diagram
-    levelLine:
-        "w-full h-full border-solid border-0 border-r-[length:var(--border-width-thin)] border-r-[color:var(--tree-view-line-color,transparent)]",
-    // The chevron sits against the top of a row that runs to more than one line, so that it
-    // stays beside the first line of the label
-    toggle: "flex [grid-column:3] h-full justify-center items-start pt-[calc(var(--tree-view-item-height)/2_-_var(--base-size-12)/2)] text-foreground-muted",
-    toggleHover: "hover:bg-[var(--control-transparent-background-color-hover)]",
-    // A chevron at the first level is flush with the start of the row, so it takes the
-    // row's own corners
-    toggleEnd: "rounded-s-[var(--border-radius-medium)]",
-    content:
-        "flex [grid-column:4] h-full px-[var(--base-size-8)] gap-[var(--stack-gap-condensed)] py-[calc((var(--tree-view-item-height)_-_var(--tree-view-item-line-height))/2)] leading-[var(--tree-view-item-line-height)]",
-    // A long label either runs off the end of the row or onto another line, which the tree
-    // as a whole decides
-    label: "grow basis-auto w-0 [[data-truncate-text='true']_&]:overflow-hidden [[data-truncate-text='true']_&]:text-ellipsis [[data-truncate-text='true']_&]:whitespace-nowrap [[data-truncate-text='false']_&]:[word-break:break-word]",
+    root: "tree-view-item",
+    container: "tree-view-item-container",
+    flat: "tree-view-item-container-flat",
+    hasLeadingAction: "tree-view-item-container-has-leading-action",
+    current: "tree-view-item-container-current",
+    loading: "tree-view-item-container-loading",
+    spacer: "tree-view-item-spacer",
+    levelLines: "tree-view-item-level-lines",
+    levelLine: "tree-view-item-level-line",
+    toggle: "tree-view-item-toggle",
+    toggleHover: "tree-view-item-toggle-hover",
+    toggleEnd: "tree-view-item-toggle-end",
+    content: "tree-view-item-content",
+    label: "tree-view-item-label",
 };
 
 // The chevron is drawn smaller than a leading visual, since it says something about the row
@@ -264,7 +243,7 @@ function TreeViewItem<As extends React.ElementType = "li">(
             aria-expanded={ariaExpanded}
             aria-current={isCurrentItem ? "true" : undefined}
             aria-selected={isFocused ? "true" : "false"}
-            className={classNames(classes.root, classes.focus, className)}
+            className={classNames(classes.root, className)}
             data-component="TreeView.Item"
             data-has-leading-action={slots.leadingAction ? "" : undefined}
             data-loading={isLoadingPlaceholder ? "" : undefined}

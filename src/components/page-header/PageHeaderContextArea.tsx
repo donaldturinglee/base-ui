@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-span-full row-start-1 flex flex-row items-center gap-[var(--stack-gap-condensed)] pb-[var(--base-size-8)] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-normal)] leading-[var(--text-body-line-height-medium)]",
+    root: "page-header-context-area",
 };
 
 // Stands above the title and says where in the site the reader is. A narrow viewport has no

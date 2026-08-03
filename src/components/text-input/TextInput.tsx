@@ -16,58 +16,44 @@ import type {
 } from "./TextInput.types";
 
 const classes = {
-    // The wrapper carries the field styling so the native control can stay transparent, and
-    // so the visuals beside it can sit within the border. The action size lives here as well,
-    // so an action inside the field is sized by the field it stands in
-    field: "relative inline-flex items-stretch overflow-hidden align-middle cursor-text gap-[var(--base-size-8)] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)]",
+    // The class names are the input's rather than the component's, since tailwind-merge reads
+    // every `text-` class as a text colour and keeps only the last of them
+    field: "input",
     size: {
-        small: "min-h-[var(--control-small-size)] py-[var(--control-small-padding-block)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-small)] [--text-input-action-size:var(--base-size-20)]",
-        medium: "min-h-[var(--control-medium-size)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-medium)] [--text-input-action-size:var(--base-size-24)]",
-        large: "min-h-[var(--control-large-size)] py-[var(--control-large-padding-block)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-medium)] [--text-input-action-size:var(--base-size-28)]",
+        small: "input-small",
+        medium: "input-medium",
+        large: "input-large",
     } satisfies Record<TextInputSize, string>,
-    focus: "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
-    // With an action inside the field, the ring follows the typing area alone, so reaching
-    // for the action does not light the whole field up
-    focusTracked:
-        "border-border-accent-emphasis outline-solid outline-[length:var(--focus-outline-width)] outline-[color:var(--focus-outline-color)] -outline-offset-1",
-    block: "flex w-full self-stretch",
-    contrast: "bg-background-inset",
-    monospace: "[font-family:var(--font-stack-monospace)]",
-    disabled:
-        "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_input]:cursor-not-allowed",
+    focus: "input-focus",
+    focusTracked: "input-focus-tracked",
+    block: "input-block",
+    contrast: "input-contrast",
+    monospace: "input-monospace",
+    disabled: "input-disabled",
     validation: {
-        error: "border-border-danger-emphasis",
-        success: "border-background-success-emphasis",
+        error: "input-error",
+        success: "input-success",
     } satisfies Record<TextInputValidationStatus, string>,
-    // An invalid field keeps its own colour in the ring, drawn the same two ways
-    validationFocus:
-        "focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
-    validationFocusTracked:
-        "border-[color:var(--control-border-color-danger)] outline-[color:var(--control-border-color-danger)]",
-    // A visual stands within the field's own padding; the typing area takes over the padding
-    // on whichever side has no visual to stand in it
-    leadingVisual: "ps-[var(--base-size-8)]",
-    leadingVisualLarge: "ps-[var(--base-size-12)]",
-    trailingVisual: "pe-[var(--base-size-8)]",
-    trailingVisualLarge: "pe-[var(--base-size-12)]",
-    // The field owns the focus ring, so the control inside it drops its own. A flex item is
-    // allowed to shrink past the width an input asks for
-    input: "w-full min-w-0 p-0 bg-transparent border-0 outline-none appearance-none cursor-text focus:outline-0 disabled:cursor-not-allowed [font-family:inherit] [font-size:inherit] [color:inherit] placeholder:text-foreground-muted",
-    inputPadStart: "ps-[var(--base-size-8)]",
-    inputPadStartWide: "ps-[var(--base-size-12)]",
-    inputPadEnd: "pe-[var(--base-size-8)]",
-    inputPadEndWide: "pe-[var(--base-size-12)]",
-    visual: "flex self-center shrink-0 text-foreground-muted",
-    // The spinner is laid over the visual it stands in for, so the field keeps its width as
-    // the wait starts and ends
-    visualBox: "relative flex",
-    spinner: "absolute top-0 right-0 max-w-full h-full",
-    spinnerLeading: "left-0",
+    validationFocus: "input-validation-focus",
+    validationFocusTracked: "input-validation-focus-tracked",
+    leadingVisual: "input-leading-visual-padding",
+    leadingVisualLarge: "input-leading-visual-padding-wide",
+    trailingVisual: "input-trailing-visual-padding",
+    trailingVisualLarge: "input-trailing-visual-padding-wide",
+    input: "input-control",
+    inputPadStart: "input-control-pad-start",
+    inputPadStartWide: "input-control-pad-start-wide",
+    inputPadEnd: "input-control-pad-end",
+    inputPadEndWide: "input-control-pad-end-wide",
+    visual: "input-visual",
+    visualBox: "input-visual-box",
+    spinner: "input-spinner",
+    spinnerLeading: "input-spinner-leading",
     spinnerHidden: "invisible",
     spinnerVisible: "visible",
-    counter: "flex items-center gap-[var(--control-xsmall-gap)] text-foreground-muted",
-    counterOverLimit: "text-foreground-danger",
-    counterIcon: "shrink-0 size-[var(--base-size-16)]",
+    counter: "input-counter",
+    counterOverLimit: "input-counter-over-limit",
+    counterIcon: "input-counter-icon",
     hidden: "sr-only",
 };
 

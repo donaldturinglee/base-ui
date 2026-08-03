@@ -1,0 +1,149 @@
+@layer components {
+    .pagination {
+        margin-top: var(--base-size-20);
+        margin-bottom: var(--base-size-16);
+        text-align: center;
+    }
+
+    .pagination-steps {
+        display: inline-block;
+    }
+
+    .pagination-step {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: var(--control-medium-size);
+        height: var(--control-medium-size);
+        padding-block: var(--base-size-8);
+        padding-inline: var(--base-size-6);
+        margin-inline-end: var(--base-size-4);
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        background-color: transparent;
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-style: normal;
+        line-height: 1;
+        transition: background-color var(--motion-transition-state-change);
+
+        &:last-child {
+            margin-inline-end: 0;
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            outline: 0;
+            background-color: var(--control-transparent-background-color-hover);
+            transition-duration: var(--motion-duration-micro);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* The icons scale with the inherited font size rather than a fixed step */
+    .pagination-step-previous,
+    .pagination-step-next {
+        color: var(--foreground-color-accent);
+
+        & > svg {
+            width: 1em;
+            height: 1em;
+        }
+    }
+
+    .pagination-step-previous > svg {
+        margin-inline-end: var(--base-size-4);
+    }
+
+    .pagination-step-next > svg {
+        margin-inline-start: var(--base-size-4);
+    }
+
+    /* The hover and focus backgrounds are restated so the page a reader has just clicked
+       keeps its fill. The ring is drawn inside the fill, so the focus outline still reads
+       against it */
+    .pagination-step-current {
+        background-color: var(--background-color-accent-emphasis);
+        color: var(--foreground-color-on-emphasis);
+
+        &:hover,
+        &:focus {
+            background-color: var(--background-color-accent-emphasis);
+        }
+
+        &:focus-visible {
+            box-shadow: var(--box-shadow-thicker) var(--foreground-color-on-emphasis);
+        }
+    }
+
+    .pagination-step-inert {
+        cursor: default;
+        background-color: transparent;
+        color: var(--foreground-color-disabled);
+
+        &:hover,
+        &:focus {
+            background-color: transparent;
+        }
+    }
+
+    /* Only the previous and next steps survive once the page numbers are hidden, so the
+       margin between them comes off too. The widths match --breakpoint-medium and
+       --breakpoint-xxlarge in variables.css */
+    .pagination-hidden-narrow {
+        @media (width < 48rem) {
+            & > *:not(:first-child):not(:last-child) {
+                display: none;
+            }
+
+            & > *:first-child {
+                margin-inline-end: 0;
+            }
+
+            & > *:last-child {
+                margin-inline-start: 0;
+            }
+        }
+    }
+
+    .pagination-hidden-regular {
+        @media (48rem <= width < 87.5rem) {
+            & > *:not(:first-child):not(:last-child) {
+                display: none;
+            }
+
+            & > *:first-child {
+                margin-inline-end: 0;
+            }
+
+            & > *:last-child {
+                margin-inline-start: 0;
+            }
+        }
+    }
+
+    .pagination-hidden-wide {
+        @media (width >= 87.5rem) {
+            & > *:not(:first-child):not(:last-child) {
+                display: none;
+            }
+
+            & > *:first-child {
+                margin-inline-end: 0;
+            }
+
+            & > *:last-child {
+                margin-inline-start: 0;
+            }
+        }
+    }
+}

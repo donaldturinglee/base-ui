@@ -19,51 +19,39 @@ import type {
 } from "./AnchoredOverlay.types";
 
 const classes = {
-    closeButtonContainer: "relative",
-    // The button is only there on the screens the overlay fills, since anywhere else it is
-    // closed by clicking off it
-    closeButton:
-        "hidden absolute top-[var(--base-size-8)] right-[var(--base-size-8)] max-medium:inline-grid",
+    closeButtonContainer: "anchored-overlay-close-button-container",
+    closeButton: "anchored-overlay-close-button",
 };
 
 const anchoredOverlayVariants = cva(
     [
-        // The overlay is laid out against the viewport, because that is what the anchor it
-        // stands against is measured against. Where it ends up is carried in variables rather
-        // than written straight onto the element, so that a narrow viewport can put it
-        // somewhere else. Nothing on it is transitioned: it is measured as it opens, and a
-        // transition would carry it into place from the corner it was first rendered in rather
-        // than let it appear where it belongs
-        "fixed transition-none top-[var(--anchored-overlay-top)] left-[var(--anchored-overlay-left)] overflow-auto min-w-[var(--overlay-width-xsmall)] max-h-[100dvh] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] focus:outline-none forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
+        "anchored-overlay",
         // It arrives from the edge of the anchor it stands off, which says where it came from
         "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2 motion-safe:data-[side=outside-right]:slide-in-from-left-2 motion-safe:data-[side=outside-left]:slide-in-from-right-2",
     ],
     {
         variants: {
             width: {
-                xsmall: "w-[var(--overlay-width-xsmall)]",
-                small: "w-[var(--overlay-width-small)]",
-                medium: "w-[var(--overlay-width-medium)]",
-                large: "w-[var(--overlay-width-large)]",
-                xlarge: "w-[var(--overlay-width-xlarge)]",
-                auto: "w-auto",
+                xsmall: "anchored-overlay-width-xsmall",
+                small: "anchored-overlay-width-small",
+                medium: "anchored-overlay-width-medium",
+                large: "anchored-overlay-width-large",
+                xlarge: "anchored-overlay-width-xlarge",
+                auto: "anchored-overlay-width-auto",
             } satisfies Record<AnchoredOverlayWidth, string>,
             height: {
-                small: "h-[var(--overlay-height-small)]",
-                medium: "h-[var(--overlay-height-medium)]",
-                large: "h-[var(--overlay-height-large)]",
-                xlarge: "h-[var(--overlay-height-xlarge)]",
-                auto: "h-auto",
+                small: "anchored-overlay-height-small",
+                medium: "anchored-overlay-height-medium",
+                large: "anchored-overlay-height-large",
+                xlarge: "anchored-overlay-height-xlarge",
+                auto: "anchored-overlay-height-auto",
             } satisfies Record<AnchoredOverlayHeight, string>,
-            // Narrowed to what the viewport has room for, rather than standing at its own width
             reflow: {
-                true: "max-w-[calc(100dvw_-_var(--base-size-32))]",
+                true: "anchored-overlay-reflow",
                 false: "",
             },
-            // A narrow viewport gives the overlay the whole screen, since there is no room left
-            // to stand beside the anchor
             fullscreen: {
-                true: "max-medium:top-0 max-medium:left-0 max-medium:w-dvw max-medium:max-w-none max-medium:h-dvh max-medium:max-h-none max-medium:rounded-none",
+                true: "anchored-overlay-fullscreen",
                 false: "",
             },
             // Held back until it has been placed, so it is never seen where it does not belong

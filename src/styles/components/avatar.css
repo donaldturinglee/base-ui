@@ -1,0 +1,39 @@
+@layer components {
+    /* `overflow: hidden` keeps the page layout intact in Firefox should the image fail to load */
+    .avatar {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+        line-height: 1;
+        width: var(--avatar-size-regular);
+        height: var(--avatar-size-regular);
+        box-shadow: 0 0 0 var(--border-width-thin) var(--avatar-border-color);
+    }
+
+    .avatar-circle {
+        border-radius: var(--border-radius-full);
+    }
+
+    /* The radius grows with the avatar, so small squares stay only slightly rounded */
+    .avatar-square {
+        border-radius: clamp(
+            var(--base-size-4),
+            calc(var(--avatar-size-regular) - var(--base-size-24)),
+            var(--border-radius-medium)
+        );
+    }
+
+    /* The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular one.
+       The widths match --breakpoint-medium and --breakpoint-xxlarge in variables.css */
+    .avatar-responsive {
+        @media (width < 48rem) {
+            width: var(--avatar-size-narrow, var(--avatar-size-regular));
+            height: var(--avatar-size-narrow, var(--avatar-size-regular));
+        }
+
+        @media (width >= 87.5rem) {
+            width: var(--avatar-size-wide, var(--avatar-size-regular));
+            height: var(--avatar-size-wide, var(--avatar-size-regular));
+        }
+    }
+}

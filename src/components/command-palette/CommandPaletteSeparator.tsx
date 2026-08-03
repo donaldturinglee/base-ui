@@ -5,9 +5,7 @@ import { CommandPaletteContext } from "./CommandPaletteContext";
 import type { CommandPaletteSeparatorProps } from "./CommandPalette.types";
 
 const classes = {
-    // The gap the list holds its children apart by is what stands either side of the line, so
-    // the divider carries no margin of its own to double it up
-    root: "h-px w-full shrink-0 bg-border-muted",
+    root: "command-palette-separator",
 };
 
 // A line between one run of items and the next. It stands down as soon as anything is typed,

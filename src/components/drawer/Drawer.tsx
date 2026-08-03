@@ -20,53 +20,42 @@ import DrawerTitle from "./DrawerTitle";
 import type { DrawerNamedSize, DrawerPosition, DrawerProps, DrawerSize } from "./Drawer.types";
 
 const classes = {
-    // The layer the drawer is laid out in covers the page and pushes the panel to whichever
-    // edge it settles against, filling the other way of its own accord
     backdrop:
-        "fixed inset-0 flex bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
-    // A modeless drawer leaves the page behind it to be used, so the layer takes no colour and
-    // catches nothing; the panel standing in it is the only part that answers a pointer
-    backdropModeless: "bg-transparent pointer-events-none",
+        "drawer-backdrop motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
+    backdropModeless: "drawer-backdrop-modeless",
     backdropPosition: {
-        left: "flex-row justify-start",
-        right: "flex-row justify-end",
-        top: "flex-col justify-start",
-        bottom: "flex-col justify-end",
+        left: "drawer-backdrop-left",
+        right: "drawer-backdrop-right",
+        top: "drawer-backdrop-top",
+        bottom: "drawer-backdrop-bottom",
     } satisfies Record<DrawerPosition, string>,
-    root: "flex flex-col overflow-hidden bg-[var(--overlay-background-color)] [box-shadow:var(--shadow-floating-small)] motion-safe:animate-in motion-safe:duration-short",
-    rootModeless: "pointer-events-auto",
-    // A drawer runs the whole way along the edge it settles against, gives up the two corners
-    // it meets there, and arrives from that edge
+    root: "drawer motion-safe:animate-in motion-safe:duration-short",
+    rootModeless: "drawer-modeless",
+    // A drawer arrives from the edge it settles against, so where it comes from is what the
+    // position says here beside the shape it takes
     position: {
-        left: "h-full max-w-[100dvw] rounded-r-[var(--border-radius-large)] motion-safe:slide-in-from-left",
-        right: "h-full max-w-[100dvw] rounded-l-[var(--border-radius-large)] motion-safe:slide-in-from-right",
-        top: "w-full max-h-[100dvh] rounded-b-[var(--border-radius-large)] motion-safe:slide-in-from-top",
-        bottom: "w-full max-h-[100dvh] rounded-t-[var(--border-radius-large)] motion-safe:slide-in-from-bottom",
+        left: "drawer-left motion-safe:slide-in-from-left",
+        right: "drawer-right motion-safe:slide-in-from-right",
+        top: "drawer-top motion-safe:slide-in-from-top",
+        bottom: "drawer-bottom motion-safe:slide-in-from-bottom",
     } satisfies Record<DrawerPosition, string>,
-    // How far a drawer comes in is a width where it settles against a side, and a height where
-    // it settles against the top or the bottom
     inlineSize: {
-        small: "w-[var(--overlay-width-small)]",
-        medium: "w-[var(--overlay-width-medium)]",
-        large: "w-[var(--overlay-width-large)]",
-        xlarge: "w-[var(--overlay-width-xlarge)]",
+        small: "drawer-inline-size-small",
+        medium: "drawer-inline-size-medium",
+        large: "drawer-inline-size-large",
+        xlarge: "drawer-inline-size-xlarge",
     } satisfies Record<DrawerNamedSize, string>,
     blockSize: {
-        small: "h-[var(--overlay-height-small)]",
-        medium: "h-[var(--overlay-height-medium)]",
-        large: "h-[var(--overlay-height-large)]",
-        xlarge: "h-[var(--overlay-height-xlarge)]",
+        small: "drawer-block-size-small",
+        medium: "drawer-block-size-medium",
+        large: "drawer-block-size-large",
+        xlarge: "drawer-block-size-xlarge",
     } satisfies Record<DrawerNamedSize, string>,
-    // A size that is not a step of the scale is carried in a variable of its own
-    customInlineSize: "w-[var(--drawer-size)]",
-    customBlockSize: "h-[var(--drawer-size)]",
-    // The header lays its parts out in a row itself, so the title and the subtitle are all
-    // that need grouping. Filling the row leaves the close button at the end of it
-    headerContent: "flex flex-col grow px-[var(--base-size-8)] py-[var(--base-size-6)]",
-    overflowWrapper: "grow",
-    // The line above the footer is only there to say that the body has more to be read past
-    // the end of the panel
-    overflowWrapperBordered: "border-b-[length:var(--border-width-thin)] border-b-border-default",
+    customInlineSize: "drawer-inline-size-custom",
+    customBlockSize: "drawer-block-size-custom",
+    headerContent: "drawer-header-content",
+    overflowWrapper: "drawer-overflow-wrapper",
+    overflowWrapperBordered: "drawer-overflow-wrapper-bordered",
 };
 
 const isNamedSize = (size: DrawerSize): size is DrawerNamedSize =>

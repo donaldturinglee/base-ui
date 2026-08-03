@@ -5,9 +5,7 @@ import { DrawerContext } from "./DrawerContext";
 import type { DrawerTitleProps } from "./Drawer.types";
 
 const classes = {
-    // The drawer is a document of its own while it is open, so its title reads as the heading
-    // of one rather than taking the size that comes with it
-    root: "m-0 [font-size:var(--text-body-size-medium)] [font-weight:var(--text-title-weight-large)]",
+    root: "drawer-title",
 };
 
 function DrawerTitle<As extends React.ElementType = "h1">(

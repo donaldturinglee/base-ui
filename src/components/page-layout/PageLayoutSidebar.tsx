@@ -13,26 +13,16 @@ import { usePaneWidth } from "./usePaneWidth";
 import type { PageLayoutSidebarProps } from "./PageLayout.types";
 
 const classes = {
-    // The sidebar and the line beside it stand together, outside everything else the page
-    // holds
-    wrapper: "flex flex-row shrink-0 h-full",
-    hidden: "data-[is-hidden=true]:hidden max-medium:data-[is-hidden-narrow=true]:hidden medium:data-[is-hidden-regular=true]:hidden xxlarge:data-[is-hidden-wide=true]:hidden",
-    position:
-        "data-[position=start]:[order:-1] data-[position=start]:me-[var(--spacing-column)] data-[position=end]:[order:1] data-[position=end]:ms-[var(--spacing-column)]",
-    sticky: "data-[sticky]:sticky data-[sticky]:top-0 data-[sticky]:h-screen",
-    // On a narrow screen a fullscreen sidebar covers the viewport the way a dialog does
-    fullscreen:
-        "max-medium:data-[responsive-variant=fullscreen]:fixed max-medium:data-[responsive-variant=fullscreen]:inset-0 max-medium:data-[responsive-variant=fullscreen]:w-screen max-medium:data-[responsive-variant=fullscreen]:h-screen max-medium:data-[responsive-variant=fullscreen]:min-w-[unset] max-medium:data-[responsive-variant=fullscreen]:max-w-[unset] max-medium:data-[responsive-variant=fullscreen]:rounded-none max-medium:data-[responsive-variant=fullscreen]:z-999 max-medium:data-[responsive-variant=fullscreen]:bg-background-default",
-    sidebar: "w-[var(--pane-width-size)] h-full overflow-auto p-[var(--spacing)]",
-    sidebarResizable:
-        "data-[resizable]:w-full medium:data-[resizable]:w-[clamp(var(--pane-min-width),var(--pane-width),var(--pane-max-width))]",
-    dragging:
-        "data-[dragging=true]:[contain:layout_style_paint] data-[dragging=true]:pointer-events-none",
-    // Covering the viewport leaves nothing for the sidebar to be narrower than
-    sidebarFullscreen:
-        "max-medium:[[data-responsive-variant=fullscreen]>&]:w-full max-medium:[[data-responsive-variant=fullscreen]>&]:h-full max-medium:[[data-responsive-variant=fullscreen]>&]:min-w-[unset] max-medium:[[data-responsive-variant=fullscreen]>&]:max-w-[unset]",
-    divider:
-        "h-auto data-[position=start]:ms-[var(--spacing-column)] data-[position=end]:me-[var(--spacing-column)] max-medium:[[data-responsive-variant=fullscreen]>&]:hidden",
+    wrapper: "page-layout-sidebar-wrapper",
+    hidden: "page-layout-hidden",
+    position: "page-layout-sidebar-position",
+    sticky: "page-layout-sidebar-sticky",
+    fullscreen: "page-layout-sidebar-fullscreen",
+    sidebar: "page-layout-sidebar",
+    sidebarResizable: "page-layout-sidebar-resizable",
+    dragging: "page-layout-dragging",
+    sidebarFullscreen: "page-layout-sidebar-fullscreen-inner",
+    divider: "page-layout-sidebar-divider",
 };
 
 function PageLayoutSidebar(

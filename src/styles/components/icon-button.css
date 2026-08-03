@@ -1,0 +1,25 @@
+@layer components {
+    /* An icon button is square, with the icon centred rather than laid out on a grid. The
+       centring is spelled out longhand so that it replaces the button's own alignment rather
+       than sitting beside it */
+    .icon-button {
+        display: inline-grid;
+        justify-content: center;
+        align-content: center;
+        flex-shrink: 0;
+        min-width: unset;
+        padding: 0;
+    }
+
+    .icon-button-small {
+        width: var(--control-small-size);
+    }
+
+    .icon-button-medium {
+        width: var(--control-medium-size);
+    }
+
+    .icon-button-large {
+        width: var(--control-large-size);
+    }
+}

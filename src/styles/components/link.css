@@ -1,0 +1,42 @@
+@layer components {
+    .link {
+        text-decoration: none;
+        text-underline-offset: 0.05rem;
+        color: var(--foreground-color-accent);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    /* Reset for button tags, so `as="button"` still reads as a link */
+    .link:is(button) {
+        display: inline-block;
+        padding: 0;
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        font-size: inherit;
+    }
+
+    /* Inline links are underlined only when an ancestor opts into the accessibility setting */
+    [data-a11y-link-underlines="true"] .link-inline {
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .link-muted {
+        color: var(--foreground-color-muted);
+
+        &:hover {
+            text-decoration: none;
+            color: var(--foreground-color-accent);
+        }
+    }
+}

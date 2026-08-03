@@ -5,9 +5,8 @@ import { CardContext } from "./CardContext";
 import type { CardIconProps } from "./Card.types";
 
 const classes = {
-    root: "flex items-center justify-start text-foreground-muted",
-    // The default layout sits the icon on a tile of its own; a compact card leaves it bare
-    tile: "justify-center size-[var(--base-size-32)] rounded-[var(--border-radius-medium)] bg-background-muted",
+    root: "card-icon",
+    tile: "card-icon-tile",
 };
 
 function CardIcon(

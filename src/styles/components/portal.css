@@ -1,0 +1,16 @@
+@layer components {
+    /* Portaled content gets its own stacking context so separate portals cannot interfere
+       with each other in unexpected ways. There is never a reason to raise this above 1 */
+    .portal {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Spans the top of its parent so portaled content can position against the page */
+    .portal-root {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}

@@ -5,9 +5,7 @@ import PageSidebarRegion from "./PageSidebarRegion";
 import type { PageSidebarChildProps } from "./PageSidebar.types";
 
 const classes = {
-    // The room left over falls above the footer, so it is pushed to the foot of the sidebar
-    // however little the rest of it holds
-    root: "mt-auto flex flex-col min-w-0 pt-[var(--base-size-8)] gap-[var(--stack-gap-condensed)]",
+    root: "page-sidebar-footer",
 };
 
 // What stands at the foot of the sidebar, under everything else it holds: whose account this

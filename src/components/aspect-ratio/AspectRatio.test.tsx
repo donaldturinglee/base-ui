@@ -35,14 +35,14 @@ describe("AspectRatio", () => {
     it("falls back to a square box", () => {
         render(<AspectRatio data-testid="aspect-ratio" />);
         expect(aspectRatio()).toHaveAttribute("data-ratio", "1:1");
-        expect(aspectRatio()).toHaveClass("[--aspect-ratio:1/1]");
+        expect(aspectRatio()).toHaveClass("aspect-ratio-1-1");
     });
 
     it("respects the ratio prop", () => {
         const ratios = {
-            "1:1": "[--aspect-ratio:1/1]",
-            "16:9": "[--aspect-ratio:16/9]",
-            "4:3": "[--aspect-ratio:4/3]",
+            "1:1": "aspect-ratio-1-1",
+            "16:9": "aspect-ratio-16-9",
+            "4:3": "aspect-ratio-4-3",
         } as const;
 
         for (const [ratio, expected] of Object.entries(ratios)) {
@@ -71,20 +71,9 @@ describe("AspectRatio", () => {
         expect(aspectRatio().style.getPropertyValue("--aspect-ratio")).toBe("");
     });
 
-    it("takes its height from the width it is given", () => {
+    it("takes its height from the width it is given, and lays whatever is put inside over it", () => {
         render(<AspectRatio data-testid="aspect-ratio" />);
-        expect(aspectRatio()).toHaveClass("aspect-[var(--aspect-ratio)]");
-        expect(aspectRatio()).toHaveClass("relative");
-        expect(aspectRatio()).toHaveClass("overflow-hidden");
-    });
-
-    it("lays whatever is put inside over the whole box", () => {
-        render(<AspectRatio data-testid="aspect-ratio" />);
-        expect(aspectRatio()).toHaveClass("[&>*]:absolute");
-        expect(aspectRatio()).toHaveClass("[&>*]:inset-0");
-        expect(aspectRatio()).toHaveClass("[&>*]:w-full");
-        expect(aspectRatio()).toHaveClass("[&>*]:h-full");
-        expect(aspectRatio()).toHaveClass("[&>*]:object-cover");
+        expect(aspectRatio()).toHaveClass("aspect-ratio");
     });
 
     it("merges a custom style onto the root element", () => {

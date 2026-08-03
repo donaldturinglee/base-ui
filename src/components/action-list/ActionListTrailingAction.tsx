@@ -6,11 +6,8 @@ import { IconButton } from "../icon-button";
 import type { ActionListTrailingActionProps } from "./ActionList.types";
 
 const classes = {
-    // The action stands at the end of the row, outside the part of the item that is picked
-    root: "flex shrink-0 items-center",
-    // It is only drawn once the item is under the pointer or holds focus, so a list of them
-    // does not read as a row of buttons
-    action: "invisible [li:hover_&]:visible [li:focus-within_&]:visible focus-visible:visible",
+    root: "action-list-trailing-action",
+    action: "action-list-trailing-action-button",
 };
 
 // A second thing an item can do, standing beside the item rather than inside it. A list

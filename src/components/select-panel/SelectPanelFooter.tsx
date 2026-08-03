@@ -6,13 +6,11 @@ import { SelectPanelContext } from "./SelectPanelContext";
 import type { SelectPanelFooterProps } from "./SelectPanel.types";
 
 const classes = {
-    root: "flex shrink-0 items-center justify-between min-h-[var(--base-size-44)] p-[var(--base-size-16)] border-solid border-t-[length:var(--border-width-thin)] border-t-border-default",
-    // With nothing to save, the footer is only there to hold whatever the caller put in it, so
-    // it is drawn in closer and that content is given the width
-    rootWithoutActions: "p-[var(--base-size-8)]",
-    content: "grow-0",
-    contentWithoutActions: "grow",
-    actions: "flex gap-[var(--stack-gap-condensed)]",
+    root: "select-panel-footer",
+    rootWithoutActions: "select-panel-footer-without-actions",
+    content: "select-panel-footer-content",
+    contentWithoutActions: "select-panel-footer-content-without-actions",
+    actions: "select-panel-footer-actions",
 };
 
 // Stands at the foot of the panel, where the selection is saved or given up. A panel that

@@ -1,0 +1,79 @@
+@layer components {
+    /* The top margin centres the box against a 20px line of label text beside it */
+    .checkbox {
+        position: relative;
+        display: grid;
+        place-content: center;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        margin: 0;
+        margin-top: var(--base-size-2);
+        cursor: pointer;
+        appearance: none;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-emphasis);
+        border-radius: var(--border-radius-small);
+        transition:
+            background-color var(--motion-transition-hover),
+            border-color var(--motion-transition-hover);
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* The mark is drawn as a masked block, so it takes its colour from the box around it */
+    .checkbox-mark::before {
+        content: "";
+        visibility: hidden;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        background-color: var(--foreground-color-on-emphasis);
+        mask-image: var(--checkbox-mark);
+        mask-size: 75%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+    }
+
+    /* The fill doubles as the border colour so the box does not shift in dark high contrast */
+    .checkbox-checked {
+        &:checked,
+        &:indeterminate {
+            background-color: var(--control-checked-background-color-rest);
+            border-color: var(--control-checked-background-color-rest);
+
+            &::before {
+                visibility: visible;
+            }
+        }
+
+        @media (forced-colors: active) {
+            &:checked,
+            &:indeterminate {
+                background-color: canvastext;
+                border-color: canvastext;
+            }
+        }
+    }
+
+    .checkbox-disabled {
+        &:disabled {
+            cursor: not-allowed;
+            background-color: var(--control-background-color-disabled);
+            border-color: var(--control-border-color-disabled);
+        }
+
+        &:checked:disabled,
+        &:indeterminate:disabled {
+            background-color: var(--control-checked-background-color-disabled);
+            border-color: var(--control-checked-border-color-disabled);
+
+            &::before {
+                background-color: var(--control-checked-foreground-color-disabled);
+            }
+        }
+    }
+}

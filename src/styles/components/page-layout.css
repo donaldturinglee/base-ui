@@ -1,0 +1,676 @@
+@layer components {
+    /* The scale every region reads its spacing from, and the order the regions fall into once
+       the page wraps. The widths match --breakpoint-medium, --breakpoint-large,
+       --breakpoint-xlarge and --breakpoint-xxlarge in variables.css */
+    .page-layout {
+        --page-layout-spacing-none: 0px;
+        --page-layout-spacing-condensed: var(--base-size-16);
+        --page-layout-spacing-normal: var(--base-size-16);
+        --region-order-header: 0;
+        --region-order-pane-start: 1;
+        --region-order-content: 2;
+        --region-order-pane-end: 3;
+        --region-order-footer: 4;
+
+        /* A pane is as wide as the page until there is room beside the content for it */
+        --pane-width-small: 100%;
+        --pane-width-medium: 100%;
+        --pane-width-large: 100%;
+
+        /* How much of the viewport a resizable region has to leave for everything beside it.
+           A sidebar reserves less, since nothing else has to fit alongside */
+        --pane-max-width-diff: 511px;
+        --sidebar-max-width-diff: 256px;
+
+        padding: var(--spacing);
+
+        @media (width >= 48rem) {
+            --pane-width-small: 240px;
+            --pane-width-medium: 256px;
+            --pane-width-large: 256px;
+        }
+
+        @media (width >= 63.25rem) {
+            --page-layout-spacing-normal: var(--base-size-24);
+            --pane-width-small: 256px;
+            --pane-width-medium: 296px;
+            --pane-width-large: 320px;
+        }
+
+        @media (width >= 80rem) {
+            --pane-max-width-diff: 959px;
+        }
+    }
+
+    /* A sidebar stands beside everything else, so the page container is laid out in a row
+       around it */
+    .page-layout-has-sidebar {
+        display: flex;
+        flex-direction: row;
+
+        & > [data-page-layout-wrapper] {
+            flex-shrink: 1;
+            min-width: 0;
+        }
+    }
+
+    .page-layout-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        margin-inline: auto;
+    }
+
+    .page-layout-width-full {
+        max-width: 100%;
+    }
+
+    .page-layout-width-medium {
+        max-width: 768px;
+    }
+
+    .page-layout-width-large {
+        max-width: 1012px;
+    }
+
+    .page-layout-width-xlarge {
+        max-width: 1280px;
+    }
+
+    /* The header, the content and the footer share a line with the panes, which take their
+       place in it through the region order above */
+    .page-layout-content-row {
+        display: flex;
+        flex-wrap: wrap;
+        flex: 1;
+        flex-basis: 100%;
+        max-width: 100%;
+
+        @media (width < 48rem) {
+            flex-direction: column;
+        }
+    }
+
+    /* A region can be taken away for good, or only within a range of viewports */
+    .page-layout-hidden {
+        &[data-hidden="true"],
+        &[data-is-hidden="true"] {
+            display: none;
+        }
+
+        @media (width < 48rem) {
+            &[data-hidden-narrow="true"],
+            &[data-is-hidden-narrow="true"] {
+                display: none;
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-hidden-regular="true"],
+            &[data-is-hidden-regular="true"] {
+                display: none;
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-hidden-wide="true"],
+            &[data-is-hidden-wide="true"] {
+                display: none;
+            }
+        }
+    }
+
+    /* A drag holds the region still, so the browser has less to work out on every move */
+    .page-layout-dragging[data-dragging="true"] {
+        contain: layout style paint;
+        pointer-events: none;
+    }
+
+    .page-layout-header {
+        width: 100%;
+        margin-bottom: var(--spacing);
+    }
+
+    .page-layout-header-divider {
+        margin-top: var(--spacing);
+    }
+
+    .page-layout-region-content {
+        padding: var(--spacing);
+    }
+
+    .page-layout-footer {
+        order: var(--region-order-footer);
+        width: 100%;
+        margin-top: var(--spacing);
+    }
+
+    /* The divider heads the footer, so its spacing falls below it rather than above */
+    .page-layout-footer-divider {
+        margin-bottom: var(--spacing);
+    }
+
+    /* The basis of zero is what lets the content take the room left over rather than the room
+       its contents ask for, which would otherwise wrap the pane onto its own line. The
+       minimum width does the same for anything inside that overflows */
+    .page-layout-content-wrapper {
+        order: var(--region-order-content);
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        width: 100%;
+        min-width: 1px;
+    }
+
+    .page-layout-content {
+        width: 100%;
+        flex-grow: 1;
+        margin-inline: auto;
+        padding: var(--spacing);
+    }
+
+    .page-layout-content-width-full {
+        max-width: 100%;
+    }
+
+    .page-layout-content-width-medium {
+        max-width: 768px;
+    }
+
+    .page-layout-content-width-large {
+        max-width: 1012px;
+    }
+
+    .page-layout-content-width-xlarge {
+        max-width: 1280px;
+    }
+
+    /* The divider reaches out past the padding it sits in, so it runs the width of the page */
+    .page-layout-horizontal-divider {
+        margin-inline: calc(-1 * var(--spacing-divider));
+
+        @media (width >= 48rem) {
+            margin-inline: 0;
+        }
+
+        &[data-variant="none"] {
+            display: none;
+        }
+
+        &[data-variant="line"] {
+            display: block;
+            height: 1px;
+            background-color: var(--border-color-default);
+        }
+
+        &[data-variant="filled"] {
+            display: block;
+            height: var(--base-size-8);
+            background-color: var(--background-color-inset);
+            box-shadow:
+                inset 0 -1px 0 0 var(--border-color-default),
+                inset 0 1px 0 0 var(--border-color-default);
+        }
+
+        @media (width < 48rem) {
+            &[data-variant-narrow="none"] {
+                display: none;
+            }
+
+            &[data-variant-narrow="line"] {
+                display: block;
+                height: 1px;
+                background-color: var(--border-color-default);
+            }
+
+            &[data-variant-narrow="filled"] {
+                display: block;
+                height: var(--base-size-8);
+                background-color: var(--background-color-inset);
+                box-shadow:
+                    inset 0 -1px 0 0 var(--border-color-default),
+                    inset 0 1px 0 0 var(--border-color-default);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-variant-regular="none"] {
+                display: none;
+            }
+
+            &[data-variant-regular="line"] {
+                display: block;
+                height: 1px;
+                background-color: var(--border-color-default);
+            }
+
+            &[data-variant-regular="filled"] {
+                display: block;
+                height: var(--base-size-8);
+                background-color: var(--background-color-inset);
+                box-shadow:
+                    inset 0 -1px 0 0 var(--border-color-default),
+                    inset 0 1px 0 0 var(--border-color-default);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-variant-wide="none"] {
+                display: none;
+            }
+
+            &[data-variant-wide="line"] {
+                display: block;
+                height: 1px;
+                background-color: var(--border-color-default);
+            }
+
+            &[data-variant-wide="filled"] {
+                display: block;
+                height: var(--base-size-8);
+                background-color: var(--background-color-inset);
+                box-shadow:
+                    inset 0 -1px 0 0 var(--border-color-default),
+                    inset 0 1px 0 0 var(--border-color-default);
+            }
+        }
+    }
+
+    /* The handle for a resizable pane is laid over the divider, so the divider is what it is
+       placed against */
+    .page-layout-vertical-divider {
+        position: relative;
+        height: 100%;
+
+        &[data-variant="none"] {
+            display: none;
+        }
+
+        &[data-variant="line"] {
+            display: block;
+            width: 1px;
+            background-color: var(--border-color-default);
+        }
+
+        &[data-variant="filled"] {
+            display: block;
+            width: var(--base-size-8);
+            background-color: var(--background-color-inset);
+            box-shadow:
+                inset -1px 0 0 0 var(--border-color-default),
+                inset 1px 0 0 0 var(--border-color-default);
+        }
+
+        @media (width < 48rem) {
+            &[data-variant-narrow="none"] {
+                display: none;
+            }
+
+            &[data-variant-narrow="line"] {
+                display: block;
+                width: 1px;
+                background-color: var(--border-color-default);
+            }
+
+            &[data-variant-narrow="filled"] {
+                display: block;
+                width: var(--base-size-8);
+                background-color: var(--background-color-inset);
+                box-shadow:
+                    inset -1px 0 0 0 var(--border-color-default),
+                    inset 1px 0 0 0 var(--border-color-default);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-variant-regular="none"] {
+                display: none;
+            }
+
+            &[data-variant-regular="line"] {
+                display: block;
+                width: 1px;
+                background-color: var(--border-color-default);
+            }
+
+            &[data-variant-regular="filled"] {
+                display: block;
+                width: var(--base-size-8);
+                background-color: var(--background-color-inset);
+                box-shadow:
+                    inset -1px 0 0 0 var(--border-color-default),
+                    inset 1px 0 0 0 var(--border-color-default);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-variant-wide="none"] {
+                display: none;
+            }
+
+            &[data-variant-wide="line"] {
+                display: block;
+                width: 1px;
+                background-color: var(--border-color-default);
+            }
+
+            &[data-variant-wide="filled"] {
+                display: block;
+                width: var(--base-size-8);
+                background-color: var(--background-color-inset);
+                box-shadow:
+                    inset -1px 0 0 0 var(--border-color-default),
+                    inset 1px 0 0 0 var(--border-color-default);
+            }
+        }
+    }
+
+    .page-layout-pane-wrapper {
+        display: flex;
+        width: 100%;
+        margin-inline: 0;
+
+        /* From the regular range up it takes only the width it needs, and stands beside the
+           content on whichever side it was given */
+        @media (width >= 48rem) {
+            width: auto;
+            margin-block: 0;
+        }
+    }
+
+    /* Below the regular range the pane stacks with the content rather than standing beside
+       it, so the position decides which side of the fold it falls on */
+    .page-layout-pane-position {
+        @media (width < 48rem) {
+            &[data-position="end"],
+            &[data-position-narrow="end"] {
+                order: var(--region-order-pane-end);
+                flex-direction: column;
+                margin-top: var(--spacing-row);
+            }
+
+            &[data-position="start"],
+            &[data-position-narrow="start"] {
+                order: var(--region-order-pane-start);
+                flex-direction: column-reverse;
+                margin-bottom: var(--spacing-row);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-position="end"],
+            &[data-position-regular="end"] {
+                order: var(--region-order-pane-end);
+                flex-direction: row-reverse;
+                margin-inline-start: var(--spacing-column);
+            }
+
+            &[data-position="start"],
+            &[data-position-regular="start"] {
+                order: var(--region-order-pane-start);
+                flex-direction: row;
+                margin-inline-end: var(--spacing-column);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-position-wide="end"] {
+                order: var(--region-order-pane-end);
+                flex-direction: row-reverse;
+                margin-inline-start: var(--spacing-column);
+            }
+
+            &[data-position-wide="start"] {
+                order: var(--region-order-pane-start);
+                flex-direction: row;
+                margin-inline-end: var(--spacing-column);
+            }
+        }
+    }
+
+    .page-layout-pane-sticky {
+        @media (width >= 48rem) {
+            &[data-sticky] {
+                position: sticky;
+                top: var(--offset-header);
+                max-height: 100vh;
+            }
+        }
+    }
+
+    /* The pane scrolls on its own only once it stands beside the content */
+    .page-layout-pane {
+        width: var(--pane-width-size);
+        padding: var(--spacing);
+
+        @media (width >= 48rem) {
+            overflow: auto;
+        }
+    }
+
+    /* A pane the reader can resize is held between its bounds, which JavaScript keeps up to
+       date as the viewport changes */
+    .page-layout-pane-resizable[data-resizable] {
+        width: 100%;
+
+        @media (width >= 48rem) {
+            width: clamp(var(--pane-min-width), var(--pane-width), var(--pane-max-width));
+        }
+    }
+
+    /* The horizontal divider only shows where the pane has stacked, so its spacing follows
+       the side it stacked on */
+    .page-layout-pane-horizontal-divider {
+        &[data-position="start"] {
+            margin-top: var(--spacing);
+        }
+
+        &[data-position="end"] {
+            margin-bottom: var(--spacing);
+        }
+
+        @media (width < 48rem) {
+            &[data-position-narrow="start"] {
+                margin-top: var(--spacing);
+                margin-bottom: 0;
+            }
+
+            &[data-position-narrow="end"] {
+                margin-top: 0;
+                margin-bottom: var(--spacing);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-position-regular="start"] {
+                margin-top: var(--spacing);
+                margin-bottom: 0;
+            }
+
+            &[data-position-regular="end"] {
+                margin-top: 0;
+                margin-bottom: var(--spacing);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-position-wide="start"] {
+                margin-top: var(--spacing);
+                margin-bottom: 0;
+            }
+
+            &[data-position-wide="end"] {
+                margin-top: 0;
+                margin-bottom: var(--spacing);
+            }
+        }
+    }
+
+    .page-layout-pane-vertical-divider {
+        &[data-position="start"] {
+            margin-inline-start: var(--spacing);
+        }
+
+        &[data-position="end"] {
+            margin-inline-end: var(--spacing);
+        }
+
+        @media (width < 48rem) {
+            &[data-position-narrow="start"] {
+                margin-inline-start: var(--spacing);
+                margin-inline-end: 0;
+            }
+
+            &[data-position-narrow="end"] {
+                margin-inline-start: 0;
+                margin-inline-end: var(--spacing);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-position-regular="start"] {
+                margin-inline-start: var(--spacing);
+                margin-inline-end: 0;
+            }
+
+            &[data-position-regular="end"] {
+                margin-inline-start: 0;
+                margin-inline-end: var(--spacing);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-position-wide="start"] {
+                margin-inline-start: var(--spacing);
+                margin-inline-end: 0;
+            }
+
+            &[data-position-wide="end"] {
+                margin-inline-start: 0;
+                margin-inline-end: var(--spacing);
+            }
+        }
+    }
+
+    /* The sidebar and the line beside it stand together, outside everything else the page
+       holds */
+    .page-layout-sidebar-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 0;
+        height: 100%;
+    }
+
+    .page-layout-sidebar-position {
+        &[data-position="start"] {
+            order: -1;
+            margin-inline-end: var(--spacing-column);
+        }
+
+        &[data-position="end"] {
+            order: 1;
+            margin-inline-start: var(--spacing-column);
+        }
+    }
+
+    .page-layout-sidebar-sticky[data-sticky] {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+    }
+
+    /* On a narrow screen a fullscreen sidebar covers the viewport the way a dialog does */
+    .page-layout-sidebar-fullscreen {
+        @media (width < 48rem) {
+            &[data-responsive-variant="fullscreen"] {
+                position: fixed;
+                inset: 0;
+                z-index: 999;
+                width: 100vw;
+                min-width: unset;
+                max-width: unset;
+                height: 100vh;
+                background-color: var(--background-color-default);
+                border-radius: 0;
+            }
+        }
+    }
+
+    .page-layout-sidebar {
+        width: var(--pane-width-size);
+        height: 100%;
+        overflow: auto;
+        padding: var(--spacing);
+    }
+
+    .page-layout-sidebar-resizable[data-resizable] {
+        width: 100%;
+
+        @media (width >= 48rem) {
+            width: clamp(var(--pane-min-width), var(--pane-width), var(--pane-max-width));
+        }
+    }
+
+    /* Covering the viewport leaves nothing for the sidebar to be narrower than */
+    .page-layout-sidebar-fullscreen-inner {
+        @media (width < 48rem) {
+            [data-responsive-variant="fullscreen"] > & {
+                width: 100%;
+                min-width: unset;
+                max-width: unset;
+                height: 100%;
+            }
+        }
+    }
+
+    .page-layout-sidebar-divider {
+        height: auto;
+
+        &[data-position="start"] {
+            margin-inline-start: var(--spacing-column);
+        }
+
+        &[data-position="end"] {
+            margin-inline-end: var(--spacing-column);
+        }
+
+        @media (width < 48rem) {
+            [data-responsive-variant="fullscreen"] > & {
+                display: none;
+            }
+        }
+    }
+
+    /* The handle reaches a little past the divider either side, so it can be taken hold of
+       without having to be aimed at exactly */
+    .page-layout-drag-handle {
+        position: absolute;
+        inset-block: 0;
+        inset-inline: -2px;
+        cursor: col-resize;
+        touch-action: none;
+        user-select: none;
+
+        /* The fill is drawn behind the handle rather than on it, so nothing set on the
+           element while dragging has to fight the background */
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(
+                --drag-handle-background-color,
+                var(--background-color-neutral-muted)
+            );
+            border-radius: inherit;
+            opacity: var(--drag-handle-opacity, 0);
+            transition: var(--drag-handle-transition, opacity 150ms ease);
+        }
+
+        &:hover::before {
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+@layer components {
+    .placeholder {
+        display: grid;
+        place-items: center;
+        /* The width fallback lives here, so leaving it unset renders full width */
+        width: var(--placeholder-width, 100%);
+        height: var(--placeholder-height);
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-24);
+        background-color: var(--background-color-inset);
+        border: var(--border-width-thin) solid var(--border-color-muted);
+        border-radius: var(--border-radius-medium);
+    }
+}

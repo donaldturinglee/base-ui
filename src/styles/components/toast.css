@@ -1,0 +1,209 @@
+@layer components {
+    /* The stack is laid over everything else on the page, since it says what has happened
+       wherever the reader happens to be. The width matches --breakpoint-small in
+       variables.css */
+    .toaster {
+        --toaster-offset: var(--toaster-viewport-offset);
+
+        position: fixed;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: var(--toaster-width);
+        max-width: calc(100dvw - 2 * var(--toaster-offset));
+
+        @media (width < 34rem) {
+            --toaster-offset: var(--toaster-mobile-offset);
+        }
+    }
+
+    /* Every toast is laid at the anchored edge of the stack, so the list itself takes up no
+       room and catches nothing that is not a toast */
+    .toaster-top-left {
+        top: var(--toaster-offset);
+        left: var(--toaster-offset);
+    }
+
+    .toaster-top-center {
+        top: var(--toaster-offset);
+        left: 50%;
+        translate: -50% 0;
+    }
+
+    .toaster-top-right {
+        top: var(--toaster-offset);
+        right: var(--toaster-offset);
+    }
+
+    .toaster-bottom-left {
+        bottom: var(--toaster-offset);
+        left: var(--toaster-offset);
+    }
+
+    .toaster-bottom-center {
+        bottom: var(--toaster-offset);
+        left: 50%;
+        translate: -50% 0;
+    }
+
+    .toaster-bottom-right {
+        bottom: var(--toaster-offset);
+        right: var(--toaster-offset);
+    }
+
+    /* Every toast is laid at the edge the stack is anchored to and moved into its own place
+       from there, so that the stack takes no room of its own and the order of the toasts in
+       the list has nothing to say about where they land */
+    .toast {
+        position: absolute;
+        inset-inline: 0;
+        z-index: var(--toast-z-index);
+        height: var(--toast-height);
+        list-style: none;
+        transform: translate3d(
+                var(--toast-swipe-x),
+                calc(var(--toast-shift) + var(--toast-swipe-y)),
+                0
+            )
+            scale(var(--toast-scale));
+    }
+
+    /* A toast is dragged rather than scrolled off, so the gesture is taken from the page */
+    .toast-grabbable {
+        touch-action: none;
+    }
+
+    /* Where the stack is anchored settles the edge a toast comes in from and goes out
+       towards, and the way the ones behind it are laid back */
+    .toast-lift-top {
+        --toast-lift: 1;
+
+        top: 0;
+        transform-origin: top;
+    }
+
+    .toast-lift-bottom {
+        --toast-lift: -1;
+
+        bottom: 0;
+        transform-origin: bottom;
+    }
+
+    /* The room between one toast and the next is bridged, so that running the pointer down an
+       open stack does not fall through the gaps and gather it up again */
+    .toast-bridge::after {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        height: calc(var(--toaster-gap) + 1px);
+    }
+
+    .toast-bridge-top::after {
+        top: 100%;
+    }
+
+    .toast-bridge-bottom::after {
+        bottom: 100%;
+    }
+
+    .toast-card {
+        --toast-background-color: var(--overlay-background-color);
+        --toast-border-color: var(--border-color-default);
+        --toast-foreground-color: var(--foreground-color-default);
+        --toast-icon-color: var(--foreground-color-muted);
+
+        background-color: var(--toast-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--toast-border-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+        color: var(--toast-foreground-color);
+    }
+
+    /* The icon carries what the toast is saying even where the toast keeps the colours of
+       every other one */
+    .toast-icon-success {
+        --toast-icon-color: var(--foreground-color-success);
+    }
+
+    .toast-icon-error {
+        --toast-icon-color: var(--foreground-color-danger);
+    }
+
+    .toast-icon-warning {
+        --toast-icon-color: var(--foreground-color-attention);
+    }
+
+    .toast-icon-info {
+        --toast-icon-color: var(--foreground-color-accent);
+    }
+
+    .toast-rich-success {
+        --toast-background-color: var(--background-color-success-muted);
+        --toast-border-color: var(--border-color-success-muted);
+    }
+
+    .toast-rich-error {
+        --toast-background-color: var(--background-color-danger-muted);
+        --toast-border-color: var(--border-color-danger-muted);
+    }
+
+    .toast-rich-warning {
+        --toast-background-color: var(--background-color-attention-muted);
+        --toast-border-color: var(--border-color-attention-muted);
+    }
+
+    .toast-rich-info {
+        --toast-background-color: var(--background-color-accent-muted);
+        --toast-border-color: var(--border-color-accent-muted);
+    }
+
+    .toast-body {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--base-size-8);
+        padding: var(--base-size-12);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The icon stands in a column of its own, held to the height of a line of the text beside
+       it so that a message running onto a second line keeps clear of it */
+    .toast-icon {
+        display: grid;
+        place-items: center;
+        min-height: calc(var(--text-body-line-height-medium) * var(--text-body-size-medium));
+        color: var(--toast-icon-color);
+
+        & > svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+    }
+
+    .toast-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: var(--base-size-2);
+        min-width: 0;
+    }
+
+    .toast-title {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .toast-description {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .toast-actions {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--base-size-8);
+    }
+}

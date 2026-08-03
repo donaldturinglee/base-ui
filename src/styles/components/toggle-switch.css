@@ -1,0 +1,216 @@
+@layer components {
+    .toggle-switch {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .toggle-switch-label-start {
+        flex-direction: row;
+    }
+
+    .toggle-switch-label-end {
+        flex-direction: row-reverse;
+    }
+
+    .toggle-switch-content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .toggle-switch-status {
+        display: inline-flex;
+    }
+
+    .toggle-switch-status-end {
+        margin-inline-start: var(--base-size-8);
+    }
+
+    .toggle-switch-status-label {
+        position: relative;
+        margin-inline: var(--base-size-8);
+        cursor: pointer;
+        color: var(--foreground-color-default);
+    }
+
+    .toggle-switch-status-label-small {
+        font-size: var(--text-body-size-small);
+    }
+
+    .toggle-switch-status-label-medium {
+        font-size: var(--text-body-size-medium);
+    }
+
+    .toggle-switch-status-label-disabled {
+        cursor: not-allowed;
+        color: var(--foreground-color-muted);
+    }
+
+    .toggle-switch-status-text {
+        display: block;
+        text-align: end;
+    }
+
+    .toggle-switch-status-text-hidden {
+        visibility: hidden;
+        height: 0;
+    }
+
+    .toggle-switch-track {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        padding: 0;
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+        appearance: none;
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-radius: var(--border-radius-default);
+        transition:
+            background-color var(--motion-transition-state-change),
+            border-color var(--motion-transition-state-change);
+
+        /* The focus ring is drawn outside the track rather than inset, where the fill behind
+           it would swallow it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--base-size-2);
+        }
+
+        /* A coarse pointer is given a target taller than the switch itself to aim at */
+        @media (pointer: coarse) {
+            &::before {
+                content: "";
+                position: absolute;
+                inset-inline: 0;
+                top: 50%;
+                translate: 0 -50%;
+                min-height: var(--control-min-target-coarse);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The track is twice as wide as it is tall. The small switch stands at the height the
+       control scale calls xsmall */
+    .toggle-switch-track-small {
+        width: calc(var(--control-xsmall-size) * 2);
+        height: var(--control-xsmall-size);
+    }
+
+    .toggle-switch-track-medium {
+        width: calc(var(--control-medium-size) * 2);
+        height: var(--control-medium-size);
+    }
+
+    .toggle-switch-track-off {
+        background-color: var(--control-track-background-color-rest);
+        border-color: var(--control-track-border-color-rest);
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--control-track-background-color-hover);
+        }
+
+        &:active {
+            background-color: var(--control-track-background-color-active);
+        }
+    }
+
+    .toggle-switch-track-on {
+        background-color: var(--control-checked-background-color-rest);
+        border-color: var(--control-checked-border-color-rest);
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--control-checked-background-color-hover);
+        }
+
+        &:active {
+            background-color: var(--control-checked-background-color-active);
+        }
+    }
+
+    .toggle-switch-track-disabled {
+        cursor: not-allowed;
+        background-color: var(--control-track-background-color-disabled);
+        border-color: transparent;
+        transition: none;
+
+        @media (forced-colors: active) {
+            border-color: GrayText;
+        }
+    }
+
+    /* Each icon takes half the track, so the pair slides by exactly its own width. The icon
+       is centred in that half by the container rather than laid out as a line of text, which
+       would leave it sitting on a baseline with the descender space below it */
+    .toggle-switch-icon {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: 50%;
+        align-items: center;
+        justify-content: center;
+        transition: transform var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    .toggle-switch-circle-icon {
+        color: var(--control-checked-foreground-color-rest);
+    }
+
+    .toggle-switch-circle-icon-disabled {
+        color: var(--control-checked-foreground-color-disabled);
+    }
+
+    .toggle-switch-line-icon {
+        color: var(--control-track-foreground-color-rest);
+    }
+
+    .toggle-switch-line-icon-disabled {
+        color: var(--control-track-foreground-color-disabled);
+    }
+
+    /* The knob sits inside the track's border, so its own radius comes in by as much */
+    .toggle-switch-knob {
+        position: absolute;
+        z-index: 1;
+        top: 1px;
+        bottom: 1px;
+        left: 1px;
+        width: 50%;
+        background-color: var(--control-knob-background-color-rest);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-knob-border-color-rest);
+        border-radius: calc(var(--border-radius-default) - var(--border-width-thick));
+        transition: transform var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The travel is short by the borders the knob is inset from */
+    .toggle-switch-knob-checked {
+        background-color: var(--control-knob-background-color-checked);
+        border-color: var(--control-knob-border-color-checked);
+        transform: translateX(calc(100% - 2px));
+    }
+
+    .toggle-switch-knob-disabled {
+        background-color: var(--control-knob-background-color-disabled);
+        border-color: var(--control-knob-border-color-disabled);
+    }
+}

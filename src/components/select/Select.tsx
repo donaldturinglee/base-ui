@@ -5,45 +5,31 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SelectProps, SelectSize, SelectValidationStatus } from "./Select.types";
 
 const classes = {
-    // The 1px margins keep the field's inset focus outline from being covered, and the
-    // inherited background is what Firefox reads to colour its own dropdown menu. The right
-    // padding clears the indicator, so a long option never runs underneath it
-    select: "w-full my-px ml-px pl-[var(--base-size-12)] pr-[calc(var(--select-indicator-inset)_+_var(--select-indicator-size)_+_var(--base-size-4))] border-0 outline-none appearance-none [font-size:inherit] [color:currentColor] [background-color:inherit] [border-radius:inherit] disabled:bg-transparent forced-colors:disabled:[background-color:-moz-combobox]",
-    indicator:
-        "absolute top-1/2 right-[var(--select-indicator-inset)] size-[var(--select-indicator-size)] -translate-y-1/2 pointer-events-none",
+    select: "select-control",
+    indicator: "select-indicator",
 };
 
-const selectFieldVariants = cva(
-    [
-        // The wrapper carries the field styling so the native control underneath can stay
-        // transparent and keep its own dropdown behaviour. The indicator's size and inset live
-        // here so the control below can reserve exactly the room it takes up
-        "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)] [--select-indicator-size:var(--base-size-16)] [--select-indicator-inset:var(--base-size-4)] [&_select]:cursor-pointer forced-colors:[&_svg]:[fill:FieldText]",
-        "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
-    ],
-    {
-        variants: {
-            size: {
-                small: "min-h-[var(--control-small-size)] py-[var(--control-small-padding-block)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-small)]",
-                medium: "min-h-[var(--control-medium-size)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-medium)]",
-                large: "min-h-[var(--control-large-size)] py-[var(--control-large-padding-block)] leading-[var(--base-size-20)] [font-size:var(--text-body-size-medium)]",
-            } satisfies Record<SelectSize, string>,
-            block: {
-                true: "flex w-full self-stretch",
-                false: "",
-            },
-            disabled: {
-                true: "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_select]:cursor-not-allowed forced-colors:[&_svg]:[fill:GrayText]",
-                false: "",
-            },
-            // Last, so a field that is both disabled and invalid still reads as invalid
-            validation: {
-                error: "border-border-danger-emphasis focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
-                success: "border-background-success-emphasis",
-            } satisfies Record<SelectValidationStatus, string>,
+const selectFieldVariants = cva("select", {
+    variants: {
+        size: {
+            small: "select-small",
+            medium: "select-medium",
+            large: "select-large",
+        } satisfies Record<SelectSize, string>,
+        block: {
+            true: "select-block",
+            false: "",
         },
+        disabled: {
+            true: "select-disabled",
+            false: "",
+        },
+        validation: {
+            error: "select-error",
+            success: "select-success",
+        } satisfies Record<SelectValidationStatus, string>,
     },
-);
+});
 
 function Select(
     props: SelectProps,

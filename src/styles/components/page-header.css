@@ -1,0 +1,278 @@
+@layer components {
+    /* Five columns: the leading action, the breadcrumbs, the title, the trailing action, and
+       whatever room is left over for the actions at the end of the row */
+    .page-header {
+        display: grid;
+        grid-template-columns: auto auto auto auto 1fr;
+    }
+
+    /* The header carries the title's type, so that every part standing beside the title is
+       set against the same line */
+    .page-header-title-type {
+        font-size: var(--page-header-title-size);
+        font-weight: var(--page-header-title-weight);
+        line-height: var(--page-header-title-line-height);
+    }
+
+    .page-header-title-subtitle {
+        --page-header-title-size: var(--text-title-size-medium);
+        --page-header-title-weight: var(--base-text-weight-normal);
+        --page-header-title-line-height: var(--text-title-line-height-medium);
+    }
+
+    .page-header-title-medium {
+        --page-header-title-size: var(--text-title-size-medium);
+        --page-header-title-weight: var(--base-text-weight-semibold);
+        --page-header-title-line-height: var(--text-title-line-height-medium);
+    }
+
+    .page-header-title-large {
+        --page-header-title-size: var(--text-title-size-large);
+        --page-header-title-weight: var(--base-text-weight-normal);
+        --page-header-title-line-height: var(--text-title-line-height-large);
+    }
+
+    /* The ranges are exclusive, so a variant given at one viewport leaves the other two
+       untouched. The widths match --breakpoint-medium and --breakpoint-xxlarge in
+       variables.css */
+    .page-header-narrow-title-subtitle {
+        @media (width < 48rem) {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+    }
+
+    .page-header-narrow-title-medium {
+        @media (width < 48rem) {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-semibold);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+    }
+
+    .page-header-narrow-title-large {
+        @media (width < 48rem) {
+            --page-header-title-size: var(--text-title-size-large);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-large);
+        }
+    }
+
+    .page-header-regular-title-subtitle {
+        @media (48rem <= width < 87.5rem) {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+    }
+
+    .page-header-regular-title-medium {
+        @media (48rem <= width < 87.5rem) {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-semibold);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+    }
+
+    .page-header-regular-title-large {
+        @media (48rem <= width < 87.5rem) {
+            --page-header-title-size: var(--text-title-size-large);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-large);
+        }
+    }
+
+    .page-header-wide-title-subtitle {
+        @media (width >= 87.5rem) {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+    }
+
+    .page-header-wide-title-medium {
+        @media (width >= 87.5rem) {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-semibold);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+    }
+
+    .page-header-wide-title-large {
+        @media (width >= 87.5rem) {
+            --page-header-title-size: var(--text-title-size-large);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-large);
+        }
+    }
+
+    .page-header-border {
+        padding-bottom: var(--base-size-8);
+        border-style: solid;
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-default);
+    }
+
+    .page-header-border-narrow {
+        @media (width < 48rem) {
+            padding-bottom: var(--base-size-8);
+            border-style: solid;
+            border-bottom-width: var(--border-width-thin);
+            border-bottom-color: var(--border-color-default);
+        }
+    }
+
+    .page-header-border-regular {
+        @media (48rem <= width < 87.5rem) {
+            padding-bottom: var(--base-size-8);
+            border-style: solid;
+            border-bottom-width: var(--border-width-thin);
+            border-bottom-color: var(--border-color-default);
+        }
+    }
+
+    .page-header-border-wide {
+        @media (width >= 87.5rem) {
+            padding-bottom: var(--base-size-8);
+            border-style: solid;
+            border-bottom-width: var(--border-width-thin);
+            border-bottom-color: var(--border-color-default);
+        }
+    }
+
+    .page-header-context-area {
+        grid-column: 1 / -1;
+        grid-row-start: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        padding-bottom: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .page-header-parent-link {
+        order: 1;
+        display: flex;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .page-header-context-bar {
+        order: 2;
+        display: flex;
+    }
+
+    .page-header-context-area-actions {
+        order: 3;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .page-header-leading-action {
+        grid-column-start: 1;
+        grid-row-start: 2;
+        display: flex;
+        align-items: center;
+        height: calc(var(--page-header-title-line-height) * 1em);
+        padding-inline-end: var(--base-size-8);
+    }
+
+    .page-header-breadcrumbs {
+        grid-column-start: 2;
+        grid-row-start: 2;
+        display: flex;
+        align-items: center;
+        padding-inline-end: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .page-header-title-area {
+        grid-column-start: 3;
+        grid-row-start: 2;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* As tall as a line of the title, so it sits against the title's first line however many
+       lines the title runs to */
+    .page-header-leading-visual {
+        order: 1;
+        display: flex;
+        align-items: center;
+        height: calc(var(--page-header-title-line-height) * 1em);
+    }
+
+    /* The type is set by the header around it, so that everything standing beside the title
+       is sized against the same line */
+    .page-header-title {
+        order: 2;
+        display: block;
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+
+    .page-header-trailing-visual {
+        order: 3;
+        display: flex;
+        align-items: center;
+        height: calc(var(--page-header-title-line-height) * 1em);
+    }
+
+    .page-header-trailing-action {
+        grid-column-start: 4;
+        grid-row-start: 2;
+        display: flex;
+        align-items: center;
+        height: calc(var(--page-header-title-line-height) * 1em);
+        padding-inline-start: var(--base-size-8);
+    }
+
+    .page-header-actions {
+        grid-column-start: 5;
+        grid-row-start: 2;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--stack-gap-condensed);
+        min-width: max-content;
+        height: calc(var(--page-header-title-line-height) * 1em);
+        padding-inline-start: var(--base-size-8);
+    }
+
+    .page-header-description {
+        grid-column: 1 / -1;
+        grid-row-start: 3;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        padding-top: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .page-header-navigation {
+        grid-column: 1 / -1;
+        grid-row-start: 4;
+        display: block;
+        padding-top: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+}

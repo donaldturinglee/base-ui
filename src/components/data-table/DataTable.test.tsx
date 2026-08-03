@@ -176,14 +176,7 @@ describe("DataTable", () => {
             "Table.SortHeader",
         );
 
-        const table = screen.getByRole("table");
-        expect(table).toHaveClass(
-            "[&_tr>*:first-child]:border-s-[length:var(--border-width-thin)]",
-        );
-        expect(table).toHaveClass("[&_tr>*:last-child]:border-e-[length:var(--border-width-thin)]");
-        expect(table).toHaveClass(
-            "[&_thead_tr:first-of-type>*:first-child]:rounded-ss-[var(--table-border-radius)]",
-        );
+        expect(screen.getByRole("table")).toHaveClass("data-table");
     });
 
     it("leaves the bottom corners to whatever follows the table", () => {
@@ -191,9 +184,7 @@ describe("DataTable", () => {
 
         // The footer below a table rounds off the box, so the table only does it where it
         // stands on its own
-        expect(screen.getByRole("table").parentElement).toHaveClass(
-            "last:[&_tbody_tr:last-of-type>*:first-child]:rounded-es-[var(--table-border-radius)]",
-        );
+        expect(screen.getByRole("table").parentElement).toHaveClass("data-table-wrapper");
     });
 
     it("refuses a column with nothing to identify it by", () => {

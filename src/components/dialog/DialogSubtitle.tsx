@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DialogSubtitleProps } from "./Dialog.types";
 
 const classes = {
-    root: "m-0 mt-[var(--base-size-4)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] text-foreground-muted",
+    root: "dialog-subtitle",
 };
 
 function DialogSubtitle<As extends React.ElementType = "h2">(

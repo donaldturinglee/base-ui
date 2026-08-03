@@ -7,11 +7,10 @@ import PageLayoutHorizontalDivider from "./PageLayoutHorizontalDivider";
 import type { PageLayoutFooterProps } from "./PageLayout.types";
 
 const classes = {
-    root: "w-full mt-[var(--spacing)] [order:var(--region-order-footer)]",
-    hidden: "data-[hidden=true]:hidden max-medium:data-[hidden-narrow=true]:hidden medium:data-[hidden-regular=true]:hidden xxlarge:data-[hidden-wide=true]:hidden",
-    // The divider heads the footer, so its spacing falls below it rather than above
-    divider: "mb-[var(--spacing)]",
-    content: "p-[var(--spacing)]",
+    root: "page-layout-footer",
+    hidden: "page-layout-hidden",
+    divider: "page-layout-footer-divider",
+    content: "page-layout-region-content",
 };
 
 function PageLayoutFooter(

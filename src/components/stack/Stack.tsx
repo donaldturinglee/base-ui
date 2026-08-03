@@ -11,70 +11,66 @@ import type {
     StackWrap,
 } from "./Stack.types";
 
-const stackVariants = cva(
-    // The gap scale sets `--stack-gap`, so leaving `gap` unset falls back to the normal step
-    "flex content-start gap-[var(--stack-gap,var(--stack-gap-normal))]",
-    {
-        variants: {
-            gap: {
-                none: "[--stack-gap:0]",
-                tight: "[--stack-gap:var(--base-size-4)]",
-                condensed: "[--stack-gap:var(--stack-gap-condensed)]",
-                cozy: "[--stack-gap:var(--base-size-12)]",
-                normal: "[--stack-gap:var(--stack-gap-normal)]",
-                spacious: "[--stack-gap:var(--stack-gap-spacious)]",
-            } satisfies Record<StackGap, string>,
-            direction: {
-                horizontal: "flex-row",
-                vertical: "flex-col",
-            } satisfies Record<StackDirection, string>,
-            align: {
-                stretch: "items-stretch",
-                start: "items-start",
-                center: "items-center",
-                end: "items-end",
-                baseline: "items-baseline",
-            } satisfies Record<StackAlign, string>,
-            wrap: {
-                wrap: "flex-wrap",
-                nowrap: "flex-nowrap",
-            } satisfies Record<StackWrap, string>,
-            justify: {
-                start: "justify-start",
-                center: "justify-center",
-                end: "justify-end",
-                "space-between": "justify-between",
-                "space-evenly": "justify-evenly",
-            } satisfies Record<StackJustify, string>,
-            padding: {
-                none: "p-0",
-                tight: "p-[var(--base-size-4)]",
-                condensed: "p-[var(--stack-padding-condensed)]",
-                cozy: "p-[var(--base-size-12)]",
-                normal: "p-[var(--stack-padding-normal)]",
-                spacious: "p-[var(--stack-padding-spacious)]",
-            } satisfies Record<StackPadding, string>,
-            // `px` and `py` resolve to the logical padding axes, so these override `padding` on
-            // one axis
-            paddingBlock: {
-                none: "py-0",
-                tight: "py-[var(--base-size-4)]",
-                condensed: "py-[var(--stack-padding-condensed)]",
-                cozy: "py-[var(--base-size-12)]",
-                normal: "py-[var(--stack-padding-normal)]",
-                spacious: "py-[var(--stack-padding-spacious)]",
-            } satisfies Record<StackPadding, string>,
-            paddingInline: {
-                none: "px-0",
-                tight: "px-[var(--base-size-4)]",
-                condensed: "px-[var(--stack-padding-condensed)]",
-                cozy: "px-[var(--base-size-12)]",
-                normal: "px-[var(--stack-padding-normal)]",
-                spacious: "px-[var(--stack-padding-spacious)]",
-            } satisfies Record<StackPadding, string>,
-        },
+const stackVariants = cva("stack", {
+    variants: {
+        gap: {
+            none: "stack-gap-none",
+            tight: "stack-gap-tight",
+            condensed: "stack-gap-condensed",
+            cozy: "stack-gap-cozy",
+            normal: "stack-gap-normal",
+            spacious: "stack-gap-spacious",
+        } satisfies Record<StackGap, string>,
+        direction: {
+            horizontal: "stack-horizontal",
+            vertical: "stack-vertical",
+        } satisfies Record<StackDirection, string>,
+        align: {
+            stretch: "stack-align-stretch",
+            start: "stack-align-start",
+            center: "stack-align-center",
+            end: "stack-align-end",
+            baseline: "stack-align-baseline",
+        } satisfies Record<StackAlign, string>,
+        wrap: {
+            wrap: "stack-wrap",
+            nowrap: "stack-nowrap",
+        } satisfies Record<StackWrap, string>,
+        justify: {
+            start: "stack-justify-start",
+            center: "stack-justify-center",
+            end: "stack-justify-end",
+            "space-between": "stack-justify-space-between",
+            "space-evenly": "stack-justify-space-evenly",
+        } satisfies Record<StackJustify, string>,
+        padding: {
+            none: "stack-padding-none",
+            tight: "stack-padding-tight",
+            condensed: "stack-padding-condensed",
+            cozy: "stack-padding-cozy",
+            normal: "stack-padding-normal",
+            spacious: "stack-padding-spacious",
+        } satisfies Record<StackPadding, string>,
+        // The block and inline classes are named after the whole-box ones in the
+        // stylesheet, so either one overrides `padding` on its own axis
+        paddingBlock: {
+            none: "stack-padding-block-none",
+            tight: "stack-padding-block-tight",
+            condensed: "stack-padding-block-condensed",
+            cozy: "stack-padding-block-cozy",
+            normal: "stack-padding-block-normal",
+            spacious: "stack-padding-block-spacious",
+        } satisfies Record<StackPadding, string>,
+        paddingInline: {
+            none: "stack-padding-inline-none",
+            tight: "stack-padding-inline-tight",
+            condensed: "stack-padding-inline-condensed",
+            cozy: "stack-padding-inline-cozy",
+            normal: "stack-padding-inline-normal",
+            spacious: "stack-padding-inline-spacious",
+        } satisfies Record<StackPadding, string>,
     },
-);
+});
 
 function Stack<As extends React.ElementType = "div">(
     props: StackProps<As>,

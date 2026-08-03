@@ -40,20 +40,19 @@ describe("InlineMessage", () => {
 
     it("holds the message to its own column, clear of the icon", () => {
         renderMessage();
-        expect(message()).toHaveClass("grid");
-        expect(message()).toHaveClass("grid-cols-[auto_minmax(0,1fr)]");
+        expect(message()).toHaveClass("inline-message");
     });
 
     it("falls back to the medium size", () => {
         renderMessage();
         expect(message()).toHaveAttribute("data-size", "medium");
-        expect(message()).toHaveClass("[--inline-message-font-size:var(--text-body-size-medium)]");
+        expect(message()).toHaveClass("inline-message-medium");
     });
 
     it("respects the size prop", () => {
         const sizes = {
-            small: "[--inline-message-font-size:var(--text-body-size-small)]",
-            medium: "[--inline-message-font-size:var(--text-body-size-medium)]",
+            small: "inline-message-small",
+            medium: "inline-message-medium",
         } as const;
 
         for (const [size, expected] of Object.entries(sizes)) {
@@ -66,21 +65,16 @@ describe("InlineMessage", () => {
 
     it("respects the variant prop", () => {
         const variants = {
-            critical: "[--inline-message-foreground-color:var(--foreground-color-danger)]",
-            success: "[--inline-message-foreground-color:var(--foreground-color-success)]",
-            unavailable: "[--inline-message-foreground-color:var(--foreground-color-muted)]",
-            warning: "[--inline-message-foreground-color:var(--foreground-color-attention)]",
+            critical: "inline-message-critical",
+            success: "inline-message-success",
+            unavailable: "inline-message-unavailable",
+            warning: "inline-message-warning",
         } as const;
 
         for (const [variant, expected] of Object.entries(variants)) {
             const { unmount } = renderMessage({ variant: variant as InlineMessageVariant });
             expect(message()).toHaveAttribute("data-variant", variant);
             expect(message()).toHaveClass(expected);
-            // The colour the message would otherwise be read in comes off with it, so which
-            // of the two is written first in the stylesheet cannot decide the outcome
-            expect(message()).not.toHaveClass(
-                "[--inline-message-foreground-color:var(--foreground-color-default)]",
-            );
             unmount();
         }
     });
@@ -89,9 +83,7 @@ describe("InlineMessage", () => {
         // The message is then read in the colour of the text around it
         renderMessage();
         expect(message()).not.toHaveAttribute("data-variant");
-        expect(message()).toHaveClass(
-            "[--inline-message-foreground-color:var(--foreground-color-default)]",
-        );
+        expect(message().className).not.toMatch(/\binline-message-(critical|success|warning)\b/);
     });
 
     it("carries the icon that belongs to the variant", () => {

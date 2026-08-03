@@ -5,9 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderTitleProps } from "./PageHeader.types";
 
 const classes = {
-    // The type is set by the header around it, so that everything standing beside the title
-    // is sized against the same line
-    root: "order-2 block m-0 [font-size:inherit] [font-weight:inherit]",
+    root: "page-header-title",
 };
 
 // Names the page. Which heading level it is drawn as is the caller's, since that follows from

@@ -57,7 +57,7 @@ describe("Banner", () => {
 
     it("wraps itself in a query container so it can respond to the room it has", () => {
         render(<Banner title="Info" />);
-        expect(banner().parentElement).toHaveClass("@container/banner");
+        expect(banner().parentElement).toHaveClass("banner-container");
     });
 
     it("takes itself out of the tab order while staying focusable in code", () => {
@@ -133,9 +133,7 @@ describe("Banner", () => {
     it("falls back to the info variant", () => {
         render(<Banner title="Info" />);
         expect(banner()).toHaveAttribute("data-variant", "info");
-        expect(banner()).toHaveClass(
-            "[--banner-background-color:var(--background-color-accent-muted)]",
-        );
+        expect(banner()).toHaveClass("banner-info");
     });
 
     it("colours itself by its variant", () => {
@@ -150,26 +148,25 @@ describe("Banner", () => {
     it("falls back to the default layout", () => {
         render(<Banner title="Info" />);
         expect(banner()).toHaveAttribute("data-layout", "default");
-        expect(banner()).toHaveClass("p-[var(--base-size-8)]");
+        expect(banner()).toHaveClass("banner-default");
     });
 
     it("takes less padding when compact", () => {
         render(<Banner title="Info" layout="compact" />);
         expect(banner()).toHaveAttribute("data-layout", "compact");
-        expect(banner()).toHaveClass("p-[var(--base-size-4)]");
+        expect(banner()).toHaveClass("banner-compact");
     });
 
     it("gives up its side borders when flush", () => {
         render(<Banner title="Info" flush />);
         expect(banner()).toHaveAttribute("data-flush", "true");
-        expect(banner()).toHaveClass("border-x-0");
-        expect(banner()).toHaveClass("rounded-none");
+        expect(banner()).toHaveClass("banner-flush");
     });
 
     it("keeps its side borders otherwise", () => {
         render(<Banner title="Info" />);
         expect(banner()).not.toHaveAttribute("data-flush");
-        expect(banner()).not.toHaveClass("border-x-0");
+        expect(banner()).not.toHaveClass("banner-flush");
     });
 
     it("passes extra props onto the section", () => {
@@ -323,40 +320,40 @@ describe("Banner actions", () => {
     it("falls back to following the room the banner has", () => {
         withActions();
         expect(banner()).toHaveAttribute("data-actions-layout", "default");
-        expect(actionsFor("trailing")).toHaveClass("@max-[500px]/banner:hidden");
-        expect(actionsFor("leading")).toHaveClass("@max-[500px]/banner:flex");
+        expect(actionsFor("trailing")).toHaveClass("banner-actions-responsive-trailing");
+        expect(actionsFor("leading")).toHaveClass("banner-actions-responsive-leading");
     });
 
     it("keeps inline actions beside the content until the viewport is narrow", () => {
         withActions({ actionsLayout: "inline" });
         expect(banner()).toHaveAttribute("data-actions-layout", "inline");
-        expect(actionsFor("trailing")).toHaveClass("max-medium:hidden");
-        expect(actionsFor("leading")).toHaveClass("max-medium:flex");
+        expect(actionsFor("trailing")).toHaveClass("banner-actions-inline-trailing");
+        expect(actionsFor("leading")).toHaveClass("banner-actions-inline-leading");
     });
 
     it("drops stacked actions below the content whatever the room", () => {
         withActions({ actionsLayout: "stacked" });
         expect(banner()).toHaveAttribute("data-actions-layout", "stacked");
-        expect(actionsFor("trailing")).toHaveClass("hidden");
-        expect(actionsFor("leading")).toHaveClass("flex");
+        expect(actionsFor("trailing")).toHaveClass("banner-actions-hidden");
+        expect(actionsFor("leading")).toHaveClass("banner-actions-shown");
     });
 
     it("drops the actions below the content where a dismiss button takes their room", () => {
         withActions({ onDismiss: () => {} });
 
         // The dismiss button stands where the actions would otherwise sit
-        expect(actionsFor("trailing")).toHaveClass("hidden");
-        expect(actionsFor("leading")).toHaveClass("flex");
+        expect(actionsFor("trailing")).toHaveClass("banner-actions-hidden");
+        expect(actionsFor("leading")).toHaveClass("banner-actions-shown");
     });
 
     it("keeps inline actions beside the content even when it can be dismissed", () => {
         withActions({ actionsLayout: "inline", onDismiss: () => {} });
-        expect(actionsFor("trailing")).toHaveClass("max-medium:hidden");
+        expect(actionsFor("trailing")).toHaveClass("banner-actions-inline-trailing");
     });
 
     it("keeps the actions beside a hidden title", () => {
         withActions({ hideTitle: true, onDismiss: () => {} });
-        expect(actionsFor("trailing")).toHaveClass("@max-[500px]/banner:hidden");
+        expect(actionsFor("trailing")).toHaveClass("banner-actions-responsive-trailing");
     });
 });
 

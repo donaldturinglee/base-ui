@@ -1,0 +1,8 @@
+@layer components {
+    /* `position: relative` goes with the overflow so that absolutely positioned descendants,
+       such as anything using `sr-only`, cannot escape and put scrollbars on the page */
+    .scrollable-region {
+        position: relative;
+        overflow: auto;
+    }
+}

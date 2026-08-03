@@ -4,8 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TimelineBodyProps } from "./Timeline.types";
 
 const classes = {
-    // The top margin sets the first line of text against the middle of the badge beside it
-    root: "flex-auto min-w-0 max-w-full mt-[calc(var(--base-size-4)_+_1px)] [font-size:var(--text-body-size-medium)] text-foreground-muted [grid-area:body]",
+    root: "timeline-body",
 };
 
 function TimelineBody(

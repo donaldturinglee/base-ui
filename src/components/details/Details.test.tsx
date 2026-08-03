@@ -40,8 +40,7 @@ describe("Details", () => {
 
     it("takes away the marker the browser draws beside the summary", () => {
         renderDetails();
-        expect(details()).toHaveClass("[&>summary]:list-none");
-        expect(details()).toHaveClass("[&>summary::-webkit-details-marker]:hidden");
+        expect(details()).toHaveClass("details");
     });
 
     it("starts closed", () => {

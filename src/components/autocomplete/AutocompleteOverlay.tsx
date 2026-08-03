@@ -19,38 +19,33 @@ const classes = {
 
 const autocompleteOverlayVariants = cva(
     [
-        // The surface is laid out against the viewport, because that is what the field it stands
-        // under is measured against. Where it ends up is carried in variables rather than
-        // written straight onto the element, so that a narrow viewport can put it somewhere else
-        "fixed transition-none top-[var(--autocomplete-overlay-top)] left-[var(--autocomplete-overlay-left)] overflow-auto bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] focus:outline-none forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
+        "autocomplete-overlay",
         // It arrives from the edge of the field it stands off, which says where it came from
         "motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short motion-safe:data-[side=outside-bottom]:slide-in-from-top-2 motion-safe:data-[side=outside-top]:slide-in-from-bottom-2",
     ],
     {
         variants: {
             width: {
-                xsmall: "w-[var(--overlay-width-xsmall)]",
-                small: "w-[var(--overlay-width-small)]",
-                medium: "w-[var(--overlay-width-medium)]",
-                large: "w-[var(--overlay-width-large)]",
-                xlarge: "w-[var(--overlay-width-xlarge)]",
-                auto: "w-auto",
-                // As wide as the field it stands under, which is where a reader looks for the
-                // list belonging to a field
-                anchor: "w-[var(--autocomplete-overlay-anchor-width)]",
+                xsmall: "autocomplete-overlay-width-xsmall",
+                small: "autocomplete-overlay-width-small",
+                medium: "autocomplete-overlay-width-medium",
+                large: "autocomplete-overlay-width-large",
+                xlarge: "autocomplete-overlay-width-xlarge",
+                auto: "autocomplete-overlay-width-auto",
+                anchor: "autocomplete-overlay-width-anchor",
             } satisfies Record<AutocompleteOverlayWidth, string>,
             height: {
-                small: "h-[var(--overlay-height-small)]",
-                medium: "h-[var(--overlay-height-medium)]",
-                large: "h-[var(--overlay-height-large)]",
-                xlarge: "h-[var(--overlay-height-xlarge)]",
-                auto: "h-auto",
+                small: "autocomplete-overlay-height-small",
+                medium: "autocomplete-overlay-height-medium",
+                large: "autocomplete-overlay-height-large",
+                xlarge: "autocomplete-overlay-height-xlarge",
+                auto: "autocomplete-overlay-height-auto",
             } satisfies Record<AutocompleteOverlayHeight, string>,
             maxHeight: {
-                small: "max-h-[var(--overlay-height-small)]",
-                medium: "max-h-[var(--overlay-height-medium)]",
-                large: "max-h-[var(--overlay-height-large)]",
-                xlarge: "max-h-[var(--overlay-height-xlarge)]",
+                small: "autocomplete-overlay-max-height-small",
+                medium: "autocomplete-overlay-max-height-medium",
+                large: "autocomplete-overlay-max-height-large",
+                xlarge: "autocomplete-overlay-max-height-xlarge",
             } satisfies Record<AutocompleteOverlayMaxHeight, string>,
             // Held back until it has been placed, so it is never seen where it does not belong
             unplaced: {

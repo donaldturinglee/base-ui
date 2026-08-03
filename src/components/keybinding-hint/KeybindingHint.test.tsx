@@ -37,10 +37,7 @@ describe("KeybindingHint", () => {
     it("strips the kbd element back to the text it stands in", () => {
         // The box is the chord's to draw, and a key of a key would be one too many
         renderHint(<KeybindingHint keys="Control" data-testid="hint" />);
-        expect(hint()).toHaveClass("p-0");
-        expect(hint()).toHaveClass("border-0");
-        expect(hint()).toHaveClass("bg-transparent");
-        expect(hint()).toHaveClass("[font-family:inherit]");
+        expect(hint()).toHaveClass("keybinding-hint");
     });
 
     it("draws the keys as they are printed on a keyboard by default", () => {
@@ -170,15 +167,15 @@ describe("KeybindingHint", () => {
         expect(hint()).toHaveAttribute("data-format", "condensed");
         expect(hint()).toHaveAttribute("data-variant", "normal");
         expect(hint()).toHaveAttribute("data-size", "normal");
-        expect(chords()[0]).toHaveClass("text-foreground-muted");
-        expect(chords()[0]).toHaveClass("min-w-[var(--base-size-20)]");
+        expect(chords()[0]).toHaveClass("keybinding-hint-chord-normal");
+        expect(chords()[0]).toHaveClass("keybinding-hint-chord-size-normal");
     });
 
     it("respects the variant prop", () => {
         const variants = {
-            normal: "text-foreground-muted",
-            onEmphasis: "bg-[var(--counter-background-color-emphasis)]",
-            onPrimary: "bg-[var(--button-primary-background-color-active)]",
+            normal: "keybinding-hint-chord-normal",
+            onEmphasis: "keybinding-hint-chord-on-emphasis",
+            onPrimary: "keybinding-hint-chord-on-primary",
         } as const;
 
         for (const [variant, expected] of Object.entries(variants)) {
@@ -198,8 +195,7 @@ describe("KeybindingHint", () => {
     it("draws the keys smaller where it is asked to", () => {
         renderHint(<KeybindingHint keys="Control" size="small" data-testid="hint" />);
         expect(hint()).toHaveAttribute("data-size", "small");
-        expect(chords()[0]).toHaveClass("[font-size:11px]");
-        expect(chords()[0]).toHaveClass("min-w-[var(--base-size-16)]");
+        expect(chords()[0]).toHaveClass("keybinding-hint-chord-size-small");
     });
 
     it("forwards a ref to the root element", () => {

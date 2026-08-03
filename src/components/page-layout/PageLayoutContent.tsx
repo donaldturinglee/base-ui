@@ -7,24 +7,18 @@ import { PageLayoutContext } from "./PageLayoutContext";
 import type { PageLayoutContentProps, PageLayoutWidth } from "./PageLayout.types";
 
 const classes = {
-    // The basis of zero is what lets the content take the room left over rather than the
-    // room its contents ask for, which would otherwise wrap the pane onto its own line. The
-    // minimum width does the same for anything inside that overflows
-    wrapper:
-        "flex flex-col w-full min-w-px grow shrink basis-0 [order:var(--region-order-content)]",
-    hidden: "data-[is-hidden=true]:hidden max-medium:data-[is-hidden-narrow=true]:hidden medium:data-[is-hidden-regular=true]:hidden xxlarge:data-[is-hidden-wide=true]:hidden",
-    // A drag holds the content still, so the browser has less to work out on every move
-    dragging:
-        "data-[dragging=true]:[contain:layout_style_paint] data-[dragging=true]:pointer-events-none",
+    wrapper: "page-layout-content-wrapper",
+    hidden: "page-layout-hidden",
+    dragging: "page-layout-dragging",
 };
 
-const pageLayoutContentVariants = cva("w-full grow mx-auto p-[var(--spacing)]", {
+const pageLayoutContentVariants = cva("page-layout-content", {
     variants: {
         width: {
-            full: "max-w-full",
-            medium: "max-w-[768px]",
-            large: "max-w-[1012px]",
-            xlarge: "max-w-[1280px]",
+            full: "page-layout-content-width-full",
+            medium: "page-layout-content-width-medium",
+            large: "page-layout-content-width-large",
+            xlarge: "page-layout-content-width-xlarge",
         } satisfies Record<PageLayoutWidth, string>,
     },
 });

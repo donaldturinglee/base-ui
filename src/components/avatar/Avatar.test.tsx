@@ -79,17 +79,15 @@ describe("Avatar", () => {
         render(<Avatar src="primer.png" data-testid="avatar" />);
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveAttribute("data-shape", "circle");
-        expect(avatar).toHaveClass("rounded-[var(--border-radius-full)]");
+        expect(avatar).toHaveClass("avatar-circle");
     });
 
     it("scales the corner radius with the avatar for the square shape", () => {
         render(<Avatar shape="square" src="primer.png" data-testid="avatar" />);
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveAttribute("data-shape", "square");
-        expect(avatar).toHaveClass(
-            "rounded-[clamp(var(--base-size-4),calc(var(--avatar-size-regular)_-_var(--base-size-24)),var(--border-radius-medium))]",
-        );
-        expect(avatar).not.toHaveClass("rounded-[var(--border-radius-full)]");
+        expect(avatar).toHaveClass("avatar-square");
+        expect(avatar).not.toHaveClass("avatar-circle");
     });
 
     it("does not leak the shape prop onto the element", () => {

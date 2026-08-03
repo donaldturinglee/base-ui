@@ -33,42 +33,41 @@ describe("IconButton", () => {
         render(<IconButton icon={Icon} aria-label="Close" />);
         const button = screen.getByRole("button");
         expect(button.querySelector("[data-component='buttonContent']")).toBeNull();
-        expect(button).toHaveClass("inline-grid");
-        expect(button).toHaveClass("justify-center");
+        expect(button).toHaveClass("icon-button");
     });
 
     it("is square at the medium size by default", () => {
         render(<IconButton icon={Icon} aria-label="Close" />);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-size", "medium");
-        expect(button).toHaveClass("w-[var(--control-medium-size)]");
-        expect(button).toHaveClass("h-[var(--control-medium-size)]");
+        expect(button).toHaveClass("icon-button-medium");
+        expect(button).toHaveClass("button");
     });
 
     it("respects the size", () => {
         render(<IconButton icon={Icon} size="large" aria-label="Close" />);
         const button = screen.getByRole("button");
-        expect(button).toHaveClass("w-[var(--control-large-size)]");
-        expect(button).toHaveClass("h-[var(--control-large-size)]");
+        expect(button).toHaveClass("icon-button-large");
+        expect(button).toHaveClass("button-large");
     });
 
     it("mutes the icon on a default button", () => {
         render(<IconButton icon={Icon} aria-label="Close" />);
-        expect(screen.getByRole("button")).toHaveClass("text-foreground-muted");
+        expect(screen.getByRole("button")).toHaveClass("button-icon-tone-default");
     });
 
     it("respects the variant", () => {
         render(<IconButton icon={Icon} variant="danger" aria-label="Delete" />);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-variant", "danger");
-        expect(button).toHaveClass("bg-[var(--button-danger-background-color-rest)]");
+        expect(button).toHaveClass("button-danger");
     });
 
     it("takes the button colour once it is out of use", () => {
         render(<IconButton icon={Icon} disabled aria-label="Close" />);
         const button = screen.getByRole("button");
         expect(button).toBeDisabled();
-        expect(button).toHaveClass("[color:var(--control-foreground-color-disabled)]");
+        expect(button).toHaveClass("button-default-disabled");
     });
 
     it("swaps the icon for a spinner while loading", () => {

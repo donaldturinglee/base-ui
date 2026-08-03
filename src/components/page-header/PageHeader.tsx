@@ -15,42 +15,33 @@ import type {
 } from "./PageHeader.types";
 
 const classes = {
-    // Five columns: the leading action, the breadcrumbs, the title, the trailing action, and
-    // whatever room is left over for the actions at the end of the row
-    root: "grid grid-cols-[auto_auto_auto_auto_1fr]",
-    // The header carries the title's type, so that every part standing beside the title is
-    // set against the same line
-    title: "[font-size:var(--page-header-title-size)] [font-weight:var(--page-header-title-weight)] leading-[var(--page-header-title-line-height)]",
+    root: "page-header",
+    title: "page-header-title-type",
     titleVariant: {
-        subtitle:
-            "[--page-header-title-size:var(--text-title-size-medium)] [--page-header-title-weight:var(--base-text-weight-normal)] [--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        medium: "[--page-header-title-size:var(--text-title-size-medium)] [--page-header-title-weight:var(--base-text-weight-semibold)] [--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        large: "[--page-header-title-size:var(--text-title-size-large)] [--page-header-title-weight:var(--base-text-weight-normal)] [--page-header-title-line-height:var(--text-title-line-height-large)]",
+        subtitle: "page-header-title-subtitle",
+        medium: "page-header-title-medium",
+        large: "page-header-title-large",
     } satisfies Record<PageHeaderTitleVariant, string>,
     narrowTitleVariant: {
-        subtitle:
-            "max-medium:[--page-header-title-size:var(--text-title-size-medium)] max-medium:[--page-header-title-weight:var(--base-text-weight-normal)] max-medium:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        medium: "max-medium:[--page-header-title-size:var(--text-title-size-medium)] max-medium:[--page-header-title-weight:var(--base-text-weight-semibold)] max-medium:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        large: "max-medium:[--page-header-title-size:var(--text-title-size-large)] max-medium:[--page-header-title-weight:var(--base-text-weight-normal)] max-medium:[--page-header-title-line-height:var(--text-title-line-height-large)]",
+        subtitle: "page-header-narrow-title-subtitle",
+        medium: "page-header-narrow-title-medium",
+        large: "page-header-narrow-title-large",
     } satisfies Record<PageHeaderTitleVariant, string>,
     regularTitleVariant: {
-        subtitle:
-            "medium:max-xxlarge:[--page-header-title-size:var(--text-title-size-medium)] medium:max-xxlarge:[--page-header-title-weight:var(--base-text-weight-normal)] medium:max-xxlarge:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        medium: "medium:max-xxlarge:[--page-header-title-size:var(--text-title-size-medium)] medium:max-xxlarge:[--page-header-title-weight:var(--base-text-weight-semibold)] medium:max-xxlarge:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        large: "medium:max-xxlarge:[--page-header-title-size:var(--text-title-size-large)] medium:max-xxlarge:[--page-header-title-weight:var(--base-text-weight-normal)] medium:max-xxlarge:[--page-header-title-line-height:var(--text-title-line-height-large)]",
+        subtitle: "page-header-regular-title-subtitle",
+        medium: "page-header-regular-title-medium",
+        large: "page-header-regular-title-large",
     } satisfies Record<PageHeaderTitleVariant, string>,
     wideTitleVariant: {
-        subtitle:
-            "xxlarge:[--page-header-title-size:var(--text-title-size-medium)] xxlarge:[--page-header-title-weight:var(--base-text-weight-normal)] xxlarge:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        medium: "xxlarge:[--page-header-title-size:var(--text-title-size-medium)] xxlarge:[--page-header-title-weight:var(--base-text-weight-semibold)] xxlarge:[--page-header-title-line-height:var(--text-title-line-height-medium)]",
-        large: "xxlarge:[--page-header-title-size:var(--text-title-size-large)] xxlarge:[--page-header-title-weight:var(--base-text-weight-normal)] xxlarge:[--page-header-title-line-height:var(--text-title-line-height-large)]",
+        subtitle: "page-header-wide-title-subtitle",
+        medium: "page-header-wide-title-medium",
+        large: "page-header-wide-title-large",
     } satisfies Record<PageHeaderTitleVariant, string>,
-    border: "border-solid border-b-[length:var(--border-width-thin)] border-b-border-default pb-[var(--base-size-8)]",
+    border: "page-header-border",
     borderWhen: {
-        narrow: "max-medium:border-solid max-medium:border-b-[length:var(--border-width-thin)] max-medium:border-b-border-default max-medium:pb-[var(--base-size-8)]",
-        regular:
-            "medium:max-xxlarge:border-solid medium:max-xxlarge:border-b-[length:var(--border-width-thin)] medium:max-xxlarge:border-b-border-default medium:max-xxlarge:pb-[var(--base-size-8)]",
-        wide: "xxlarge:border-solid xxlarge:border-b-[length:var(--border-width-thin)] xxlarge:border-b-border-default xxlarge:pb-[var(--base-size-8)]",
+        narrow: "page-header-border-narrow",
+        regular: "page-header-border-regular",
+        wide: "page-header-border-wide",
     } satisfies Record<PageHeaderViewport, string>,
 };
 

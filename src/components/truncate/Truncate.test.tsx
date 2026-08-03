@@ -34,7 +34,7 @@ describe("Truncate", () => {
                 a-long-branch-name
             </Truncate>,
         );
-        expect(screen.getByTestId("truncate")).toHaveClass("truncate");
+        expect(screen.getByTestId("truncate")).toHaveClass("truncate-text");
     });
 
     it("passes the title down so the full text stays reachable", () => {
@@ -86,7 +86,7 @@ describe("Truncate", () => {
             </Truncate>,
         );
         const truncate = screen.getByTestId("truncate");
-        expect(truncate).toHaveClass("[display:inherit]");
+        expect(truncate).toHaveClass("truncate-text-block");
         expect(truncate).not.toHaveAttribute("data-inline");
     });
 
@@ -99,7 +99,7 @@ describe("Truncate", () => {
         const truncate = screen.getByTestId("truncate");
         expect(truncate).toHaveAttribute("data-inline", "true");
         expect(truncate).toHaveClass("inline-block", "align-top");
-        expect(truncate).not.toHaveClass("[display:inherit]");
+        expect(truncate).not.toHaveClass("truncate-text-block");
     });
 
     it("opens up on hover when expandable", () => {
@@ -110,7 +110,7 @@ describe("Truncate", () => {
         );
         const truncate = screen.getByTestId("truncate");
         expect(truncate).toHaveAttribute("data-expandable", "true");
-        expect(truncate).toHaveClass("hover:max-w-[10000px]");
+        expect(truncate).toHaveClass("truncate-text-expandable");
     });
 
     it("stays clipped on hover by default", () => {
@@ -121,7 +121,7 @@ describe("Truncate", () => {
         );
         const truncate = screen.getByTestId("truncate");
         expect(truncate).not.toHaveAttribute("data-expandable");
-        expect(truncate).not.toHaveClass("hover:max-w-[10000px]");
+        expect(truncate).not.toHaveClass("truncate-text-expandable");
     });
 
     it("does not leak the layout props onto the element", () => {

@@ -4,11 +4,8 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SkeletonBoxProps } from "./SkeletonBox.types";
 
 const classes = {
-    root: "block bg-[var(--skeleton-loader-background-color)] rounded-[var(--border-radius-small)]",
-    dimensions: "w-[var(--skeleton-box-width,auto)] h-[var(--skeleton-box-height,1rem)]",
+    root: "skeleton-box",
     shimmer: "motion-safe:shimmer",
-    forcedColors:
-        "forced-colors:outline-1 forced-colors:outline-transparent forced-colors:-outline-offset-1",
 };
 
 function SkeletonBox<As extends React.ElementType = "div">(
@@ -28,13 +25,7 @@ function SkeletonBox<As extends React.ElementType = "div">(
     return (
         <Component
             ref={ref}
-            className={classNames(
-                classes.root,
-                classes.dimensions,
-                classes.shimmer,
-                classes.forcedColors,
-                className,
-            )}
+            className={classNames(classes.root, classes.shimmer, className)}
             style={
                 {
                     ...style,

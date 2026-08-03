@@ -22,44 +22,32 @@ import type {
 } from "./Toast.types";
 
 const classes = {
-    // Every toast is laid at the edge the stack is anchored to and moved into its own place
-    // from there, so that the stack takes no room of its own and the order of the toasts in
-    // the list has nothing to say about where they land
-    root: "group/toast absolute inset-x-0 list-none [z-index:var(--toast-z-index)] [height:var(--toast-height)] [transform:translate3d(var(--toast-swipe-x),calc(var(--toast-shift)_+_var(--toast-swipe-y)),0)_scale(var(--toast-scale))]",
+    root: "toast",
     animated:
         "motion-safe:[transition:transform_var(--motion-transition-state-change),opacity_var(--motion-transition-state-change),height_var(--motion-transition-state-change)]",
-    // A toast is dragged rather than scrolled off, so the gesture is taken from the page
-    grabbable: "touch-none",
-    // Where the stack is anchored settles the edge a toast comes in from and goes out towards,
-    // and the way the ones behind it are laid back
+    grabbable: "toast-grabbable",
     lift: {
-        top: "top-0 origin-top [--toast-lift:1]",
-        bottom: "bottom-0 origin-bottom [--toast-lift:-1]",
+        top: "toast-lift-top",
+        bottom: "toast-lift-bottom",
     },
-    // The room between one toast and the next is bridged, so that running the pointer down an
-    // open stack does not fall through the gaps and gather it up again
-    bridge: "after:absolute after:inset-x-0 after:h-[calc(var(--toaster-gap)_+_1px)] after:content-['']",
-    bridgeTop: "after:top-full",
-    bridgeBottom: "after:bottom-full",
-    card: "rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--toast-border-color)] bg-[var(--toast-background-color)] [box-shadow:var(--shadow-floating-small)] [color:var(--toast-foreground-color)] [--toast-background-color:var(--overlay-background-color)] [--toast-border-color:var(--border-color-default)] [--toast-foreground-color:var(--foreground-color-default)] [--toast-icon-color:var(--foreground-color-muted)]",
-    // The icon carries what the toast is saying even where the toast keeps the colours of
-    // every other one
+    bridge: "toast-bridge",
+    bridgeTop: "toast-bridge-top",
+    bridgeBottom: "toast-bridge-bottom",
+    card: "toast-card",
     iconColor: {
         default: "",
-        success: "[--toast-icon-color:var(--foreground-color-success)]",
-        error: "[--toast-icon-color:var(--foreground-color-danger)]",
-        warning: "[--toast-icon-color:var(--foreground-color-attention)]",
-        info: "[--toast-icon-color:var(--foreground-color-accent)]",
+        success: "toast-icon-success",
+        error: "toast-icon-error",
+        warning: "toast-icon-warning",
+        info: "toast-icon-info",
         loading: "",
     } satisfies Record<ToastVariant, string>,
     richColors: {
         default: "",
-        success:
-            "[--toast-background-color:var(--background-color-success-muted)] [--toast-border-color:var(--border-color-success-muted)]",
-        error: "[--toast-background-color:var(--background-color-danger-muted)] [--toast-border-color:var(--border-color-danger-muted)]",
-        warning:
-            "[--toast-background-color:var(--background-color-attention-muted)] [--toast-border-color:var(--border-color-attention-muted)]",
-        info: "[--toast-background-color:var(--background-color-accent-muted)] [--toast-border-color:var(--border-color-accent-muted)]",
+        success: "toast-rich-success",
+        error: "toast-rich-error",
+        warning: "toast-rich-warning",
+        info: "toast-rich-info",
         loading: "",
     } satisfies Record<ToastVariant, string>,
     // A toast that has yet to arrive, one on its way out and one waiting its turn behind the
@@ -69,17 +57,14 @@ const classes = {
     // Nothing is animated while the toast is being dragged, so that it keeps up with the
     // pointer rather than trailing behind it
     dragging: "select-none",
-    body: "flex items-start gap-[var(--base-size-8)] p-[var(--base-size-12)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)] motion-safe:[transition:opacity_var(--motion-transition-state-change)]",
+    body: "toast-body motion-safe:[transition:opacity_var(--motion-transition-state-change)]",
     // A toast lying back in a gathered stack shows only the edge of the card it stands in
     bodyStacked: "opacity-0",
-    // The icon stands in a column of its own, held to the height of a line of the text beside
-    // it so that a message running onto a second line keeps clear of it
-    icon: "grid min-h-[calc(var(--text-body-line-height-medium)_*_var(--text-body-size-medium))] place-items-center [color:var(--toast-icon-color)] [&>svg]:size-[var(--base-size-16)]",
-    content: "flex min-w-0 grow flex-col gap-[var(--base-size-2)]",
-    title: "[font-weight:var(--base-text-weight-semibold)]",
-    description:
-        "text-foreground-muted [font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
-    actions: "flex shrink-0 items-center gap-[var(--base-size-8)]",
+    icon: "toast-icon",
+    content: "toast-content",
+    title: "toast-title",
+    description: "toast-description",
+    actions: "toast-actions",
 };
 
 const iconForVariant = {

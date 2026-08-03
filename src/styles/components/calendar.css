@@ -1,0 +1,131 @@
+@layer components {
+    /* The calendar is only as wide as the grid it holds, so it can stand on a page or in an
+       overlay without either having to say how much room to give it */
+    .calendar {
+        display: inline-block;
+    }
+
+    .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--base-size-4);
+        padding-bottom: var(--base-size-8);
+    }
+
+    .calendar-caption {
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .calendar-grid {
+        border-collapse: collapse;
+    }
+
+    .calendar-weekday {
+        padding: 0;
+        padding-bottom: var(--base-size-4);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .calendar-week-number-header {
+        padding: 0;
+    }
+
+    .calendar-week-number {
+        padding-inline-end: var(--base-size-8);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    /* The room between one day and the next is given by the cell around it, so that the days
+       themselves stay square */
+    .calendar-cell {
+        padding: var(--base-size-2);
+    }
+
+    /* The bar running from one end of a stretch of days to the other is drawn by the cells
+       rather than by the days, so that it runs unbroken across the room between them */
+    .calendar-cell-range {
+        background-color: var(--background-color-accent-muted);
+    }
+
+    .calendar-cell-range-start {
+        border-start-start-radius: var(--border-radius-medium);
+        border-end-start-radius: var(--border-radius-medium);
+    }
+
+    .calendar-cell-range-end {
+        border-start-end-radius: var(--border-radius-medium);
+        border-end-end-radius: var(--border-radius-medium);
+    }
+
+    /* Every day takes the same square whatever it holds, so the grid keeps its shape from
+       one month to the next */
+    .calendar-day {
+        display: grid;
+        place-items: center;
+        width: var(--control-medium-size);
+        height: var(--control-medium-size);
+        padding: 0;
+        cursor: pointer;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-family: inherit;
+        font-size: var(--text-body-size-small);
+        font-variant-numeric: tabular-nums;
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(-1 * var(--border-width-thin));
+        }
+    }
+
+    .calendar-day-interactive {
+        &:hover {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:active {
+            background-color: var(--control-transparent-background-color-active);
+        }
+    }
+
+    .calendar-day-outside {
+        color: var(--foreground-color-muted);
+    }
+
+    .calendar-day-between {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .calendar-day-unavailable {
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+    }
+
+    /* Last, so that a day that is both picked and unavailable still reads as picked. The day
+       that has been picked takes the colours a chosen control takes anywhere else; only the
+       two ends of a range are filled in, since the days between them are carried by the bar
+       the cells around them draw */
+    .calendar-day-selected {
+        background-color: var(--control-checked-background-color-rest);
+        color: var(--control-checked-foreground-color-rest);
+        font-weight: var(--base-text-weight-semibold);
+
+        &:hover {
+            background-color: var(--control-checked-background-color-hover);
+        }
+
+        &:active {
+            background-color: var(--control-checked-background-color-active);
+        }
+    }
+}

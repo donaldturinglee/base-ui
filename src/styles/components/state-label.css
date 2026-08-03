@@ -1,0 +1,68 @@
+@layer components {
+    .state-label {
+        display: inline-flex;
+        align-items: center;
+        text-align: center;
+        border-radius: var(--border-radius-full);
+        color: var(--foreground-color-on-emphasis);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: 1rem;
+    }
+
+    .state-label-small {
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-8);
+        font-size: var(--text-body-size-small);
+    }
+
+    .state-label-medium {
+        padding-block: var(--base-size-8);
+        padding-inline: var(--base-size-12);
+        font-size: var(--text-body-size-medium);
+    }
+
+    .state-label-open {
+        background-color: var(--background-color-open-emphasis);
+        box-shadow: var(--box-shadow-thin) var(--border-color-open-emphasis);
+    }
+
+    .state-label-closed {
+        background-color: var(--background-color-closed-emphasis);
+        box-shadow: var(--box-shadow-thin) var(--border-color-closed-emphasis);
+    }
+
+    .state-label-done {
+        background-color: var(--background-color-done-emphasis);
+        box-shadow: var(--box-shadow-thin) var(--border-color-done-emphasis);
+    }
+
+    .state-label-draft {
+        background-color: var(--background-color-draft-emphasis);
+        box-shadow: var(--box-shadow-thin) var(--border-color-draft-emphasis);
+    }
+
+    .state-label-attention {
+        background-color: var(--background-color-attention-emphasis);
+        box-shadow: var(--box-shadow-thin) var(--border-color-attention-emphasis);
+    }
+
+    .state-label-neutral {
+        background-color: var(--background-color-neutral-emphasis);
+        box-shadow: var(--box-shadow-thin) var(--border-color-neutral-emphasis);
+    }
+
+    .state-label-visual {
+        margin-right: var(--base-size-4);
+    }
+
+    /* The small icon scales with the inherited font size rather than a fixed step */
+    .state-label-visual-small {
+        width: 1em;
+        height: 1em;
+    }
+
+    .state-label-visual-medium {
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+}

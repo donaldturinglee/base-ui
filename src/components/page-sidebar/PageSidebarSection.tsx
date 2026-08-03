@@ -5,8 +5,7 @@ import PageSidebarRegion from "./PageSidebarRegion";
 import type { PageSidebarChildProps } from "./PageSidebar.types";
 
 const classes = {
-    // A run cannot be pushed wider than the sidebar by anything inside it that overflows
-    root: "flex flex-col min-w-0 gap-[var(--stack-gap-condensed)]",
+    root: "page-sidebar-section",
 };
 
 // A run of the sidebar: a group of things that belong together, whatever heads it. This is

@@ -5,7 +5,7 @@ import PageFooterRegion from "./PageFooterRegion";
 import type { PageFooterChildProps } from "./PageFooter.types";
 
 const classes = {
-    root: "col-start-2 row-start-2 flex flex-row items-center gap-[var(--stack-gap-condensed)]",
+    root: "page-footer-copyright",
 };
 
 // Says who the page belongs to, standing on the closing line. The year is the caller's, since

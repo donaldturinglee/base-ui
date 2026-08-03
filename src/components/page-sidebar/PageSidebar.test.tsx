@@ -71,14 +71,14 @@ describe("PageSidebar", () => {
             render(withTitle());
 
             expect(sidebar()).toHaveAttribute("data-position", "start");
-            expect(sidebar()).toHaveClass("[order:-1]");
+            expect(sidebar()).toHaveClass("page-sidebar-start");
         });
 
         it("stands at the end where it is told to", () => {
             render(withTitle({ position: "end" }));
 
             expect(sidebar()).toHaveAttribute("data-position", "end");
-            expect(sidebar()).toHaveClass("[order:1]");
+            expect(sidebar()).toHaveClass("page-sidebar-end");
         });
     });
 
@@ -87,20 +87,19 @@ describe("PageSidebar", () => {
             render(withTitle());
 
             expect(sidebar()).toHaveAttribute("data-width", "medium");
-            expect(sidebar()).toHaveClass("medium:w-[256px]");
-            expect(sidebar()).toHaveClass("large:w-[296px]");
+            expect(sidebar()).toHaveClass("page-sidebar-width-medium");
         });
 
         it("is held to the width it is given", () => {
             render(withTitle({ width: "large" }));
 
             expect(sidebar()).toHaveAttribute("data-width", "large");
-            expect(sidebar()).toHaveClass("large:w-[320px]");
+            expect(sidebar()).toHaveClass("page-sidebar-width-large");
         });
 
         it("runs the whole width where there is no room beside the content", () => {
             render(withTitle({ width: "small" }));
-            expect(sidebar()).toHaveClass("w-full");
+            expect(sidebar()).toHaveClass("page-sidebar-width-small");
         });
     });
 
@@ -110,8 +109,8 @@ describe("PageSidebar", () => {
 
             expect(sidebar()).toHaveAttribute("data-padding", "normal");
             expect(sidebar()).toHaveAttribute("data-gap", "normal");
-            expect(sidebar()).toHaveClass("p-[var(--base-size-16)]");
-            expect(sidebar()).toHaveClass("[--page-sidebar-gap:var(--stack-gap-normal)]");
+            expect(sidebar()).toHaveClass("page-sidebar-padding-normal");
+            expect(sidebar()).toHaveClass("page-sidebar-gap-normal");
         });
 
         it("leaves the room it is asked for", () => {
@@ -119,13 +118,13 @@ describe("PageSidebar", () => {
 
             expect(sidebar()).toHaveAttribute("data-padding", "none");
             expect(sidebar()).toHaveAttribute("data-gap", "spacious");
-            expect(sidebar()).toHaveClass("p-0");
-            expect(sidebar()).toHaveClass("[--page-sidebar-gap:var(--stack-gap-spacious)]");
+            expect(sidebar()).toHaveClass("page-sidebar-padding-none");
+            expect(sidebar()).toHaveClass("page-sidebar-gap-spacious");
         });
 
         it("spaces its runs by the room it carries", () => {
             render(withTitle());
-            expect(sidebar()).toHaveClass("gap-[var(--page-sidebar-gap)]");
+            expect(sidebar()).toHaveClass("page-sidebar");
         });
     });
 
@@ -134,35 +133,35 @@ describe("PageSidebar", () => {
             render(withTitle());
 
             expect(sidebar()).not.toHaveAttribute("data-sticky");
-            expect(sidebar()).not.toHaveClass("sticky");
+            expect(sidebar()).not.toHaveClass("page-sidebar-sticky");
         });
 
         it("stays put where it is asked to", () => {
             render(withTitle({ sticky: true }));
 
             expect(sidebar()).toHaveAttribute("data-sticky", "");
-            expect(sidebar()).toHaveClass("sticky");
+            expect(sidebar()).toHaveClass("page-sidebar-sticky");
         });
     });
 
     describe("the line beside the sidebar", () => {
         it("draws no line unless it is asked for", () => {
             render(withTitle());
-            expect(sidebar()).not.toHaveClass("border-e-border-default");
+            expect(sidebar()).not.toHaveClass("page-sidebar-border-start");
         });
 
         it("draws the line on the edge facing the content at the start", () => {
             render(withTitle({ hasBorder: true }));
 
             expect(sidebar()).toHaveAttribute("data-has-border", "");
-            expect(sidebar()).toHaveClass("border-e-border-default");
+            expect(sidebar()).toHaveClass("page-sidebar-border-start");
         });
 
         it("turns the line around for a sidebar at the end", () => {
             render(withTitle({ position: "end", hasBorder: true }));
 
-            expect(sidebar()).toHaveClass("border-s-border-default");
-            expect(sidebar()).not.toHaveClass("border-e-border-default");
+            expect(sidebar()).toHaveClass("page-sidebar-border-end");
+            expect(sidebar()).not.toHaveClass("page-sidebar-border-start");
         });
     });
 
@@ -185,7 +184,7 @@ describe("PageSidebar", () => {
                 </PageSidebar>,
             );
 
-            expect(part("Section")).toHaveClass("medium:max-xxlarge:hidden");
+            expect(part("Section")).toHaveClass("hidden-regular");
             expect(part("Section")).toHaveAttribute("data-hidden", "regular");
         });
 
@@ -252,8 +251,7 @@ describe("PageSidebar", () => {
                 </PageSidebar>,
             );
 
-            expect(part("Header")).toHaveClass("flex-row");
-            expect(part("Header")).toHaveClass("justify-between");
+            expect(part("Header")).toHaveClass("page-sidebar-header");
             expect(part("Header")).toContainElement(part("Title"));
             expect(part("Header")).toContainElement(part("Actions"));
         });
@@ -277,7 +275,7 @@ describe("PageSidebar", () => {
                     <PageSidebar.Footer>Footer</PageSidebar.Footer>
                 </PageSidebar>,
             );
-            expect(part("Content")).toHaveClass("grow");
+            expect(part("Content")).toHaveClass("page-sidebar-content");
         });
 
         it("spaces its runs by the room the sidebar carries", () => {
@@ -289,8 +287,8 @@ describe("PageSidebar", () => {
                 </PageSidebar>,
             );
 
-            expect(part("Content")).toHaveClass("gap-[var(--page-sidebar-gap)]");
-            expect(sidebar()).toHaveClass("[--page-sidebar-gap:var(--stack-gap-spacious)]");
+            expect(part("Content")).toHaveClass("page-sidebar-content");
+            expect(sidebar()).toHaveClass("page-sidebar-gap-spacious");
         });
 
         it("holds the runs of the sidebar", () => {
@@ -311,7 +309,7 @@ describe("PageSidebar", () => {
                 </PageSidebar>,
             );
 
-            expect(part("Content")).toHaveClass("max-medium:hidden");
+            expect(part("Content")).toHaveClass("hidden-narrow");
             expect(part("Content")).toHaveAttribute("data-hidden", "narrow");
         });
     });
@@ -323,7 +321,7 @@ describe("PageSidebar", () => {
                     <PageSidebar.Footer>Footer</PageSidebar.Footer>
                 </PageSidebar>,
             );
-            expect(part("Footer")).toHaveClass("mt-auto");
+            expect(part("Footer")).toHaveClass("page-sidebar-footer");
         });
 
         it("passes the rest of its props through", () => {

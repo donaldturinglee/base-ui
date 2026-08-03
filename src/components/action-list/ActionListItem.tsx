@@ -21,36 +21,23 @@ import type {
 } from "./ActionList.types";
 
 const classes = {
-    // The item is the box that is drawn; the content inside it is what is pressed. They are
-    // told apart so that a trailing action can stand beside the part that is pressed rather
-    // than inside it
-    root: "relative list-none rounded-[var(--border-radius-medium)] data-[has-trailing-action]:flex data-[has-trailing-action]:flex-nowrap data-[has-trailing-action]:items-center data-[has-trailing-action]:pr-[var(--base-size-4)]",
-    content:
-        "flex grow items-start w-full gap-[var(--base-size-8)] min-w-0 px-[var(--control-medium-padding-inline-condensed)] py-[var(--control-medium-padding-block)] m-0 text-left no-underline appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] cursor-pointer [font-family:inherit] [font-size:var(--text-body-size-medium)] leading-[var(--text-body-line-height-medium)] text-foreground-default transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-transparent-background-color-hover)]",
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[calc(-1_*_var(--focus-outline-width))]",
+    root: "action-list-item",
+    content: "action-list-item-content",
     size: {
+        // A medium item takes the padding the content is already drawn with
         medium: "",
-        large: "py-[var(--control-large-padding-block)]",
+        large: "action-list-item-content-large",
     } satisfies Record<ActionListItemSize, string>,
-    danger: "[color:var(--control-danger-foreground-color-rest)] hover:[color:var(--control-danger-foreground-color-hover)] hover:bg-[var(--control-danger-background-color-hover)]",
-    // An item that cannot be used says so by its colour, and stops answering the pointer
-    disabled:
-        "cursor-not-allowed [color:var(--control-foreground-color-disabled)] hover:bg-transparent",
-    inactive: "cursor-not-allowed text-foreground-muted hover:bg-transparent",
+    danger: "action-list-item-content-danger",
+    disabled: "action-list-item-content-disabled",
+    inactive: "action-list-item-content-inactive",
     loading: "cursor-default",
-    // The one item the list is currently showing carries more weight than the rest. It is
-    // filled and marked in the margin so it can be picked out at a glance down a long list,
-    // and it keeps that fill under the pointer, which the hover of an ordinary item would
-    // otherwise wash out
-    active: "relative bg-[var(--control-transparent-background-color-selected)] hover:bg-[var(--control-transparent-background-color-selected)] [font-weight:var(--base-text-weight-semibold)] after:content-[''] after:absolute after:top-[calc(50%_-_var(--base-size-12))] after:left-[calc(-1_*_var(--base-size-8))] after:w-[var(--base-size-4)] after:h-[var(--base-size-24)] after:rounded-[var(--border-radius-medium)] after:bg-foreground-accent",
-    // The label and everything read with it, which is the part that gives way when there is
-    // not enough room
-    main: "flex grow items-start min-w-0 gap-[var(--base-size-8)]",
-    labelWrap: "flex grow min-w-0 gap-[var(--base-size-8)]",
+    active: "action-list-item-content-active",
+    main: "action-list-item-main",
+    labelWrap: "action-list-item-label-wrap",
     labelWrapBlock: "flex-col gap-0",
     label: "min-w-0",
-    inactiveWarning:
-        "text-foreground-muted [font-size:var(--text-body-size-small)] leading-[var(--text-body-line-height-small)]",
+    inactiveWarning: "action-list-item-inactive-warning",
     srOnly: "sr-only",
 };
 
@@ -260,7 +247,6 @@ function ActionListItem<As extends React.ElementType = never>(
 
     const contentClassName = classNames(
         classes.content,
-        classes.focus,
         classes.size[size],
         variant === "danger" && !disabled && !inactive && classes.danger,
         active && classes.active,

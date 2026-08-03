@@ -97,8 +97,7 @@ describe("Checkbox", () => {
         // A click is left to the browser to refuse, so only the state and the styling that
         // goes with it are worth asserting here
         expect(checkbox).toBeDisabled();
-        expect(checkbox).toHaveClass("disabled:cursor-not-allowed");
-        expect(checkbox).toHaveClass("disabled:bg-[var(--control-background-color-disabled)]");
+        expect(checkbox).toHaveClass("checkbox-disabled");
     });
 
     it("marks itself required for assistive technology", () => {

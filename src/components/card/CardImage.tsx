@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { CardImageProps } from "./Card.types";
 
 const classes = {
-    root: "block w-full h-auto",
+    root: "card-image",
 };
 
 function CardImage(

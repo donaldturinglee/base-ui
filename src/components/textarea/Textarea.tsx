@@ -12,56 +12,43 @@ export const DEFAULT_TEXTAREA_COLS = 30;
 export const DEFAULT_TEXTAREA_RESIZE: TextareaResize = "both";
 
 const classes = {
-    counter: "flex items-center gap-[var(--control-xsmall-gap)] text-foreground-muted",
-    counterOverLimit: "text-foreground-danger",
-    counterIcon: "shrink-0 size-[var(--base-size-16)]",
+    counter: "textarea-counter",
+    counterOverLimit: "textarea-counter-over-limit",
+    counterIcon: "textarea-counter-icon",
     hidden: "sr-only",
 };
 
-const textareaFieldVariants = cva(
-    [
-        // The wrapper carries the field styling so the native control can stay transparent and
-        // keep its own resize handle
-        "relative inline-flex items-stretch overflow-hidden align-middle rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [box-shadow:var(--shadow-inset)] [font-size:var(--text-body-size-medium)] leading-[var(--base-size-20)]",
-        "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
-    ],
-    {
-        variants: {
-            block: {
-                true: "flex w-full self-stretch",
-                false: "",
-            },
-            contrast: {
-                true: "bg-background-inset",
-                false: "",
-            },
-            disabled: {
-                true: "text-foreground-disabled bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)] [box-shadow:none] [&_textarea]:cursor-not-allowed",
-                false: "",
-            },
-            // Last, so a field that is both disabled and invalid still reads as invalid
-            validation: {
-                error: "border-border-danger-emphasis focus-within:border-[color:var(--control-border-color-danger)] focus-within:outline-[color:var(--control-border-color-danger)]",
-                success: "border-background-success-emphasis",
-            } satisfies Record<TextareaValidationStatus, string>,
+const textareaFieldVariants = cva("textarea-field", {
+    variants: {
+        block: {
+            true: "textarea-field-block",
+            false: "",
         },
+        contrast: {
+            true: "textarea-field-contrast",
+            false: "",
+        },
+        disabled: {
+            true: "textarea-field-disabled",
+            false: "",
+        },
+        validation: {
+            error: "textarea-field-error",
+            success: "textarea-field-success",
+        } satisfies Record<TextareaValidationStatus, string>,
     },
-);
+});
 
-const textareaControlVariants = cva(
-    // The field owns the focus ring, so the control inside it drops its own
-    "w-full p-[var(--base-size-12)] bg-transparent border-0 outline-none appearance-none focus:outline-0 disabled:resize-none [font-family:inherit] [font-size:inherit] [color:inherit]",
-    {
-        variants: {
-            resize: {
-                none: "resize-none",
-                both: "resize",
-                horizontal: "resize-x",
-                vertical: "resize-y",
-            } satisfies Record<TextareaResize, string>,
-        },
+const textareaControlVariants = cva("textarea", {
+    variants: {
+        resize: {
+            none: "textarea-resize-none",
+            both: "textarea-resize-both",
+            horizontal: "textarea-resize-horizontal",
+            vertical: "textarea-resize-vertical",
+        } satisfies Record<TextareaResize, string>,
     },
-);
+});
 
 function Textarea(
     props: TextareaProps,

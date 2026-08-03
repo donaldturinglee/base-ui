@@ -1,0 +1,218 @@
+@layer components {
+    /* The banner responds to the room it is given rather than to the viewport, so it is its
+       own query container */
+    .banner-container {
+        container: banner / inline-size;
+    }
+
+    /* The three columns hold the icon, the content and the dismiss button */
+    .banner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: start;
+        background-color: var(--banner-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--banner-border-color);
+        border-radius: var(--border-radius-medium);
+    }
+
+    .banner-default {
+        padding: var(--base-size-8);
+    }
+
+    .banner-compact {
+        padding: var(--base-size-4);
+    }
+
+    .banner-critical {
+        --banner-background-color: var(--background-color-danger-muted);
+        --banner-border-color: var(--border-color-danger-muted);
+        --banner-icon-color: var(--foreground-color-danger);
+    }
+
+    .banner-info {
+        --banner-background-color: var(--background-color-accent-muted);
+        --banner-border-color: var(--border-color-accent-muted);
+        --banner-icon-color: var(--foreground-color-accent);
+    }
+
+    .banner-success {
+        --banner-background-color: var(--background-color-success-muted);
+        --banner-border-color: var(--border-color-success-muted);
+        --banner-icon-color: var(--foreground-color-success);
+    }
+
+    .banner-upsell {
+        --banner-background-color: var(--background-color-upsell-muted);
+        --banner-border-color: var(--border-color-upsell-muted);
+        --banner-icon-color: var(--foreground-color-upsell);
+    }
+
+    .banner-warning {
+        --banner-background-color: var(--background-color-attention-muted);
+        --banner-border-color: var(--border-color-attention-muted);
+        --banner-icon-color: var(--foreground-color-attention);
+    }
+
+    /* A flush banner spans whatever holds it, so the edges it meets are given up */
+    .banner-flush {
+        border-inline-width: 0;
+        border-radius: 0;
+    }
+
+    /* The icon stands as tall as the line box of the action buttons beside it */
+    .banner-icon {
+        display: grid;
+        place-items: center;
+        padding: var(--base-size-8);
+
+        & svg {
+            height: var(--base-size-20);
+            color: var(--banner-icon-color);
+        }
+    }
+
+    /* With nothing but a description to sit beside, the icon comes down to the height of a
+       line of text */
+    .banner-icon-tight {
+        & svg {
+            height: var(--base-size-16);
+        }
+    }
+
+    .banner-body {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--base-size-4);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* Where the actions drop below the content there is only ever one column */
+    .banner-body-stacked {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    /* An inline banner keeps its actions beside the content until the viewport is narrow.
+       The width matches --breakpoint-medium in variables.css */
+    .banner-body-inline {
+        flex-wrap: nowrap;
+
+        @media (width < 48rem) {
+            flex-direction: column;
+        }
+    }
+
+    /* Otherwise it is the banner's own width that decides */
+    .banner-body-responsive {
+        @container banner (width < 500px) {
+            flex-direction: column;
+            flex-wrap: nowrap;
+        }
+    }
+
+    .banner-content {
+        display: grid;
+        grid-column-start: 1;
+        row-gap: var(--base-size-4);
+        margin-block: var(--base-size-8);
+
+        /* The width matches --breakpoint-small in variables.css */
+        @media (width >= 34rem) {
+            flex: 1 1 0%;
+        }
+    }
+
+    /* A banner with no visible title and nothing to act on is only a line of text, so it
+       sits closer to its edges */
+    .banner-content-tight {
+        margin-block: var(--base-size-6);
+    }
+
+    .banner-actions {
+        display: flex;
+        align-items: center;
+        column-gap: var(--base-size-12);
+        margin-block: var(--base-size-2);
+    }
+
+    .banner-actions-inline {
+        flex: none;
+    }
+
+    /* Where the actions drop below the content they are given room beneath them */
+    .banner-actions-stacked {
+        margin-bottom: var(--base-size-6);
+    }
+
+    /* Both orders are laid out and one of them is taken away, since which one reads
+       correctly depends on the room the banner is given */
+    .banner-actions-shown {
+        display: flex;
+    }
+
+    .banner-actions-hidden {
+        display: none;
+    }
+
+    .banner-actions-inline-leading {
+        display: none;
+
+        @media (width < 48rem) {
+            display: flex;
+        }
+    }
+
+    .banner-actions-inline-trailing {
+        display: flex;
+
+        @media (width < 48rem) {
+            display: none;
+        }
+    }
+
+    .banner-actions-responsive-leading {
+        display: none;
+
+        @container banner (width < 500px) {
+            display: flex;
+        }
+    }
+
+    .banner-actions-responsive-trailing {
+        display: flex;
+
+        @container banner (width < 500px) {
+            display: none;
+        }
+    }
+
+    /* The dismiss button is named from the banner so that what it says here stands over the
+       icon button it is drawn as */
+    .banner .banner-dismiss {
+        display: grid;
+        place-items: center;
+        margin-inline-start: var(--base-size-4);
+        padding: var(--base-size-8);
+
+        & svg {
+            color: var(--banner-icon-color);
+        }
+    }
+
+    .banner .banner-dismiss-with-actions {
+        margin-block: var(--base-size-2);
+    }
+
+    /* The type is the banner's own, so only the weight sets the title apart from the text
+       below it */
+    .banner-title {
+        margin: 0;
+        font-size: inherit;
+        font-weight: var(--base-text-weight-semibold);
+    }
+}

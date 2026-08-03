@@ -14,95 +14,75 @@ import type {
 export const DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY = 2000;
 
 const classes = {
-    content: "flex items-center w-full h-full overflow-hidden",
+    content: "toggle-switch-content",
     srOnly: "sr-only",
 };
 
-// Each icon takes half the track, so the pair slides by exactly its own width. The icon is
-// centred in that half by the container rather than laid out as a line of text, which would
-// leave it sitting on a baseline with the descender space below it
-const iconRoot =
-    "flex items-center justify-center grow shrink-0 basis-1/2 transition-transform duration-micro ease-move motion-reduce:transition-none";
+const iconRoot = "toggle-switch-icon";
 
-const toggleSwitchVariants = cva("inline-flex items-center", {
+const toggleSwitchVariants = cva("toggle-switch", {
     variants: {
         statusLabelPosition: {
-            start: "flex-row",
-            end: "flex-row-reverse",
+            start: "toggle-switch-label-start",
+            end: "toggle-switch-label-end",
         } satisfies Record<ToggleSwitchStatusLabelPosition, string>,
     },
 });
 
-const toggleSwitchSpinnerVariants = cva("inline-flex", {
+const toggleSwitchSpinnerVariants = cva("toggle-switch-status", {
     variants: {
         statusLabelPosition: {
             start: "",
-            end: "ms-[var(--base-size-8)]",
+            end: "toggle-switch-status-end",
         } satisfies Record<ToggleSwitchStatusLabelPosition, string>,
     },
 });
 
-const toggleSwitchStatusTextVariants = cva(
-    "relative mx-[var(--base-size-8)] cursor-pointer text-foreground-default",
-    {
-        variants: {
-            size: {
-                small: "[font-size:var(--text-body-size-small)]",
-                medium: "[font-size:var(--text-body-size-medium)]",
-            } satisfies Record<ToggleSwitchSize, string>,
-            disabled: {
-                true: "cursor-not-allowed text-foreground-muted",
-                false: "",
-            },
-        },
-    },
-);
-
-// Both readings are laid out, with the one that does not apply left in place but out of
-// sight, so the switch keeps its width as it is turned on and off
-const toggleSwitchStatusTextItemVariants = cva("block text-end", {
+const toggleSwitchStatusTextVariants = cva("toggle-switch-status-label", {
     variants: {
-        hidden: {
-            true: "invisible h-0",
+        size: {
+            small: "toggle-switch-status-label-small",
+            medium: "toggle-switch-status-label-medium",
+        } satisfies Record<ToggleSwitchSize, string>,
+        disabled: {
+            true: "toggle-switch-status-label-disabled",
             false: "",
         },
     },
 });
 
-const toggleSwitchButtonVariants = cva(
-    [
-        "relative block overflow-hidden p-0 cursor-pointer select-none appearance-none no-underline rounded-[var(--border-radius-default)] border-solid border-[length:var(--border-width-thin)] transition-[background-color,border-color] duration-micro ease-move motion-reduce:transition-none",
-        // The focus ring is drawn outside the track rather than inset, where the fill behind
-        // it would swallow it
-        "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--base-size-2)]",
-        // A coarse pointer is given a target taller than the switch itself to aim at
-        "pointer-coarse:before:content-[''] pointer-coarse:before:absolute pointer-coarse:before:inset-x-0 pointer-coarse:before:top-1/2 pointer-coarse:before:-translate-y-1/2 pointer-coarse:before:min-h-[var(--control-min-target-coarse)]",
-    ],
-    {
-        variants: {
-            // The track is twice as wide as it is tall. The small switch stands at the height
-            // the control scale calls xsmall
-            size: {
-                small: "h-[var(--control-xsmall-size)] w-[calc(var(--control-xsmall-size)*2)]",
-                medium: "h-[var(--control-medium-size)] w-[calc(var(--control-medium-size)*2)]",
-            } satisfies Record<ToggleSwitchSize, string>,
-            track: {
-                off: "bg-[var(--control-track-background-color-rest)] border-[color:var(--control-track-border-color-rest)] hover:bg-[var(--control-track-background-color-hover)] focus-visible:bg-[var(--control-track-background-color-hover)] active:bg-[var(--control-track-background-color-active)]",
-                on: "bg-[var(--control-checked-background-color-rest)] border-[color:var(--control-checked-border-color-rest)] hover:bg-[var(--control-checked-background-color-hover)] focus-visible:bg-[var(--control-checked-background-color-hover)] active:bg-[var(--control-checked-background-color-active)]",
-                disabled:
-                    "cursor-not-allowed transition-none bg-[var(--control-track-background-color-disabled)] border-transparent forced-colors:border-[color:GrayText]",
-            },
+// Both readings are laid out, with the one that does not apply left in place but out of
+// sight, so the switch keeps its width as it is turned on and off
+const toggleSwitchStatusTextItemVariants = cva("toggle-switch-status-text", {
+    variants: {
+        hidden: {
+            true: "toggle-switch-status-text-hidden",
+            false: "",
         },
     },
-);
+});
+
+const toggleSwitchButtonVariants = cva("toggle-switch-track", {
+    variants: {
+        size: {
+            small: "toggle-switch-track-small",
+            medium: "toggle-switch-track-medium",
+        } satisfies Record<ToggleSwitchSize, string>,
+        track: {
+            off: "toggle-switch-track-off",
+            on: "toggle-switch-track-on",
+            disabled: "toggle-switch-track-disabled",
+        },
+    },
+});
 
 // The bar follows the knob in from the start of the track as the switch goes on, and the ring
 // leaves at the end of it
 const toggleSwitchLineIconVariants = cva(iconRoot, {
     variants: {
         disabled: {
-            true: "[color:var(--control-checked-foreground-color-disabled)]",
-            false: "[color:var(--control-checked-foreground-color-rest)]",
+            true: "toggle-switch-circle-icon-disabled",
+            false: "toggle-switch-circle-icon",
         },
         checked: {
             true: "translate-x-0",
@@ -114,8 +94,8 @@ const toggleSwitchLineIconVariants = cva(iconRoot, {
 const toggleSwitchCircleIconVariants = cva(iconRoot, {
     variants: {
         disabled: {
-            true: "[color:var(--control-track-foreground-color-disabled)]",
-            false: "[color:var(--control-track-foreground-color-rest)]",
+            true: "toggle-switch-line-icon-disabled",
+            false: "toggle-switch-line-icon",
         },
         checked: {
             true: "translate-x-full",
@@ -124,23 +104,19 @@ const toggleSwitchCircleIconVariants = cva(iconRoot, {
     },
 });
 
-const toggleSwitchKnobVariants = cva(
-    // The knob sits inside the track's border, so its own radius comes in by as much
-    "absolute z-1 top-px bottom-px left-px w-1/2 bg-[var(--control-knob-background-color-rest)] border-solid border-[length:var(--border-width-thin)] border-[color:var(--control-knob-border-color-rest)] rounded-[calc(var(--border-radius-default)-var(--border-width-thick))] transition-transform duration-micro ease-move motion-reduce:transition-none",
-    {
-        variants: {
-            // The travel is short by the borders the knob is inset from
-            checked: {
-                true: "translate-x-[calc(100%-2px)] bg-[var(--control-knob-background-color-checked)] border-[color:var(--control-knob-border-color-checked)]",
-                false: "translate-x-0",
-            },
-            disabled: {
-                true: "bg-[var(--control-knob-background-color-disabled)] border-[color:var(--control-knob-border-color-disabled)]",
-                false: "",
-            },
+const toggleSwitchKnobVariants = cva("toggle-switch-knob", {
+    variants: {
+        // The travel is short by the borders the knob is inset from
+        checked: {
+            true: "toggle-switch-knob-checked",
+            false: "translate-x-0",
+        },
+        disabled: {
+            true: "toggle-switch-knob-disabled",
+            false: "",
         },
     },
-);
+});
 
 const iconSizes = { small: 12, medium: 16 } satisfies Record<ToggleSwitchSize, number>;
 

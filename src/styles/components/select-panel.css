@@ -1,0 +1,368 @@
+@layer components {
+    /* The page behind the panel is covered whichever way the panel is drawn, so that a click
+       that lands anywhere else can dismiss it. Only a modal tints what it covers. The width
+       matches --breakpoint-medium in variables.css */
+    .select-panel-backdrop {
+        position: fixed;
+        inset: 0;
+        display: flex;
+    }
+
+    .select-panel-backdrop-modal {
+        align-items: center;
+        justify-content: center;
+        background-color: var(--overlay-backdrop-background-color);
+    }
+
+    .select-panel-backdrop-narrow-modal {
+        @media (width < 48rem) {
+            align-items: center;
+            justify-content: center;
+            background-color: var(--overlay-backdrop-background-color);
+        }
+    }
+
+    .select-panel-backdrop-narrow-bottom-sheet {
+        @media (width < 48rem) {
+            align-items: flex-end;
+            justify-content: center;
+            background-color: var(--overlay-backdrop-background-color);
+        }
+    }
+
+    /* The floor keeps the panel from closing up around a spinner or a line of text where the
+       list it would have held has nothing to show */
+    .select-panel {
+        --select-panel-body-min-height: var(--overlay-height-small);
+
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-width: calc(100dvw - var(--base-size-32));
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        color: var(--foreground-color-default);
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .select-panel-width-small {
+        width: var(--overlay-width-small);
+    }
+
+    .select-panel-width-medium {
+        width: var(--overlay-width-medium);
+    }
+
+    .select-panel-width-large {
+        width: var(--overlay-width-large);
+    }
+
+    .select-panel-width-xlarge {
+        width: var(--overlay-width-xlarge);
+    }
+
+    .select-panel-width-auto {
+        width: auto;
+    }
+
+    .select-panel-max-height-small {
+        max-height: var(--overlay-height-small);
+    }
+
+    .select-panel-max-height-medium {
+        max-height: var(--overlay-height-medium);
+    }
+
+    .select-panel-max-height-large {
+        max-height: var(--overlay-height-large);
+    }
+
+    .select-panel-max-height-xlarge {
+        max-height: var(--overlay-height-xlarge);
+    }
+
+    .select-panel-max-height-fit-content {
+        max-height: calc(100dvh - var(--base-size-64));
+    }
+
+    /* Where it ends up is carried in variables rather than written straight onto the element,
+       so that a narrow viewport can put it somewhere else */
+    .select-panel-anchored {
+        position: absolute;
+        top: var(--select-panel-top);
+        left: var(--select-panel-left);
+    }
+
+    .select-panel-narrow-anchored {
+        @media (width < 48rem) {
+            position: absolute;
+            top: var(--select-panel-top);
+            left: var(--select-panel-left);
+        }
+    }
+
+    .select-panel-narrow-modal {
+        @media (width < 48rem) {
+            position: static;
+        }
+    }
+
+    /* The whole screen, which is what a narrow viewport has room for and nothing else */
+    .select-panel-narrow-full-screen {
+        @media (width < 48rem) {
+            position: static;
+            width: 100dvw;
+            max-width: none;
+            height: 100dvh;
+            max-height: none;
+            border-radius: 0;
+        }
+    }
+
+    /* The foot of the screen, within reach of a thumb */
+    .select-panel-narrow-bottom-sheet {
+        @media (width < 48rem) {
+            position: static;
+            width: 100dvw;
+            max-width: none;
+            max-height: calc(100dvh - var(--base-size-64));
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    .select-panel-form {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* The list scrolls within the panel rather than the panel growing to hold it */
+    .select-panel-container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+        overflow: hidden;
+
+        & ul {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+    }
+
+    .select-panel-header {
+        display: flex;
+        flex-shrink: 0;
+        flex-direction: column;
+        padding: var(--base-size-8);
+        border-style: solid;
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-default);
+    }
+
+    /* The title and the buttons stand either end of the row. A description puts a second line
+       under the title, so the buttons keep to the top rather than centring against both */
+    .select-panel-header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &[data-has-description] {
+            align-items: flex-start;
+        }
+    }
+
+    .select-panel-header-content-with-search {
+        margin-bottom: var(--base-size-8);
+    }
+
+    .select-panel-header-title-row {
+        display: flex;
+    }
+
+    .select-panel-header-title {
+        margin-inline-start: var(--base-size-8);
+
+        &[data-has-description] {
+            margin-top: var(--base-size-2);
+        }
+
+        &[data-has-back] {
+            margin-inline-start: var(--base-size-4);
+        }
+    }
+
+    .select-panel-header-heading {
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .select-panel-header-description {
+        display: block;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    .select-panel-header-actions {
+        display: flex;
+    }
+
+    /* The field is drawn edge to edge under the title, so it gives up the padding a field
+       standing on its own would keep before its leading visual */
+    .select-panel-search-input {
+        padding-inline-start: var(--base-size-8);
+    }
+
+    .select-panel-footer {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: space-between;
+        min-height: var(--base-size-44);
+        padding: var(--base-size-16);
+        border-style: solid;
+        border-top-width: var(--border-width-thin);
+        border-top-color: var(--border-color-default);
+    }
+
+    /* With nothing to save, the footer is only there to hold whatever the caller put in it,
+       so it is drawn in closer and that content is given the width */
+    .select-panel-footer-without-actions {
+        padding: var(--base-size-8);
+    }
+
+    .select-panel-footer-content {
+        flex-grow: 0;
+    }
+
+    .select-panel-footer-content-without-actions {
+        flex-grow: 1;
+    }
+
+    .select-panel-footer-actions {
+        display: flex;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .select-panel-secondary-action-small {
+        font-size: var(--text-body-size-small);
+    }
+
+    .select-panel-secondary-action-checkbox {
+        display: flex;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The box is centred against the single line of text beside it rather than against a
+       label standing above a field */
+    .checkbox.select-panel-secondary-action-box {
+        margin-top: 0;
+    }
+
+    /* Stands in place of the list, so it is given the room the list would have had rather
+       than letting the panel close up around a spinner */
+    .select-panel-loading {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        gap: var(--stack-gap-normal);
+        height: 100%;
+        min-height: var(--select-panel-body-min-height);
+    }
+
+    .select-panel-loading-text {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* A full message stands in place of the list, so it is given the room the list would have
+       had rather than letting the panel close up around a line of text */
+    .select-panel-message-full {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        gap: var(--base-size-4);
+        height: 100%;
+        min-height: var(--select-panel-body-min-height);
+        padding-inline: var(--base-size-24);
+        text-align: center;
+
+        & a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+
+    .select-panel-message-full-icon {
+        width: var(--base-size-24);
+        height: var(--base-size-24);
+        margin-bottom: var(--base-size-8);
+    }
+
+    .select-panel-message-full-title {
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .select-panel-message-full-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* An inline message stands above the list rather than in place of it */
+    .select-panel-message-inline {
+        display: flex;
+        gap: var(--stack-gap-condensed);
+        padding-block: var(--base-size-12);
+        padding-inline: var(--base-size-16);
+        border-style: solid;
+        border-bottom-width: var(--border-width-thin);
+        font-size: var(--text-body-size-small);
+
+        & a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+
+    .select-panel-message-inline-icon {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        margin-top: var(--base-size-2);
+    }
+
+    .select-panel-message-warning {
+        color: var(--foreground-color-attention);
+    }
+
+    .select-panel-message-error {
+        color: var(--foreground-color-danger);
+    }
+
+    .select-panel-message-inline-warning {
+        background-color: var(--background-color-attention-muted);
+        border-bottom-color: var(--border-color-attention-muted);
+    }
+
+    .select-panel-message-inline-error {
+        background-color: var(--background-color-danger-muted);
+        border-bottom-color: var(--border-color-danger-muted);
+    }
+}

@@ -6,9 +6,7 @@ import { DEFAULT_PORTAL_CONTAINER_NAME, ensureDefaultPortal, getPortalRoot } fro
 import type { PortalProps } from "./Portal.types";
 
 const classes = {
-    // Portaled content gets its own stacking context so separate portals cannot interfere
-    // with each other in unexpected ways. There is never a reason to raise this above 1.
-    root: "relative z-1",
+    root: "portal",
 };
 
 function Portal({ children, onMount, containerName }: PortalProps) {

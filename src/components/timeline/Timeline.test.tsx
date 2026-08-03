@@ -59,7 +59,7 @@ describe("Timeline", () => {
 
     it("becomes its own query container so it can respond to the room it has", () => {
         render(<Timeline />);
-        expect(timeline()).toHaveClass("@container/timeline");
+        expect(timeline()).toHaveClass("timeline");
     });
 
     it("trims neither end by default", () => {
@@ -118,7 +118,7 @@ describe("Timeline.Item", () => {
 
     it("draws the rail beside itself", () => {
         render(<Timeline.Item />);
-        expect(screen.getByRole("listitem")).toHaveClass("before:bg-border-muted");
+        expect(screen.getByRole("listitem")).toHaveClass("timeline-item-rail");
     });
 
     it("is not condensed by default", () => {
@@ -130,15 +130,12 @@ describe("Timeline.Item", () => {
         render(<Timeline.Item condensed />);
         const item = screen.getByRole("listitem");
         expect(item).toHaveAttribute("data-condensed", "");
-        expect(item).toHaveClass("pt-[var(--base-size-4)]");
-        expect(item).toHaveClass("pb-0");
+        expect(item).toHaveClass("timeline-item-condensed");
     });
 
     it("brings the badge down to a line of text when condensed", () => {
         render(<Timeline.Item condensed />);
-        expect(screen.getByRole("listitem")).toHaveClass(
-            "[&_[data-component='Timeline.Badge']]:h-[var(--base-size-16)]",
-        );
+        expect(screen.getByRole("listitem")).toHaveClass("timeline-item-condensed-badge");
     });
 
     it("forwards a ref to the list item", () => {
@@ -168,8 +165,7 @@ describe("Timeline.Badge", () => {
 
     it("stands in a wrapper that keeps it above the rail", () => {
         const { container } = render(<Timeline.Badge />);
-        expect(badge(container).parentElement).toHaveClass("relative");
-        expect(badge(container).parentElement).toHaveClass("z-1");
+        expect(badge(container).parentElement).toHaveClass("timeline-badge-wrapper");
     });
 
     it("carries no variant by default", () => {
@@ -181,16 +177,14 @@ describe("Timeline.Badge", () => {
         for (const variant of variants) {
             const { container, unmount } = render(<Timeline.Badge variant={variant} />);
             expect(badge(container)).toHaveAttribute("data-variant", variant);
-            expect(badge(container)).toHaveClass(
-                `[--timeline-badge-background-color:var(--background-color-${variant}-emphasis)]`,
-            );
+            expect(badge(container)).toHaveClass(`timeline-badge-${variant}`);
             unmount();
         }
     });
 
     it("sets its contents against the fill a variant gives it", () => {
         const { container } = render(<Timeline.Badge variant="done" />);
-        expect(badge(container)).toHaveClass("text-foreground-on-emphasis");
+        expect(badge(container)).toHaveClass("timeline-badge-done");
     });
 
     it("forwards a ref to the badge rather than to its wrapper", () => {
@@ -217,9 +211,7 @@ describe("Timeline.Break", () => {
 
     it("pulls a condensed item below it closer", () => {
         const { container } = render(<Timeline.Break />);
-        expect(container.firstElementChild).toHaveClass(
-            "has-[+[data-condensed]]:mb-[calc(-1_*_var(--base-size-12))]",
-        );
+        expect(container.firstElementChild).toHaveClass("timeline-break-before-condensed");
     });
 
     it("merges a custom className onto the break", () => {
@@ -236,7 +228,7 @@ describe("Timeline.Body", () => {
 
     it("takes the room left over beside the badge", () => {
         const { container } = render(<Timeline.Body />);
-        expect(container.firstElementChild).toHaveClass("flex-auto");
+        expect(container.firstElementChild).toHaveClass("timeline-body");
     });
 
     it("passes extra props onto the body", () => {
@@ -257,12 +249,12 @@ describe("Timeline.Actions", () => {
 
     it("stands at the end of the item", () => {
         const { container } = render(<Timeline.Actions />);
-        expect(container.firstElementChild).toHaveClass("ms-auto");
+        expect(container.firstElementChild).toHaveClass("timeline-actions");
     });
 
     it("drops onto its own row where there is little room", () => {
         const { container } = render(<Timeline.Actions />);
-        expect(container.firstElementChild).toHaveClass("@max-[480px]/timeline:ms-0");
+        expect(container.firstElementChild).toHaveClass("timeline-actions-narrow");
     });
 });
 
@@ -278,10 +270,7 @@ describe("Timeline.Avatar", () => {
 
     it("stands out in the gutter beside the rail", () => {
         const { container } = render(<Timeline.Avatar />);
-        expect(container.firstElementChild).toHaveClass("absolute");
-        expect(container.firstElementChild).toHaveClass(
-            "start-[calc(-1_*_(var(--base-size-40)_+_var(--base-size-32)))]",
-        );
+        expect(container.firstElementChild).toHaveClass("timeline-avatar");
     });
 
     it("passes extra props onto the avatar", () => {

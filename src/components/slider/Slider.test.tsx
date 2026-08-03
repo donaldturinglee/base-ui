@@ -125,19 +125,13 @@ describe("Slider", () => {
         it("fades the whole control rather than draining it", () => {
             render(<Slider aria-label="Volume" disabled />);
 
-            expect(slider()).toHaveClass("disabled:opacity-[var(--slider-disabled-opacity)]");
-            expect(slider()).toHaveClass("[--slider-disabled-opacity:0.5]");
+            expect(slider()).toHaveClass("slider");
         });
 
         it("keeps the colours it is drawn in, so where it stands is still clear", () => {
             render(<Slider aria-label="Volume" defaultValue={40} disabled />);
 
-            expect(slider()).toHaveClass(
-                "[--slider-fill-color:var(--control-checked-background-color-rest)]",
-            );
-            expect(slider()).toHaveClass(
-                "[--slider-track-color:var(--control-track-background-color-rest)]",
-            );
+            expect(slider()).toHaveClass("slider");
             expect(fill()).toBe("40%");
         });
     });
@@ -158,8 +152,7 @@ describe("Slider", () => {
         it("sizes the track and the thumb from the size it stands at", () => {
             render(<Slider aria-label="Volume" size="large" />);
 
-            expect(slider()).toHaveClass("[--slider-thumb-size:var(--base-size-20)]");
-            expect(slider()).toHaveClass("[--slider-track-size:var(--base-size-8)]");
+            expect(slider()).toHaveClass("slider-large");
         });
     });
 
@@ -181,16 +174,15 @@ describe("Slider", () => {
         it("turns the control on its end, with the bottom of the range at the bottom", () => {
             render(<Slider aria-label="Volume" orientation="vertical" />);
 
-            expect(slider()).toHaveClass("[writing-mode:vertical-lr]");
-            expect(slider()).toHaveClass("[direction:rtl]");
+            expect(slider()).toHaveClass("slider-vertical");
         });
 
         it("fills the track along whichever way it runs", () => {
             const { rerender } = render(<Slider aria-label="Volume" />);
-            expect(slider()).toHaveClass("[--slider-fill-direction:to_right]");
+            expect(slider()).toHaveClass("slider-horizontal");
 
             rerender(<Slider aria-label="Volume" orientation="vertical" />);
-            expect(slider()).toHaveClass("[--slider-fill-direction:to_top]");
+            expect(slider()).toHaveClass("slider-vertical");
         });
 
         it("works the fill out from the range whichever way it runs", () => {
@@ -201,25 +193,24 @@ describe("Slider", () => {
         it("stands as thick as the size it is drawn at, whichever way it runs", () => {
             render(<Slider aria-label="Volume" orientation="vertical" size="large" />);
 
-            expect(slider()).toHaveClass("[block-size:var(--slider-thickness)]");
-            expect(slider()).toHaveClass("[--slider-thickness:var(--base-size-20)]");
+            expect(slider()).toHaveClass("slider");
+            expect(slider()).toHaveClass("slider-large");
         });
     });
 
     it("fills the width of what it stands in when it is asked to", () => {
         render(<Slider aria-label="Volume" block />);
 
-        expect(slider()).toHaveClass("w-full");
+        expect(slider()).toHaveClass("slider-block-horizontal");
         expect(slider()).toHaveAttribute("data-block", "true");
     });
 
     it("fills the height of what it stands in when it is standing up", () => {
         render(<Slider aria-label="Volume" orientation="vertical" block />);
 
-        expect(slider()).toHaveClass("h-full");
-        expect(slider()).not.toHaveClass("w-full");
         // Filling stands over the height a slider standing up starts out with
-        expect(slider()).not.toHaveClass("h-[var(--base-size-128)]");
+        expect(slider()).toHaveClass("slider-block-vertical");
+        expect(slider()).not.toHaveClass("slider-block-horizontal");
     });
 
     it("is named by a label pointing at it", () => {

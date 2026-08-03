@@ -3,9 +3,7 @@ import { TreeViewItemContext } from "./TreeViewContext";
 import type { TreeViewVisualChildren } from "./TreeView.types";
 
 export const classes = {
-    // As tall as one line of the label, so a visual sits on the label's first line however
-    // many lines the item runs to
-    visual: "flex items-center h-[var(--tree-view-item-line-height)] text-foreground-muted",
+    visual: "tree-view-visual",
     hidden: "sr-only",
 };
 

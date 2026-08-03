@@ -1,0 +1,94 @@
+@layer components {
+    .carousel {
+        display: flex;
+        flex-direction: column;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The window shows one slide and clips the rest of the run standing either side of it */
+    .carousel-viewport {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--border-radius-medium);
+    }
+
+    /* The slides are laid out in one long row and the row is moved along by a slide at a
+       time. Which way it moves is the reading direction's, so the run is stepped through the
+       way the page is read rather than always leftwards */
+    .carousel-track {
+        --carousel-step: -1;
+
+        display: flex;
+        translate: calc(var(--carousel-step) * var(--carousel-index) * 100%);
+
+        &:dir(rtl) {
+            --carousel-step: 1;
+        }
+    }
+
+    /* Every slide is exactly as wide as the window it is shown through, so the run steps
+       along by one width at a time however many slides it holds */
+    .carousel-slide {
+        flex: 0 0 100%;
+        min-width: 0;
+    }
+
+    .carousel-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--base-size-8);
+    }
+
+    .carousel-indicators {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--base-size-4);
+    }
+
+    .carousel-indicator {
+        flex-shrink: 0;
+        width: var(--base-size-8);
+        height: var(--base-size-8);
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        appearance: none;
+        background-color: var(--control-track-background-color-rest);
+        border: 0;
+        border-radius: var(--border-radius-full);
+        transition: background-color var(--motion-transition-hover);
+
+        &:hover {
+            background-color: var(--control-track-background-color-hover);
+        }
+
+        /* The ring is drawn outside the dot, which is too small to hold one within it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--base-size-2);
+        }
+
+        /* A dot drawn in colour says nothing in forced colours, so the run is marked out by
+           an outline instead and the one being shown is filled */
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: Canvas;
+            outline: var(--border-width-thin) solid ButtonText;
+        }
+    }
+
+    /* The hover fill is restated so the slide being shown keeps its colour under the pointer */
+    .carousel-indicator-current {
+        background-color: var(--control-checked-background-color-rest);
+
+        &:hover {
+            background-color: var(--control-checked-background-color-rest);
+        }
+
+        @media (forced-colors: active) {
+            background-color: Highlight;
+        }
+    }
+}

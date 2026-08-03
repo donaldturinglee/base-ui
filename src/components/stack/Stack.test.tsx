@@ -26,26 +26,26 @@ describe("Stack", () => {
 
     it("lays its children out as a flex container", () => {
         render(<Stack data-testid="stack" />);
-        expect(screen.getByTestId("stack")).toHaveClass("flex");
+        expect(screen.getByTestId("stack")).toHaveClass("stack");
     });
 
     it("stacks vertically by default", () => {
         const stack = render(<Stack data-testid="stack" />).getByTestId("stack");
         expect(stack).toHaveAttribute("data-direction", "vertical");
-        expect(stack).toHaveClass("flex-col");
+        expect(stack).toHaveClass("stack-vertical");
     });
 
     it("stacks horizontally when the direction is horizontal", () => {
         render(<Stack direction="horizontal" data-testid="stack" />);
         const stack = screen.getByTestId("stack");
         expect(stack).toHaveAttribute("data-direction", "horizontal");
-        expect(stack).toHaveClass("flex-row");
+        expect(stack).toHaveClass("stack-horizontal");
     });
 
     it("falls back to the normal gap when no gap is provided", () => {
         const stack = render(<Stack data-testid="stack" />).getByTestId("stack");
         expect(stack).not.toHaveAttribute("data-gap");
-        expect(stack).toHaveClass("gap-[var(--stack-gap,var(--stack-gap-normal))]");
+        expect(stack).toHaveClass("stack");
     });
 
     it("applies the gap scale as a custom property", () => {
@@ -59,22 +59,18 @@ describe("Stack", () => {
                 <Stack data-testid="spacious" gap="spacious" />
             </>,
         );
-        expect(screen.getByTestId("none")).toHaveClass("[--stack-gap:0]");
-        expect(screen.getByTestId("tight")).toHaveClass("[--stack-gap:var(--base-size-4)]");
-        expect(screen.getByTestId("condensed")).toHaveClass(
-            "[--stack-gap:var(--stack-gap-condensed)]",
-        );
-        expect(screen.getByTestId("cozy")).toHaveClass("[--stack-gap:var(--base-size-12)]");
-        expect(screen.getByTestId("normal")).toHaveClass("[--stack-gap:var(--stack-gap-normal)]");
-        expect(screen.getByTestId("spacious")).toHaveClass(
-            "[--stack-gap:var(--stack-gap-spacious)]",
-        );
+        expect(screen.getByTestId("none")).toHaveClass("stack-gap-none");
+        expect(screen.getByTestId("tight")).toHaveClass("stack-gap-tight");
+        expect(screen.getByTestId("condensed")).toHaveClass("stack-gap-condensed");
+        expect(screen.getByTestId("cozy")).toHaveClass("stack-gap-cozy");
+        expect(screen.getByTestId("normal")).toHaveClass("stack-gap-normal");
+        expect(screen.getByTestId("spacious")).toHaveClass("stack-gap-spacious");
     });
 
     it("aligns items with stretch by default", () => {
         const stack = render(<Stack data-testid="stack" />).getByTestId("stack");
         expect(stack).toHaveAttribute("data-align", "stretch");
-        expect(stack).toHaveClass("items-stretch");
+        expect(stack).toHaveClass("stack-align-stretch");
     });
 
     it("applies the alignment passed to the align prop", () => {
@@ -86,16 +82,16 @@ describe("Stack", () => {
                 <Stack data-testid="baseline" align="baseline" />
             </>,
         );
-        expect(screen.getByTestId("start")).toHaveClass("items-start");
-        expect(screen.getByTestId("center")).toHaveClass("items-center");
-        expect(screen.getByTestId("end")).toHaveClass("items-end");
-        expect(screen.getByTestId("baseline")).toHaveClass("items-baseline");
+        expect(screen.getByTestId("start")).toHaveClass("stack-align-start");
+        expect(screen.getByTestId("center")).toHaveClass("stack-align-center");
+        expect(screen.getByTestId("end")).toHaveClass("stack-align-end");
+        expect(screen.getByTestId("baseline")).toHaveClass("stack-align-baseline");
     });
 
     it("justifies content from the start by default", () => {
         const stack = render(<Stack data-testid="stack" />).getByTestId("stack");
         expect(stack).toHaveAttribute("data-justify", "start");
-        expect(stack).toHaveClass("justify-start");
+        expect(stack).toHaveClass("stack-justify-start");
     });
 
     it("applies the distribution passed to the justify prop", () => {
@@ -107,27 +103,27 @@ describe("Stack", () => {
                 <Stack data-testid="space-evenly" justify="space-evenly" />
             </>,
         );
-        expect(screen.getByTestId("center")).toHaveClass("justify-center");
-        expect(screen.getByTestId("end")).toHaveClass("justify-end");
-        expect(screen.getByTestId("space-between")).toHaveClass("justify-between");
-        expect(screen.getByTestId("space-evenly")).toHaveClass("justify-evenly");
+        expect(screen.getByTestId("center")).toHaveClass("stack-justify-center");
+        expect(screen.getByTestId("end")).toHaveClass("stack-justify-end");
+        expect(screen.getByTestId("space-between")).toHaveClass("stack-justify-space-between");
+        expect(screen.getByTestId("space-evenly")).toHaveClass("stack-justify-space-evenly");
     });
 
     it("keeps items on a single line by default", () => {
         const stack = render(<Stack data-testid="stack" />).getByTestId("stack");
         expect(stack).toHaveAttribute("data-wrap", "nowrap");
-        expect(stack).toHaveClass("flex-nowrap");
+        expect(stack).toHaveClass("stack-nowrap");
     });
 
     it("wraps items onto multiple lines when wrap is wrap", () => {
         render(<Stack wrap="wrap" data-testid="stack" />);
-        expect(screen.getByTestId("stack")).toHaveClass("flex-wrap");
+        expect(screen.getByTestId("stack")).toHaveClass("stack-wrap");
     });
 
     it("applies no padding by default", () => {
         const stack = render(<Stack data-testid="stack" />).getByTestId("stack");
         expect(stack).toHaveAttribute("data-padding", "none");
-        expect(stack).toHaveClass("p-0");
+        expect(stack).toHaveClass("stack-padding-none");
     });
 
     it("applies the padding scale on both axes", () => {
@@ -140,25 +136,25 @@ describe("Stack", () => {
                 <Stack data-testid="spacious" padding="spacious" />
             </>,
         );
-        expect(screen.getByTestId("tight")).toHaveClass("p-[var(--base-size-4)]");
-        expect(screen.getByTestId("condensed")).toHaveClass("p-[var(--stack-padding-condensed)]");
-        expect(screen.getByTestId("cozy")).toHaveClass("p-[var(--base-size-12)]");
-        expect(screen.getByTestId("normal")).toHaveClass("p-[var(--stack-padding-normal)]");
-        expect(screen.getByTestId("spacious")).toHaveClass("p-[var(--stack-padding-spacious)]");
+        expect(screen.getByTestId("tight")).toHaveClass("stack-padding-tight");
+        expect(screen.getByTestId("condensed")).toHaveClass("stack-padding-condensed");
+        expect(screen.getByTestId("cozy")).toHaveClass("stack-padding-cozy");
+        expect(screen.getByTestId("normal")).toHaveClass("stack-padding-normal");
+        expect(screen.getByTestId("spacious")).toHaveClass("stack-padding-spacious");
     });
 
     it("applies the block padding to the block axis only", () => {
         render(<Stack paddingBlock="condensed" data-testid="stack" />);
         const stack = screen.getByTestId("stack");
         expect(stack).toHaveAttribute("data-padding-block", "condensed");
-        expect(stack).toHaveClass("py-[var(--stack-padding-condensed)]");
+        expect(stack).toHaveClass("stack-padding-block-condensed");
     });
 
     it("applies the inline padding to the inline axis only", () => {
         render(<Stack paddingInline="spacious" data-testid="stack" />);
         const stack = screen.getByTestId("stack");
         expect(stack).toHaveAttribute("data-padding-inline", "spacious");
-        expect(stack).toHaveClass("px-[var(--stack-padding-spacious)]");
+        expect(stack).toHaveClass("stack-padding-inline-spacious");
     });
 
     it("keeps the single axis padding alongside the padding shorthand", () => {
@@ -171,9 +167,9 @@ describe("Stack", () => {
             />,
         );
         const stack = screen.getByTestId("stack");
-        expect(stack).toHaveClass("p-[var(--stack-padding-normal)]");
-        expect(stack).toHaveClass("py-[var(--stack-padding-condensed)]");
-        expect(stack).toHaveClass("px-[var(--stack-padding-spacious)]");
+        expect(stack).toHaveClass("stack-padding-normal");
+        expect(stack).toHaveClass("stack-padding-block-condensed");
+        expect(stack).toHaveClass("stack-padding-inline-spacious");
     });
 
     it("forwards element specific props to the element passed to the as prop", () => {
@@ -224,7 +220,7 @@ describe("StackItem", () => {
 
     it("keeps its own size by default", () => {
         const item = render(<StackItem data-testid="item" />).getByTestId("item");
-        expect(item).toHaveClass("flex-initial");
+        expect(item).toHaveClass("stack-item");
         expect(item).not.toHaveAttribute("data-grow");
         expect(item).not.toHaveAttribute("data-shrink");
     });
@@ -233,28 +229,28 @@ describe("StackItem", () => {
         render(<StackItem grow data-testid="item" />);
         const item = screen.getByTestId("item");
         expect(item).toHaveAttribute("data-grow", "true");
-        expect(item).toHaveClass("grow");
+        expect(item).toHaveClass("stack-item-grow");
     });
 
     it("holds its size when grow is false", () => {
         render(<StackItem grow={false} data-testid="item" />);
         const item = screen.getByTestId("item");
         expect(item).toHaveAttribute("data-grow", "false");
-        expect(item).toHaveClass("grow-0");
+        expect(item).toHaveClass("stack-item-no-grow");
     });
 
     it("allows shrinking when shrink is true", () => {
         render(<StackItem shrink data-testid="item" />);
         const item = screen.getByTestId("item");
         expect(item).toHaveAttribute("data-shrink", "true");
-        expect(item).toHaveClass("shrink");
+        expect(item).toHaveClass("stack-item-shrink");
     });
 
     it("holds its size when shrink is false", () => {
         render(<StackItem shrink={false} data-testid="item" />);
         const item = screen.getByTestId("item");
         expect(item).toHaveAttribute("data-shrink", "false");
-        expect(item).toHaveClass("shrink-0");
+        expect(item).toHaveClass("stack-item-no-shrink");
     });
 
     it("forwards element specific props to the element passed to the as prop", () => {

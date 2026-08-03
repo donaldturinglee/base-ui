@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-start-5 row-start-2 flex min-w-max flex-row items-center justify-end ps-[var(--base-size-8)] gap-[var(--stack-gap-condensed)] h-[calc(var(--page-header-title-line-height)_*_1em)]",
+    root: "page-header-actions",
 };
 
 // What can be done to whatever the page is about, standing at the far end of the title row

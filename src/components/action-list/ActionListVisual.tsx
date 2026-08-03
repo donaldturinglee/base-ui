@@ -4,14 +4,9 @@ import { ActionListItemContext } from "./ActionListItemContext";
 import type { ActionListVisualProps } from "./ActionList.types";
 
 const classes = {
-    // The box is as tall as a line of the label, so a visual sits on the label's first line
-    // however many lines the item runs to. The line height is a bare number, so it is taken
-    // against the label's own size to give a length
-    root: "flex shrink-0 items-center justify-center min-w-[var(--base-size-16)] h-[calc(var(--text-body-line-height-medium)_*_1em)] [&_svg]:size-[var(--base-size-16)]",
-    // A visual says the same thing the label does, so it is only ever coloured against it
-    muted: "text-foreground-muted",
-    // Danger, disabled and inactive items are coloured as a whole, and the visual follows
-    inherit: "[color:inherit]",
+    root: "action-list-visual",
+    muted: "action-list-visual-muted",
+    inherit: "action-list-visual-inherit",
 };
 
 // The box a leading or trailing visual is drawn in. Both stand it in the same place, so

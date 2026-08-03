@@ -85,8 +85,7 @@ describe("Radio", () => {
         // A click is left to the browser to refuse, so only the state and the styling that
         // goes with it are worth asserting here
         expect(radio).toBeDisabled();
-        expect(radio).toHaveClass("disabled:cursor-not-allowed");
-        expect(radio).toHaveClass("disabled:bg-[var(--control-background-color-disabled)]");
+        expect(radio).toHaveClass("radio-disabled");
     });
 
     it("marks itself required for assistive technology", () => {

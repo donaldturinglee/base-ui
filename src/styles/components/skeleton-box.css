@@ -1,0 +1,16 @@
+@layer components {
+    .skeleton-box {
+        display: block;
+        /* The fallbacks live here, so leaving the custom properties unset renders a full width box
+       one line tall */
+        width: var(--skeleton-box-width, auto);
+        height: var(--skeleton-box-height, 1rem);
+        background-color: var(--skeleton-loader-background-color);
+        border-radius: var(--border-radius-small);
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+            outline-offset: -1px;
+        }
+    }
+}

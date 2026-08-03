@@ -1,0 +1,81 @@
+@layer components {
+    .label {
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        background-color: transparent;
+        line-height: 1;
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-medium);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-radius: var(--border-radius-full);
+    }
+
+    .label-small {
+        height: var(--base-size-20);
+        padding-block: 0;
+        padding-inline: var(--base-size-6);
+    }
+
+    .label-medium {
+        height: var(--base-size-24);
+        padding-block: 0;
+        padding-inline: var(--base-size-6);
+    }
+
+    .label-large {
+        height: var(--base-size-24);
+        padding-block: 0;
+        padding-inline: var(--base-size-8);
+    }
+
+    .label-default {
+        border-color: var(--border-color-default);
+    }
+
+    .label-primary {
+        border-color: var(--foreground-color-default);
+    }
+
+    .label-secondary {
+        color: var(--foreground-color-muted);
+        border-color: var(--border-color-muted);
+    }
+
+    .label-accent {
+        color: var(--foreground-color-accent);
+        border-color: var(--background-color-accent-emphasis);
+    }
+
+    .label-success {
+        color: var(--foreground-color-success);
+        border-color: var(--background-color-success-emphasis);
+    }
+
+    .label-attention {
+        color: var(--foreground-color-attention);
+        border-color: var(--background-color-attention-emphasis);
+    }
+
+    .label-severe {
+        color: var(--foreground-color-severe);
+        border-color: var(--background-color-severe-emphasis);
+    }
+
+    .label-danger {
+        color: var(--foreground-color-danger);
+        border-color: var(--border-color-danger-emphasis);
+    }
+
+    .label-done {
+        color: var(--foreground-color-done);
+        border-color: var(--background-color-done-emphasis);
+    }
+
+    .label-sponsors {
+        color: var(--foreground-color-sponsors);
+        border-color: var(--background-color-sponsors-emphasis);
+    }
+}

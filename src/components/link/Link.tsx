@@ -4,12 +4,11 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { LinkProps } from "./Link.types";
 
 const classes = {
-    root: "text-foreground-accent no-underline [text-underline-offset:0.05rem] hover:underline",
-    // Reset for button tags, so `as="button"` still reads as a link
-    button: "[&:is(button)]:inline-block [&:is(button)]:p-0 [&:is(button)]:[font-size:inherit] [&:is(button)]:whitespace-nowrap [&:is(button)]:cursor-pointer [&:is(button)]:select-none [&:is(button)]:bg-transparent [&:is(button)]:border-0 [&:is(button)]:appearance-none",
-    // Inline links are underlined only when an ancestor opts into the accessibility setting
-    inline: "[[data-a11y-link-underlines='true']_&]:underline [[data-a11y-link-underlines='true']_&]:hover:no-underline",
-    muted: "text-foreground-muted hover:text-foreground-accent hover:no-underline",
+    // The reset for button tags travels with the root class, so `as="button"` still reads as
+    // a link without a second name for it
+    root: "link",
+    inline: "link-inline",
+    muted: "link-muted",
 };
 
 function Link<As extends React.ElementType = "a">(
@@ -24,7 +23,6 @@ function Link<As extends React.ElementType = "a">(
             ref={ref}
             className={classNames(
                 classes.root,
-                classes.button,
                 inline && classes.inline,
                 muted && classes.muted,
                 className,

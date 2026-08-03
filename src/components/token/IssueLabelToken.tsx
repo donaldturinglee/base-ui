@@ -8,15 +8,10 @@ import { DEFAULT_ISSUE_LABEL_FILL_COLOR, getIssueLabelColors } from "./issueLabe
 import type { IssueLabelTokenProps } from "./Token.types";
 
 const classes = {
-    // Every colour the label is drawn in is worked out from the one it was given and carried
-    // in variables, so the theme it is read in is left to CSS to pick
-    root: "max-w-full border-solid border-[length:var(--border-width-thin)] bg-[var(--issue-label-background)] [color:var(--issue-label-foreground)] border-[color:var(--issue-label-border)] [[data-theme='dark']_&]:bg-[var(--issue-label-dark-background)] [[data-theme='dark']_&]:[color:var(--issue-label-dark-foreground)] [[data-theme='dark']_&]:border-[color:var(--issue-label-dark-border)]",
-    interactive:
-        "hover:bg-[var(--issue-label-background-hover)] hover:[box-shadow:var(--shadow-resting-medium)] [[data-theme='dark']_&]:hover:bg-[var(--issue-label-dark-background-hover)]",
-    // A label that has been picked is ringed in its own colour, standing clear of it
-    selected:
-        "outline-none [box-shadow:0_0_0_var(--base-size-2)_var(--issue-label-ring)] [[data-theme='dark']_&]:[box-shadow:0_0_0_var(--base-size-2)_var(--issue-label-dark-ring)]",
-    withRemoveButton: "pr-0",
+    root: "issue-label-token",
+    interactive: "issue-label-token-interactive",
+    selected: "issue-label-token-selected",
+    withRemoveButton: "token-with-remove-button",
     srOnly: "sr-only",
 };
 

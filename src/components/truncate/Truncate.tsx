@@ -6,13 +6,10 @@ import type { TruncateProps } from "./Truncate.types";
 export const DEFAULT_TRUNCATE_MAX_WIDTH = 125;
 
 const classes = {
-    root: "truncate max-w-[var(--truncate-max-width)]",
-    // Takes its display from whatever it is sitting in, so truncating a run of text does not
-    // change how the surrounding layout flows
-    block: "[display:inherit]",
+    root: "truncate-text",
+    block: "truncate-text-block",
     inline: "inline-block align-top",
-    // Far wider than any line of text, so hovering shows the whole thing
-    expandable: "hover:max-w-[10000px]",
+    expandable: "truncate-text-expandable",
 };
 
 function Truncate<As extends React.ElementType = "div">(

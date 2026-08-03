@@ -40,35 +40,35 @@ describe("Button", () => {
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-variant", "default");
         expect(button).toHaveAttribute("data-size", "medium");
-        expect(button).toHaveClass("bg-[var(--button-default-background-color-rest)]");
+        expect(button).toHaveClass("button-default");
     });
 
     it("respects the variant", () => {
         render(<Button variant="primary">Save</Button>);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-variant", "primary");
-        expect(button).toHaveClass("bg-[var(--button-primary-background-color-rest)]");
+        expect(button).toHaveClass("button-primary");
     });
 
     it("respects the size", () => {
         render(<Button size="small">Save</Button>);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-size", "small");
-        expect(button).toHaveClass("h-[var(--control-small-size)]");
+        expect(button).toHaveClass("button-small");
     });
 
     it("drops the shape of a button for the link variant", () => {
         render(<Button variant="link">Save</Button>);
         const button = screen.getByRole("button");
-        expect(button).toHaveClass("text-foreground-accent");
-        expect(button).toHaveClass("border-0");
+        expect(button).toHaveClass("button-link");
+        expect(button).toHaveClass("button-link-shape");
     });
 
     it("fills its container when block is set", () => {
         render(<Button block>Save</Button>);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-block", "block");
-        expect(button).toHaveClass("w-full");
+        expect(button).toHaveClass("button-block");
     });
 
     it("respects the content alignment", () => {
@@ -82,8 +82,8 @@ describe("Button", () => {
         render(<Button labelWrap>Save</Button>);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-label-wrap", "true");
-        expect(button).toHaveClass("h-[unset]");
-        expect(screen.getByText("Save")).toHaveClass("whitespace-normal");
+        expect(button).toHaveClass("button-label-wrap");
+        expect(screen.getByText("Save")).toHaveClass("button-label-wrap-label");
     });
 
     it("renders a leading visual given as a component", () => {
@@ -144,7 +144,7 @@ describe("Button", () => {
         render(<Button count={8} leadingVisual={Icon} aria-label="Watch" />);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-icon-only-counter", "true");
-        expect(button).toHaveClass("px-[var(--control-medium-padding-inline-condensed)]");
+        expect(button).toHaveClass("button-icon-only-counter-medium");
     });
 
     it("marks a loading button as unavailable without disabling it", () => {
@@ -235,13 +235,13 @@ describe("Button", () => {
         render(<Button disabled>Save</Button>);
         const button = screen.getByRole("button");
         expect(button).toBeDisabled();
-        expect(button).toHaveClass("cursor-not-allowed");
-        expect(button).toHaveClass("[color:var(--control-foreground-color-disabled)]");
+        expect(button).toHaveClass("button-disabled");
+        expect(button).toHaveClass("button-default-disabled");
     });
 
     it("treats aria-disabled as unavailable", () => {
         render(<Button aria-disabled="true">Save</Button>);
-        expect(screen.getByRole("button")).toHaveClass("cursor-not-allowed");
+        expect(screen.getByRole("button")).toHaveClass("button-disabled");
     });
 
     it("does not style a loading button as unavailable", () => {
@@ -250,15 +250,14 @@ describe("Button", () => {
                 Save
             </Button>,
         );
-        expect(screen.getByRole("button")).not.toHaveClass("cursor-not-allowed");
+        expect(screen.getByRole("button")).not.toHaveClass("button-disabled");
     });
 
     it("styles an inactive button", () => {
         render(<Button inactive>Save</Button>);
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-inactive", "");
-        expect(button).toHaveClass("[color:var(--button-inactive-foreground-color)]");
-        expect(button).toHaveClass("cursor-auto");
+        expect(button).toHaveClass("button-inactive");
     });
 
     it("flattens the visual colour once the button is out of use", () => {
@@ -267,7 +266,7 @@ describe("Button", () => {
                 Save
             </Button>,
         );
-        expect(screen.getByTestId("icon").parentElement).toHaveClass("[color:inherit]");
+        expect(screen.getByTestId("icon").parentElement).toHaveClass("button-visual-muted");
     });
 
     it("does not leak its own props onto the element", () => {

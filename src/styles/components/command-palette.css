@@ -1,0 +1,189 @@
+@layer components {
+    /* The palette takes whatever room it is given, up to the width a single line of command
+       still reads across. Everything it holds is clipped to its own corners, so nothing
+       standing at either end of it rounds out past them. Nothing inside it can take focus,
+       so it gives up its own ring */
+    .command-palette {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: var(--overlay-width-large);
+        overflow: hidden;
+        background-color: var(--overlay-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    /* The palette sits high on the screen rather than in the middle of it, since it is
+       reached for and read from the top down */
+    .command-palette-backdrop {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        overflow-y: auto;
+        padding: var(--base-size-16);
+        padding-top: 10dvh;
+        background-color: var(--overlay-backdrop-background-color);
+    }
+
+    .command-palette-panel {
+        width: var(--overlay-width-large);
+        max-width: 100%;
+        height: fit-content;
+        box-shadow: var(--shadow-floating-medium);
+    }
+
+    /* The field stands on the panel rather than being the top of it: a margin holds it off
+       the top and either side, and a background of its own sets it apart from what it is
+       standing on, so it reads as the one thing there to be typed into. Nothing is set under
+       it, since the list below carries padding of its own that already holds the two apart.
+       It is left to stretch to the panel rather than told to fill it: a field given the
+       whole width would take that and its margins besides, and the panel would clip what ran
+       past its end, leaving the far margin nowhere to be seen. Its corners are its own now
+       that the panel's are no longer what clips it, but it gives up its border and its ring
+       alike, since the background is what marks it out. It is set larger and taller than an
+       ordinary field, and its padding stands inside its margin far enough that the magnifier
+       still starts where the headings and the items below it start, so the whole panel reads
+       down one edge. It is named from the palette so that what it says here stands over the
+       text input it is drawn as */
+    .command-palette .command-palette-input {
+        flex-shrink: 0;
+        width: auto;
+        min-height: var(--control-xlarge-size);
+        margin-top: var(--base-size-8);
+        margin-inline: var(--base-size-8);
+        padding-inline: var(--base-size-8);
+        background-color: var(--background-color-muted);
+        border: 0;
+        box-shadow: none;
+        font-size: var(--text-body-size-large);
+
+        &:focus-within {
+            outline: none;
+        }
+    }
+
+    /* A column laid out by flex, so that the items can be put in the order they answered best
+       in without any of them being moved in the tree. The gap is what holds the items apart,
+       so nothing that stands down leaves the space it was taking behind it */
+    .command-palette-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scroll-padding: var(--base-size-8);
+        padding: var(--base-size-8);
+    }
+
+    /* A column of its own, so that the items inside it can be laid out in the order they
+       answered best in just as they are in the list itself. It holds them apart by the same
+       gap the list does, so a group reads no differently from the items standing beside it */
+    .command-palette-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+    }
+
+    /* The heading names the run below it without standing over it: it is set small and muted
+       rather than heavy, so the items are what the eye lands on going down the list */
+    .command-palette-group-heading {
+        display: flex;
+        align-items: center;
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-8);
+        user-select: none;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-medium);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* Every item stands the same height whatever it was written with, so a long list reads as
+       a run of rows rather than as a paragraph of them. Only what is on screen is drawn, and
+       the room an undrawn item would have taken is kept, so the list does not shift as it is
+       scrolled. The text cannot be selected, since the item is there to be pressed */
+    .command-palette-item {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        min-height: var(--control-large-size);
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-8);
+        cursor: pointer;
+        user-select: none;
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        content-visibility: auto;
+        contain-intrinsic-size: auto var(--control-large-size);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+        transition:
+            background-color var(--motion-transition-hover),
+            color var(--motion-transition-hover);
+
+        &:active {
+            background-color: var(--control-transparent-background-color-active);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The item in hand is marked out by its background alone. Focus never reaches it, so
+       there is no ring to draw: the field keeps focus and points at it instead */
+    .command-palette-item-active {
+        background-color: var(--control-transparent-background-color-selected);
+    }
+
+    /* An item that cannot be picked says so by its colour, and stops answering the pointer at
+       all rather than darkening under a press that does nothing */
+    .command-palette-item-unavailable {
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+
+        &:active {
+            background-color: transparent;
+        }
+    }
+
+    /* A box of a fixed height, which is the same one the spinner stands in, so the panel
+       keeps its size as the palette goes from waiting to having nothing to show */
+    .command-palette-empty {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        height: var(--base-size-64);
+        padding-inline: var(--base-size-8);
+        white-space: pre-wrap;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* The same box the message stands in, so what is being waited on and what came back of it
+       take up the same room */
+    .command-palette-loading {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        height: var(--base-size-64);
+        padding-inline: var(--base-size-8);
+    }
+
+    /* The gap the list holds its children apart by is what stands either side of the line, so
+       the divider carries no margin of its own to double it up */
+    .command-palette-separator {
+        flex-shrink: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--border-color-muted);
+    }
+}

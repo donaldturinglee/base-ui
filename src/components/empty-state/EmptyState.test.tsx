@@ -97,8 +97,7 @@ describe("EmptyState", () => {
         it("sizes the type and the icon from the size it stands at", () => {
             render(<EmptyState title="No results found" size="small" />);
 
-            expect(root()).toHaveClass("[--empty-state-title-size:var(--text-body-size-medium)]");
-            expect(root()).toHaveClass("[--empty-state-icon-size:var(--base-size-20)]");
+            expect(root()).toHaveClass("empty-state-small");
         });
     });
 

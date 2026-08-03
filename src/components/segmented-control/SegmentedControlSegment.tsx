@@ -5,38 +5,15 @@ import type { ButtonVisual } from "../button";
 import type { SegmentedControlSegmentProps } from "./SegmentedControl.types";
 
 const classes = {
-    // Neighbouring segments pull over the track's own border, so the row keeps a single
-    // outline rather than drawing one around every segment
-    item: "relative block grow -my-px first:-ms-px last:-me-px [&:not(:last-child)]:me-px",
-    // The line between two segments is drawn by the one on the left, and stops short of the
-    // track at both ends
-    separator:
-        "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:absolute [&:not(:last-child)]:after:top-[var(--base-size-8)] [&:not(:last-child)]:after:bottom-[var(--base-size-8)] [&:not(:last-child)]:after:end-[calc(-1_*_var(--base-size-2))] [&:not(:last-child)]:after:w-px [&:not(:last-child)]:after:bg-border-default",
-    // The segment being shown is already set apart by the knob it carries, so no line is
-    // drawn on either side of it. Nor is one drawn where it would show through a focus ring
-    separatorHidden:
-        "[&:not(:last-child)[data-selected]]:after:bg-transparent [&:not(:last-child):has(+[data-selected])]:after:bg-transparent [&:not(:last-child):has(:focus-visible)]:after:w-0",
-    // The button fills the segment and holds its content in by the room the knob needs to
-    // stand clear of the track. `group/segment` lets that content answer the pointer
-    button: "group/segment w-full h-full p-[var(--base-size-4)] [font-family:inherit] [font-size:inherit] [font-weight:var(--base-text-weight-normal)] [color:currentColor] cursor-pointer appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)]",
-    // The ring is drawn just inside the track's border, where an offset of its own would
-    // leave it sitting on top of it
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[calc(-1_*_var(--border-width-thin))]",
-    // A coarse pointer is given a target taller than the segment itself to aim at
-    target: "pointer-coarse:before:content-[''] pointer-coarse:before:absolute pointer-coarse:before:inset-x-0 pointer-coarse:before:top-1/2 pointer-coarse:before:-translate-y-1/2 pointer-coarse:before:min-h-[var(--control-min-target-coarse)]",
-    // The knob takes the room the button was inset by, so the label keeps its place as the
-    // reader moves along the row
-    buttonSelected: "p-0 [font-weight:var(--base-text-weight-semibold)]",
-    buttonDisabled: "cursor-not-allowed text-foreground-disabled",
-    // What is drawn inside the button: the knob where the segment is the one being shown, and
-    // the hover and press states where it is not
-    content:
-        "flex h-full items-center justify-center px-[calc(var(--control-medium-padding-inline-normal)_-_var(--base-size-4))] border-solid border-[length:var(--border-width-thin)] border-transparent rounded-[calc(var(--border-radius-medium)_-_var(--base-size-2))]",
-    contentSelected:
-        "px-[var(--control-medium-padding-inline-normal)] bg-[var(--control-knob-background-color-rest)] border-[color:var(--control-knob-border-color-rest)] rounded-[var(--border-radius-medium)]",
-    // Only a segment that can still be picked answers the pointer
-    contentInteractive:
-        "group-hover/segment:bg-[var(--control-track-background-color-hover)] group-active/segment:bg-[var(--control-track-background-color-active)]",
+    item: "segmented-control-segment",
+    separator: "segmented-control-segment-separator",
+    separatorHidden: "segmented-control-segment-separator-hidden",
+    button: "segmented-control-button",
+    buttonSelected: "segmented-control-button-selected",
+    buttonDisabled: "segmented-control-button-disabled",
+    content: "segmented-control-content",
+    contentSelected: "segmented-control-content-selected",
+    contentInteractive: "segmented-control-content-interactive",
 };
 
 // A visual is given either as the component to render, or as an element that is already built
@@ -75,8 +52,6 @@ function SegmentedControlSegment(props: SegmentedControlSegmentProps) {
             aria-disabled={unavailable || undefined}
             className={classNames(
                 classes.button,
-                classes.focus,
-                classes.target,
                 selected && classes.buttonSelected,
                 unavailable && !selected && classes.buttonDisabled,
                 className,

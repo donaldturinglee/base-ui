@@ -3,33 +3,28 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { PageContentProps, PageContentSpacing, PageContentWidth } from "./PageContent.types";
 
-const pageContentVariants = cva(
-    // The runs of content stand one under the next. The minimum width keeps anything inside
-    // that overflows from pushing the page wider than the room it was given
-    "flex flex-col w-full min-w-0 mx-auto",
-    {
-        variants: {
-            width: {
-                full: "max-w-full",
-                medium: "max-w-[768px]",
-                large: "max-w-[1012px]",
-                xlarge: "max-w-[1280px]",
-            } satisfies Record<PageContentWidth, string>,
-            padding: {
-                none: "p-0",
-                condensed: "p-[var(--base-size-8)]",
-                normal: "p-[var(--base-size-16)]",
-                spacious: "p-[var(--base-size-24)]",
-            } satisfies Record<PageContentSpacing, string>,
-            gap: {
-                none: "gap-0",
-                condensed: "gap-[var(--stack-gap-condensed)]",
-                normal: "gap-[var(--stack-gap-normal)]",
-                spacious: "gap-[var(--stack-gap-spacious)]",
-            } satisfies Record<PageContentSpacing, string>,
-        },
+const pageContentVariants = cva("page-content", {
+    variants: {
+        width: {
+            full: "page-content-width-full",
+            medium: "page-content-width-medium",
+            large: "page-content-width-large",
+            xlarge: "page-content-width-xlarge",
+        } satisfies Record<PageContentWidth, string>,
+        padding: {
+            none: "page-content-padding-none",
+            condensed: "page-content-padding-condensed",
+            normal: "page-content-padding-normal",
+            spacious: "page-content-padding-spacious",
+        } satisfies Record<PageContentSpacing, string>,
+        gap: {
+            none: "page-content-gap-none",
+            condensed: "page-content-gap-condensed",
+            normal: "page-content-gap-normal",
+            spacious: "page-content-gap-spacious",
+        } satisfies Record<PageContentSpacing, string>,
     },
-);
+});
 
 // The body of a page: what the reader came for, standing between the header and the footer.
 // It holds the content to a width that can be read across and centres it in whatever room

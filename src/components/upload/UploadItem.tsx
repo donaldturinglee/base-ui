@@ -13,20 +13,17 @@ import { formatFileSize } from "./files";
 import type { UploadItemProps } from "./Upload.types";
 
 const classes = {
-    root: "flex items-center gap-[var(--stack-gap-condensed)] p-[var(--base-size-8)] rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] border-border-muted bg-background-default",
-    icon: "flex shrink-0 items-center justify-center text-foreground-muted [&>svg]:size-[var(--upload-item-icon-size,var(--base-size-20))]",
-    // The name is the one part of the row with no length of its own, so it is what gives when
-    // the row runs out of room
-    body: "grid flex-auto min-w-0 gap-[var(--base-size-4)]",
-    heading: "flex items-baseline min-w-0 gap-[var(--base-size-8)]",
-    name: "min-w-0 truncate [font-size:var(--text-body-size-small)]",
-    fileSize: "shrink-0 [font-size:var(--text-body-size-small)] text-foreground-muted",
-    description: "[font-size:var(--text-body-size-small)] text-foreground-muted",
-    // What went wrong is drawn in the colour errors are drawn in elsewhere
-    descriptionError: "text-foreground-danger",
-    status: "flex shrink-0 items-center justify-center [&>svg]:size-[var(--base-size-16)]",
-    statusSuccess: "text-foreground-success",
-    statusError: "text-foreground-danger",
+    root: "upload-item",
+    icon: "upload-item-icon",
+    body: "upload-item-body",
+    heading: "upload-item-heading",
+    name: "upload-item-name",
+    fileSize: "upload-item-file-size",
+    description: "upload-item-description",
+    descriptionError: "upload-item-description-error",
+    status: "upload-item-status",
+    statusSuccess: "upload-item-status-success",
+    statusError: "upload-item-status-error",
 };
 
 // A file that has arrived and one that has gone wrong are marked at the end of the row. One

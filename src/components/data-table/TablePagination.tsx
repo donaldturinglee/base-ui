@@ -24,60 +24,38 @@ const getHiddenRanges = (showPages: boolean | Partial<Record<Range, boolean>>): 
 };
 
 const classes = {
-    root: "flex items-center justify-between gap-x-[var(--base-size-16)] w-full p-[var(--base-size-8)_var(--base-size-16)] border-solid border-[length:var(--border-width-thin)] border-t-0 border-border-default rounded-es-[var(--border-radius-medium)] rounded-ee-[var(--border-radius-medium)] [grid-area:footer]",
-    range: "m-0 [font-size:var(--text-body-size-small)] text-foreground-muted",
-    steps: "flex flex-wrap items-center list-none m-0 p-0 [font-size:var(--text-body-size-medium)] text-foreground-default",
-    // The two ends stand away from the page numbers between them
-    step: "first-of-type:me-[var(--base-size-16)] last-of-type:ms-[var(--base-size-16)]",
-    button: "bg-transparent border-0 appearance-none select-none [font-family:inherit] [font-size:var(--text-body-size-medium)] [line-height:calc(20/14)] rounded-[var(--border-radius-medium)]",
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    truncation:
-        "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] select-none",
-    icon: "size-[var(--base-size-16)]",
-    // Only the two steps survive once the page numbers are hidden, so the margin between
-    // them comes off too
+    root: "data-table-pagination",
+    range: "data-table-pagination-range",
+    steps: "data-table-pagination-steps",
+    step: "data-table-pagination-step",
+    button: "data-table-pagination-button",
+    truncation: "data-table-pagination-truncation",
+    icon: "data-table-pagination-icon",
     hiddenRange: {
-        narrow: "max-medium:[&>*:not(:first-child):not(:last-child)]:hidden max-medium:[&>*:first-child]:me-0 max-medium:[&>*:last-child]:ms-0",
-        regular:
-            "medium:max-xxlarge:[&>*:not(:first-child):not(:last-child)]:hidden medium:max-xxlarge:[&>*:first-child]:me-0 medium:max-xxlarge:[&>*:last-child]:ms-0",
-        wide: "xxlarge:[&>*:not(:first-child):not(:last-child)]:hidden xxlarge:[&>*:first-child]:me-0 xxlarge:[&>*:last-child]:ms-0",
+        narrow: "data-table-pagination-hidden-range-narrow",
+        regular: "data-table-pagination-hidden-range-regular",
+        wide: "data-table-pagination-hidden-range-wide",
     } satisfies Record<Range, string>,
     hidden: "sr-only",
 };
 
-const tablePaginationActionVariants = cva(
-    [
-        classes.button,
-        classes.focus,
-        "flex items-center gap-x-[var(--base-size-4)] p-[var(--base-size-8)] text-foreground-muted",
-    ],
-    {
-        variants: {
-            // A step with nowhere to go reads as text rather than as something to press
-            enabled: {
-                true: "cursor-pointer text-foreground-accent hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
-                false: "",
-            },
+const tablePaginationActionVariants = cva([classes.button, "data-table-pagination-jump"], {
+    variants: {
+        enabled: {
+            true: "data-table-pagination-jump-enabled",
+            false: "",
         },
     },
-);
+});
 
-const tablePaginationPageVariants = cva(
-    [
-        classes.button,
-        classes.focus,
-        "flex items-center justify-center min-w-[var(--base-size-32)] min-h-[var(--base-size-32)] py-[var(--base-size-8)] px-[calc((var(--base-size-32)_-_var(--base-size-20))/2)] cursor-pointer [color:inherit] hover:bg-[var(--control-transparent-background-color-hover)] focus:bg-[var(--control-transparent-background-color-hover)]",
-    ],
-    {
-        variants: {
-            // The ring is drawn inside the fill, so it still reads against it
-            active: {
-                true: "bg-background-accent-emphasis text-foreground-on-emphasis hover:bg-background-accent-emphasis focus:bg-background-accent-emphasis focus-visible:[box-shadow:inset_0_0_0_var(--border-width-thicker)_var(--foreground-color-on-emphasis)]",
-                false: "",
-            },
+const tablePaginationPageVariants = cva([classes.button, "data-table-pagination-page"], {
+    variants: {
+        active: {
+            true: "data-table-pagination-page-active",
+            false: "",
         },
     },
-);
+});
 
 // Holds which page is showing, and works out what is on it
 const usePagination = ({

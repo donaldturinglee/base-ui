@@ -11,20 +11,17 @@ const icons = {
 } satisfies Record<FormControlValidationStatus, React.ElementType>;
 
 const classes = {
-    icon: "shrink-0 mt-[var(--base-size-2)] me-[var(--base-size-4)] size-[var(--base-size-12)]",
+    icon: "form-control-validation-icon",
 };
 
-const formControlValidationVariants = cva(
-    "flex [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [&_a]:underline [&_a]:[color:currentColor]",
-    {
-        variants: {
-            variant: {
-                success: "text-foreground-success",
-                error: "text-foreground-danger",
-            } satisfies Record<FormControlValidationStatus, string>,
-        },
+const formControlValidationVariants = cva("form-control-validation", {
+    variants: {
+        variant: {
+            success: "form-control-validation-success",
+            error: "form-control-validation-error",
+        } satisfies Record<FormControlValidationStatus, string>,
     },
-);
+});
 
 function FormControlValidation(
     props: FormControlValidationProps,

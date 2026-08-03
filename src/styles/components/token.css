@@ -1,0 +1,233 @@
+@layer components {
+    .token {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        text-decoration: none;
+        border-radius: var(--border-radius-full);
+        font-family: inherit;
+        font-weight: var(--base-text-weight-semibold);
+        line-height: 1;
+    }
+
+    .token-small {
+        height: var(--base-size-16);
+        padding-inline: var(--base-size-4);
+        font-size: var(--text-body-size-small);
+    }
+
+    .token-medium {
+        height: var(--base-size-20);
+        padding-inline: var(--base-size-6);
+        font-size: var(--text-body-size-small);
+    }
+
+    .token-large {
+        height: var(--base-size-24);
+        padding-inline: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+    }
+
+    .token-xlarge {
+        height: var(--base-size-32);
+        padding-inline: var(--base-size-12);
+        font-size: var(--text-body-size-medium);
+    }
+
+    .token-interactive {
+        cursor: pointer;
+    }
+
+    .token-static {
+        cursor: auto;
+    }
+
+    .token-default {
+        max-width: 100%;
+        background-color: var(--background-color-neutral-muted);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-muted);
+        color: var(--foreground-color-muted);
+    }
+
+    /* A token that answers the reader lifts as the pointer rests on it */
+    .token-default-interactive:hover {
+        box-shadow: var(--shadow-resting-medium);
+        color: var(--foreground-color-default);
+    }
+
+    .token-default-selected {
+        border-color: var(--border-color-emphasis);
+        color: var(--foreground-color-default);
+    }
+
+    /* The remove button carries the room at that end, so the token gives up its own */
+    .token-with-remove-button {
+        padding-right: 0;
+    }
+
+    .token-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        line-height: 1;
+    }
+
+    .token-visual-medium {
+        margin-right: var(--base-size-4);
+    }
+
+    .token-visual-large,
+    .token-visual-xlarge {
+        margin-right: var(--base-size-6);
+    }
+
+    /* Whatever the text is rendered as, it is stripped back to text: an anchor keeps none of
+       its underline and a button none of its box */
+    .token-text {
+        flex-grow: 1;
+        width: auto;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: start;
+        text-decoration: none;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        color: currentcolor;
+        font: inherit;
+        line-height: var(--base-text-line-height-normal);
+    }
+
+    /* Stretched over the whole token, so that a click anywhere on it lands on the same thing
+       rather than only on the words */
+    .token-text-interactive {
+        cursor: pointer;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+        }
+    }
+
+    .token-remove-button {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-full);
+        color: currentcolor;
+        font-family: inherit;
+
+        /* The token is drawn with a border, so the button is moved out by as much to sit
+           against the edge rather than inside it */
+        translate: var(--border-width-thin) calc(-1 * var(--border-width-thin));
+
+        &:hover,
+        &:focus {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:active {
+            background-color: var(--control-transparent-background-color-active);
+        }
+    }
+
+    .token-remove-button-small,
+    .token-remove-button-medium {
+        margin-left: var(--base-size-4);
+
+        & svg {
+            width: var(--base-size-12);
+            height: var(--base-size-12);
+        }
+    }
+
+    .token-remove-button-small {
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+
+    .token-remove-button-medium {
+        width: var(--base-size-20);
+        height: var(--base-size-20);
+    }
+
+    .token-remove-button-large,
+    .token-remove-button-xlarge {
+        margin-left: var(--base-size-6);
+
+        & svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+    }
+
+    .token-remove-button-large {
+        width: var(--base-size-24);
+        height: var(--base-size-24);
+    }
+
+    .token-remove-button-xlarge {
+        width: var(--base-size-32);
+        height: var(--base-size-32);
+    }
+
+    /* The text of an interactive token is stretched over the whole of it, so the button is
+       lifted back above that to stay something the reader can press */
+    .token-remove-button-raised {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Every colour the label is drawn in is worked out from the one it was given and carried
+       in variables, so the theme it is read in is left to CSS to pick */
+    .issue-label-token {
+        max-width: 100%;
+        background-color: var(--issue-label-background);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--issue-label-border);
+        color: var(--issue-label-foreground);
+
+        [data-theme="dark"] & {
+            background-color: var(--issue-label-dark-background);
+            border-color: var(--issue-label-dark-border);
+            color: var(--issue-label-dark-foreground);
+        }
+    }
+
+    .issue-label-token-interactive:hover {
+        background-color: var(--issue-label-background-hover);
+        box-shadow: var(--shadow-resting-medium);
+
+        [data-theme="dark"] & {
+            background-color: var(--issue-label-dark-background-hover);
+        }
+    }
+
+    /* A label that has been picked is ringed in its own colour, standing clear of it */
+    .issue-label-token-selected {
+        outline: none;
+        box-shadow: 0 0 0 var(--base-size-2) var(--issue-label-ring);
+
+        [data-theme="dark"] & {
+            box-shadow: 0 0 0 var(--base-size-2) var(--issue-label-dark-ring);
+        }
+    }
+}

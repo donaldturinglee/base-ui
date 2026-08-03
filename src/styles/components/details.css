@@ -1,0 +1,24 @@
+@layer components {
+    /* The marker the browser draws beside the summary is taken away, so that whatever the
+       summary is made of is all there is to see */
+    .details {
+        & > summary {
+            list-style: none;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+    }
+
+    /* The marker is taken away here as well as on the disclosure, so a summary that is not a
+       child of one is left with only what it is made of either way */
+    .details-summary {
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+}

@@ -194,7 +194,7 @@ describe("RadioGroup", () => {
             </RadioGroup>,
         );
         expect(container.querySelector('[data-component="RadioGroup.Label"]')).toHaveClass(
-            "text-foreground-muted",
+            "radio-group-label-disabled",
         );
     });
 
@@ -253,7 +253,7 @@ describe("RadioGroup", () => {
         );
         const validation = container.querySelector('[data-component="RadioGroup.Validation"]');
         expect(validation).toHaveAttribute("data-validation-status", "success");
-        expect(validation).toHaveClass("text-foreground-success");
+        expect(validation).toHaveClass("radio-group-validation-success");
         expect(validation?.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
     });
 

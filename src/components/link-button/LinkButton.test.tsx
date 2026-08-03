@@ -31,7 +31,7 @@ describe("LinkButton", () => {
 
     it("lays itself out inline once it has somewhere to go", () => {
         render(<LinkButton href="/settings">Settings</LinkButton>);
-        expect(screen.getByRole("link")).toHaveClass("[&[href]]:inline-flex");
+        expect(screen.getByRole("link")).toHaveClass("button");
     });
 
     it("forwards the anchor attributes", () => {
@@ -60,8 +60,8 @@ describe("LinkButton", () => {
             </LinkButton>,
         );
         const link = screen.getByRole("link");
-        expect(link).toHaveClass("bg-[var(--button-primary-background-color-rest)]");
-        expect(link).toHaveClass("h-[var(--control-large-size)]");
+        expect(link).toHaveClass("button-primary");
+        expect(link).toHaveClass("button-large");
     });
 
     it("reads as plain text for the link variant", () => {
@@ -71,8 +71,8 @@ describe("LinkButton", () => {
             </LinkButton>,
         );
         const link = screen.getByRole("link");
-        expect(link).toHaveClass("text-foreground-accent");
-        expect(link).toHaveClass("p-0");
+        expect(link).toHaveClass("button-link");
+        expect(link).toHaveClass("button-link-shape");
     });
 
     it("renders a leading visual", () => {
@@ -103,7 +103,7 @@ describe("LinkButton", () => {
                 Settings
             </LinkButton>,
         );
-        expect(screen.getByRole("link")).toHaveClass("w-full");
+        expect(screen.getByRole("link")).toHaveClass("button-block");
     });
 
     it("announces the wait while loading", () => {
@@ -124,7 +124,7 @@ describe("LinkButton", () => {
         );
         const link = screen.getByRole("link");
         expect(link).toHaveAttribute("data-inactive", "");
-        expect(link).toHaveClass("[color:var(--button-inactive-foreground-color)]");
+        expect(link).toHaveClass("button-inactive");
     });
 
     it("does not leak its own props onto the element", () => {

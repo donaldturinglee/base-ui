@@ -70,17 +70,9 @@ describe("Select", () => {
         // The field owns the indicator's geometry, and the control reserves that much room
         // on its trailing edge so the two can never overlap
         const field = screen.getByTestId("select").parentElement;
-        expect(field).toHaveClass(
-            "[--select-indicator-size:var(--base-size-16)]",
-            "[--select-indicator-inset:var(--base-size-4)]",
-        );
-        expect(container.querySelector("svg")).toHaveClass(
-            "right-[var(--select-indicator-inset)]",
-            "size-[var(--select-indicator-size)]",
-        );
-        expect(screen.getByTestId("select")).toHaveClass(
-            "pr-[calc(var(--select-indicator-inset)_+_var(--select-indicator-size)_+_var(--base-size-4))]",
-        );
+        expect(field).toHaveClass("select");
+        expect(container.querySelector("svg")).toHaveClass("select-indicator");
+        expect(screen.getByTestId("select")).toHaveClass("select-control");
     });
 
     it("renders a placeholder option and selects it", () => {
@@ -163,7 +155,7 @@ describe("Select", () => {
         );
         const field = screen.getByTestId("select").parentElement;
         expect(field).toHaveAttribute("data-size", "medium");
-        expect(field).toHaveClass("min-h-[var(--control-medium-size)]");
+        expect(field).toHaveClass("select-medium");
     });
 
     it("respects the size prop", () => {
@@ -177,7 +169,7 @@ describe("Select", () => {
             );
             const field = screen.getByTestId("select").parentElement;
             expect(field).toHaveAttribute("data-size", size);
-            expect(field).toHaveClass(`min-h-[var(--control-${size}-size)]`);
+            expect(field).toHaveClass(`select-${size}`);
             unmount();
         }
     });
@@ -190,7 +182,7 @@ describe("Select", () => {
         );
         const field = screen.getByTestId("select").parentElement;
         expect(field).toHaveAttribute("data-block", "true");
-        expect(field).toHaveClass("w-full");
+        expect(field).toHaveClass("select-block");
     });
 
     it("marks itself invalid for the error status", () => {
@@ -202,7 +194,7 @@ describe("Select", () => {
         const select = screen.getByTestId("select");
         expect(select).toHaveAttribute("aria-invalid", "true");
         expect(select.parentElement).toHaveAttribute("data-validation", "error");
-        expect(select.parentElement).toHaveClass("border-border-danger-emphasis");
+        expect(select.parentElement).toHaveClass("select-error");
     });
 
     it("does not mark itself invalid for the success status", () => {
@@ -225,7 +217,7 @@ describe("Select", () => {
         const select = screen.getByTestId("select");
         expect(select).toBeDisabled();
         expect(select.parentElement).toHaveAttribute("data-disabled", "true");
-        expect(select.parentElement).toHaveClass("[&_select]:cursor-not-allowed");
+        expect(select.parentElement).toHaveClass("select-disabled");
     });
 
     it("leaves the state attributes unset by default", () => {

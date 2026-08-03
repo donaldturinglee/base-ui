@@ -11,20 +11,17 @@ const icons = {
 } satisfies Record<RadioGroupValidationStatus, React.ElementType>;
 
 const classes = {
-    icon: "shrink-0 mt-[var(--base-size-2)] me-[var(--base-size-4)] size-[var(--base-size-12)]",
+    icon: "radio-group-validation-icon",
 };
 
-const radioGroupValidationVariants = cva(
-    "flex [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [&_a]:underline [&_a]:[color:currentColor]",
-    {
-        variants: {
-            variant: {
-                success: "text-foreground-success",
-                error: "text-foreground-danger",
-            } satisfies Record<RadioGroupValidationStatus, string>,
-        },
+const radioGroupValidationVariants = cva("radio-group-validation", {
+    variants: {
+        variant: {
+            success: "radio-group-validation-success",
+            error: "radio-group-validation-error",
+        } satisfies Record<RadioGroupValidationStatus, string>,
     },
-);
+});
 
 function RadioGroupValidation(
     props: RadioGroupValidationProps,

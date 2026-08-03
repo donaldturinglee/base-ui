@@ -4,26 +4,19 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import ProgressBarItem from "./ProgressBarItem";
 import type { ProgressBarProps, ProgressBarSize } from "./ProgressBar.types";
 
-const progressBarVariants = cva(
-    [
-        "flex overflow-hidden gap-[var(--base-size-2)] bg-[var(--progress-bar-track-background-color)] rounded-[var(--border-radius-small)] outline-solid outline-[length:var(--border-width-thin)] outline-[color:var(--progress-bar-track-border-color)] -outline-offset-1",
-        "forced-colors:[forced-color-adjust:none] forced-colors:bg-[color:CanvasText]",
-    ],
-    {
-        variants: {
-            // The track heights are 5px, 8px and 10px, which the base size scale has no steps for
-            size: {
-                small: "h-[0.3125rem]",
-                medium: "h-[0.5rem]",
-                large: "h-[0.625rem]",
-            } satisfies Record<ProgressBarSize, string>,
-            inline: {
-                true: "inline-flex",
-                false: "",
-            },
+const progressBarVariants = cva("progress-bar", {
+    variants: {
+        size: {
+            small: "progress-bar-small",
+            medium: "progress-bar-medium",
+            large: "progress-bar-large",
+        } satisfies Record<ProgressBarSize, string>,
+        inline: {
+            true: "progress-bar-inline",
+            false: "",
         },
     },
-);
+});
 
 function ProgressBar<As extends React.ElementType = "span">(
     props: ProgressBarProps<As>,

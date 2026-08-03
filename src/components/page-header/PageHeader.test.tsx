@@ -103,16 +103,14 @@ describe("PageHeader", () => {
             );
 
             expect(header()).toHaveAttribute("data-title-size-variant", "large");
-            expect(header()).toHaveClass("[--page-header-title-size:var(--text-title-size-large)]");
+            expect(header()).toHaveClass("page-header-title-large");
         });
 
         it("falls back to the medium size", () => {
             render(withTitle());
 
             expect(header()).toHaveAttribute("data-title-size-variant", "medium");
-            expect(header()).toHaveClass(
-                "[--page-header-title-size:var(--text-title-size-medium)]",
-            );
+            expect(header()).toHaveClass("page-header-title-medium");
         });
 
         it("reads the size through a fragment", () => {
@@ -148,12 +146,8 @@ describe("PageHeader", () => {
 
             expect(header()).toHaveAttribute("data-title-size-variant-narrow", "medium");
             expect(header()).toHaveAttribute("data-title-size-variant-regular", "large");
-            expect(header()).toHaveClass(
-                "max-medium:[--page-header-title-size:var(--text-title-size-medium)]",
-            );
-            expect(header()).toHaveClass(
-                "medium:max-xxlarge:[--page-header-title-size:var(--text-title-size-large)]",
-            );
+            expect(header()).toHaveClass("page-header-narrow-title-medium");
+            expect(header()).toHaveClass("page-header-regular-title-large");
         });
 
         it("says on the title area which size it asked for", () => {
@@ -171,14 +165,14 @@ describe("PageHeader", () => {
     describe("the line under the header", () => {
         it("draws no line unless it is asked for", () => {
             render(withTitle());
-            expect(header()).not.toHaveClass("border-b-border-default");
+            expect(header()).not.toHaveClass("page-header-border");
         });
 
         it("draws a line where there is no navigation", () => {
             render(withTitle({ hasBorder: true }));
 
             expect(header()).toHaveAttribute("data-has-border", "");
-            expect(header()).toHaveClass("border-b-border-default");
+            expect(header()).toHaveClass("page-header-border");
         });
 
         it("leaves the line off where a navigation is showing", () => {
@@ -192,7 +186,7 @@ describe("PageHeader", () => {
             );
 
             expect(header()).toHaveAttribute("data-has-navigation", "");
-            expect(header()).not.toHaveClass("border-b-border-default");
+            expect(header()).not.toHaveClass("page-header-border");
         });
 
         it("draws the line only where the navigation is hidden", () => {
@@ -207,8 +201,8 @@ describe("PageHeader", () => {
                 </PageHeader>,
             );
 
-            expect(header()).toHaveClass("max-medium:border-b-border-default");
-            expect(header()).not.toHaveClass("border-b-border-default");
+            expect(header()).toHaveClass("page-header-border-narrow");
+            expect(header()).not.toHaveClass("page-header-border");
         });
 
         it("reads a navigation through a fragment", () => {
@@ -244,7 +238,7 @@ describe("PageHeader", () => {
                 </PageHeader>,
             );
 
-            expect(part("Description")).toHaveClass("medium:max-xxlarge:hidden");
+            expect(part("Description")).toHaveClass("hidden-regular");
             expect(part("Description")).toHaveAttribute("data-hidden", "regular");
         });
 

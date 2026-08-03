@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-start-1 row-start-2 flex items-center pe-[var(--base-size-8)] h-[calc(var(--page-header-title-line-height)_*_1em)]",
+    root: "page-header-leading-action",
 };
 
 // Something to press before the title, which opens the sidebar the page stands in. A narrow

@@ -14,17 +14,14 @@ import SelectPanelSearchInput from "./SelectPanelSearchInput";
 import type { SelectPanelHeaderProps } from "./SelectPanel.types";
 
 const classes = {
-    root: "flex shrink-0 flex-col p-[var(--base-size-8)] border-solid border-b-[length:var(--border-width-thin)] border-b-border-default",
-    // The title and the buttons stand either end of the row. A description puts a second line
-    // under the title, so the buttons keep to the top rather than centring against both
-    content: "flex items-center justify-between data-[has-description]:items-start",
-    contentWithSearchInput: "mb-[var(--base-size-8)]",
-    titleRow: "flex",
-    title: "ms-[var(--base-size-8)] data-[has-description]:mt-[var(--base-size-2)] data-[has-back]:ms-[var(--base-size-4)]",
-    heading:
-        "[font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
-    description: "block [font-size:var(--text-body-size-small)] text-foreground-muted",
-    actions: "flex",
+    root: "select-panel-header",
+    content: "select-panel-header-content",
+    contentWithSearchInput: "select-panel-header-content-with-search",
+    titleRow: "select-panel-header-title-row",
+    title: "select-panel-header-title",
+    heading: "select-panel-header-heading",
+    description: "select-panel-header-description",
+    actions: "select-panel-header-actions",
 };
 
 const slotsConfig = {

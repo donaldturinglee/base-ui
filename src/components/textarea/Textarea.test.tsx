@@ -82,15 +82,15 @@ describe("Textarea", () => {
         render(<Textarea aria-label="Notes" />);
         const textarea = screen.getByRole("textbox");
         expect(textarea).toHaveAttribute("data-resize", "both");
-        expect(textarea).toHaveClass("resize");
+        expect(textarea).toHaveClass("textarea-resize-both");
     });
 
     it("respects the resize prop", () => {
         const resizes = {
-            none: "resize-none",
-            both: "resize",
-            horizontal: "resize-x",
-            vertical: "resize-y",
+            none: "textarea-resize-none",
+            both: "textarea-resize-both",
+            horizontal: "textarea-resize-horizontal",
+            vertical: "textarea-resize-vertical",
         } as const;
 
         for (const [resize, expected] of Object.entries(resizes)) {
@@ -106,26 +106,26 @@ describe("Textarea", () => {
 
     it("stops a disabled field being resized", () => {
         render(<Textarea aria-label="Notes" disabled />);
-        expect(screen.getByRole("textbox")).toHaveClass("disabled:resize-none");
+        expect(screen.getByRole("textbox")).toHaveClass("textarea");
     });
 
     it("fills its container when block", () => {
         render(<Textarea aria-label="Notes" block />);
         expect(field()).toHaveAttribute("data-block", "true");
-        expect(field()).toHaveClass("w-full");
+        expect(field()).toHaveClass("textarea-field-block");
     });
 
     it("recesses itself when contrast", () => {
         render(<Textarea aria-label="Notes" contrast />);
         expect(field()).toHaveAttribute("data-contrast", "true");
-        expect(field()).toHaveClass("bg-background-inset");
+        expect(field()).toHaveClass("textarea-field-contrast");
     });
 
     it("disables the control and dims the field", () => {
         render(<Textarea aria-label="Notes" disabled />);
         expect(screen.getByRole("textbox")).toBeDisabled();
         expect(field()).toHaveAttribute("data-disabled", "true");
-        expect(field()).toHaveClass("[&_textarea]:cursor-not-allowed");
+        expect(field()).toHaveClass("textarea-field-disabled");
     });
 
     it("marks itself required for assistive technology", () => {

@@ -1,0 +1,29 @@
+@layer components {
+    .counter-label {
+        display: inline-block;
+        padding-block: var(--base-size-2);
+        padding-inline: var(--base-size-6);
+        line-height: 1;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--counter-border-color);
+        border-radius: var(--border-radius-full);
+
+        /* A counter with nothing to count takes up no space */
+        &:empty {
+            display: none;
+        }
+    }
+
+    .counter-label-primary {
+        color: var(--foreground-color-on-emphasis);
+        background-color: var(--counter-background-color-emphasis);
+    }
+
+    .counter-label-secondary {
+        color: var(--foreground-color-default);
+        background-color: var(--counter-background-color-muted);
+    }
+}

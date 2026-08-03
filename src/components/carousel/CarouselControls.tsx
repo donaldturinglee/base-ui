@@ -9,7 +9,7 @@ import CarouselPreviousButton from "./CarouselPreviousButton";
 import type { CarouselControlsProps } from "./Carousel.types";
 
 const classes = {
-    root: "flex items-center justify-center gap-[var(--base-size-8)]",
+    root: "carousel-controls",
 };
 
 // The bar beneath the run. Left empty it holds the steps, the dots and, where the run may move

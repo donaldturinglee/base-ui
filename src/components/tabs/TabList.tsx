@@ -6,11 +6,8 @@ import { useTabList } from "./useTabList";
 import type { TabListProps } from "./Tabs.types";
 
 const classes = {
-    // The rule runs the length of the tablist, and each tab draws over its own part of it
-    root: "group/tablist flex border-solid border-0 border-b-[length:var(--border-width-thin)] border-b-border-muted",
-    // Standing beside the panels rather than above them turns the rule onto the other side
-    vertical:
-        "flex-col border-b-0 border-e-[length:var(--border-width-thin)] border-e-border-muted",
+    root: "tab-list",
+    vertical: "tab-list-vertical",
 };
 
 // The row the tabs stand in, and what answers the keys that move between them

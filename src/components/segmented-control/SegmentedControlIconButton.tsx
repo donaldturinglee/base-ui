@@ -3,11 +3,9 @@ import SegmentedControlSegment, { renderSegmentVisual } from "./SegmentedControl
 import type { SegmentedControlIconButtonProps } from "./SegmentedControl.types";
 
 const classes = {
-    // An icon segment is as wide as the control says, which is a square while the row takes
-    // only the room it needs and an even share of it once the row fills its container
-    button: "w-[var(--segment-icon-width)]",
-    visual: "flex shrink-0 items-center text-foreground-muted",
-    visualDisabled: "text-foreground-disabled",
+    button: "segmented-control-icon-button",
+    visual: "segmented-control-icon-visual",
+    visualDisabled: "segmented-control-visual-disabled",
 };
 
 // One segment of the control, carrying an icon in place of a label. The name it is given is

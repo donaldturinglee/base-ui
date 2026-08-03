@@ -16,109 +16,77 @@ import BannerTitle from "./BannerTitle";
 import type { BannerLayout, BannerProps, BannerVariant } from "./Banner.types";
 
 const classes = {
-    // The banner responds to the room it is given rather than to the viewport, so it is its
-    // own query container. The three columns hold the icon, the content and the dismiss
-    // button
-    container: "@container/banner",
-    actions: "flex items-center gap-x-[var(--base-size-12)] my-[var(--base-size-2)]",
-    actionsInline: "flex-none",
-    // Where the actions drop below the content they are given room beneath them
-    actionsStacked: "mb-[var(--base-size-6)]",
+    container: "banner-container",
+    actions: "banner-actions",
+    actionsInline: "banner-actions-inline",
+    actionsStacked: "banner-actions-stacked",
     order: {
-        shown: "flex",
-        hidden: "hidden",
-        inlineLeading: "hidden max-medium:flex",
-        inlineTrailing: "flex max-medium:hidden",
-        responsiveLeading: "hidden @max-[500px]/banner:flex",
-        responsiveTrailing: "flex @max-[500px]/banner:hidden",
+        shown: "banner-actions-shown",
+        hidden: "banner-actions-hidden",
+        inlineLeading: "banner-actions-inline-leading",
+        inlineTrailing: "banner-actions-inline-trailing",
+        responsiveLeading: "banner-actions-responsive-leading",
+        responsiveTrailing: "banner-actions-responsive-trailing",
     },
     hidden: "sr-only",
 };
 
-const bannerVariants = cva(
-    "grid grid-cols-[auto_minmax(0,1fr)_auto] items-start rounded-[var(--border-radius-medium)] border-solid border-[length:var(--border-width-thin)] bg-[var(--banner-background-color)] border-[color:var(--banner-border-color)]",
-    {
-        variants: {
-            layout: {
-                default: "p-[var(--base-size-8)]",
-                compact: "p-[var(--base-size-4)]",
-            } satisfies Record<BannerLayout, string>,
-            variant: {
-                critical:
-                    "[--banner-background-color:var(--background-color-danger-muted)] [--banner-border-color:var(--border-color-danger-muted)] [--banner-icon-color:var(--foreground-color-danger)]",
-                info: "[--banner-background-color:var(--background-color-accent-muted)] [--banner-border-color:var(--border-color-accent-muted)] [--banner-icon-color:var(--foreground-color-accent)]",
-                success:
-                    "[--banner-background-color:var(--background-color-success-muted)] [--banner-border-color:var(--border-color-success-muted)] [--banner-icon-color:var(--foreground-color-success)]",
-                upsell: "[--banner-background-color:var(--background-color-upsell-muted)] [--banner-border-color:var(--border-color-upsell-muted)] [--banner-icon-color:var(--foreground-color-upsell)]",
-                warning:
-                    "[--banner-background-color:var(--background-color-attention-muted)] [--banner-border-color:var(--border-color-attention-muted)] [--banner-icon-color:var(--foreground-color-attention)]",
-            } satisfies Record<BannerVariant, string>,
-            // A flush banner spans whatever holds it, so the edges it meets are given up
-            flush: {
-                true: "border-x-0 rounded-none",
-                false: "",
-            },
+const bannerVariants = cva("banner", {
+    variants: {
+        layout: {
+            default: "banner-default",
+            compact: "banner-compact",
+        } satisfies Record<BannerLayout, string>,
+        variant: {
+            critical: "banner-critical",
+            info: "banner-info",
+            success: "banner-success",
+            upsell: "banner-upsell",
+            warning: "banner-warning",
+        } satisfies Record<BannerVariant, string>,
+        flush: {
+            true: "banner-flush",
+            false: "",
         },
     },
-);
+});
 
-const bannerIconVariants = cva(
-    // The icon stands as tall as the line box of the action buttons beside it
-    "grid place-items-center p-[var(--base-size-8)] [&_svg]:h-[var(--base-size-20)] [&_svg]:[color:var(--banner-icon-color)]",
-    {
-        variants: {
-            // With nothing but a description to sit beside, the icon comes down to the height of
-            // a line of text
-            tight: {
-                true: "[&_svg]:h-[var(--base-size-16)]",
-                false: "",
-            },
+const bannerIconVariants = cva("banner-icon", {
+    variants: {
+        tight: {
+            true: "banner-icon-tight",
+            false: "",
         },
     },
-);
+});
 
-const bannerBodyVariants = cva(
-    "flex flex-wrap items-start justify-between gap-[var(--base-size-4)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
-    {
-        variants: {
-            actions: {
-                // Where the actions drop below the content there is only ever one column
-                stacked: "flex-col flex-nowrap",
-                // An inline banner keeps its actions beside the content until the viewport is
-                // narrow
-                inline: "flex-nowrap max-medium:flex-col",
-                // Otherwise it is the banner's own width that decides
-                responsive: "@max-[500px]/banner:flex-col @max-[500px]/banner:flex-nowrap",
-            },
+const bannerBodyVariants = cva("banner-body", {
+    variants: {
+        actions: {
+            stacked: "banner-body-stacked",
+            inline: "banner-body-inline",
+            responsive: "banner-body-responsive",
         },
     },
-);
+});
 
-const bannerContentVariants = cva(
-    "grid gap-y-[var(--base-size-4)] col-start-1 my-[var(--base-size-8)] small:flex-1",
-    {
-        variants: {
-            // A banner with no visible title and nothing to act on is only a line of text, so it
-            // sits closer to its edges
-            tight: {
-                true: "my-[var(--base-size-6)]",
-                false: "",
-            },
+const bannerContentVariants = cva("banner-content", {
+    variants: {
+        tight: {
+            true: "banner-content-tight",
+            false: "",
         },
     },
-);
+});
 
-const bannerDismissVariants = cva(
-    "grid place-items-center p-[var(--base-size-8)] ms-[var(--base-size-4)] [&_svg]:[color:var(--banner-icon-color)]",
-    {
-        variants: {
-            withActions: {
-                true: "my-[var(--base-size-2)]",
-                false: "",
-            },
+const bannerDismissVariants = cva("banner-dismiss", {
+    variants: {
+        withActions: {
+            true: "banner-dismiss-with-actions",
+            false: "",
         },
     },
-);
+});
 
 const iconForVariant = {
     critical: ErrorCircleRegular,

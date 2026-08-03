@@ -319,30 +319,27 @@ describe("Tabs", () => {
     it("merges a custom className onto every part", () => {
         render(
             <Tabs defaultValue="a">
-                <Tabs.List aria-label="Sections" className="list">
-                    <Tabs.Tab value="a" className="tab">
+                <Tabs.List aria-label="Sections" className="custom-list">
+                    <Tabs.Tab value="a" className="custom-tab">
                         Tab A
                     </Tabs.Tab>
                 </Tabs.List>
-                <Tabs.Panel value="a" className="panel">
+                <Tabs.Panel value="a" className="custom-panel">
                     Panel A
                 </Tabs.Panel>
             </Tabs>,
         );
 
-        expect(tablist()).toHaveClass("list");
-        expect(tab("Tab A")).toHaveClass("tab");
-        expect(panel("Panel A")).toHaveClass("panel");
+        expect(tablist()).toHaveClass("custom-list");
+        expect(tab("Tab A")).toHaveClass("custom-tab");
+        expect(panel("Panel A")).toHaveClass("custom-panel");
     });
 
     it("draws the line under the selected tab and under no other", () => {
         renderTabs();
-        expect(tab("Tab A")).toHaveClass(
-            "border-b-[color:var(--underline-nav-border-color-active)]",
-        );
+        expect(tab("Tab A")).toHaveClass("tab-selected");
         // The line the tab carries when it is not the selected one comes off with it
-        expect(tab("Tab A")).not.toHaveClass("border-b-transparent");
-        expect(tab("Tab B")).toHaveClass("border-b-transparent");
+        expect(tab("Tab B")).not.toHaveClass("tab-selected");
     });
 
     it("refuses to stand outside of a Tabs", () => {

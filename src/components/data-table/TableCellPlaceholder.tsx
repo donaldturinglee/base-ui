@@ -5,7 +5,7 @@ import { Text } from "../text";
 import type { TableCellPlaceholderProps } from "./DataTable.types";
 
 const classes = {
-    root: "text-foreground-muted",
+    root: "data-table-cell-placeholder",
 };
 
 // Stands in a cell that has nothing to show, so an empty column still reads as deliberate

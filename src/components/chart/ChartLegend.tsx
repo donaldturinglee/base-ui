@@ -4,12 +4,9 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { ChartLegendProps } from "./Chart.types";
 
 const classes = {
-    root: "flex flex-wrap items-center gap-x-[var(--base-size-16)] gap-y-[var(--base-size-4)] m-0 list-none p-0",
-    item: "flex items-center gap-[var(--base-size-6)] text-foreground-muted [font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
-    // The colour is carried by the swatch beside the name rather than by the name itself. A
-    // light hue is unreadable as text, and identity that lives only in the text colour is
-    // identity a colour-blind reader cannot get at
-    swatch: "size-[var(--base-size-8)] shrink-0 rounded-[var(--border-radius-full)]",
+    root: "chart-legend",
+    item: "chart-legend-item",
+    swatch: "chart-swatch",
 };
 
 // What each series is called, beside the colour it is drawn in. It stands wherever there is

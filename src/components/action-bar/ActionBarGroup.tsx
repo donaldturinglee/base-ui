@@ -5,9 +5,7 @@ import { useActionBarItem } from "./useActionBarItem";
 import type { ActionBarGroupProps } from "./ActionBar.types";
 
 const classes = {
-    // The items of a group stay together, so they are carried into the overflow menu all at
-    // once rather than one at a time
-    root: "flex shrink-0 items-center gap-[var(--base-size-2)]",
+    root: "action-bar-group",
     overflowing: "invisible",
 };
 

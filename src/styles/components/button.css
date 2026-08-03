@@ -1,0 +1,437 @@
+@layer components {
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--base-size-8);
+        min-width: max-content;
+        height: var(--control-medium-size);
+        padding-block: 0;
+        padding-inline: var(--control-medium-padding-inline-normal);
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
+        appearance: none;
+        background-color: transparent;
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--button-default-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        color: var(--button-default-foreground-color-rest);
+        font-family: inherit;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-medium);
+        transition-property: color, fill, background-color, border-color;
+        transition-duration: 80ms;
+        transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+
+        &:active {
+            transition-property: none;
+        }
+
+        &[href] {
+            display: inline-flex;
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+
+        @media (forced-colors: active) {
+            &:focus {
+                outline: var(--border-width-thin) solid transparent;
+            }
+        }
+    }
+
+    .button-small {
+        height: var(--control-small-size);
+        padding-inline: var(--control-small-padding-inline-condensed);
+        gap: var(--control-small-gap);
+        font-size: var(--text-body-size-small);
+    }
+
+    .button-large {
+        height: var(--control-large-size);
+        padding-inline: var(--control-large-padding-inline-spacious);
+        gap: var(--control-large-gap);
+    }
+
+    /* The link variant drops the shape of a button and reads as text */
+    .button-link-shape {
+        display: inline-flex;
+        min-width: fit-content;
+        height: unset;
+        padding: 0;
+        text-align: left;
+        border: 0;
+        border-radius: 0;
+        font-size: inherit;
+
+        &:focus-visible {
+            outline-offset: var(--base-size-2);
+        }
+    }
+
+    [data-a11y-link-underlines="true"] .button-link-underlines {
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .button-default {
+        background-color: var(--button-default-background-color-rest);
+        box-shadow: var(--button-default-shadow-resting);
+        color: var(--button-default-foreground-color-rest);
+
+        &[aria-expanded="true"] {
+            background-color: var(--button-default-background-color-active);
+            border-color: var(--button-default-border-color-active);
+        }
+
+        &:hover {
+            background-color: var(--button-default-background-color-hover);
+            border-color: var(--button-default-border-color-hover);
+        }
+
+        &:active {
+            background-color: var(--button-default-background-color-active);
+            border-color: var(--button-default-border-color-active);
+        }
+    }
+
+    .button-default-disabled {
+        background-color: var(--button-default-background-color-disabled);
+        border-color: var(--button-default-border-color-disabled);
+        color: var(--control-foreground-color-disabled);
+    }
+
+    .button-primary {
+        background-color: var(--button-primary-background-color-rest);
+        border-color: var(--button-primary-border-color-rest);
+        box-shadow: var(--shadow-resting-small);
+        color: var(--button-primary-foreground-color-rest);
+
+        &[aria-expanded="true"] {
+            background-color: var(--button-primary-background-color-active);
+            box-shadow: var(--button-primary-shadow-selected);
+        }
+
+        &:hover {
+            background-color: var(--button-primary-background-color-hover);
+            border-color: var(--button-primary-border-color-hover);
+        }
+
+        &:active {
+            background-color: var(--button-primary-background-color-active);
+            box-shadow: var(--button-primary-shadow-selected);
+        }
+
+        /* The ring stands on the button's own fill rather than on the page behind it */
+        &:focus-visible {
+            outline-color: var(--foreground-color-on-emphasis);
+        }
+    }
+
+    .button-primary-disabled {
+        background-color: var(--button-primary-background-color-disabled);
+        border-color: var(--button-primary-border-color-disabled);
+        color: var(--button-primary-foreground-color-disabled);
+    }
+
+    .button-danger {
+        background-color: var(--button-danger-background-color-rest);
+        box-shadow: var(--button-default-shadow-resting);
+        color: var(--button-danger-foreground-color-rest);
+
+        &[aria-expanded="true"] {
+            background-color: var(--button-danger-background-color-active);
+            border-color: var(--button-danger-border-color-active);
+            box-shadow: var(--button-danger-shadow-selected);
+            color: var(--button-danger-foreground-color-active);
+        }
+
+        &:hover {
+            background-color: var(--button-danger-background-color-hover);
+            border-color: var(--button-danger-border-color-hover);
+            box-shadow: var(--shadow-resting-small);
+            color: var(--button-danger-foreground-color-hover);
+        }
+
+        &:active {
+            background-color: var(--button-danger-background-color-active);
+            border-color: var(--button-danger-border-color-active);
+            box-shadow: var(--button-danger-shadow-selected);
+            color: var(--button-danger-foreground-color-active);
+        }
+    }
+
+    .button-danger-disabled {
+        background-color: var(--button-danger-background-color-disabled);
+        border-color: var(--button-default-border-color-disabled);
+        color: var(--button-danger-foreground-color-disabled);
+    }
+
+    .button-invisible {
+        border-color: var(--button-invisible-border-color-rest);
+        box-shadow: none;
+        color: var(--button-default-foreground-color-rest);
+
+        &[aria-expanded="true"] {
+            background-color: var(--button-invisible-background-color-active);
+        }
+
+        &:hover {
+            background-color: var(--button-invisible-background-color-hover);
+            border-color: var(--button-invisible-border-color-hover);
+        }
+
+        &:active {
+            background-color: var(--button-invisible-background-color-active);
+        }
+    }
+
+    .button-invisible-disabled {
+        background-color: var(--button-invisible-background-color-disabled);
+        border-color: var(--button-invisible-border-color-disabled);
+        color: var(--button-invisible-foreground-color-disabled);
+    }
+
+    .button-link {
+        color: var(--foreground-color-accent);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .button-link-disabled {
+        background-color: transparent;
+        border-color: transparent;
+        color: var(--control-foreground-color-disabled);
+    }
+
+    .button-inactive {
+        cursor: auto;
+        background-color: var(--button-inactive-background-color);
+        border-color: var(--button-inactive-background-color);
+        box-shadow: none;
+        color: var(--button-inactive-foreground-color);
+    }
+
+    .button-inactive-link {
+        cursor: auto;
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        color: var(--button-inactive-foreground-color);
+    }
+
+    /* An icon-only button has no visual wrapper to colour, so the icon follows the button
+       itself */
+    .button-icon-tone-default {
+        color: var(--foreground-color-muted);
+    }
+
+    .button-icon-tone-invisible {
+        color: var(--button-invisible-icon-color-rest);
+    }
+
+    .button-disabled {
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    .button-block {
+        width: 100%;
+    }
+
+    .button-label-wrap {
+        min-width: fit-content;
+        height: unset;
+    }
+
+    .button-label-wrap-small {
+        min-height: var(--control-small-size);
+    }
+
+    .button-label-wrap-medium {
+        min-height: var(--control-medium-size);
+    }
+
+    .button-label-wrap-large {
+        min-height: var(--control-large-size);
+    }
+
+    /* A count sitting beside an icon has no label to pad around */
+    .button-icon-only-counter-small {
+        padding-inline: var(--control-xsmall-padding-inline-condensed);
+    }
+
+    .button-icon-only-counter-medium {
+        padding-inline: var(--control-medium-padding-inline-condensed);
+    }
+
+    .button-icon-only-counter-large {
+        padding-inline: var(--control-large-padding-inline-normal);
+    }
+
+    /* The content sits on its own grid so the label keeps its place as visuals come and go */
+    .button-content {
+        display: grid;
+        grid-template-areas: "leadingVisual text trailingVisual";
+        grid-template-columns: min-content minmax(0, auto) min-content;
+        flex: 1 0 auto;
+        align-items: center;
+        align-content: center;
+    }
+
+    .button-content-gap-small {
+        & > *:not(:last-child) {
+            margin-right: var(--control-small-gap);
+        }
+    }
+
+    .button-content-gap-medium {
+        & > *:not(:last-child) {
+            margin-right: var(--base-size-8);
+        }
+    }
+
+    .button-content-gap-large {
+        & > *:not(:last-child) {
+            margin-right: var(--control-large-gap);
+        }
+    }
+
+    .button-label-wrap-content-small {
+        flex: 1 1 auto;
+        align-self: stretch;
+        padding-block: calc(var(--control-small-padding-block) - var(--base-size-2));
+    }
+
+    .button-label-wrap-content-medium {
+        flex: 1 1 auto;
+        align-self: stretch;
+        padding-block: calc(var(--control-medium-padding-block) - var(--base-size-2));
+    }
+
+    .button-label-wrap-content-large {
+        flex: 1 1 auto;
+        align-self: stretch;
+        padding-block: calc(var(--control-large-padding-block) - var(--base-size-2));
+    }
+
+    .button-label {
+        grid-area: text;
+        white-space: nowrap;
+    }
+
+    .button-label-small {
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .button-label-medium,
+    .button-label-large {
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .button-label-wrap-label {
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .button-visual {
+        display: flex;
+        flex-shrink: 0;
+        pointer-events: none;
+    }
+
+    /* Visuals take their colour from the variant, and fall back to the button's own colour
+       once it can no longer be used */
+    .button-visual-default {
+        color: var(--foreground-color-muted);
+    }
+
+    .button-visual-primary {
+        color: var(--button-primary-foreground-color-rest);
+    }
+
+    .button-visual-danger {
+        color: var(--button-danger-icon-color-rest);
+    }
+
+    .button:hover .button-visual-danger,
+    .button:active .button-visual-danger {
+        color: var(--button-danger-icon-color-hover);
+    }
+
+    .button-visual-invisible {
+        color: var(--button-invisible-icon-color-rest);
+    }
+
+    .button-visual-link {
+        color: var(--foreground-color-accent);
+    }
+
+    .button-visual-muted {
+        color: inherit;
+    }
+
+    .button-leading-visual {
+        grid-area: leadingVisual;
+    }
+
+    .button-trailing-visual {
+        grid-area: trailingVisual;
+    }
+
+    .button-trailing-action {
+        margin-right: calc(-1 * var(--base-size-4));
+    }
+
+    /* With nothing to swap out, the spinner takes the label's place on the grid */
+    .button-standalone-spinner {
+        grid-area: text;
+        place-self: center;
+    }
+
+    /* The counter is named from the button so that what it says here stands over the counter
+       label it is drawn as */
+    .button .button-counter-default {
+        background-color: var(--button-counter-default-background-color-rest);
+    }
+
+    .button .button-counter-primary {
+        background-color: var(--button-counter-primary-background-color-rest);
+        color: var(--button-primary-foreground-color-rest);
+    }
+
+    .button .button-counter-danger {
+        background-color: var(--button-counter-danger-background-color-rest);
+        color: var(--button-counter-danger-foreground-color-rest);
+    }
+
+    .button:hover .button-counter-danger,
+    .button:active .button-counter-danger {
+        background-color: var(--button-counter-danger-background-color-hover);
+        color: var(--button-counter-danger-foreground-color-hover);
+    }
+
+    .button .button-counter-invisible {
+        background-color: var(--button-counter-invisible-background-color-rest);
+    }
+
+    .button .button-counter-muted {
+        color: inherit;
+    }
+
+    .button .button-counter-muted-danger {
+        background-color: var(--button-counter-danger-background-color-disabled);
+        color: var(--button-counter-danger-foreground-color-disabled);
+    }
+}

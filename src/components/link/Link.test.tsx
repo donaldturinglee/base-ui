@@ -27,30 +27,24 @@ describe("Link", () => {
 
     it("uses the accent foreground colour and underlines on hover", () => {
         render(<Link data-testid="link" />);
-        const link = screen.getByTestId("link");
-        expect(link).toHaveClass("text-foreground-accent");
-        expect(link).toHaveClass("no-underline");
-        expect(link).toHaveClass("hover:underline");
+        expect(screen.getByTestId("link")).toHaveClass("link");
     });
 
     it("resets the button styles when rendering a button element", () => {
         render(<Link as="button" data-testid="link" />);
-        expect(screen.getByTestId("link")).toHaveClass("[&:is(button)]:appearance-none");
+        expect(screen.getByTestId("link")).toHaveClass("link");
     });
 
     it("applies the muted colour when muted", () => {
         render(<Link muted data-testid="link" />);
         const link = screen.getByTestId("link");
         expect(link).toHaveAttribute("data-muted", "true");
-        expect(link).toHaveClass("text-foreground-muted");
-        expect(link).toHaveClass("hover:text-foreground-accent");
+        expect(link).toHaveClass("link-muted");
     });
 
     it("drops the default hover underline when muted", () => {
         render(<Link muted data-testid="link" />);
-        const link = screen.getByTestId("link");
-        expect(link).toHaveClass("hover:no-underline");
-        expect(link).not.toHaveClass("hover:underline");
+        expect(screen.getByTestId("link")).toHaveClass("link-muted");
     });
 
     it("does not leak the muted prop onto the element", () => {
@@ -62,8 +56,7 @@ describe("Link", () => {
         render(<Link inline data-testid="link" />);
         const link = screen.getByTestId("link");
         expect(link).toHaveAttribute("data-inline", "true");
-        expect(link).toHaveClass("[[data-a11y-link-underlines='true']_&]:underline");
-        expect(link).toHaveClass("[[data-a11y-link-underlines='true']_&]:hover:no-underline");
+        expect(link).toHaveClass("link-inline");
     });
 
     it("does not leak the inline prop onto the element", () => {

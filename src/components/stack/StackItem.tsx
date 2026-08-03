@@ -3,22 +3,18 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { StackItemProps } from "./Stack.types";
 
-const stackItemVariants = cva(
-    // `flex-initial` keeps items at their own size until `grow` or `shrink` opts out
-    "flex-initial min-w-0",
-    {
-        variants: {
-            grow: {
-                true: "grow",
-                false: "grow-0",
-            },
-            shrink: {
-                true: "shrink",
-                false: "shrink-0",
-            },
+const stackItemVariants = cva("stack-item", {
+    variants: {
+        grow: {
+            true: "stack-item-grow",
+            false: "stack-item-no-grow",
+        },
+        shrink: {
+            true: "stack-item-shrink",
+            false: "stack-item-no-shrink",
         },
     },
-);
+});
 
 function StackItem<As extends React.ElementType = "div">(
     props: StackItemProps<As>,

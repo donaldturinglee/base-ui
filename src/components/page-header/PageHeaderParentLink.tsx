@@ -7,7 +7,7 @@ import { getHiddenAttribute, getHiddenClassName, getHiddenViewports } from "./vi
 import type { PageHeaderParentLinkProps } from "./PageHeader.types";
 
 const classes = {
-    root: "order-1 flex items-center gap-[var(--stack-gap-condensed)]",
+    root: "page-header-parent-link",
 };
 
 // Goes back up a level, for a reader who has no breadcrumbs to climb. It stands in the

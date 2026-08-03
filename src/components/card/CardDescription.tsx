@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { CardDescriptionProps } from "./Card.types";
 
 const classes = {
-    root: "m-0 text-body-medium text-foreground-muted",
+    root: "card-description text-body-medium",
 };
 
 function CardDescription(

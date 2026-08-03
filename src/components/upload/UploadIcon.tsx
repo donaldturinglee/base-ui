@@ -5,9 +5,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { UploadIconProps } from "./Upload.types";
 
 const classes = {
-    // The mark is sized by the control it stands in, so a small drop zone is not led by an
-    // icon drawn for a large one
-    root: "flex items-center justify-center [color:var(--upload-muted-color,var(--foreground-color-muted))] [&>svg]:size-[var(--upload-icon-size,var(--base-size-24))]",
+    root: "upload-icon",
 };
 
 function UploadIcon(

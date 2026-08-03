@@ -1,0 +1,67 @@
+@layer components {
+    /* A `kbd` is drawn as a key of its own, in a face of its own. Here the box is the chord's
+       to draw, so what is left is stripped back to the text it stands in */
+    .keybinding-hint {
+        position: relative;
+        display: inline-block;
+        padding: 0;
+        overflow: visible;
+        vertical-align: baseline;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: unset;
+    }
+
+    .keybinding-hint-chord {
+        display: inline-flex;
+        justify-content: center;
+        gap: 0.5ch;
+        overflow: hidden;
+        padding: var(--base-size-4);
+        vertical-align: baseline;
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-radius: var(--border-radius-default);
+        box-shadow: none;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-normal);
+        line-height: 10px;
+    }
+
+    .keybinding-hint-chord-normal {
+        background-color: var(--background-color-transparent);
+        border-color: var(--border-color-default);
+        color: var(--foreground-color-muted);
+    }
+
+    .keybinding-hint-chord-on-emphasis {
+        background-color: var(--counter-background-color-emphasis);
+        border-color: transparent;
+        color: var(--foreground-color-on-emphasis);
+    }
+
+    .keybinding-hint-chord-on-primary {
+        background-color: var(--button-primary-background-color-active);
+        border-color: transparent;
+        color: var(--foreground-color-on-emphasis);
+    }
+
+    /* A width the box will not fall below keeps a run of single keys from being drawn as a run
+       of boxes of different sizes */
+    .keybinding-hint-chord-size-normal {
+        min-width: var(--base-size-20);
+    }
+
+    .keybinding-hint-chord-size-small {
+        min-width: var(--base-size-16);
+        padding: var(--base-size-2);
+        border-radius: var(--border-radius-small);
+        font-size: 11px;
+        line-height: var(--base-size-8);
+    }
+}

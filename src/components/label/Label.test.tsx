@@ -31,48 +31,43 @@ describe("Label", () => {
 
     it("applies the small size by default", () => {
         render(<Label>Default</Label>);
-        expect(screen.getByText("Default")).toHaveClass("h-[var(--base-size-20)]");
+        expect(screen.getByText("Default")).toHaveClass("label-small");
     });
 
     it("applies the requested size", () => {
         render(<Label size="large">Default</Label>);
-        const label = screen.getByText("Default");
-        expect(label).toHaveClass("h-[var(--base-size-24)]");
-        expect(label).toHaveClass("px-[var(--base-size-8)]");
+        expect(screen.getByText("Default")).toHaveClass("label-large");
     });
 
     it("applies the medium size", () => {
         render(<Label size="medium">Default</Label>);
         const label = screen.getByText("Default");
-        expect(label).toHaveClass("h-[var(--base-size-24)]");
-        expect(label).toHaveClass("px-[var(--base-size-6)]");
+        expect(label).toHaveClass("label-medium");
         expect(label).toHaveAttribute("data-size", "medium");
     });
 
     it("applies the default variant when no variant is provided", () => {
         render(<Label>Default</Label>);
         const label = screen.getByText("Default");
-        expect(label).toHaveClass("border-border-default");
-        expect(label).toHaveClass("text-foreground-default");
+        expect(label).toHaveClass("label");
+        expect(label).toHaveClass("label-default");
     });
 
     it("applies the requested variant", () => {
         render(<Label variant="danger">Danger</Label>);
-        expect(screen.getByText("Danger")).toHaveClass("border-border-danger-emphasis");
+        expect(screen.getByText("Danger")).toHaveClass("label-danger");
     });
 
     it("replaces the default foreground color when a colored variant is provided", () => {
         render(<Label variant="accent">Accent</Label>);
         const label = screen.getByText("Accent");
-        expect(label).toHaveClass("text-foreground-accent");
-        expect(label).not.toHaveClass("text-foreground-default");
+        expect(label).toHaveClass("label-accent");
+        expect(label).not.toHaveClass("label-default");
     });
 
     it("keeps the default foreground color for the primary variant", () => {
         render(<Label variant="primary">Primary</Label>);
-        const label = screen.getByText("Primary");
-        expect(label).toHaveClass("text-foreground-default");
-        expect(label).toHaveClass("border-foreground-default");
+        expect(screen.getByText("Primary")).toHaveClass("label-primary");
     });
 
     it("exposes the size through the data-size attribute", () => {

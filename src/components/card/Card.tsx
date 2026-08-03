@@ -19,54 +19,48 @@ import type {
 } from "./Card.types";
 
 const classes = {
-    content: "grid gap-[var(--stack-gap-condensed)]",
+    content: "card-content",
 };
 
-const cardVariants = cva(
-    "relative grid overflow-hidden [grid-auto-rows:max-content_auto] gap-[var(--stack-gap-normal)] bg-[var(--card-background-color)] border-solid border-[length:var(--border-width-thin)] border-border-default [box-shadow:var(--shadow-resting-small)]",
-    {
-        variants: {
-            borderRadius: {
-                medium: "rounded-[var(--border-radius-medium)]",
-                large: "rounded-[var(--border-radius-large)]",
-            } satisfies Record<CardBorderRadius, string>,
-            // A compact card lays its parts out in a row rather than stacking them
-            layout: {
-                default: "",
-                compact: "flex items-start gap-[var(--stack-gap-condensed)]",
-            } satisfies Record<CardLayout, string>,
-            padding: {
-                none: "p-0",
-                condensed: "p-[var(--stack-padding-condensed)]",
-                normal: "p-[var(--stack-padding-spacious)]",
-            } satisfies Record<CardPadding, string>,
-        },
-        // A compact card pulls its normal padding in by a step
-        compoundVariants: [
-            { layout: "compact", padding: "normal", class: "p-[var(--stack-padding-normal)]" },
-        ],
-    },
-);
-
-const cardHeaderVariants = cva("block w-full h-auto", {
+const cardVariants = cva("card", {
     variants: {
-        // An image runs to the card's edges, so the header cancels the padding around it
+        borderRadius: {
+            medium: "card-radius-medium",
+            large: "card-radius-large",
+        } satisfies Record<CardBorderRadius, string>,
+        layout: {
+            default: "",
+            compact: "card-compact",
+        } satisfies Record<CardLayout, string>,
+        padding: {
+            none: "card-padding-none",
+            condensed: "card-padding-condensed",
+            normal: "card-padding-normal",
+        } satisfies Record<CardPadding, string>,
+    },
+    compoundVariants: [
+        { layout: "compact", padding: "normal", class: "card-compact-padding-normal" },
+    ],
+});
+
+const cardHeaderVariants = cva("card-header", {
+    variants: {
         edgeToEdge: {
-            true: "mt-[calc(-1*var(--stack-padding-spacious))] mx-[calc(-1*var(--stack-padding-spacious))] w-[calc(100%+2*var(--stack-padding-spacious))]",
+            true: "card-header-edge-to-edge",
             false: "",
         },
         layout: {
             default: "",
-            compact: "flex-none w-auto",
+            compact: "card-header-compact",
         } satisfies Record<CardLayout, string>,
     },
 });
 
-const cardBodyVariants = cva("grid gap-[var(--stack-gap-normal)]", {
+const cardBodyVariants = cva("card-body", {
     variants: {
         layout: {
             default: "",
-            compact: "flex-auto",
+            compact: "card-body-compact",
         } satisfies Record<CardLayout, string>,
     },
 });

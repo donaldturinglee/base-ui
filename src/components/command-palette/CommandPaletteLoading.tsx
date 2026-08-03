@@ -5,9 +5,7 @@ import { Spinner } from "../spinner";
 import type { CommandPaletteLoadingProps } from "./CommandPalette.types";
 
 const classes = {
-    // The same box the message stands in, so what is being waited on and what came back of it
-    // take up the same room
-    root: "grid h-[var(--base-size-64)] shrink-0 place-items-center px-[var(--base-size-8)]",
+    root: "command-palette-loading",
 };
 
 // Stands in place of the list while the palette is waiting on items it has to fetch. It is

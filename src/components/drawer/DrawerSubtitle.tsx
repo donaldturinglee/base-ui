@@ -5,7 +5,7 @@ import { DrawerContext } from "./DrawerContext";
 import type { DrawerSubtitleProps } from "./Drawer.types";
 
 const classes = {
-    root: "m-0 mt-[var(--base-size-4)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] text-foreground-muted",
+    root: "drawer-subtitle",
 };
 
 function DrawerSubtitle<As extends React.ElementType = "h2">(

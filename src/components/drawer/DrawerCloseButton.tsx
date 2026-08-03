@@ -7,9 +7,7 @@ import { DrawerContext } from "./DrawerContext";
 import type { DrawerCloseButtonProps } from "./Drawer.types";
 
 const classes = {
-    // The button settles at the end of the header row whatever stands before it there, so a
-    // header built by hand does not have to give the title something to fill the row with
-    root: "ms-auto",
+    root: "drawer-close-button",
 };
 
 function DrawerCloseButton(

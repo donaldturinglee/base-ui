@@ -8,8 +8,8 @@ import { ActionListGroupContext } from "./ActionListGroupContext";
 import type { ActionListGroupProps } from "./ActionList.types";
 
 const classes = {
-    root: "list-none",
-    list: "list-none m-0 p-0",
+    root: "action-list-group",
+    list: "action-list-group-items",
 };
 
 const slotsConfig = {

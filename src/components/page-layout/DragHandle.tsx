@@ -9,12 +9,7 @@ import {
 import type { DragHandleProps } from "./PageLayout.types";
 
 const classes = {
-    // The handle reaches a little past the divider either side, so it can be taken hold of
-    // without having to be aimed at exactly
-    root: "absolute inset-y-0 -inset-x-[2px] cursor-col-resize touch-none select-none",
-    // The fill is drawn behind the handle rather than on it, so nothing set on the element
-    // while dragging has to fight the background
-    fill: "before:content-[''] before:absolute before:inset-0 before:rounded-[inherit] before:bg-[var(--drag-handle-background-color,var(--background-color-neutral-muted))] before:opacity-[var(--drag-handle-opacity,0)] before:[transition:var(--drag-handle-transition,opacity_150ms_ease)] hover:before:opacity-100",
+    root: "page-layout-drag-handle",
 };
 
 const isArrowKey = (key: string) =>
@@ -179,7 +174,7 @@ function DragHandle(props: DragHandleProps) {
             aria-valuetext={
                 ariaValueNow === undefined ? undefined : formatPaneValueText(ariaValueNow)
             }
-            className={classNames(classes.root, classes.fill, className)}
+            className={classNames(classes.root, className)}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={(event) => event.preventDefault()}

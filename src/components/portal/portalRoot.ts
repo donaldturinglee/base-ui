@@ -3,8 +3,7 @@ const PORTAL_ROOT_ID = "__baseUiPortalRoot__";
 export const DEFAULT_PORTAL_CONTAINER_NAME = "__default__";
 
 const classes = {
-    // Spans the top of its parent so portaled content can position against the page
-    root: "absolute top-0 left-0 w-full",
+    root: "portal-root",
 };
 
 const portalRootRegistry: Partial<Record<string, Element>> = {};

@@ -5,9 +5,7 @@ import { CarouselContext, CarouselSlideContext } from "./CarouselContext";
 import type { CarouselSlideProps } from "./Carousel.types";
 
 const classes = {
-    // Every slide is exactly as wide as the window it is shown through, so the run steps along
-    // by one width at a time however many slides it holds
-    root: "shrink-0 grow-0 basis-full min-w-0",
+    root: "carousel-slide",
 };
 
 // One slide of the run. Where in the run it stands is taken from the carousel around it rather

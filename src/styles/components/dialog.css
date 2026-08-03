@@ -1,0 +1,237 @@
+@layer components {
+    .dialog-backdrop {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        background-color: var(--overlay-backdrop-background-color);
+    }
+
+    .dialog-backdrop-center {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dialog-backdrop-left {
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .dialog-backdrop-right {
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    /* A narrow viewport lays the dialog out again from the start, so where it still centres
+       the dialog it has to say where down the screen a second time. The width matches
+       --breakpoint-medium in variables.css */
+    .dialog-backdrop-narrow-center,
+    .dialog-backdrop-narrow-fullscreen {
+        @media (width < 48rem) {
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .dialog-backdrop-narrow-bottom {
+        @media (width < 48rem) {
+            align-items: flex-end;
+            justify-content: center;
+        }
+    }
+
+    .dialog-backdrop-align-top {
+        align-items: flex-start;
+    }
+
+    .dialog-backdrop-align-center {
+        align-items: center;
+    }
+
+    .dialog-backdrop-align-bottom {
+        align-items: flex-end;
+    }
+
+    .dialog-backdrop-narrow-align-top {
+        @media (width < 48rem) {
+            align-items: flex-start;
+        }
+    }
+
+    .dialog-backdrop-narrow-align-center {
+        @media (width < 48rem) {
+            align-items: center;
+        }
+    }
+
+    .dialog-backdrop-narrow-align-bottom {
+        @media (width < 48rem) {
+            align-items: flex-end;
+        }
+    }
+
+    .dialog {
+        display: flex;
+        flex-direction: column;
+        min-width: var(--overlay-width-xsmall);
+        max-width: calc(100dvw - var(--base-size-64));
+        max-height: calc(100dvh - var(--base-size-64));
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+    }
+
+    .dialog-width-small {
+        width: var(--overlay-width-small);
+    }
+
+    .dialog-width-medium {
+        width: var(--overlay-width-medium);
+    }
+
+    .dialog-width-large {
+        width: var(--overlay-width-large);
+    }
+
+    .dialog-width-xlarge {
+        width: var(--overlay-width-xlarge);
+    }
+
+    /* A width that is not a step of the scale is carried in a variable of its own */
+    .dialog-width-custom {
+        width: var(--dialog-width);
+    }
+
+    .dialog-height-small {
+        height: var(--overlay-height-small);
+    }
+
+    .dialog-height-large {
+        height: var(--overlay-height-large);
+    }
+
+    .dialog-height-auto {
+        height: auto;
+    }
+
+    /* A side sheet fills the height of the screen and gives up the corners it meets */
+    .dialog-left {
+        height: 100dvh;
+        max-height: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .dialog-right {
+        height: 100dvh;
+        max-height: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .dialog-narrow-bottom {
+        @media (width < 48rem) {
+            width: 100dvw;
+            max-width: 100dvw;
+            height: auto;
+            max-height: calc(100dvh - var(--base-size-64));
+            margin: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    .dialog-narrow-fullscreen {
+        @media (width < 48rem) {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 100dvw;
+            height: 100%;
+            max-height: 100dvh;
+            margin: 0;
+            border-radius: 0;
+        }
+    }
+
+    .dialog-align-top {
+        margin-top: var(--base-size-64);
+    }
+
+    .dialog-align-bottom {
+        margin-bottom: var(--base-size-64);
+    }
+
+    /* The header stays put while the body scrolls under it, and the shadow stands in for a
+       border so a long title never pushes the body down by a pixel */
+    .dialog-header {
+        z-index: 1;
+        flex-shrink: 0;
+        max-height: 35vh;
+        padding: var(--base-size-8);
+        overflow-y: auto;
+        box-shadow: 0 1px 0 var(--border-color-default);
+    }
+
+    .dialog-header-inner {
+        display: flex;
+    }
+
+    .dialog-header-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding-block: var(--base-size-6);
+        padding-inline: var(--base-size-8);
+    }
+
+    /* The dialog is a document of its own while it is open, so its title reads as the heading
+       of one rather than taking the size that comes with it */
+    .dialog-title {
+        margin: 0;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--text-title-weight-large);
+    }
+
+    .dialog-subtitle {
+        margin: 0;
+        margin-top: var(--base-size-4);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .dialog-overflow-wrapper {
+        flex-grow: 1;
+    }
+
+    /* The line above the footer is only there to say that the body has more to be read past
+       the end of the box */
+    .dialog-overflow-wrapper-bordered {
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-default);
+    }
+
+    .dialog-body {
+        flex-grow: 1;
+        padding: var(--base-size-16);
+        overflow: auto;
+    }
+
+    .dialog-footer {
+        z-index: 1;
+        flex-shrink: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: var(--base-size-8);
+        padding: var(--base-size-16);
+    }
+
+    /* Where the buttons would leave the body no room to speak of, the dialog says so and they
+       are scrolled through in one row instead of wrapping */
+    [data-footer-button-layout="scroll"] .dialog-footer-scroll {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: scroll;
+    }
+}

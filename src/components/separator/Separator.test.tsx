@@ -37,8 +37,7 @@ describe("Separator", () => {
     it("falls back to running horizontally", () => {
         render(<Separator />);
         expect(separator()).toHaveAttribute("data-orientation", "horizontal");
-        expect(separator()).toHaveClass("w-full");
-        expect(separator()).toHaveClass("h-[var(--border-width-thin)]");
+        expect(separator()).toHaveClass("separator-horizontal");
     });
 
     it("says which way it runs whichever way that is", () => {
@@ -51,8 +50,8 @@ describe("Separator", () => {
 
     it("respects the orientation prop", () => {
         const orientations = {
-            horizontal: "w-full",
-            vertical: "self-stretch",
+            horizontal: "separator-horizontal",
+            vertical: "separator-vertical",
         } as const;
 
         for (const [orientation, expected] of Object.entries(orientations)) {
@@ -67,21 +66,20 @@ describe("Separator", () => {
 
     it("keeps a vertical line standing where nothing stretches it", () => {
         render(<Separator orientation="vertical" />);
-        expect(separator()).toHaveClass("min-h-[var(--base-size-16)]");
-        expect(separator()).toHaveClass("w-[var(--border-width-thin)]");
+        expect(separator()).toHaveClass("separator-vertical");
     });
 
     it("falls back to the default variant", () => {
         render(<Separator />);
         expect(separator()).toHaveAttribute("data-variant", "default");
-        expect(separator()).toHaveClass("[--separator-color:var(--border-color-default)]");
+        expect(separator()).toHaveClass("separator-default");
     });
 
     it("respects the variant prop", () => {
         const variants = {
-            subtle: "[--separator-color:var(--border-color-muted)]",
-            default: "[--separator-color:var(--border-color-default)]",
-            emphasis: "[--separator-color:var(--border-color-emphasis)]",
+            subtle: "separator-subtle",
+            default: "separator-default",
+            emphasis: "separator-emphasis",
         } as const;
 
         for (const [variant, expected] of Object.entries(variants)) {
@@ -96,9 +94,7 @@ describe("Separator", () => {
         // One set of rules then serves both orientations, and nothing can shrink the line
         // away in a flex row
         render(<Separator />);
-        expect(separator()).toHaveClass("bg-[var(--separator-color)]");
-        expect(separator()).toHaveClass("border-0");
-        expect(separator()).toHaveClass("shrink-0");
+        expect(separator()).toHaveClass("separator");
     });
 
     it("lets a caller repaint the line through the custom property", () => {

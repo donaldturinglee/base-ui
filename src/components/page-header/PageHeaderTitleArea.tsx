@@ -6,7 +6,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderTitleAreaProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-start-3 row-start-2 flex flex-row items-start gap-[var(--stack-gap-condensed)]",
+    root: "page-header-title-area",
 };
 
 // Holds the title and whatever stands either side of it. Which size the title is drawn in is

@@ -43,19 +43,19 @@ describe("PageContent", () => {
             render(withSection());
 
             expect(content()).toHaveAttribute("data-width", "full");
-            expect(content()).toHaveClass("max-w-full");
+            expect(content()).toHaveClass("page-content-width-full");
         });
 
         it("is held to the width it is given", () => {
             render(withSection({ width: "medium" }));
 
             expect(content()).toHaveAttribute("data-width", "medium");
-            expect(content()).toHaveClass("max-w-[768px]");
+            expect(content()).toHaveClass("page-content-width-medium");
         });
 
         it("is centred in whatever room the page leaves", () => {
             render(withSection({ width: "large" }));
-            expect(content()).toHaveClass("mx-auto");
+            expect(content()).toHaveClass("page-content");
         });
     });
 
@@ -64,14 +64,14 @@ describe("PageContent", () => {
             render(withSection());
 
             expect(content()).toHaveAttribute("data-padding", "none");
-            expect(content()).toHaveClass("p-0");
+            expect(content()).toHaveClass("page-content-padding-none");
         });
 
         it("leaves the room it is asked for", () => {
             render(withSection({ padding: "spacious" }));
 
             expect(content()).toHaveAttribute("data-padding", "spacious");
-            expect(content()).toHaveClass("p-[var(--base-size-24)]");
+            expect(content()).toHaveClass("page-content-padding-spacious");
         });
     });
 
@@ -80,14 +80,14 @@ describe("PageContent", () => {
             render(withSection());
 
             expect(content()).toHaveAttribute("data-gap", "normal");
-            expect(content()).toHaveClass("gap-[var(--stack-gap-normal)]");
+            expect(content()).toHaveClass("page-content-gap-normal");
         });
 
         it("leaves the room it is asked for", () => {
             render(withSection({ gap: "condensed" }));
 
             expect(content()).toHaveAttribute("data-gap", "condensed");
-            expect(content()).toHaveClass("gap-[var(--stack-gap-condensed)]");
+            expect(content()).toHaveClass("page-content-gap-condensed");
         });
     });
 
@@ -146,7 +146,7 @@ describe("PageContent", () => {
                 </PageContent>,
             );
 
-            expect(section()).toHaveClass("medium:max-xxlarge:hidden");
+            expect(section()).toHaveClass("hidden-regular");
             expect(section()).toHaveAttribute("data-hidden", "regular");
         });
 

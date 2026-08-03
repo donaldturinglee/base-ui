@@ -28,124 +28,105 @@ export type ButtonBaseRenderProps = Omit<React.ComponentPropsWithoutRef<"button"
     };
 
 const classes = {
-    // The group lets the visuals follow the button through hover and press
-    base: "group/button flex items-center justify-between min-w-max h-[var(--control-medium-size)] px-[var(--control-medium-padding-inline-normal)] py-0 gap-[var(--base-size-8)] [font-family:inherit] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-medium)] [color:var(--button-default-foreground-color-rest)] text-center no-underline cursor-pointer select-none appearance-none bg-transparent border-solid border-[length:var(--border-width-thin)] border-[color:var(--button-default-border-color-rest)] rounded-[var(--border-radius-medium)] [transition-property:color,fill,background-color,border-color] [transition-duration:80ms] [transition-timing-function:cubic-bezier(0.65,0,0.35,1)] active:[transition-property:none] [&[href]]:inline-flex",
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)] forced-colors:focus:outline-solid forced-colors:focus:outline-[length:var(--border-width-thin)] forced-colors:focus:outline-[color:transparent]",
-    disabled: "cursor-not-allowed [box-shadow:none]",
-    block: "w-full",
+    base: "button",
+    disabled: "button-disabled",
+    block: "button-block",
     size: {
-        small: "h-[var(--control-small-size)] px-[var(--control-small-padding-inline-condensed)] gap-[var(--control-small-gap)] [font-size:var(--text-body-size-small)]",
+        small: "button-small",
+        // A medium button takes the size the button is already drawn at
         medium: "",
-        large: "h-[var(--control-large-size)] px-[var(--control-large-padding-inline-spacious)] gap-[var(--control-large-gap)]",
+        large: "button-large",
     } satisfies Record<ButtonSize, string>,
     variant: {
         default: {
-            rest: "[color:var(--button-default-foreground-color-rest)] bg-[var(--button-default-background-color-rest)] [box-shadow:var(--button-default-shadow-resting)] aria-expanded:bg-[var(--button-default-background-color-active)] aria-expanded:border-[color:var(--button-default-border-color-active)] hover:bg-[var(--button-default-background-color-hover)] hover:border-[color:var(--button-default-border-color-hover)] active:bg-[var(--button-default-background-color-active)] active:border-[color:var(--button-default-border-color-active)]",
-            disabled:
-                "[color:var(--control-foreground-color-disabled)] bg-[var(--button-default-background-color-disabled)] border-[color:var(--button-default-border-color-disabled)]",
+            rest: "button-default",
+            disabled: "button-default-disabled",
         },
         primary: {
-            rest: "[color:var(--button-primary-foreground-color-rest)] bg-[var(--button-primary-background-color-rest)] border-[color:var(--button-primary-border-color-rest)] [box-shadow:var(--shadow-resting-small)] focus-visible:outline-foreground-on-emphasis aria-expanded:bg-[var(--button-primary-background-color-active)] aria-expanded:[box-shadow:var(--button-primary-shadow-selected)] hover:bg-[var(--button-primary-background-color-hover)] hover:border-[color:var(--button-primary-border-color-hover)] active:bg-[var(--button-primary-background-color-active)] active:[box-shadow:var(--button-primary-shadow-selected)]",
-            disabled:
-                "[color:var(--button-primary-foreground-color-disabled)] bg-[var(--button-primary-background-color-disabled)] border-[color:var(--button-primary-border-color-disabled)]",
+            rest: "button-primary",
+            disabled: "button-primary-disabled",
         },
         danger: {
-            rest: "[color:var(--button-danger-foreground-color-rest)] bg-[var(--button-danger-background-color-rest)] [box-shadow:var(--button-default-shadow-resting)] aria-expanded:[color:var(--button-danger-foreground-color-active)] aria-expanded:bg-[var(--button-danger-background-color-active)] aria-expanded:border-[color:var(--button-danger-border-color-active)] aria-expanded:[box-shadow:var(--button-danger-shadow-selected)] hover:[color:var(--button-danger-foreground-color-hover)] hover:bg-[var(--button-danger-background-color-hover)] hover:border-[color:var(--button-danger-border-color-hover)] hover:[box-shadow:var(--shadow-resting-small)] active:[color:var(--button-danger-foreground-color-active)] active:bg-[var(--button-danger-background-color-active)] active:border-[color:var(--button-danger-border-color-active)] active:[box-shadow:var(--button-danger-shadow-selected)]",
-            disabled:
-                "[color:var(--button-danger-foreground-color-disabled)] bg-[var(--button-danger-background-color-disabled)] border-[color:var(--button-default-border-color-disabled)]",
+            rest: "button-danger",
+            disabled: "button-danger-disabled",
         },
         invisible: {
-            rest: "[color:var(--button-default-foreground-color-rest)] border-[color:var(--button-invisible-border-color-rest)] [box-shadow:none] aria-expanded:bg-[var(--button-invisible-background-color-active)] hover:bg-[var(--button-invisible-background-color-hover)] hover:border-[color:var(--button-invisible-border-color-hover)] active:bg-[var(--button-invisible-background-color-active)]",
-            disabled:
-                "[color:var(--button-invisible-foreground-color-disabled)] bg-[var(--button-invisible-background-color-disabled)] border-[color:var(--button-invisible-border-color-disabled)]",
+            rest: "button-invisible",
+            disabled: "button-invisible-disabled",
         },
         link: {
-            rest: "text-foreground-accent hover:underline",
-            disabled:
-                "[color:var(--control-foreground-color-disabled)] bg-transparent border-transparent",
+            rest: "button-link",
+            disabled: "button-link-disabled",
         },
     } satisfies Record<ButtonVariant, { rest: string; disabled: string }>,
-    // The link variant drops the shape of a button and reads as text
-    link: "inline-flex min-w-fit h-[unset] p-0 [font-size:inherit] text-left border-0 rounded-none focus-visible:outline-offset-[var(--base-size-2)]",
-    linkUnderlines:
-        "[[data-a11y-link-underlines='true']_&]:underline [[data-a11y-link-underlines='true']_&]:hover:no-underline",
-    inactive:
-        "[color:var(--button-inactive-foreground-color)] cursor-auto bg-[var(--button-inactive-background-color)] border-[color:var(--button-inactive-background-color)] [box-shadow:none]",
-    inactiveLink:
-        "[color:var(--button-inactive-foreground-color)] cursor-auto bg-transparent border-transparent [box-shadow:none]",
-    // An icon-only button has no visual wrapper to colour, so the icon follows the button itself
+    link: "button-link-shape",
+    linkUnderlines: "button-link-underlines",
+    inactive: "button-inactive",
+    inactiveLink: "button-inactive-link",
     iconTone: {
-        default: "text-foreground-muted",
+        default: "button-icon-tone-default",
         primary: "",
         danger: "",
-        invisible: "[color:var(--button-invisible-icon-color-rest)]",
+        invisible: "button-icon-tone-invisible",
         link: "",
     } satisfies Record<ButtonVariant, string>,
-    labelWrapRoot: "min-w-fit h-[unset]",
+    labelWrapRoot: "button-label-wrap",
     labelWrapHeight: {
-        small: "min-h-[var(--control-small-size)]",
-        medium: "min-h-[var(--control-medium-size)]",
-        large: "min-h-[var(--control-large-size)]",
+        small: "button-label-wrap-small",
+        medium: "button-label-wrap-medium",
+        large: "button-label-wrap-large",
     } satisfies Record<ButtonSize, string>,
     labelWrapContent: {
-        small: "flex-[1_1_auto] self-stretch py-[calc(var(--control-small-padding-block)_-_var(--base-size-2))]",
-        medium: "flex-[1_1_auto] self-stretch py-[calc(var(--control-medium-padding-block)_-_var(--base-size-2))]",
-        large: "flex-[1_1_auto] self-stretch py-[calc(var(--control-large-padding-block)_-_var(--base-size-2))]",
+        small: "button-label-wrap-content-small",
+        medium: "button-label-wrap-content-medium",
+        large: "button-label-wrap-content-large",
     } satisfies Record<ButtonSize, string>,
-    labelWrapLabel: "[word-break:break-word] whitespace-normal",
-    // A count sitting beside an icon has no label to pad around
+    labelWrapLabel: "button-label-wrap-label",
     iconOnlyCounter: {
-        small: "px-[var(--control-xsmall-padding-inline-condensed)]",
-        medium: "px-[var(--control-medium-padding-inline-condensed)]",
-        large: "px-[var(--control-large-padding-inline-normal)]",
+        small: "button-icon-only-counter-small",
+        medium: "button-icon-only-counter-medium",
+        large: "button-icon-only-counter-large",
     } satisfies Record<ButtonSize, string>,
-    // The content sits on its own grid so the label keeps its place as visuals come and go
-    content:
-        "flex-[1_0_auto] grid items-center content-center [grid-template-areas:'leadingVisual_text_trailingVisual'] [grid-template-columns:min-content_minmax(0,auto)_min-content]",
+    content: "button-content",
     contentGap: {
-        small: "[&>*:not(:last-child)]:mr-[var(--control-small-gap)]",
-        medium: "[&>*:not(:last-child)]:mr-[var(--base-size-8)]",
-        large: "[&>*:not(:last-child)]:mr-[var(--control-large-gap)]",
+        small: "button-content-gap-small",
+        medium: "button-content-gap-medium",
+        large: "button-content-gap-large",
     } satisfies Record<ButtonSize, string>,
     align: {
         start: "justify-start",
         center: "justify-center",
     } satisfies Record<ButtonAlignContent, string>,
-    label: "[grid-area:text] whitespace-nowrap",
+    label: "button-label",
     labelLineHeight: {
-        small: "leading-[var(--text-body-line-height-small)]",
-        medium: "leading-[var(--text-body-line-height-medium)]",
-        large: "leading-[var(--text-body-line-height-medium)]",
+        small: "button-label-small",
+        medium: "button-label-medium",
+        large: "button-label-large",
     } satisfies Record<ButtonSize, string>,
     labelHidden: "invisible",
-    visualBase: "flex shrink-0 pointer-events-none",
-    // Visuals take their colour from the variant, and fall back to the button's own colour once
-    // it can no longer be used
+    visualBase: "button-visual",
     visual: {
-        default: "text-foreground-muted",
-        primary: "[color:var(--button-primary-foreground-color-rest)]",
-        danger: "[color:var(--button-danger-icon-color-rest)] group-hover/button:[color:var(--button-danger-icon-color-hover)] group-active/button:[color:var(--button-danger-icon-color-hover)]",
-        invisible: "[color:var(--button-invisible-icon-color-rest)]",
-        link: "text-foreground-accent",
+        default: "button-visual-default",
+        primary: "button-visual-primary",
+        danger: "button-visual-danger",
+        invisible: "button-visual-invisible",
+        link: "button-visual-link",
     } satisfies Record<ButtonVariant, string>,
-    visualMuted: "[color:inherit]",
+    visualMuted: "button-visual-muted",
     counter: {
-        default: "bg-[var(--button-counter-default-background-color-rest)]",
-        primary:
-            "[color:var(--button-primary-foreground-color-rest)] bg-[var(--button-counter-primary-background-color-rest)]",
-        danger: "[color:var(--button-counter-danger-foreground-color-rest)] bg-[var(--button-counter-danger-background-color-rest)] group-hover/button:[color:var(--button-counter-danger-foreground-color-hover)] group-hover/button:bg-[var(--button-counter-danger-background-color-hover)] group-active/button:[color:var(--button-counter-danger-foreground-color-hover)] group-active/button:bg-[var(--button-counter-danger-background-color-hover)]",
-        invisible: "bg-[var(--button-counter-invisible-background-color-rest)]",
+        default: "button-counter-default",
+        primary: "button-counter-primary",
+        danger: "button-counter-danger",
+        invisible: "button-counter-invisible",
         link: "",
     } satisfies Record<ButtonVariant, string>,
-    counterMuted: "[color:inherit]",
-    counterMutedDanger:
-        "[color:var(--button-counter-danger-foreground-color-disabled)] bg-[var(--button-counter-danger-background-color-disabled)]",
-    leadingVisual: "[grid-area:leadingVisual]",
-    trailingVisual: "[grid-area:trailingVisual]",
-    trailingAction: "-mr-[var(--base-size-4)]",
+    counterMuted: "button-counter-muted",
+    counterMutedDanger: "button-counter-muted-danger",
+    leadingVisual: "button-leading-visual",
+    trailingVisual: "button-trailing-visual",
+    trailingAction: "button-trailing-action",
     loadingSpinner: "items-center justify-center",
-    // With nothing to swap out, the spinner takes the label's place on the grid
-    standaloneSpinner: "[grid-area:text] place-self-center",
+    standaloneSpinner: "button-standalone-spinner",
     loadingWrapper: "inline-flex",
     loadingWrapperBlock: "block",
     srOnly: "sr-only",
@@ -245,7 +226,6 @@ function ButtonBase(
             ref={ref}
             className={classNames(
                 classes.base,
-                classes.focus,
                 classes.size[size],
                 variant === "link" && classes.link,
                 variant === "link" && !hasVisuals && classes.linkUnderlines,

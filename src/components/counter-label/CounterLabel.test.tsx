@@ -41,8 +41,7 @@ describe("CounterLabel", () => {
         render(<CounterLabel data-testid="counter">1234</CounterLabel>);
         const counter = screen.getByTestId("counter");
         expect(counter).toHaveAttribute("data-variant", "secondary");
-        expect(counter).toHaveClass("bg-[var(--counter-background-color-muted)]");
-        expect(counter).toHaveClass("text-foreground-default");
+        expect(counter).toHaveClass("counter-label-secondary");
     });
 
     it("respects the primary variant", () => {
@@ -53,8 +52,7 @@ describe("CounterLabel", () => {
         );
         const counter = screen.getByTestId("counter");
         expect(counter).toHaveAttribute("data-variant", "primary");
-        expect(counter).toHaveClass("bg-[var(--counter-background-color-emphasis)]");
-        expect(counter).toHaveClass("text-foreground-on-emphasis");
+        expect(counter).toHaveClass("counter-label-primary");
     });
 
     it("respects the secondary variant", () => {
@@ -68,7 +66,7 @@ describe("CounterLabel", () => {
 
     it("collapses the counter when there is nothing to count", () => {
         render(<CounterLabel data-testid="counter" />);
-        expect(screen.getByTestId("counter")).toHaveClass("empty:hidden");
+        expect(screen.getByTestId("counter")).toHaveClass("counter-label");
     });
 
     it("does not leak the variant prop onto the element", () => {

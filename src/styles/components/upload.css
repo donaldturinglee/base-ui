@@ -1,0 +1,217 @@
+@layer components {
+    .upload {
+        display: grid;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .upload-small {
+        --upload-zone-gap: var(--base-size-4);
+        --upload-zone-padding: var(--stack-padding-normal);
+        --upload-icon-size: var(--base-size-20);
+        --upload-label-size: var(--text-body-size-small);
+        --upload-description-size: var(--text-body-size-small);
+        --upload-item-icon-size: var(--base-size-16);
+    }
+
+    .upload-medium {
+        --upload-zone-gap: var(--base-size-8);
+        --upload-zone-padding: var(--stack-padding-spacious);
+        --upload-icon-size: var(--base-size-24);
+        --upload-label-size: var(--text-body-size-medium);
+        --upload-description-size: var(--text-body-size-small);
+        --upload-item-icon-size: var(--base-size-20);
+    }
+
+    .upload-large {
+        --upload-zone-gap: var(--base-size-8);
+        --upload-zone-padding: var(--base-size-32);
+        --upload-icon-size: var(--base-size-32);
+        --upload-label-size: var(--text-title-size-small);
+        --upload-description-size: var(--text-body-size-medium);
+        --upload-item-icon-size: var(--base-size-20);
+    }
+
+    /* The zone is a label, so anywhere in it opens the picker; the control inside it is what
+       the reader tabs to, and what the ring is drawn for */
+    .upload-zone {
+        --upload-muted-color: var(--foreground-color-muted);
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--upload-zone-gap);
+        padding: var(--upload-zone-padding);
+        text-align: center;
+        cursor: pointer;
+        background-color: var(--background-color-default);
+        border-style: dashed;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        transition:
+            border-color var(--motion-transition-hover),
+            background-color var(--motion-transition-hover);
+
+        &:focus-within {
+            border-color: var(--border-color-accent-emphasis);
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: -1px;
+        }
+    }
+
+    /* A file held over the control is answered by the whole zone, since the pointer is
+       carrying something rather than aiming at anything. The border is drawn solid as well as
+       in colour, so the answer still reads where colour does not */
+    .upload-zone-dragging {
+        background-color: var(--background-color-accent-muted);
+        border-style: solid;
+        border-color: var(--border-color-accent-emphasis);
+    }
+
+    /* Only a control that can still be used answers the pointer */
+    .upload-zone-interactive:hover {
+        background-color: var(--background-color-accent-muted);
+        border-color: var(--border-color-accent-emphasis);
+    }
+
+    .upload-zone-disabled {
+        --upload-muted-color: var(--foreground-color-disabled);
+
+        cursor: not-allowed;
+        background-color: var(--control-background-color-disabled);
+        border-color: var(--control-border-color-disabled);
+        color: var(--foreground-color-disabled);
+    }
+
+    /* The validation colours come last, so a control that is both disabled and invalid still
+       reads as invalid */
+    .upload-zone-error {
+        border-color: var(--border-color-danger-emphasis);
+    }
+
+    .upload-zone-success {
+        border-color: var(--background-color-success-emphasis);
+    }
+
+    /* The mark is sized by the control it stands in, so a small drop zone is not led by an
+       icon drawn for a large one */
+    .upload-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--upload-muted-color, var(--foreground-color-muted));
+
+        & > svg {
+            width: var(--upload-icon-size, var(--base-size-24));
+            height: var(--upload-icon-size, var(--base-size-24));
+        }
+    }
+
+    .upload-label {
+        font-size: var(--upload-label-size, var(--text-body-size-medium));
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .upload-description {
+        color: var(--upload-muted-color, var(--foreground-color-muted));
+        font-size: var(--upload-description-size, var(--text-body-size-small));
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .upload-list {
+        display: grid;
+        gap: var(--stack-gap-condensed);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .upload-item {
+        display: flex;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        padding: var(--base-size-8);
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-muted);
+        border-radius: var(--border-radius-medium);
+    }
+
+    .upload-item-icon {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        color: var(--foreground-color-muted);
+
+        & > svg {
+            width: var(--upload-item-icon-size, var(--base-size-20));
+            height: var(--upload-item-icon-size, var(--base-size-20));
+        }
+    }
+
+    /* The name is the one part of the row with no length of its own, so it is what gives when
+       the row runs out of room */
+    .upload-item-body {
+        display: grid;
+        flex: auto;
+        gap: var(--base-size-4);
+        min-width: 0;
+    }
+
+    .upload-item-heading {
+        display: flex;
+        align-items: baseline;
+        gap: var(--base-size-8);
+        min-width: 0;
+    }
+
+    .upload-item-name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: var(--text-body-size-small);
+    }
+
+    .upload-item-file-size {
+        flex-shrink: 0;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    .upload-item-description {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    /* What went wrong is drawn in the colour errors are drawn in elsewhere */
+    .upload-item-description-error {
+        color: var(--foreground-color-danger);
+    }
+
+    .upload-item-status {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+
+        & > svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+    }
+
+    .upload-item-status-success {
+        color: var(--foreground-color-success);
+    }
+
+    .upload-item-status-error {
+        color: var(--foreground-color-danger);
+    }
+}

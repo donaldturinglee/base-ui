@@ -130,7 +130,7 @@ describe("FormControl", () => {
 
         const validation = container.querySelector('[data-component="FormControl.Validation"]');
         expect(validation).toHaveAttribute("data-validation-status", "success");
-        expect(validation).toHaveClass("text-foreground-success");
+        expect(validation).toHaveClass("form-control-validation-success");
         expect(validation?.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
     });
 
@@ -154,8 +154,11 @@ describe("FormControl", () => {
         );
 
         for (const name of ["FormControl.Label", "FormControl.Caption"]) {
-            expect(container.querySelector(`[data-component="${name}"]`)).toHaveClass(
-                "[color:var(--control-foreground-color-disabled)]",
+            const part = container.querySelector(`[data-component="${name}"]`);
+            expect(part).toHaveClass(
+                name === "FormControl.Label"
+                    ? "form-control-label-disabled"
+                    : "form-control-caption-disabled",
             );
         }
     });
@@ -349,7 +352,7 @@ describe("FormControl", () => {
 
             expect(
                 container.querySelector('[data-component="FormControl.LeadingVisual"]'),
-            ).toHaveClass("[--leading-visual-size:var(--base-size-24)]");
+            ).toHaveClass("form-control-leading-visual-with-caption");
         });
     });
 

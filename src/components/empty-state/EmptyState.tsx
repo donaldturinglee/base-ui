@@ -4,25 +4,20 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { EmptyStateProps, EmptyStateSize, EmptyStateVisual } from "./EmptyState.types";
 
-const emptyStateVariants = cva(
-    "flex flex-col items-center justify-center text-center text-foreground-default",
-    {
-        variants: {
-            size: {
-                small: "gap-[var(--base-size-4)] p-[var(--base-size-16)] [--empty-state-icon-size:var(--base-size-20)] [--empty-state-title-size:var(--text-body-size-medium)] [--empty-state-description-size:var(--text-body-size-small)]",
-                medium: "gap-[var(--base-size-8)] p-[var(--base-size-24)] [--empty-state-icon-size:var(--base-size-24)] [--empty-state-title-size:var(--text-title-size-small)] [--empty-state-description-size:var(--text-body-size-medium)]",
-            } satisfies Record<EmptyStateSize, string>,
-        },
+const emptyStateVariants = cva("empty-state", {
+    variants: {
+        size: {
+            small: "empty-state-small",
+            medium: "empty-state-medium",
+        } satisfies Record<EmptyStateSize, string>,
     },
-);
+});
 
 const classes = {
-    icon: "flex items-center justify-center text-foreground-muted [&>svg]:size-[var(--empty-state-icon-size)]",
-    title: "m-0 [font-size:var(--empty-state-title-size)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)]",
-    description:
-        "m-0 [font-size:var(--empty-state-description-size)] [line-height:var(--text-body-line-height-medium)] text-foreground-muted",
-    actions:
-        "flex flex-wrap items-center justify-center gap-[var(--base-size-8)] mt-[var(--base-size-4)]",
+    icon: "empty-state-icon",
+    title: "empty-state-title",
+    description: "empty-state-description",
+    actions: "empty-state-actions",
 };
 
 // Anything that can stand as a component is called with no props of its own, which covers a

@@ -48,7 +48,7 @@ describe("ToggleSwitch", () => {
 
     it("lays the labels out after the switch when asked to", () => {
         renderSwitch({ statusLabelPosition: "end" });
-        expect(screen.getByTestId("switch")).toHaveClass("flex-row-reverse");
+        expect(screen.getByTestId("switch")).toHaveClass("toggle-switch-label-end");
     });
 
     it("says on and off beside the switch", () => {
@@ -59,8 +59,8 @@ describe("ToggleSwitch", () => {
 
     it("hides the reading that does not apply", () => {
         renderSwitch();
-        expect(screen.getByText("On")).toHaveClass("invisible");
-        expect(screen.getByText("Off")).not.toHaveClass("invisible");
+        expect(screen.getByText("On")).toHaveClass("toggle-switch-status-text-hidden");
+        expect(screen.getByText("Off")).not.toHaveClass("toggle-switch-status-text-hidden");
     });
 
     it("uses custom on and off text", () => {
@@ -80,10 +80,7 @@ describe("ToggleSwitch", () => {
             const icon = part(name);
             // Laid out rather than left to sit on a baseline, where the descender space below
             // it would push it off centre
-            expect(icon).toHaveClass("flex");
-            expect(icon).toHaveClass("items-center");
-            expect(icon).toHaveClass("justify-center");
-            expect(icon).toHaveClass("basis-1/2");
+            expect(icon).toHaveClass("toggle-switch-icon");
         }
     });
 
@@ -96,7 +93,7 @@ describe("ToggleSwitch", () => {
         fireEvent.click(button());
         expect(part("LineIcon")).toHaveClass("translate-x-0");
         expect(part("CircleIcon")).toHaveClass("translate-x-full");
-        expect(part("ToggleKnob")).toHaveClass("translate-x-[calc(100%-2px)]");
+        expect(part("ToggleKnob")).toHaveClass("toggle-switch-knob-checked");
     });
 
     it("is a button rather than a submit by default", () => {

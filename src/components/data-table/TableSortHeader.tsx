@@ -6,15 +6,11 @@ import TableHeader from "./TableHeader";
 import type { TableSortHeaderProps } from "./DataTable.types";
 
 const classes = {
-    header: "group/sort-header",
-    button: "flex items-center gap-x-[var(--base-size-8)] p-0 m-0 bg-transparent border-0 appearance-none cursor-pointer text-start [font:inherit] [color:inherit]",
-    buttonFocus:
-        "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    // An end aligned column keeps its label against the edge, so the icon moves inside it
-    buttonEnd: "flex-row-reverse",
-    icon: "shrink-0 size-[var(--base-size-16)]",
-    // An unsorted column only shows what pressing it would do once the reader is on it
-    iconResting: "invisible group-hover/sort-header:visible group-focus-within/sort-header:visible",
+    header: "data-table-sort-header",
+    button: "data-table-sort-header-button",
+    buttonEnd: "data-table-sort-header-button-end",
+    icon: "data-table-sort-header-icon",
+    iconResting: "data-table-sort-header-icon-resting",
     hidden: "sr-only",
 };
 
@@ -41,11 +37,7 @@ function TableSortHeader(
             <button
                 type="button"
                 onClick={onToggleSort}
-                className={classNames(
-                    classes.button,
-                    classes.buttonFocus,
-                    align === "end" && classes.buttonEnd,
-                )}
+                className={classNames(classes.button, align === "end" && classes.buttonEnd)}
                 data-component="Table.SortHeader.Button"
             >
                 {children}

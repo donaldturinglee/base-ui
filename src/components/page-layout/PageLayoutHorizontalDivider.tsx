@@ -9,13 +9,7 @@ import type { PageLayoutDividerProps } from "./PageLayout.types";
 // and once for each viewport range it can be given one at a time. They are written out in
 // full because a class name only reaches the stylesheet if it appears here as it stands
 const classes = {
-    // The divider reaches out past the padding it sits in, so it runs the width of the page
-    root: "-mx-[var(--spacing-divider)] medium:mx-0",
-    base: "data-[variant=none]:hidden data-[variant=line]:block data-[variant=line]:h-px data-[variant=line]:bg-border-default data-[variant=filled]:block data-[variant=filled]:h-[var(--base-size-8)] data-[variant=filled]:bg-background-inset data-[variant=filled]:[box-shadow:inset_0_-1px_0_0_var(--border-color-default),inset_0_1px_0_0_var(--border-color-default)]",
-    narrow: "max-medium:data-[variant-narrow=none]:hidden max-medium:data-[variant-narrow=line]:block max-medium:data-[variant-narrow=line]:h-px max-medium:data-[variant-narrow=line]:bg-border-default max-medium:data-[variant-narrow=filled]:block max-medium:data-[variant-narrow=filled]:h-[var(--base-size-8)] max-medium:data-[variant-narrow=filled]:bg-background-inset max-medium:data-[variant-narrow=filled]:[box-shadow:inset_0_-1px_0_0_var(--border-color-default),inset_0_1px_0_0_var(--border-color-default)]",
-    regular:
-        "medium:data-[variant-regular=none]:hidden medium:data-[variant-regular=line]:block medium:data-[variant-regular=line]:h-px medium:data-[variant-regular=line]:bg-border-default medium:data-[variant-regular=filled]:block medium:data-[variant-regular=filled]:h-[var(--base-size-8)] medium:data-[variant-regular=filled]:bg-background-inset medium:data-[variant-regular=filled]:[box-shadow:inset_0_-1px_0_0_var(--border-color-default),inset_0_1px_0_0_var(--border-color-default)]",
-    wide: "xxlarge:data-[variant-wide=none]:hidden xxlarge:data-[variant-wide=line]:block xxlarge:data-[variant-wide=line]:h-px xxlarge:data-[variant-wide=line]:bg-border-default xxlarge:data-[variant-wide=filled]:block xxlarge:data-[variant-wide=filled]:h-[var(--base-size-8)] xxlarge:data-[variant-wide=filled]:bg-background-inset xxlarge:data-[variant-wide=filled]:[box-shadow:inset_0_-1px_0_0_var(--border-color-default),inset_0_1px_0_0_var(--border-color-default)]",
+    root: "page-layout-horizontal-divider",
 };
 
 function PageLayoutHorizontalDivider(
@@ -29,14 +23,7 @@ function PageLayoutHorizontalDivider(
     return (
         <div
             ref={ref}
-            className={classNames(
-                classes.root,
-                classes.base,
-                classes.narrow,
-                classes.regular,
-                classes.wide,
-                className,
-            )}
+            className={classNames(classes.root, className)}
             style={
                 {
                     "--spacing-divider": `var(--page-layout-spacing-${padding})`,

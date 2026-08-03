@@ -17,49 +17,34 @@ const classes = {
     input: "sr-only",
 };
 
-const uploadVariants = cva("grid gap-[var(--stack-gap-condensed)]", {
+const uploadVariants = cva("upload", {
     variants: {
         // The size sets how much room the zone keeps and how big the pieces it is drawn from
         // are, and it is written on the root so that the list below the zone is sized by it too
         size: {
-            small: "[--upload-zone-gap:var(--base-size-4)] [--upload-zone-padding:var(--stack-padding-normal)] [--upload-icon-size:var(--base-size-20)] [--upload-label-size:var(--text-body-size-small)] [--upload-description-size:var(--text-body-size-small)] [--upload-item-icon-size:var(--base-size-16)]",
-            medium: "[--upload-zone-gap:var(--base-size-8)] [--upload-zone-padding:var(--stack-padding-spacious)] [--upload-icon-size:var(--base-size-24)] [--upload-label-size:var(--text-body-size-medium)] [--upload-description-size:var(--text-body-size-small)] [--upload-item-icon-size:var(--base-size-20)]",
-            large: "[--upload-zone-gap:var(--base-size-8)] [--upload-zone-padding:var(--base-size-32)] [--upload-icon-size:var(--base-size-32)] [--upload-label-size:var(--text-title-size-small)] [--upload-description-size:var(--text-body-size-medium)] [--upload-item-icon-size:var(--base-size-20)]",
+            small: "upload-small",
+            medium: "upload-medium",
+            large: "upload-large",
         } satisfies Record<UploadSize, string>,
     },
 });
 
-const uploadZoneVariants = cva(
-    [
-        // The zone is a label, so anywhere in it opens the picker; the control inside it is what
-        // the reader tabs to, and what the ring below is drawn for
-        "relative flex flex-col items-center justify-center text-center cursor-pointer rounded-[var(--border-radius-medium)] border-dashed border-[length:var(--border-width-thin)] border-[color:var(--control-border-color-rest)] bg-background-default text-foreground-default [--upload-muted-color:var(--foreground-color-muted)] gap-[var(--upload-zone-gap)] p-[var(--upload-zone-padding)] [transition:border-color_var(--motion-transition-hover),background-color_var(--motion-transition-hover)]",
-        "focus-within:border-border-accent-emphasis focus-within:outline-solid focus-within:outline-[length:var(--focus-outline-width)] focus-within:outline-[color:var(--focus-outline-color)] focus-within:-outline-offset-1",
-    ],
-    {
-        variants: {
-            // A file held over the control is answered by the whole zone, since the pointer is
-            // carrying something rather than aiming at anything. The border is drawn solid as
-            // well as in colour, so the answer still reads where colour does not
-            dragging: {
-                true: "border-solid border-border-accent-emphasis bg-background-accent-muted",
-                false: "",
-            },
-            // Only a control that can still be used answers the pointer, so the hover rules are
-            // the other side of this same variant
-            disabled: {
-                true: "cursor-not-allowed text-foreground-disabled [--upload-muted-color:var(--foreground-color-disabled)] bg-[var(--control-background-color-disabled)] border-[color:var(--control-border-color-disabled)]",
-                false: "hover:border-border-accent-emphasis hover:bg-background-accent-muted",
-            },
-            // The validation colours come last, so a control that is both disabled and invalid
-            // still reads as invalid
-            validation: {
-                error: "border-border-danger-emphasis",
-                success: "border-background-success-emphasis",
-            } satisfies Record<UploadValidationStatus, string>,
+const uploadZoneVariants = cva("upload-zone", {
+    variants: {
+        dragging: {
+            true: "upload-zone-dragging",
+            false: "",
         },
+        disabled: {
+            true: "upload-zone-disabled",
+            false: "upload-zone-interactive",
+        },
+        validation: {
+            error: "upload-zone-error",
+            success: "upload-zone-success",
+        } satisfies Record<UploadValidationStatus, string>,
     },
-);
+});
 
 // A drop lands on the control rather than in it, so what was dropped is written into the
 // control as well. That leaves it holding what the reader can see, and leaves a form posting

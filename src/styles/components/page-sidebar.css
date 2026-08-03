@@ -1,0 +1,168 @@
+@layer components {
+    /* The runs of the sidebar stand one under the next. It is kept from being squeezed by
+       whatever it stands beside, since its width is the whole point of it. The sidebar
+       carries the room between its runs, so that the runs held by the content are spaced the
+       same as the parts standing either side of it */
+    .page-sidebar {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        gap: var(--page-sidebar-gap);
+        min-width: 0;
+    }
+
+    /* The widths match --breakpoint-medium and --breakpoint-large in variables.css */
+    .page-sidebar-width-small {
+        width: 100%;
+
+        @media (width >= 48rem) {
+            width: 240px;
+        }
+
+        @media (width >= 63.25rem) {
+            width: 256px;
+        }
+    }
+
+    .page-sidebar-width-medium {
+        width: 100%;
+
+        @media (width >= 48rem) {
+            width: 256px;
+        }
+
+        @media (width >= 63.25rem) {
+            width: 296px;
+        }
+    }
+
+    .page-sidebar-width-large {
+        width: 100%;
+
+        @media (width >= 48rem) {
+            width: 256px;
+        }
+
+        @media (width >= 63.25rem) {
+            width: 320px;
+        }
+    }
+
+    .page-sidebar-start {
+        order: -1;
+    }
+
+    .page-sidebar-end {
+        order: 1;
+    }
+
+    .page-sidebar-padding-none {
+        padding: 0;
+    }
+
+    .page-sidebar-padding-condensed {
+        padding: var(--base-size-8);
+    }
+
+    .page-sidebar-padding-normal {
+        padding: var(--base-size-16);
+    }
+
+    .page-sidebar-padding-spacious {
+        padding: var(--base-size-24);
+    }
+
+    .page-sidebar-gap-none {
+        --page-sidebar-gap: 0px;
+    }
+
+    .page-sidebar-gap-condensed {
+        --page-sidebar-gap: var(--stack-gap-condensed);
+    }
+
+    .page-sidebar-gap-normal {
+        --page-sidebar-gap: var(--stack-gap-normal);
+    }
+
+    .page-sidebar-gap-spacious {
+        --page-sidebar-gap: var(--stack-gap-spacious);
+    }
+
+    /* A sidebar that stays put is as tall as the viewport, so anything past that has to
+       scroll within it. Where the content of a sidebar runs long enough to matter, wrap it in
+       a ScrollableRegion, which only becomes a landmark once it really does scroll */
+    .page-sidebar-sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+    }
+
+    /* The line falls on whichever edge faces the content, so it always reads as the join
+       between the sidebar and the page rather than as an edge of the viewport */
+    .page-sidebar-border-start {
+        border-style: solid;
+        border-inline-end-width: var(--border-width-thin);
+        border-inline-end-color: var(--border-color-default);
+    }
+
+    .page-sidebar-border-end {
+        border-style: solid;
+        border-inline-start-width: var(--border-width-thin);
+        border-inline-start-color: var(--border-color-default);
+    }
+
+    .page-sidebar-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--stack-gap-condensed);
+        min-width: 0;
+    }
+
+    .page-sidebar-title {
+        margin: 0;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .page-sidebar-actions {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The body takes whatever room is left between the head and the foot, so the foot is
+       pushed to the bottom however little stands above it. The runs inside are spaced by the
+       sidebar's own scale, so they read the same as the parts standing beside them */
+    .page-sidebar-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: var(--page-sidebar-gap);
+        min-width: 0;
+    }
+
+    /* A run cannot be pushed wider than the sidebar by anything inside it that overflows */
+    .page-sidebar-section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--stack-gap-condensed);
+        min-width: 0;
+    }
+
+    /* The room left over falls above the footer, so it is pushed to the foot of the sidebar
+       however little the rest of it holds */
+    .page-sidebar-footer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--stack-gap-condensed);
+        min-width: 0;
+        margin-top: auto;
+        padding-top: var(--base-size-8);
+    }
+}

@@ -1,0 +1,474 @@
+@layer components {
+    /* Every part of the table has a place on this grid, so the title, the actions and the
+       footer stay put whichever of them a caller gives */
+    .data-table-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "title actions"
+            "divider divider"
+            "subtitle subtitle"
+            "filter filter"
+            "table table"
+            "footer footer";
+        column-gap: var(--base-size-8);
+    }
+
+    /* The table is given room below whatever heads it */
+    .data-table-container-spacing {
+        & [data-component="Table.Title"] + [data-component="ScrollableRegion"],
+        & [data-component="Table.Subtitle"] + [data-component="ScrollableRegion"],
+        & [data-component="Table.Actions"] + [data-component="ScrollableRegion"] {
+            margin-top: var(--base-size-8);
+        }
+    }
+
+    .data-table-wrapper {
+        grid-area: table;
+    }
+
+    /* The bottom corners are only the table's own where nothing follows it. With a footer
+       below, that is what rounds them off */
+    .data-table-wrapper:last-child {
+        & tbody tr:last-of-type > *:first-child {
+            border-end-start-radius: var(--table-border-radius);
+        }
+
+        & tbody tr:last-of-type > *:last-child {
+            border-end-end-radius: var(--table-border-radius);
+        }
+    }
+
+    /* The columns are laid out on the table's own grid, which the head, the body and each
+       row take part in as a subgrid */
+    .data-table {
+        --table-border-radius: var(--border-radius-medium);
+
+        display: grid;
+        grid-area: table;
+        grid-template-columns: var(--table-grid-template-columns);
+        width: 100%;
+        background-color: var(--background-color-default);
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: var(--text-body-size-small);
+        line-height: calc(20 / 12);
+
+        /* The borders belong to the table rather than to the cells, since which edge a cell
+           draws depends on where it stands in the row. They key on that position rather than
+           on what the cell calls itself, because a sortable header reports itself as
+           Table.SortHeader and would otherwise be missed */
+        & tr > *:first-child {
+            border-inline-start-width: var(--border-width-thin);
+            border-inline-start-color: var(--border-color-default);
+        }
+
+        & tr > *:last-child {
+            border-inline-end-width: var(--border-width-thin);
+            border-inline-end-color: var(--border-color-default);
+        }
+
+        /* The top corners are rounded on the outermost cells of the head, so the border reads
+           as one box */
+        & thead tr:first-of-type > *:first-child {
+            border-start-start-radius: var(--table-border-radius);
+        }
+
+        & thead tr:first-of-type > *:last-child {
+            border-start-end-radius: var(--table-border-radius);
+        }
+
+        /* The type lines up with the title above the table whatever padding the cells are
+           given */
+        & tr > *:first-child:not([data-cell-skeleton]),
+        & tr > *:first-child [data-cell-skeleton-item] {
+            padding-inline-start: var(--base-size-16);
+        }
+
+        & tr > *:last-child:not([data-cell-skeleton]),
+        & tr > *:last-child [data-cell-skeleton-item] {
+            padding-inline-end: var(--base-size-16);
+        }
+
+        & tbody tr:hover > *:not([data-cell-skeleton]) {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+    }
+
+    /* The head, the body and each row take part in the table's own grid, so cells line up in
+       columns the whole way down. `contents` is the fallback for a browser without subgrid,
+       which lays the cells out on the grid but drops the rows themselves */
+    .data-table-subgrid {
+        display: contents;
+
+        @supports (grid-template-columns: subgrid) {
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: -1 / 1;
+        }
+    }
+
+    .data-table-cell-padding-condensed {
+        --table-cell-padding-block: var(--base-size-4);
+        --table-cell-padding-inline: var(--base-size-8);
+    }
+
+    .data-table-cell-padding-normal {
+        --table-cell-padding-block: var(--base-size-8);
+        --table-cell-padding-inline: var(--base-size-12);
+    }
+
+    .data-table-cell-padding-spacious {
+        --table-cell-padding-block: var(--base-size-12);
+        --table-cell-padding-inline: var(--base-size-16);
+    }
+
+    .data-table-title {
+        grid-area: title;
+        align-self: center;
+        margin: 0;
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--base-size-20);
+    }
+
+    .data-table-subtitle {
+        grid-area: subtitle;
+        margin: 0;
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-title-line-height-small);
+    }
+
+    .data-table-actions {
+        grid-area: actions;
+        display: flex;
+        align-items: center;
+        column-gap: var(--base-size-8);
+        justify-self: end;
+    }
+
+    .data-table-divider {
+        grid-area: divider;
+        width: 100%;
+        height: 1px;
+        margin-top: var(--base-size-16);
+        margin-bottom: var(--base-size-8);
+        background-color: var(--border-color-default);
+    }
+
+    .data-table-cell {
+        display: flex;
+        align-items: center;
+        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+        text-align: start;
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-default);
+    }
+
+    .data-table-cell-end {
+        justify-content: flex-end;
+        text-align: end;
+    }
+
+    /* A cell that names its row reads as a heading for it, so it is set apart the same way */
+    .data-table-cell-row-header {
+        color: var(--foreground-color-default);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .data-table-cell-placeholder {
+        color: var(--foreground-color-muted);
+    }
+
+    .data-table-header {
+        display: flex;
+        align-items: center;
+        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+        text-align: start;
+        background-color: var(--background-color-muted);
+        border-block-width: var(--border-width-thin);
+        border-block-color: var(--border-color-default);
+        color: var(--foreground-color-muted);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .data-table-header-end {
+        justify-content: flex-end;
+        text-align: end;
+    }
+
+    /* A sorted column is the one the reader is looking at, so it is set in the plain colour */
+    .data-table-header-sorted {
+        &[aria-sort="ascending"],
+        &[aria-sort="descending"] {
+            color: var(--foreground-color-default);
+        }
+    }
+
+    .data-table-sort-header-button {
+        display: flex;
+        align-items: center;
+        column-gap: var(--base-size-8);
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        appearance: none;
+        text-align: start;
+        background-color: transparent;
+        border: 0;
+        color: inherit;
+        font: inherit;
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* An end aligned column keeps its label against the edge, so the icon moves inside it */
+    .data-table-sort-header-button-end {
+        flex-direction: row-reverse;
+    }
+
+    .data-table-sort-header-icon {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+
+    /* An unsorted column only shows what pressing it would do once the reader is on it */
+    .data-table-sort-header-icon-resting {
+        visibility: hidden;
+
+        .data-table-sort-header:hover &,
+        .data-table-sort-header:focus-within & {
+            visibility: visible;
+        }
+    }
+
+    /* The whole column is one cell, so the placeholder rows can be drawn down it without the
+       table having to know how many rows the data will bring */
+    .data-table-skeleton-cell {
+        padding: 0;
+    }
+
+    .data-table-skeleton-items {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        /* The lines run to different widths, so a column of them reads as text rather than as
+           a block of bars */
+        & > *:nth-of-type(5n + 1) {
+            --table-skeleton-item-width: 85%;
+        }
+
+        & > *:nth-of-type(5n + 2) {
+            --table-skeleton-item-width: 67.5%;
+        }
+
+        & > *:nth-of-type(5n + 3) {
+            --table-skeleton-item-width: 80%;
+        }
+
+        & > *:nth-of-type(5n + 4) {
+            --table-skeleton-item-width: 60%;
+        }
+
+        & > *:nth-of-type(5n + 5) {
+            --table-skeleton-item-width: 75%;
+        }
+    }
+
+    .data-table-skeleton-item {
+        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+
+        &:not(:last-child) {
+            border-bottom-width: var(--border-width-thin);
+            border-bottom-color: var(--border-color-default);
+        }
+
+        & [data-component="SkeletonText"] {
+            width: var(--table-skeleton-item-width);
+        }
+    }
+
+    .data-table-pagination {
+        grid-area: footer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: var(--base-size-16);
+        width: 100%;
+        padding: var(--base-size-8) var(--base-size-16);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-top-width: 0;
+        border-color: var(--border-color-default);
+        border-end-start-radius: var(--border-radius-medium);
+        border-end-end-radius: var(--border-radius-medium);
+    }
+
+    .data-table-pagination-range {
+        margin: 0;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    .data-table-pagination-steps {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* The two ends stand away from the page numbers between them */
+    .data-table-pagination-step {
+        &:first-of-type {
+            margin-inline-end: var(--base-size-16);
+        }
+
+        &:last-of-type {
+            margin-inline-start: var(--base-size-16);
+        }
+    }
+
+    .data-table-pagination-button {
+        appearance: none;
+        user-select: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        font-family: inherit;
+        font-size: var(--text-body-size-medium);
+        line-height: calc(20 / 14);
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    .data-table-pagination-jump {
+        display: flex;
+        align-items: center;
+        column-gap: var(--base-size-4);
+        padding: var(--base-size-8);
+        color: var(--foreground-color-muted);
+    }
+
+    /* A step with nowhere to go reads as text rather than as something to press */
+    .data-table-pagination-jump-enabled {
+        cursor: pointer;
+        color: var(--foreground-color-accent);
+
+        &:hover,
+        &:focus {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+    }
+
+    .data-table-pagination-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: var(--base-size-32);
+        min-height: var(--base-size-32);
+        padding-block: var(--base-size-8);
+        padding-inline: calc((var(--base-size-32) - var(--base-size-20)) / 2);
+        cursor: pointer;
+        color: inherit;
+
+        &:hover,
+        &:focus {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+    }
+
+    /* The ring is drawn inside the fill, so it still reads against it */
+    .data-table-pagination-page-active {
+        background-color: var(--background-color-accent-emphasis);
+        color: var(--foreground-color-on-emphasis);
+
+        &:hover,
+        &:focus {
+            background-color: var(--background-color-accent-emphasis);
+        }
+
+        &:focus-visible {
+            box-shadow: inset 0 0 0 var(--border-width-thicker) var(--foreground-color-on-emphasis);
+        }
+    }
+
+    .data-table-pagination-truncation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: var(--base-size-32);
+        min-height: var(--base-size-32);
+        user-select: none;
+    }
+
+    .data-table-pagination-icon {
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+
+    /* Only the two steps survive once the page numbers are hidden, so the margin between them
+       comes off too. The widths match --breakpoint-medium and --breakpoint-xxlarge in
+       variables.css */
+    .data-table-pagination-hidden-range-narrow {
+        @media (width < 48rem) {
+            & > *:not(:first-child):not(:last-child) {
+                display: none;
+            }
+
+            & > *:first-child {
+                margin-inline-end: 0;
+            }
+
+            & > *:last-child {
+                margin-inline-start: 0;
+            }
+        }
+    }
+
+    .data-table-pagination-hidden-range-regular {
+        @media (48rem <= width < 87.5rem) {
+            & > *:not(:first-child):not(:last-child) {
+                display: none;
+            }
+
+            & > *:first-child {
+                margin-inline-end: 0;
+            }
+
+            & > *:last-child {
+                margin-inline-start: 0;
+            }
+        }
+    }
+
+    .data-table-pagination-hidden-range-wide {
+        @media (width >= 87.5rem) {
+            & > *:not(:first-child):not(:last-child) {
+                display: none;
+            }
+
+            & > *:first-child {
+                margin-inline-end: 0;
+            }
+
+            & > *:last-child {
+                margin-inline-start: 0;
+            }
+        }
+    }
+}

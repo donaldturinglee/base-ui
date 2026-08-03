@@ -5,10 +5,8 @@ import { Spinner } from "../spinner";
 import type { SelectPanelLoadingProps } from "./SelectPanel.types";
 
 const classes = {
-    // Stands in place of the list, so it is given the room the list would have had rather
-    // than letting the panel close up around a spinner
-    root: "flex grow flex-col items-center justify-center h-full min-h-[var(--select-panel-body-min-height)] gap-[var(--stack-gap-normal)]",
-    text: "[font-size:var(--text-body-size-medium)] text-foreground-muted",
+    root: "select-panel-loading",
+    text: "select-panel-loading-text",
 };
 
 // Stands in place of the list while the items are being fetched. It is a live region, so the

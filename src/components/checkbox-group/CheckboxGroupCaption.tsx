@@ -5,7 +5,7 @@ import { CheckboxGroupContext } from "./CheckboxGroupContext";
 import type { CheckboxGroupCaptionProps } from "./CheckboxGroup.types";
 
 const classes = {
-    root: "block [font-size:var(--text-body-size-medium)] text-foreground-muted",
+    root: "checkbox-group-caption",
 };
 
 function CheckboxGroupCaption(

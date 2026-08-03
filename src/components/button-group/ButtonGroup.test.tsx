@@ -23,8 +23,7 @@ describe("ButtonGroup", () => {
     it("lays its children out in a row of their own", () => {
         render(<ButtonGroup data-testid="group" />);
         const group = screen.getByTestId("group");
-        expect(group).toHaveClass("inline-flex");
-        expect(group).toHaveClass("isolate");
+        expect(group).toHaveClass("button-group");
     });
 
     it("wraps each child in an item of its own", () => {
@@ -48,8 +47,7 @@ describe("ButtonGroup", () => {
             </ButtonGroup>,
         );
         for (const item of getItems(screen.getByTestId("group"))) {
-            expect(item).toHaveClass("relative");
-            expect(item).toHaveClass("-me-px");
+            expect(item).toHaveClass("button-group-item");
         }
     });
 
@@ -61,8 +59,7 @@ describe("ButtonGroup", () => {
             </ButtonGroup>,
         );
         for (const item of getItems(screen.getByTestId("group"))) {
-            expect(item).toHaveClass("[&_button]:rounded-none");
-            expect(item).toHaveClass("[&_a]:rounded-none");
+            expect(item).toHaveClass("button-group-item");
         }
     });
 
@@ -75,12 +72,12 @@ describe("ButtonGroup", () => {
             </ButtonGroup>,
         );
         const [first, middle, last] = getItems(screen.getByTestId("group"));
-        expect(first).toHaveClass("[&_button]:rounded-s-[var(--border-radius-medium)]");
-        expect(first).not.toHaveClass("[&_button]:rounded-e-[var(--border-radius-medium)]");
-        expect(middle).not.toHaveClass("[&_button]:rounded-s-[var(--border-radius-medium)]");
-        expect(middle).not.toHaveClass("[&_button]:rounded-e-[var(--border-radius-medium)]");
-        expect(last).toHaveClass("[&_button]:rounded-e-[var(--border-radius-medium)]");
-        expect(last).not.toHaveClass("[&_button]:rounded-s-[var(--border-radius-medium)]");
+        expect(first).toHaveClass("button-group-item-first");
+        expect(first).not.toHaveClass("button-group-item-last");
+        expect(middle).not.toHaveClass("button-group-item-first");
+        expect(middle).not.toHaveClass("button-group-item-last");
+        expect(last).toHaveClass("button-group-item-last");
+        expect(last).not.toHaveClass("button-group-item-first");
     });
 
     it("rounds both edges of a group holding a single button", () => {
@@ -90,8 +87,8 @@ describe("ButtonGroup", () => {
             </ButtonGroup>,
         );
         const [only] = getItems(screen.getByTestId("group"));
-        expect(only).toHaveClass("[&_button]:rounded-s-[var(--border-radius-medium)]");
-        expect(only).toHaveClass("[&_button]:rounded-e-[var(--border-radius-medium)]");
+        expect(only).toHaveClass("button-group-item-first");
+        expect(only).toHaveClass("button-group-item-last");
     });
 
     it("leaves out the children that are not there", () => {
@@ -104,7 +101,7 @@ describe("ButtonGroup", () => {
         );
         const items = getItems(screen.getByTestId("group"));
         expect(items).toHaveLength(1);
-        expect(items[0]).toHaveClass("[&_button]:rounded-e-[var(--border-radius-medium)]");
+        expect(items[0]).toHaveClass("button-group-item-last");
     });
 
     it("respects the role", () => {

@@ -33,12 +33,12 @@ describe("Spinner", () => {
 
     it("applies the requested size to the icon", () => {
         const { container } = render(<Spinner size="large" />);
-        expect(container.querySelector("svg")).toHaveClass("size-[var(--spinner-size-large)]");
+        expect(container.querySelector("svg")).toHaveClass("spinner-large");
     });
 
     it("defaults to the medium size", () => {
         const { container } = render(<Spinner />);
-        expect(container.querySelector("svg")).toHaveClass("size-[var(--spinner-size-medium)]");
+        expect(container.querySelector("svg")).toHaveClass("spinner-medium");
     });
 
     it("tags the root element with a data-component attribute", () => {

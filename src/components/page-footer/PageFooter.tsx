@@ -13,38 +13,29 @@ import type {
 } from "./PageFooter.types";
 
 const classes = {
-    // Three columns: the mark, whatever room is left over for the closing line, and the
-    // actions at the end of the row
-    root: "grid grid-cols-[auto_1fr_auto] text-foreground-muted",
-    // The footer carries its own type, so that every part standing in it is set against the
-    // same line
-    text: "[font-size:var(--page-footer-text-size)] [font-weight:var(--base-text-weight-normal)] leading-[var(--page-footer-text-line-height)]",
+    root: "page-footer",
+    text: "page-footer-text",
     variant: {
-        normal: "[--page-footer-text-size:var(--text-body-size-medium)] [--page-footer-text-line-height:var(--text-body-line-height-medium)]",
-        condensed:
-            "[--page-footer-text-size:var(--text-body-size-small)] [--page-footer-text-line-height:var(--text-body-line-height-small)]",
+        normal: "page-footer-normal",
+        condensed: "page-footer-condensed",
     } satisfies Record<PageFooterVariant, string>,
     narrowVariant: {
-        normal: "max-medium:[--page-footer-text-size:var(--text-body-size-medium)] max-medium:[--page-footer-text-line-height:var(--text-body-line-height-medium)]",
-        condensed:
-            "max-medium:[--page-footer-text-size:var(--text-body-size-small)] max-medium:[--page-footer-text-line-height:var(--text-body-line-height-small)]",
+        normal: "page-footer-narrow-normal",
+        condensed: "page-footer-narrow-condensed",
     } satisfies Record<PageFooterVariant, string>,
     regularVariant: {
-        normal: "medium:max-xxlarge:[--page-footer-text-size:var(--text-body-size-medium)] medium:max-xxlarge:[--page-footer-text-line-height:var(--text-body-line-height-medium)]",
-        condensed:
-            "medium:max-xxlarge:[--page-footer-text-size:var(--text-body-size-small)] medium:max-xxlarge:[--page-footer-text-line-height:var(--text-body-line-height-small)]",
+        normal: "page-footer-regular-normal",
+        condensed: "page-footer-regular-condensed",
     } satisfies Record<PageFooterVariant, string>,
     wideVariant: {
-        normal: "xxlarge:[--page-footer-text-size:var(--text-body-size-medium)] xxlarge:[--page-footer-text-line-height:var(--text-body-line-height-medium)]",
-        condensed:
-            "xxlarge:[--page-footer-text-size:var(--text-body-size-small)] xxlarge:[--page-footer-text-line-height:var(--text-body-line-height-small)]",
+        normal: "page-footer-wide-normal",
+        condensed: "page-footer-wide-condensed",
     } satisfies Record<PageFooterVariant, string>,
-    border: "border-solid border-t-[length:var(--border-width-thin)] border-t-border-default pt-[var(--base-size-8)]",
+    border: "page-footer-border",
     borderWhen: {
-        narrow: "max-medium:border-solid max-medium:border-t-[length:var(--border-width-thin)] max-medium:border-t-border-default max-medium:pt-[var(--base-size-8)]",
-        regular:
-            "medium:max-xxlarge:border-solid medium:max-xxlarge:border-t-[length:var(--border-width-thin)] medium:max-xxlarge:border-t-border-default medium:max-xxlarge:pt-[var(--base-size-8)]",
-        wide: "xxlarge:border-solid xxlarge:border-t-[length:var(--border-width-thin)] xxlarge:border-t-border-default xxlarge:pt-[var(--base-size-8)]",
+        narrow: "page-footer-border-narrow",
+        regular: "page-footer-border-regular",
+        wide: "page-footer-border-wide",
     } satisfies Record<PageFooterViewport, string>,
 };
 

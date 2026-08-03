@@ -7,23 +7,14 @@ const classes = {
     srOnly: "sr-only",
 };
 
-const counterLabelVariants = cva(
-    [
-        "inline-block px-[var(--base-size-6)] py-[var(--base-size-2)] leading-none [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)]",
-        "border-solid border-[length:var(--border-width-thin)] border-[color:var(--counter-border-color)] rounded-[var(--border-radius-full)]",
-        // A counter with nothing to count takes up no space
-        "empty:hidden",
-    ],
-    {
-        variants: {
-            variant: {
-                primary:
-                    "text-foreground-on-emphasis bg-[var(--counter-background-color-emphasis)]",
-                secondary: "text-foreground-default bg-[var(--counter-background-color-muted)]",
-            } satisfies Record<CounterLabelVariant, string>,
-        },
+const counterLabelVariants = cva("counter-label", {
+    variants: {
+        variant: {
+            primary: "counter-label-primary",
+            secondary: "counter-label-secondary",
+        } satisfies Record<CounterLabelVariant, string>,
     },
-);
+});
 
 function CounterLabel<As extends React.ElementType = "span">(
     props: CounterLabelProps<As>,

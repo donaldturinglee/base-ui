@@ -16,13 +16,10 @@ import { getAccessibleName, getFirstChildItem } from "./treeNavigation";
 import type { TreeViewSubTreeProps } from "./TreeView.types";
 
 const classes = {
-    root: "list-none m-0 p-0",
-    // A row standing in for one still being fetched, drawn at the height a real row would
-    // stand at so that the tree does not jump as they arrive
-    skeletonRow:
-        "flex items-center gap-[var(--base-size-8)] h-[2rem] [@media(pointer:coarse)]:h-[2.75rem]",
-    skeletonText: "w-[var(--tree-view-skeleton-width)]",
-    muted: "text-foreground-muted",
+    root: "tree-view-sub-tree",
+    skeletonRow: "tree-view-skeleton-row",
+    skeletonText: "tree-view-skeleton-text",
+    muted: "tree-view-muted",
     hidden: "sr-only",
 };
 

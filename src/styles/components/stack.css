@@ -1,0 +1,184 @@
+@layer components {
+    /* The gap scale sets `--stack-gap`, so leaving `gap` unset falls back to the normal step */
+    .stack {
+        display: flex;
+        align-content: flex-start;
+        gap: var(--stack-gap, var(--stack-gap-normal));
+    }
+
+    .stack-gap-none {
+        --stack-gap: 0;
+    }
+
+    .stack-gap-tight {
+        --stack-gap: var(--base-size-4);
+    }
+
+    .stack-gap-condensed {
+        --stack-gap: var(--stack-gap-condensed);
+    }
+
+    .stack-gap-cozy {
+        --stack-gap: var(--base-size-12);
+    }
+
+    .stack-gap-normal {
+        --stack-gap: var(--stack-gap-normal);
+    }
+
+    .stack-gap-spacious {
+        --stack-gap: var(--stack-gap-spacious);
+    }
+
+    .stack-horizontal {
+        flex-direction: row;
+    }
+
+    .stack-vertical {
+        flex-direction: column;
+    }
+
+    .stack-align-stretch {
+        align-items: stretch;
+    }
+
+    .stack-align-start {
+        align-items: flex-start;
+    }
+
+    .stack-align-center {
+        align-items: center;
+    }
+
+    .stack-align-end {
+        align-items: flex-end;
+    }
+
+    .stack-align-baseline {
+        align-items: baseline;
+    }
+
+    .stack-wrap {
+        flex-wrap: wrap;
+    }
+
+    .stack-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    .stack-justify-start {
+        justify-content: flex-start;
+    }
+
+    .stack-justify-center {
+        justify-content: center;
+    }
+
+    .stack-justify-end {
+        justify-content: flex-end;
+    }
+
+    .stack-justify-space-between {
+        justify-content: space-between;
+    }
+
+    .stack-justify-space-evenly {
+        justify-content: space-evenly;
+    }
+
+    .stack-padding-none {
+        padding: 0;
+    }
+
+    .stack-padding-tight {
+        padding: var(--base-size-4);
+    }
+
+    .stack-padding-condensed {
+        padding: var(--stack-padding-condensed);
+    }
+
+    .stack-padding-cozy {
+        padding: var(--base-size-12);
+    }
+
+    .stack-padding-normal {
+        padding: var(--stack-padding-normal);
+    }
+
+    .stack-padding-spacious {
+        padding: var(--stack-padding-spacious);
+    }
+
+    /* The block and inline sets come after the whole-box set, so either one overrides the
+       padding on its own axis */
+    .stack-padding-block-none {
+        padding-block: 0;
+    }
+
+    .stack-padding-block-tight {
+        padding-block: var(--base-size-4);
+    }
+
+    .stack-padding-block-condensed {
+        padding-block: var(--stack-padding-condensed);
+    }
+
+    .stack-padding-block-cozy {
+        padding-block: var(--base-size-12);
+    }
+
+    .stack-padding-block-normal {
+        padding-block: var(--stack-padding-normal);
+    }
+
+    .stack-padding-block-spacious {
+        padding-block: var(--stack-padding-spacious);
+    }
+
+    .stack-padding-inline-none {
+        padding-inline: 0;
+    }
+
+    .stack-padding-inline-tight {
+        padding-inline: var(--base-size-4);
+    }
+
+    .stack-padding-inline-condensed {
+        padding-inline: var(--stack-padding-condensed);
+    }
+
+    .stack-padding-inline-cozy {
+        padding-inline: var(--base-size-12);
+    }
+
+    .stack-padding-inline-normal {
+        padding-inline: var(--stack-padding-normal);
+    }
+
+    .stack-padding-inline-spacious {
+        padding-inline: var(--stack-padding-spacious);
+    }
+
+    /* `flex: initial` keeps items at their own size until `grow` or `shrink` opts out */
+    .stack-item {
+        flex: initial;
+        min-width: 0;
+    }
+
+    .stack-item-grow {
+        flex-grow: 1;
+    }
+
+    .stack-item-no-grow {
+        flex-grow: 0;
+    }
+
+    .stack-item-shrink {
+        flex-shrink: 1;
+    }
+
+    .stack-item-no-shrink {
+        flex-shrink: 0;
+    }
+}

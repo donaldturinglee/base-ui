@@ -5,25 +5,20 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SelectPanelMessageProps, SelectPanelMessageVariant } from "./SelectPanel.types";
 
 const classes = {
-    // A full message stands in place of the list, so it is given the room the list would
-    // have had rather than letting the panel close up around a line of text
-    full: "flex grow flex-col items-center justify-center h-full min-h-[var(--select-panel-body-min-height)] px-[var(--base-size-24)] gap-[var(--base-size-4)] text-center [&_a]:[color:inherit] [&_a]:underline",
-    fullIcon: "mb-[var(--base-size-8)] size-[var(--base-size-24)]",
-    fullTitle:
-        "[font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-medium)]",
-    fullContent:
-        "flex flex-col items-center gap-[var(--stack-gap-condensed)] [font-size:var(--text-body-size-medium)] text-foreground-muted",
-    // An inline message stands above the list rather than in place of it
-    inline: "flex gap-[var(--stack-gap-condensed)] px-[var(--base-size-16)] py-[var(--base-size-12)] [font-size:var(--text-body-size-small)] border-solid border-b-[length:var(--border-width-thin)] [&_a]:[color:inherit] [&_a]:underline",
-    inlineIcon: "shrink-0 mt-[var(--base-size-2)] size-[var(--base-size-16)]",
+    full: "select-panel-message-full",
+    fullIcon: "select-panel-message-full-icon",
+    fullTitle: "select-panel-message-full-title",
+    fullContent: "select-panel-message-full-content",
+    inline: "select-panel-message-inline",
+    inlineIcon: "select-panel-message-inline-icon",
     variant: {
-        warning: "text-foreground-attention",
-        error: "text-foreground-danger",
+        warning: "select-panel-message-warning",
+        error: "select-panel-message-error",
         empty: "",
     } satisfies Record<SelectPanelMessageVariant, string>,
     inlineVariant: {
-        warning: "bg-background-attention-muted border-b-border-attention-muted",
-        error: "bg-background-danger-muted border-b-border-danger-muted",
+        warning: "select-panel-message-inline-warning",
+        error: "select-panel-message-inline-error",
         empty: "",
     } satisfies Record<SelectPanelMessageVariant, string>,
 };

@@ -16,30 +16,23 @@ import type {
 } from "./InlineMessage.types";
 
 const classes = {
-    // The icon is held to the height of a line of the text beside it, so it stands against the
-    // first line rather than above or below it
-    icon: "grid place-items-center min-h-[calc(var(--inline-message-line-height)_*_var(--inline-message-font-size))] [&>svg]:size-[var(--inline-message-icon-size)]",
+    icon: "inline-message-icon",
 };
 
-const inlineMessageVariants = cva(
-    // The icon stands in a column of its own, so a message running onto a second line keeps
-    // clear of it rather than wrapping underneath it
-    "grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-[var(--base-size-8)] [font-size:var(--inline-message-font-size)] [line-height:var(--inline-message-line-height)] [color:var(--inline-message-foreground-color)] [--inline-message-foreground-color:var(--foreground-color-default)]",
-    {
-        variants: {
-            size: {
-                small: "[--inline-message-font-size:var(--text-body-size-small)] [--inline-message-line-height:var(--text-body-line-height-small)] [--inline-message-icon-size:var(--base-size-12)]",
-                medium: "[--inline-message-font-size:var(--text-body-size-medium)] [--inline-message-line-height:var(--text-body-line-height-medium)] [--inline-message-icon-size:var(--base-size-16)]",
-            } satisfies Record<InlineMessageSize, string>,
-            variant: {
-                critical: "[--inline-message-foreground-color:var(--foreground-color-danger)]",
-                success: "[--inline-message-foreground-color:var(--foreground-color-success)]",
-                unavailable: "[--inline-message-foreground-color:var(--foreground-color-muted)]",
-                warning: "[--inline-message-foreground-color:var(--foreground-color-attention)]",
-            } satisfies Record<InlineMessageVariant, string>,
-        },
+const inlineMessageVariants = cva("inline-message", {
+    variants: {
+        size: {
+            small: "inline-message-small",
+            medium: "inline-message-medium",
+        } satisfies Record<InlineMessageSize, string>,
+        variant: {
+            critical: "inline-message-critical",
+            success: "inline-message-success",
+            unavailable: "inline-message-unavailable",
+            warning: "inline-message-warning",
+        } satisfies Record<InlineMessageVariant, string>,
     },
-);
+});
 
 const iconForVariant = {
     critical: ErrorCircleRegular,

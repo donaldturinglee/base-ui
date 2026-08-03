@@ -4,9 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TimelineAvatarProps } from "./Timeline.types";
 
 const classes = {
-    // The avatar stands out in the gutter beside the rail, lined up with the actor avatars
-    // around the timeline, and centred against the badge it belongs to
-    root: "absolute z-1 -translate-y-1/2 start-[calc(-1_*_(var(--base-size-40)_+_var(--base-size-32)))] top-[calc(var(--base-size-16)_+_var(--base-size-16))]",
+    root: "timeline-avatar",
 };
 
 function TimelineAvatar(

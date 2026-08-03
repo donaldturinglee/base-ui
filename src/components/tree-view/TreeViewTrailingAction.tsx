@@ -7,9 +7,7 @@ import { TreeViewItemContext } from "./TreeViewContext";
 import type { TreeViewTrailingActionProps } from "./TreeView.types";
 
 const classes = {
-    // Stands at the end of the row, in the column left over once everything else has been
-    // given its width
-    root: "flex [grid-column:5] text-foreground-muted",
+    root: "tree-view-trailing-action",
     button: "shrink",
     hidden: "sr-only",
 };

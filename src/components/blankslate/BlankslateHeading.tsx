@@ -4,9 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { BlankslateHeadingProps } from "./Blankslate.types";
 
 const classes = {
-    // The size prop sets the type and the block margins, so both fall back to nothing when
-    // the heading is used outside a blankslate
-    root: "text-center [text-wrap:balance] [margin-inline:0] [margin-block:var(--blankslate-heading-margin-block,0)] [font:var(--blankslate-heading-text)]",
+    root: "blankslate-heading",
 };
 
 function BlankslateHeading(

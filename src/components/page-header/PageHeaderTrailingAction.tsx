@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-start-4 row-start-2 flex items-center ps-[var(--base-size-8)] h-[calc(var(--page-header-title-line-height)_*_1em)]",
+    root: "page-header-trailing-action",
 };
 
 // Something to press straight after the title, which acts on the title itself: renaming it,

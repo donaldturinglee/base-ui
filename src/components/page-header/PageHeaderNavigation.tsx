@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderNavigationProps } from "./PageHeader.types";
 
 const classes = {
-    root: "col-span-full row-start-4 block pt-[var(--base-size-8)] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-normal)] leading-[var(--text-body-line-height-medium)]",
+    root: "page-header-navigation",
 };
 
 // Moves between the pages that belong with this one, standing at the foot of the header.

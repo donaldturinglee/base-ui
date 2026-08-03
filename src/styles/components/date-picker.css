@@ -1,0 +1,17 @@
+@layer components {
+    .date-picker {
+        display: inline-block;
+    }
+
+    /* A field that fills whatever holds it needs every wrapper between the two to fill it too */
+    .date-picker-block {
+        display: block;
+        width: 100%;
+    }
+
+    /* The calendar is given room of its own inside the overlay, which brings nothing but the
+       surface it stands on */
+    .date-picker-overlay {
+        padding: var(--overlay-padding-normal);
+    }
+}

@@ -5,7 +5,7 @@ import PageFooterRegion from "./PageFooterRegion";
 import type { PageFooterChildProps } from "./PageFooter.types";
 
 const classes = {
-    root: "col-start-3 row-start-2 flex min-w-max flex-row items-center justify-end ps-[var(--base-size-8)] gap-[var(--stack-gap-condensed)] h-[calc(var(--page-footer-text-line-height)_*_1em)]",
+    root: "page-footer-actions",
 };
 
 // What can be done from the foot of the page rather than from the page itself: picking a

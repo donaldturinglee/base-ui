@@ -5,9 +5,7 @@ import PageFooterRegion from "./PageFooterRegion";
 import type { PageFooterChildProps } from "./PageFooter.types";
 
 const classes = {
-    // As tall as a line of the closing row, so it sits against that row's first line however
-    // many lines the row runs to
-    root: "col-start-1 row-start-2 flex items-center pe-[var(--base-size-8)] h-[calc(var(--page-footer-text-line-height)_*_1em)]",
+    root: "page-footer-leading-visual",
 };
 
 // A mark, or something like one, standing before the closing line. It says whose page this

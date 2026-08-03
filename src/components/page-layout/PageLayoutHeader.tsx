@@ -7,11 +7,10 @@ import PageLayoutHorizontalDivider from "./PageLayoutHorizontalDivider";
 import type { PageLayoutHeaderProps } from "./PageLayout.types";
 
 const classes = {
-    root: "w-full mb-[var(--spacing)]",
-    // A region can be taken away for good, or only within a range of viewports
-    hidden: "data-[hidden=true]:hidden max-medium:data-[hidden-narrow=true]:hidden medium:data-[hidden-regular=true]:hidden xxlarge:data-[hidden-wide=true]:hidden",
-    content: "p-[var(--spacing)]",
-    divider: "mt-[var(--spacing)]",
+    root: "page-layout-header",
+    hidden: "page-layout-hidden",
+    content: "page-layout-region-content",
+    divider: "page-layout-header-divider",
 };
 
 function PageLayoutHeader(

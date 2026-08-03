@@ -37,7 +37,7 @@ describe("Blankslate", () => {
 
     it("wraps itself in a query container so it can respond to the room it has", () => {
         render(<Blankslate data-testid="blankslate">Empty</Blankslate>);
-        expect(screen.getByTestId("blankslate").parentElement).toHaveClass("@container/blankslate");
+        expect(screen.getByTestId("blankslate").parentElement).toHaveClass("blankslate-container");
     });
 
     it("tags the blankslate and its parts with data-component attributes", () => {
@@ -73,20 +73,14 @@ describe("Blankslate", () => {
         render(<Blankslate data-testid="blankslate">Empty</Blankslate>);
         const blankslate = screen.getByTestId("blankslate");
         expect(blankslate).toHaveAttribute("data-size", "medium");
-        expect(blankslate).toHaveClass(
-            "[--blankslate-heading-text:var(--text-title-shorthand-medium)]",
-        );
-        expect(blankslate).toHaveClass("[--blankslate-padding:var(--base-size-32)]");
+        expect(blankslate).toHaveClass("blankslate-medium");
+        expect(blankslate).toHaveClass("blankslate-padding-medium");
     });
 
     it("respects the size prop", () => {
-        const headings: Record<BlankslateSize, string> = {
-            small: "small",
-            medium: "medium",
-            large: "large",
-        };
+        const sizes: BlankslateSize[] = ["small", "medium", "large"];
 
-        for (const size of Object.keys(headings) as BlankslateSize[]) {
+        for (const size of sizes) {
             const { unmount } = render(
                 <Blankslate size={size} data-testid="blankslate">
                     Empty
@@ -94,9 +88,7 @@ describe("Blankslate", () => {
             );
             const blankslate = screen.getByTestId("blankslate");
             expect(blankslate).toHaveAttribute("data-size", size);
-            expect(blankslate).toHaveClass(
-                `[--blankslate-heading-text:var(--text-title-shorthand-${headings[size]})]`,
-            );
+            expect(blankslate).toHaveClass(`blankslate-${size}`);
             unmount();
         }
     });
@@ -107,9 +99,7 @@ describe("Blankslate", () => {
                 Empty
             </Blankslate>,
         );
-        expect(screen.getByTestId("blankslate")).toHaveClass(
-            "[--blankslate-visual-size:var(--base-size-24)]",
-        );
+        expect(screen.getByTestId("blankslate")).toHaveClass("blankslate-small");
     });
 
     it("opens the padding up when spacious", () => {
@@ -120,10 +110,8 @@ describe("Blankslate", () => {
         );
         const blankslate = screen.getByTestId("blankslate");
         expect(blankslate).toHaveAttribute("data-spacious", "true");
-        expect(blankslate).toHaveClass(
-            "[--blankslate-padding:var(--base-size-80)_var(--base-size-40)]",
-        );
-        expect(blankslate).not.toHaveClass("[--blankslate-padding:var(--base-size-32)]");
+        expect(blankslate).toHaveClass("blankslate-padding-spacious-medium");
+        expect(blankslate).not.toHaveClass("blankslate-padding-medium");
     });
 
     it("keeps a spacious small blankslate tighter than a spacious medium one", () => {
@@ -132,20 +120,14 @@ describe("Blankslate", () => {
                 Empty
             </Blankslate>,
         );
-        expect(screen.getByTestId("blankslate")).toHaveClass(
-            "[--blankslate-padding:var(--base-size-44)_var(--base-size-28)]",
-        );
+        expect(screen.getByTestId("blankslate")).toHaveClass("blankslate-padding-spacious-small");
     });
 
     it("drops to the small type scale in a narrow container", () => {
         render(<Blankslate data-testid="blankslate">Empty</Blankslate>);
         const blankslate = screen.getByTestId("blankslate");
-        expect(blankslate).toHaveClass(
-            "@max-[34rem]/blankslate:[--blankslate-heading-text:var(--text-title-shorthand-small)]",
-        );
-        expect(blankslate).toHaveClass(
-            "@max-[34rem]/blankslate:[--blankslate-padding:var(--base-size-20)]",
-        );
+        expect(blankslate).toHaveClass("blankslate-tight-type");
+        expect(blankslate).toHaveClass("blankslate-tight-padding-medium");
     });
 
     it("draws a border when bordered", () => {
@@ -156,8 +138,7 @@ describe("Blankslate", () => {
         );
         const blankslate = screen.getByTestId("blankslate");
         expect(blankslate).toHaveAttribute("data-border", "true");
-        expect(blankslate).toHaveClass("border-[length:var(--border-width-thin)]");
-        expect(blankslate).toHaveClass("rounded-[var(--border-radius-medium)]");
+        expect(blankslate).toHaveClass("blankslate-border");
     });
 
     it("constrains and centres itself when narrow", () => {
@@ -168,7 +149,7 @@ describe("Blankslate", () => {
         );
         const blankslate = screen.getByTestId("blankslate");
         expect(blankslate).toHaveAttribute("data-narrow", "true");
-        expect(blankslate).toHaveClass("max-w-[485px]", "mx-auto");
+        expect(blankslate).toHaveClass("blankslate-narrow");
     });
 
     it("leaves the state attributes unset by default", () => {
@@ -247,7 +228,7 @@ describe("Blankslate", () => {
 
         for (const name of ["Blankslate.PrimaryAction", "Blankslate.SecondaryAction"]) {
             expect(container.querySelector(`[data-component="${name}"]`)).toHaveClass(
-                "last-of-type:mb-[var(--blankslate-action-margin-block-end)]",
+                "blankslate-action",
             );
         }
     });

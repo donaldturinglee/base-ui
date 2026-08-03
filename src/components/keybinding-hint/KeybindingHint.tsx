@@ -6,9 +6,7 @@ import KeybindingHintChord from "./KeybindingHintChord";
 import type { KeybindingHintProps } from "./KeybindingHint.types";
 
 const classes = {
-    // A `kbd` is drawn as a key of its own, in a face of its own. Here the box is the chord's
-    // to draw, so what is left is stripped back to the text it stands in
-    root: "relative inline-block p-0 overflow-visible align-baseline whitespace-nowrap border-0 bg-transparent [font-family:inherit] [font-size:inherit] [line-height:unset] [color:inherit] [box-shadow:none]",
+    root: "keybinding-hint",
     hidden: "sr-only",
 };
 

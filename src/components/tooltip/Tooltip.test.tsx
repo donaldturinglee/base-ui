@@ -154,8 +154,8 @@ describe("Tooltip", () => {
 
         // The polyfill marks an open popover with a class rather than the pseudo-class,
         // and rewrites only the selectors it is asked for, not the stylesheet
-        expect(tooltip()).toHaveClass("[&:popover-open]:block");
-        expect(tooltip()).toHaveClass("[&[class~=':popover-open']]:block");
+        expect(tooltip()).toHaveClass("tooltip-open");
+        expect(tooltip()).toHaveClass("tooltip-open-polyfilled");
     });
 
     it("merges a custom className onto the tooltip", () => {

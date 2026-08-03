@@ -24,29 +24,21 @@ import { useChartWidth } from "./useChartWidth";
 import type { ChartProps, ChartReading, ChartResolvedSeries } from "./Chart.types";
 
 const classes = {
-    root: "m-0 flex flex-col gap-[var(--base-size-12)]",
-    caption: "flex flex-col gap-[var(--base-size-2)]",
-    title: "text-foreground-default [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)]",
-    description:
-        "text-foreground-muted [font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
-    // The readout is laid over the plot, so the plot is what it is measured against
-    plot: "relative w-full focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--base-size-2)] rounded-[var(--border-radius-medium)]",
-    svg: "block w-full overflow-visible",
-    // The lines behind the marks are there to be read past rather than looked at
-    grid: "stroke-border-muted [stroke-width:1]",
-    axis: "stroke-border-default [stroke-width:1]",
-    tick: "fill-foreground-muted [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums]",
-    label: "fill-foreground-muted [font-size:var(--text-body-size-small)]",
-    // The line the reader is on, drawn behind the marks so it never covers the data
-    crosshair: "stroke-border-default [stroke-width:1]",
-    line: "fill-none [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:2]",
-    // A wash rather than a block: the area says which way the line went, and the line itself
-    // is still what is read
-    area: "[fill-opacity:0.1]",
-    // The ring is the surface showing through, which keeps a marker legible where it crosses
-    // a line or another marker
-    marker: "stroke-background-default [stroke-width:2]",
-    empty: "grid place-items-center text-foreground-muted [font-size:var(--text-body-size-small)]",
+    root: "chart",
+    caption: "chart-caption",
+    title: "chart-title",
+    description: "chart-description",
+    plot: "chart-plot",
+    svg: "chart-svg",
+    grid: "chart-grid",
+    axis: "chart-axis",
+    tick: "chart-tick",
+    label: "chart-label",
+    crosshair: "chart-crosshair",
+    line: "chart-line",
+    area: "chart-area",
+    marker: "chart-marker",
+    empty: "chart-empty",
     hidden: "sr-only",
 };
 

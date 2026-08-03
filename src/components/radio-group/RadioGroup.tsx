@@ -10,12 +10,11 @@ import RadioGroupValidation from "./RadioGroupValidation";
 import type { RadioGroupProps } from "./RadioGroup.types";
 
 const classes = {
-    root: "p-0 m-0 border-none",
-    legend: "p-0",
-    legendVisible: "mb-[var(--base-size-8)]",
-    // The circles stack, each one spaced from the last
-    body: "flex flex-col list-none p-0 m-0 [&>*+*]:mt-[var(--base-size-8)]",
-    validation: "mt-[var(--base-size-8)]",
+    root: "radio-group",
+    legend: "radio-group-legend",
+    legendVisible: "radio-group-legend-visible",
+    body: "radio-group-body",
+    validation: "radio-group-validation-slot",
     hidden: "sr-only",
 };
 

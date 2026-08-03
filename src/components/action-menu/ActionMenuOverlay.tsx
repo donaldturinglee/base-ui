@@ -6,9 +6,7 @@ import type { AnchoredOverlayCloseGesture } from "../anchored-overlay";
 import type { ActionMenuOverlayProps } from "./ActionMenu.types";
 
 const classes = {
-    // The overlay is only as wide as the widest item, and gives way to a scrollbar rather
-    // than growing past the screen
-    container: "min-w-[var(--overlay-width-xsmall)] max-h-[inherit] overflow-auto",
+    container: "action-menu-overlay",
 };
 
 // The floating part of the menu, which is where the list of items goes. It stands against

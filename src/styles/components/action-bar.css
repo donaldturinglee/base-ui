@@ -1,0 +1,72 @@
+@layer components {
+    .action-bar {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+    }
+
+    /* A bar that is not flush is held in from the edges of whatever it is drawn on */
+    .action-bar-inset {
+        padding-inline: var(--base-size-8);
+    }
+
+    .action-bar-toolbar {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        min-width: 0;
+    }
+
+    /* The items are laid out as one row that is allowed to wrap. The row is only as tall as
+       one line of them, so whatever wraps below is cut off, and being cut off is how an item
+       knows it no longer fits */
+    .action-bar-items {
+        display: flex;
+        flex-grow: 1;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: flex-start;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .action-bar-size-small {
+        height: var(--control-small-size);
+    }
+
+    .action-bar-size-medium {
+        height: var(--control-medium-size);
+    }
+
+    .action-bar-size-large {
+        height: var(--control-large-size);
+    }
+
+    .action-bar-gap-none {
+        gap: 0;
+    }
+
+    .action-bar-gap-condensed {
+        gap: var(--base-size-4);
+    }
+
+    /* A standing line between one run of items and the next, drawn as a background so it
+       keeps its height whatever stands either side of it */
+    .action-bar-divider {
+        flex-shrink: 0;
+        align-self: center;
+        width: var(--border-width-thin);
+        height: var(--base-size-16);
+        margin-inline: var(--base-size-4);
+        background-color: var(--border-color-muted);
+    }
+
+    /* The items of a group stay together, so they are carried into the overflow menu all at
+       once rather than one at a time */
+    .action-bar-group {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--base-size-2);
+    }
+}

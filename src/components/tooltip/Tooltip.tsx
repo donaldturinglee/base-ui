@@ -11,26 +11,17 @@ import type { AnchorAlignment, AnchorSide } from "./anchoredPosition";
 import type { TooltipDelay, TooltipDirection, TooltipProps } from "./Tooltip.types";
 
 const classes = {
-    // The tooltip lives in the top layer as a popover, so it is laid out against the
-    // viewport and the coordinates worked out below are all it needs
-    root: "hidden absolute [inset:auto] m-auto w-max max-w-[250px] overflow-visible p-[var(--overlay-padding-block-condensed)_var(--overlay-padding-condensed)] rounded-[var(--border-radius-medium)] border-0 bg-[var(--tooltip-background-color)] [color:var(--tooltip-foreground-color)] [font:var(--text-body-shorthand-small)] text-center text-balance whitespace-normal [overflow-wrap:break-word] [-webkit-font-smoothing:subpixel-antialiased] forced-colors:outline-solid forced-colors:outline-1 forced-colors:outline-[color:transparent]",
-    open: "[&:popover-open]:block motion-safe:[&:popover-open]:animate-in motion-safe:[&:popover-open]:fade-in motion-safe:[&:popover-open]:duration-100",
+    root: "tooltip",
+    open: "tooltip-open motion-safe:[&:popover-open]:animate-in motion-safe:[&:popover-open]:fade-in motion-safe:[&:popover-open]:duration-100",
     // A browser without the popover API is served by the polyfill, which marks an open
     // popover with a class named `:popover-open` rather than with the pseudo-class. It
     // rewrites the selectors it is asked for at runtime, but not the ones already in a
-    // stylesheet, so that state is matched here as well. The class is matched as an
-    // attribute rather than with `.\:popover-open`, since the escape a class selector
-    // needs does not survive being written as a class name of its own
+    // stylesheet, so that state is matched here as well
     openPolyfilled:
-        "[&[class~=':popover-open']]:block motion-safe:[&[class~=':popover-open']]:animate-in motion-safe:[&[class~=':popover-open']]:fade-in motion-safe:[&[class~=':popover-open']]:duration-100",
-    // The bridge spans the gap the tooltip stands off by, so the pointer can travel from
-    // the trigger onto the tooltip without it closing on the way
-    bridge: "after:content-[''] after:absolute after:block after:inset-x-0 after:h-[var(--overlay-offset)]",
-    bridgeVertical:
-        "data-[direction=n]:after:top-full data-[direction=ne]:after:top-full data-[direction=nw]:after:top-full data-[direction=s]:after:bottom-full data-[direction=se]:after:bottom-full data-[direction=sw]:after:bottom-full",
-    // Standing to one side, the bridge runs down the tooltip rather than across it
-    bridgeHorizontal:
-        "data-[direction=e]:after:inset-x-auto data-[direction=e]:after:right-full data-[direction=e]:after:bottom-0 data-[direction=e]:after:h-full data-[direction=e]:after:w-[var(--overlay-offset)] data-[direction=w]:after:inset-x-auto data-[direction=w]:after:left-full data-[direction=w]:after:bottom-0 data-[direction=w]:after:h-full data-[direction=w]:after:w-[var(--overlay-offset)]",
+        "tooltip-open-polyfilled motion-safe:[&[class~=':popover-open']]:animate-in motion-safe:[&[class~=':popover-open']]:fade-in motion-safe:[&[class~=':popover-open']]:duration-100",
+    bridge: "tooltip-bridge",
+    bridgeVertical: "tooltip-bridge-vertical",
+    bridgeHorizontal: "tooltip-bridge-horizontal",
 };
 
 const directionToPosition: Record<TooltipDirection, { side: AnchorSide; align: AnchorAlignment }> =

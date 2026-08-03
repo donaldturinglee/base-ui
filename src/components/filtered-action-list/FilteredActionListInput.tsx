@@ -2,9 +2,7 @@ import { TextInput } from "../text-input";
 import type { FilteredActionListInputProps } from "./FilteredActionList.types";
 
 const classes = {
-    // The field stands above the list and over it as it scrolls, with a line under it in
-    // place of a border so that the field itself keeps its own
-    root: "relative z-1 [box-shadow:0_1px_0_var(--border-color-default)]",
+    root: "filtered-action-list-input",
 };
 
 // The field the list is filtered by. It is read as a combobox standing against the list

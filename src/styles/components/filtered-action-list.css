@@ -1,0 +1,78 @@
+@layer components {
+    .filtered-action-list {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* The field stands above the list and over it as it scrolls, with a line under it in
+       place of a border so that the field itself keeps its own */
+    .filtered-action-list-input {
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 1px 0 var(--border-color-default);
+    }
+
+    /* The list scrolls within the box rather than the box growing to hold it */
+    .filtered-action-list-container {
+        display: flex;
+        flex-grow: 1;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .filtered-action-list-list {
+        flex-grow: 1;
+    }
+
+    /* A message stands in place of the list, so it is given the room the list would have had.
+       Without a width of its own it would be laid out against its own text, and anything
+       measuring itself against the room it has been given — a container query, say — would
+       find there is none */
+    .filtered-action-list-message {
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    /* Only the items in view are drawn, so the list is given the height the whole of it would
+       take and each item is placed within that */
+    .filtered-action-list-virtual-list {
+        position: relative;
+    }
+
+    .filtered-action-list-virtual-item {
+        position: absolute;
+        top: 0;
+        inset-inline: 0;
+    }
+
+    .filtered-action-list-select-all {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-16);
+        background-color: var(--background-color-muted);
+        border-style: solid;
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-default);
+    }
+
+    .filtered-action-list-select-all-label {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+
+    .filtered-action-list-spinner {
+        flex-grow: 1;
+        height: 100%;
+        padding: var(--base-size-16);
+        align-content: center;
+        text-align: center;
+    }
+
+    .filtered-action-list-skeleton {
+        flex-grow: 1;
+        padding: var(--base-size-8);
+    }
+}

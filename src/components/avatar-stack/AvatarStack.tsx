@@ -14,54 +14,44 @@ type Range = (typeof ranges)[number];
 type AvatarStackWidth = "two" | "three" | "more";
 
 const classes = {
-    root: "relative flex isolate h-[var(--avatar-stack-size)] min-w-[var(--avatar-stack-size)] [--avatar-stack-border-width:1px] [--avatar-stack-mask-size:calc(100%+(var(--avatar-stack-border-width)*2))] [--avatar-stack-opacity-step:15%]",
-    // The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular one
-    responsive:
-        "max-medium:[--avatar-stack-size:var(--avatar-stack-size-narrow)] medium:max-xxlarge:[--avatar-stack-size:var(--avatar-stack-size-regular)] xxlarge:[--avatar-stack-size:var(--avatar-stack-size-wide)]",
-    // The mask slides to the opposite edge when the stack runs right to left
-    alignLeft: "[--avatar-stack-mask-start:-1]",
-    alignRight: "[direction:rtl] [--avatar-stack-mask-start:1]",
+    root: "avatar-stack",
+    responsive: "avatar-stack-responsive",
+    alignLeft: "avatar-stack-align-left",
+    alignRight: "avatar-stack-align-right",
     variant: {
-        cascade:
-            "[--avatar-stack-overlap:calc(var(--avatar-stack-size)*0.55)] [--avatar-stack-overlap-large:calc(var(--avatar-stack-size)*0.85)]",
-        stack: "[--avatar-stack-overlap:calc(var(--avatar-stack-size)*0.55)] [--avatar-stack-overlap-large:calc(var(--avatar-stack-size)*0.55)]",
+        cascade: "avatar-stack-cascade",
+        stack: "avatar-stack-stack",
     } satisfies Record<AvatarStackVariant, string>,
-    // One avatar per visible slot, so the track widens by the uncovered part of each one
     width: {
         cascade: {
-            two: "min-w-[calc(var(--avatar-stack-size)+(var(--avatar-stack-size)-var(--avatar-stack-overlap)))]",
-            three: "min-w-[calc(var(--avatar-stack-size)+(var(--avatar-stack-size)-var(--avatar-stack-overlap))+(var(--avatar-stack-size)-var(--avatar-stack-overlap-large)))]",
-            more: "min-w-[calc(var(--avatar-stack-size)+(var(--avatar-stack-size)-var(--avatar-stack-overlap))+(var(--avatar-stack-size)-var(--avatar-stack-overlap-large))*2)]",
+            two: "avatar-stack-cascade-two",
+            three: "avatar-stack-cascade-three",
+            more: "avatar-stack-cascade-more",
         },
         stack: {
-            two: "min-w-[calc(var(--avatar-stack-size)+(var(--avatar-stack-size)-var(--avatar-stack-overlap)))]",
-            three: "min-w-[calc(var(--avatar-stack-size)+(var(--avatar-stack-size)-var(--avatar-stack-overlap-large))*2)]",
-            more: "min-w-[calc(var(--avatar-stack-size)+(var(--avatar-stack-size)-var(--avatar-stack-overlap-large))*3)] [--avatar-stack-overlap:var(--avatar-stack-overlap-large)]",
+            two: "avatar-stack-stack-two",
+            three: "avatar-stack-stack-three",
+            more: "avatar-stack-stack-more",
         },
     } satisfies Record<AvatarStackVariant, Record<AvatarStackWidth, string>>,
     body: {
-        collapsed: "relative flex",
-        // `group` lets the avatars react to the whole stack being hovered or focused
-        expandable: "group absolute flex hover:w-auto focus-within:w-auto",
+        collapsed: "avatar-stack-body",
+        expandable: "avatar-stack-body-expandable",
     },
     item: {
-        root: "relative flex shrink-0 overflow-hidden w-[var(--avatar-stack-size)] h-[var(--avatar-stack-size)] [--avatar-size-regular:var(--avatar-stack-size)] transition-[margin,opacity,mask-position,mask-size] duration-short ease-move",
-        first: "ms-0",
-        // The padding keeps a hairline of the underlying element from showing at the edges
-        overlapped:
-            "ms-[calc(var(--avatar-stack-overlap)*-1)] p-[0.1px] [mask-repeat:no-repeat,no-repeat] [mask-composite:exclude] [mask-size:var(--avatar-stack-mask-size)_var(--avatar-stack-mask-size),auto] [mask-position:calc((var(--avatar-stack-size)-var(--avatar-stack-overlap))*var(--avatar-stack-mask-start)-var(--avatar-stack-border-width))_center,0_0]",
-        // Punches the next avatar's outline out of this one, so the two never touch
-        mask: "[mask-image:radial-gradient(at_50%_50%,rgb(0,0,0)_70%,rgb(0,0,0,0)_71%),linear-gradient(rgb(0,0,0)_0_0)]",
+        root: "avatar-stack-item",
+        first: "avatar-stack-item-first",
+        overlapped: "avatar-stack-item-overlapped",
+        mask: "avatar-stack-item-mask",
         shape: {
-            circle: "rounded-[var(--border-radius-full)]",
-            square: "rounded-[clamp(var(--base-size-4),calc(var(--avatar-stack-size)_-_var(--base-size-24)),var(--border-radius-medium))]",
+            circle: "avatar-stack-item-circle",
+            square: "avatar-stack-item-square",
         } satisfies Record<AvatarShape, string>,
-        // Square avatars cannot be masked into each other, so a hairline separates them
         edge: {
-            circle: "[&:is(img)]:[box-shadow:0_0_0_var(--avatar-stack-border-width)_transparent]",
-            square: "[&:is(img)]:[box-shadow:1px_0_var(--avatar-border-color)]",
+            circle: "avatar-stack-item-edge-circle",
+            square: "avatar-stack-item-edge-square",
         } satisfies Record<AvatarShape, string>,
-        edgeAlignRight: "[&:is(img)]:[box-shadow:-1px_0_var(--avatar-border-color)]",
+        edgeAlignRight: "avatar-stack-item-edge-align-right",
         // Square avatars overlap without a mask, so the earlier ones have to sit on top
         layer: ["z-5", "z-4", "z-3", "z-2", "z-1"],
         // Indexed by child position: the first two stay solid, then each avatar fades a
@@ -69,14 +59,13 @@ const classes = {
         fade: [
             "",
             "",
-            "[--avatar-stack-overlap:var(--avatar-stack-overlap-large)] opacity-[calc(100%-2*var(--avatar-stack-opacity-step))]",
-            "opacity-[calc(100%-3*var(--avatar-stack-opacity-step))]",
-            "opacity-[calc(100%-4*var(--avatar-stack-opacity-step))]",
+            "avatar-stack-item-fade-third",
+            "avatar-stack-item-fade-fourth",
+            "avatar-stack-item-fade-fifth",
         ],
-        overflow: "invisible opacity-0",
-        expanded:
-            "group-hover:ms-[var(--base-size-4)] group-hover:visible group-hover:opacity-100 group-hover:[--avatar-stack-mask-size:100%] group-hover:[mask-position:calc(var(--avatar-stack-size)*var(--avatar-stack-mask-start))_center,0_0] group-focus-within:ms-[var(--base-size-4)] group-focus-within:visible group-focus-within:opacity-100 group-focus-within:[--avatar-stack-mask-size:100%] group-focus-within:[mask-position:calc(var(--avatar-stack-size)*var(--avatar-stack-mask-start))_center,0_0]",
-        expandedFirst: "group-hover:ms-0 group-focus-within:ms-0",
+        overflow: "avatar-stack-item-overflow",
+        expanded: "avatar-stack-item-expanded",
+        expandedFirst: "avatar-stack-item-expanded-first",
     },
 };
 

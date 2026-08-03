@@ -1,0 +1,21 @@
+@layer components {
+    /* The ranges are exclusive, so hiding at one viewport leaves the other two untouched. The
+       widths match --breakpoint-medium and --breakpoint-xxlarge in variables.css */
+    .hidden-narrow {
+        @media (width < 48rem) {
+            display: none;
+        }
+    }
+
+    .hidden-regular {
+        @media (48rem <= width < 87.5rem) {
+            display: none;
+        }
+    }
+
+    .hidden-wide {
+        @media (width >= 87.5rem) {
+            display: none;
+        }
+    }
+}

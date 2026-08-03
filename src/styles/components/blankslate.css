@@ -1,0 +1,159 @@
+@layer components {
+    /* The blankslate responds to the room it is given rather than to the viewport, so the
+       wrapper is what the container queries below measure */
+    .blankslate-container {
+        container: blankslate / inline-size;
+    }
+
+    .blankslate {
+        display: grid;
+        justify-items: center;
+        padding: var(--blankslate-padding);
+    }
+
+    .blankslate-border {
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+    }
+
+    .blankslate-narrow {
+        max-width: 485px;
+        margin-inline: auto;
+    }
+
+    .blankslate-small {
+        --blankslate-heading-text: var(--text-title-shorthand-small);
+        --blankslate-heading-margin-block: 0 var(--base-size-4);
+        --blankslate-description-text: var(--text-body-shorthand-medium);
+        --blankslate-action-margin-block-end: var(--base-size-12);
+        --blankslate-visual-size: var(--base-size-24);
+    }
+
+    .blankslate-medium {
+        --blankslate-heading-text: var(--text-title-shorthand-medium);
+        --blankslate-heading-margin-block: 0 var(--base-size-4);
+        --blankslate-description-text: var(--text-body-shorthand-large);
+        --blankslate-action-margin-block-end: var(--base-size-16);
+    }
+
+    .blankslate-large {
+        --blankslate-heading-text: var(--text-title-shorthand-large);
+        --blankslate-heading-margin-block: var(--base-size-8) var(--base-size-4);
+        --blankslate-description-text: var(--text-body-shorthand-large);
+        --blankslate-description-margin-block: 0 var(--base-size-8);
+        --blankslate-action-margin-block-end: var(--base-size-16);
+    }
+
+    .blankslate-padding-small {
+        --blankslate-padding: var(--base-size-16);
+    }
+
+    .blankslate-padding-medium,
+    .blankslate-padding-large {
+        --blankslate-padding: var(--base-size-32);
+    }
+
+    .blankslate-padding-spacious-small {
+        --blankslate-padding: var(--base-size-44) var(--base-size-28);
+    }
+
+    .blankslate-padding-spacious-medium,
+    .blankslate-padding-spacious-large {
+        --blankslate-padding: var(--base-size-80) var(--base-size-40);
+    }
+
+    /* In a narrow container the type drops to the small scale whatever the size prop says.
+       The width matches --breakpoint-small in variables.css */
+    .blankslate-tight-type {
+        @container blankslate (width < 34rem) {
+            --blankslate-heading-text: var(--text-title-shorthand-small);
+            --blankslate-description-text: var(--text-body-shorthand-medium);
+        }
+    }
+
+    .blankslate-tight-padding-small {
+        @container blankslate (width < 34rem) {
+            --blankslate-padding: var(--base-size-16);
+        }
+    }
+
+    .blankslate-tight-padding-medium,
+    .blankslate-tight-padding-large {
+        @container blankslate (width < 34rem) {
+            --blankslate-padding: var(--base-size-20);
+        }
+    }
+
+    .blankslate-tight-padding-spacious {
+        @container blankslate (width < 34rem) {
+            --blankslate-padding: var(--base-size-44) var(--base-size-28);
+        }
+    }
+
+    /* `inline-flex` keeps the box the size of the icon inside it. The max width is only set
+       at the small size, so the fallback leaves the icon at its own size otherwise */
+    .blankslate-visual {
+        display: inline-flex;
+        margin-bottom: var(--base-size-8);
+        max-width: var(--blankslate-visual-size, none);
+        color: var(--foreground-color-muted);
+
+        & svg {
+            width: 100%;
+        }
+    }
+
+    .blankslate-visual-tight {
+        @container blankslate (width < 34rem) {
+            max-width: var(--base-size-24);
+        }
+    }
+
+    /* The size prop sets the type and the block margins, so both fall back to nothing when
+       the heading is used outside a blankslate */
+    .blankslate-heading {
+        margin-inline: 0;
+        margin-block: var(--blankslate-heading-margin-block, 0);
+        text-align: center;
+        text-wrap: balance;
+        font: var(--blankslate-heading-text);
+    }
+
+    /* Only the large size gives the description block margins, so the fallback keeps the
+       paragraph flush at the other sizes */
+    .blankslate-description {
+        margin-inline: 0;
+        margin-block: var(--blankslate-description-margin-block, 0);
+        text-align: center;
+        text-wrap: balance;
+        color: var(--foreground-color-muted);
+        font: var(--blankslate-description-text);
+    }
+
+    /* The last action carries the blankslate's bottom padding, so the two actions can sit
+       together without doubling the gap beneath them */
+    .blankslate-action {
+        margin-top: var(--base-size-16);
+        font: var(--blankslate-description-text);
+
+        &:last-of-type {
+            margin-bottom: var(--blankslate-action-margin-block-end);
+        }
+    }
+
+    .blankslate-action-tight {
+        @container blankslate (width < 34rem) {
+            margin-top: var(--base-size-8);
+
+            &:first-of-type {
+                margin-top: var(--base-size-16);
+            }
+
+            &:last-of-type {
+                margin-bottom: calc(var(--base-size-8) / 2);
+            }
+        }
+    }
+}

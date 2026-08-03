@@ -3,9 +3,7 @@ import { Heading } from "../heading";
 import type { NavListHeadingProps } from "./NavList.types";
 
 const classes = {
-    // Lined up with the labels of the items below it rather than with the edge of the list,
-    // since the items are held in from that edge by their own padding
-    root: "mb-[var(--base-size-8)] ms-[calc(var(--control-medium-padding-inline-condensed)_+_var(--base-size-8))]",
+    root: "nav-list-heading",
     // A heading is not phrasing content, so it cannot be wrapped in a span to be hidden.
     // The styles go on the heading itself instead
     hidden: "sr-only",

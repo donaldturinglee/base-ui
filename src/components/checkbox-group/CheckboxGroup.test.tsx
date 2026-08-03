@@ -201,7 +201,7 @@ describe("CheckboxGroup", () => {
             </CheckboxGroup>,
         );
         expect(container.querySelector('[data-component="CheckboxGroup.Label"]')).toHaveClass(
-            "text-foreground-muted",
+            "checkbox-group-label-disabled",
         );
     });
 
@@ -260,7 +260,7 @@ describe("CheckboxGroup", () => {
         );
         const validation = container.querySelector('[data-component="CheckboxGroup.Validation"]');
         expect(validation).toHaveAttribute("data-validation-status", "success");
-        expect(validation).toHaveClass("text-foreground-success");
+        expect(validation).toHaveClass("checkbox-group-validation-success");
         expect(validation?.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
     });
 

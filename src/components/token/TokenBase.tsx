@@ -3,23 +3,20 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { TokenBaseProps, TokenInteractiveProps, TokenSize } from "./Token.types";
 
-const tokenBaseVariants = cva(
-    "relative inline-flex items-center whitespace-nowrap no-underline rounded-[var(--border-radius-full)] [font-family:inherit] [font-weight:var(--base-text-weight-semibold)] leading-none",
-    {
-        variants: {
-            size: {
-                small: "h-[var(--base-size-16)] px-[var(--base-size-4)] [font-size:var(--text-body-size-small)]",
-                medium: "h-[var(--base-size-20)] px-[var(--base-size-6)] [font-size:var(--text-body-size-small)]",
-                large: "h-[var(--base-size-24)] px-[var(--base-size-8)] [font-size:var(--text-body-size-medium)]",
-                xlarge: "h-[var(--base-size-32)] px-[var(--base-size-12)] [font-size:var(--text-body-size-medium)]",
-            } satisfies Record<TokenSize, string>,
-            interactive: {
-                true: "cursor-pointer",
-                false: "cursor-auto",
-            },
+const tokenBaseVariants = cva("token", {
+    variants: {
+        size: {
+            small: "token-small",
+            medium: "token-medium",
+            large: "token-large",
+            xlarge: "token-xlarge",
+        } satisfies Record<TokenSize, string>,
+        interactive: {
+            true: "token-interactive",
+            false: "token-static",
         },
     },
-);
+});
 
 export const DEFAULT_TOKEN_SIZE: TokenSize = "medium";
 

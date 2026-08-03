@@ -25,20 +25,12 @@ import type {
 } from "./FormControl.types";
 
 const classes = {
-    // Reading down: the name, then the control, then whatever is said about it, each spaced
-    // from the last. The row after a label is left alone, so the name sits against its field
-    vertical: "flex flex-col items-start [&>*:not(label)+*]:mt-[var(--base-size-4)]",
-    verticalWithLabel: "[&>*+*]:mt-[var(--base-size-4)]",
-    // Reading across: the box, then the name beside it. This is what a checkbox or a radio
-    // always reads as, whatever layout was asked for
-    horizontal: "flex",
-    horizontalWithLeadingVisual: "items-center",
-    // The box brings its own spacing from the label container beside it
-    choiceInput: "[&>input]:mx-0",
-    // A name standing beside a box is not the heading of a field, so it is set in the weight
-    // of the text around it
-    labelContainer:
-        "[&>*]:ps-[var(--stack-gap-condensed)] [&>label]:[font-weight:var(--base-text-weight-normal)]",
+    vertical: "form-control-vertical",
+    verticalWithLabel: "form-control-vertical-with-label",
+    horizontal: "form-control-horizontal",
+    horizontalWithLeadingVisual: "form-control-horizontal-with-leading-visual",
+    choiceInput: "form-control-choice-input",
+    labelContainer: "form-control-label-container",
 };
 
 // The inputs a field knows how to wire up. Anything else given to it is left to stand as it

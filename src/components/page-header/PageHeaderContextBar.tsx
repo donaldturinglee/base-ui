@@ -5,7 +5,7 @@ import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderChildProps } from "./PageHeader.types";
 
 const classes = {
-    root: "order-2 flex",
+    root: "page-header-context-bar",
 };
 
 // Stands in the context area in place of a parent link, for a header whose way back up is

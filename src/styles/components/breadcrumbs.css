@@ -1,0 +1,103 @@
+@layer components {
+    .breadcrumbs {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .breadcrumbs-list {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* A trail that wraps runs onto as many lines as it needs; one that collapses is held to
+       a single line, and whatever no longer fits is moved into the menu */
+    .breadcrumbs-list-wrap {
+        flex-wrap: wrap;
+    }
+
+    .breadcrumbs-list-menu {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+
+    .breadcrumbs-item {
+        display: inline-grid;
+        grid-auto-flow: column;
+        align-items: center;
+        flex: 0 99999 auto;
+        min-width: auto;
+        white-space: nowrap;
+        list-style: none;
+    }
+
+    /* The menu is the one step that is allowed to run onto another line */
+    .breadcrumbs-item-menu {
+        white-space: normal;
+    }
+
+    .breadcrumbs-separator {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        user-select: none;
+        white-space: nowrap;
+        color: var(--foreground-color-muted);
+    }
+
+    /* The last step of the trail leads nowhere, so nothing is drawn after it */
+    .breadcrumbs-item:last-child .breadcrumbs-separator {
+        display: none;
+    }
+
+    .breadcrumbs-link {
+        display: inline-block;
+        text-decoration: none;
+        font-size: var(--text-body-size-medium);
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+            text-decoration: none;
+            border-radius: var(--border-radius-small);
+        }
+    }
+
+    /* A step of the trail reads as a link */
+    .breadcrumbs-link-normal {
+        color: var(--foreground-color-accent);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    /* The page the reader is already on is where they are rather than somewhere else to go */
+    .breadcrumbs-link-normal-selected {
+        color: var(--foreground-color-default);
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    /* A spacious trail is drawn as a row of boxes rather than as a line of links */
+    .breadcrumbs-link-spacious {
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-6);
+        color: var(--foreground-color-default);
+        border-radius: var(--border-radius-medium);
+
+        &:hover {
+            text-decoration: none;
+            background-color: var(--control-transparent-background-color-hover);
+        }
+    }
+
+    .breadcrumbs-link-spacious-selected {
+        font-weight: var(--base-text-weight-semibold);
+    }
+}

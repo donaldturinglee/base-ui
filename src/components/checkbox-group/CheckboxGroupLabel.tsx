@@ -5,10 +5,10 @@ import { CheckboxGroupContext } from "./CheckboxGroupContext";
 import type { CheckboxGroupLabelProps } from "./CheckboxGroup.types";
 
 const classes = {
-    root: "block [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
-    disabled: "text-foreground-muted",
+    root: "checkbox-group-label",
+    disabled: "checkbox-group-label-disabled",
     hidden: "sr-only",
-    required: "ms-[var(--base-size-4)]",
+    required: "checkbox-group-label-required",
 };
 
 function CheckboxGroupLabel(

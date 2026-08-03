@@ -5,7 +5,7 @@ import { UploadContext } from "./UploadContext";
 import type { UploadDescriptionProps } from "./Upload.types";
 
 const classes = {
-    root: "[font-size:var(--upload-description-size,var(--text-body-size-small))] [line-height:var(--text-body-line-height-medium)] [color:var(--upload-muted-color,var(--foreground-color-muted))]",
+    root: "upload-description",
 };
 
 function UploadDescription(

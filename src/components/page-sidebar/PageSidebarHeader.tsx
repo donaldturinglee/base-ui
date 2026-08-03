@@ -5,7 +5,7 @@ import PageSidebarRegion from "./PageSidebarRegion";
 import type { PageSidebarChildProps } from "./PageSidebar.types";
 
 const classes = {
-    root: "flex flex-row items-center justify-between min-w-0 gap-[var(--stack-gap-condensed)]",
+    root: "page-sidebar-header",
 };
 
 // The head of the sidebar, which holds whatever names it and whatever acts on it. The two

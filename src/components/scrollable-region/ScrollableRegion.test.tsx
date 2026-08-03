@@ -75,7 +75,7 @@ describe("ScrollableRegion", () => {
                 Content
             </ScrollableRegion>,
         );
-        expect(screen.getByTestId("region")).toHaveClass("relative", "overflow-auto");
+        expect(screen.getByTestId("region")).toHaveClass("scrollable-region");
     });
 
     it("stays out of the accessibility tree until the content overflows", () => {

@@ -5,7 +5,7 @@ import { RadioGroupContext } from "./RadioGroupContext";
 import type { RadioGroupCaptionProps } from "./RadioGroup.types";
 
 const classes = {
-    root: "block [font-size:var(--text-body-size-medium)] text-foreground-muted",
+    root: "radio-group-caption",
 };
 
 function RadioGroupCaption(

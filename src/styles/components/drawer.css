@@ -1,0 +1,211 @@
+@layer components {
+    /* The layer the drawer is laid out in covers the page and pushes the panel to whichever
+       edge it settles against, filling the other way of its own accord */
+    .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        background-color: var(--overlay-backdrop-background-color);
+    }
+
+    /* A modeless drawer leaves the page behind it to be used, so the layer takes no colour
+       and catches nothing; the panel standing in it is the only part that answers a pointer */
+    .drawer-backdrop-modeless {
+        background-color: transparent;
+        pointer-events: none;
+    }
+
+    .drawer-backdrop-left {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .drawer-backdrop-right {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .drawer-backdrop-top {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .drawer-backdrop-bottom {
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .drawer {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background-color: var(--overlay-background-color);
+        box-shadow: var(--shadow-floating-small);
+    }
+
+    .drawer-modeless {
+        pointer-events: auto;
+    }
+
+    /* A drawer runs the whole way along the edge it settles against and gives up the two
+       corners it meets there */
+    .drawer-left {
+        height: 100%;
+        max-width: 100dvw;
+        border-top-right-radius: var(--border-radius-large);
+        border-bottom-right-radius: var(--border-radius-large);
+    }
+
+    .drawer-right {
+        height: 100%;
+        max-width: 100dvw;
+        border-top-left-radius: var(--border-radius-large);
+        border-bottom-left-radius: var(--border-radius-large);
+    }
+
+    .drawer-top {
+        width: 100%;
+        max-height: 100dvh;
+        border-bottom-left-radius: var(--border-radius-large);
+        border-bottom-right-radius: var(--border-radius-large);
+    }
+
+    .drawer-bottom {
+        width: 100%;
+        max-height: 100dvh;
+        border-top-left-radius: var(--border-radius-large);
+        border-top-right-radius: var(--border-radius-large);
+    }
+
+    /* How far a drawer comes in is a width where it settles against a side, and a height
+       where it settles against the top or the bottom */
+    .drawer-inline-size-small {
+        width: var(--overlay-width-small);
+    }
+
+    .drawer-inline-size-medium {
+        width: var(--overlay-width-medium);
+    }
+
+    .drawer-inline-size-large {
+        width: var(--overlay-width-large);
+    }
+
+    .drawer-inline-size-xlarge {
+        width: var(--overlay-width-xlarge);
+    }
+
+    .drawer-block-size-small {
+        height: var(--overlay-height-small);
+    }
+
+    .drawer-block-size-medium {
+        height: var(--overlay-height-medium);
+    }
+
+    .drawer-block-size-large {
+        height: var(--overlay-height-large);
+    }
+
+    .drawer-block-size-xlarge {
+        height: var(--overlay-height-xlarge);
+    }
+
+    /* A size that is not a step of the scale is carried in a variable of its own */
+    .drawer-inline-size-custom {
+        width: var(--drawer-size);
+    }
+
+    .drawer-block-size-custom {
+        height: var(--drawer-size);
+    }
+
+    /* The header stays put while the body scrolls under it, and the shadow stands in for a
+       border so a long title never pushes the body down by a pixel.
+
+       Its parts are laid out in a row by the header itself, so that a header built by hand
+       stands a close button beside the title rather than beneath it. The row is read from the
+       top, so a title running onto a second line leaves the button where it started */
+    .drawer-header {
+        z-index: 1;
+        flex-shrink: 0;
+        display: flex;
+        align-items: flex-start;
+        gap: var(--base-size-8);
+        max-height: 35vh;
+        padding: var(--base-size-8);
+        overflow-y: auto;
+        box-shadow: 0 1px 0 var(--border-color-default);
+    }
+
+    /* The default header groups its title and subtitle in a block of its own, and that block
+       is what holds them off the edge and gives them the height the close button stands at. A
+       title written straight into the header has no such block, so it is given the same
+       rhythm here — and being a direct child is what the rule turns on, so it cannot reach the
+       grouped title, which sits a step further down */
+    .drawer-header-direct-title {
+        & > [data-component="Drawer.Title"] {
+            padding-block: var(--base-size-6);
+            padding-inline: var(--base-size-8);
+        }
+    }
+
+    /* The header lays its parts out in a row itself, so the title and the subtitle are all
+       that need grouping. Filling the row leaves the close button at the end of it */
+    .drawer-header-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding-block: var(--base-size-6);
+        padding-inline: var(--base-size-8);
+    }
+
+    /* The button settles at the end of the header row whatever stands before it there, so a
+       header built by hand does not have to give the title something to fill the row with */
+    .drawer-header .drawer-close-button {
+        margin-inline-start: auto;
+    }
+
+    /* The drawer is a document of its own while it is open, so its title reads as the heading
+       of one rather than taking the size that comes with it */
+    .drawer-title {
+        margin: 0;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--text-title-weight-large);
+    }
+
+    .drawer-subtitle {
+        margin: 0;
+        margin-top: var(--base-size-4);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .drawer-overflow-wrapper {
+        flex-grow: 1;
+    }
+
+    /* The line above the footer is only there to say that the body has more to be read past
+       the end of the panel */
+    .drawer-overflow-wrapper-bordered {
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-default);
+    }
+
+    .drawer-body {
+        flex-grow: 1;
+        padding: var(--base-size-16);
+        overflow: auto;
+    }
+
+    .drawer-footer {
+        z-index: 1;
+        flex-shrink: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: var(--base-size-8);
+        padding: var(--base-size-16);
+    }
+}

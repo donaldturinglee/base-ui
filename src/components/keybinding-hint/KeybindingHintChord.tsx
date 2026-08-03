@@ -8,26 +8,19 @@ import type {
     KeybindingHintVariant,
 } from "./KeybindingHint.types";
 
-const keybindingHintChordVariants = cva(
-    "inline-flex justify-center overflow-hidden gap-[0.5ch] p-[var(--base-size-4)] align-baseline border-solid border-[length:var(--border-width-thin)] rounded-[var(--border-radius-default)] [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)] leading-[10px] [box-shadow:none]",
-    {
-        variants: {
-            variant: {
-                normal: "bg-background-transparent text-foreground-muted border-border-default",
-                onEmphasis:
-                    "bg-[var(--counter-background-color-emphasis)] text-foreground-on-emphasis border-transparent",
-                onPrimary:
-                    "bg-[var(--button-primary-background-color-active)] text-foreground-on-emphasis border-transparent",
-            } satisfies Record<KeybindingHintVariant, string>,
-            // A width the box will not fall below keeps a run of single keys from being drawn as
-            // a run of boxes of different sizes
-            size: {
-                normal: "min-w-[var(--base-size-20)]",
-                small: "p-[var(--base-size-2)] rounded-[var(--border-radius-small)] [font-size:11px] leading-[var(--base-size-8)] min-w-[var(--base-size-16)]",
-            } satisfies Record<KeybindingHintSize, string>,
-        },
+const keybindingHintChordVariants = cva("keybinding-hint-chord", {
+    variants: {
+        variant: {
+            normal: "keybinding-hint-chord-normal",
+            onEmphasis: "keybinding-hint-chord-on-emphasis",
+            onPrimary: "keybinding-hint-chord-on-primary",
+        } satisfies Record<KeybindingHintVariant, string>,
+        size: {
+            normal: "keybinding-hint-chord-size-normal",
+            small: "keybinding-hint-chord-size-small",
+        } satisfies Record<KeybindingHintSize, string>,
     },
-);
+});
 
 // The keys that are held down together, drawn as the one box they are pressed as
 function KeybindingHintChord(props: KeybindingHintChordProps) {

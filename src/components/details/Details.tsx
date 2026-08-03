@@ -5,9 +5,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DetailsProps } from "./Details.types";
 
 const classes = {
-    // The marker the browser draws beside the summary is taken away, so that whatever the
-    // summary is made of is all there is to see
-    root: "[&>summary]:list-none [&>summary::-webkit-details-marker]:hidden",
+    root: "details",
 };
 
 // A disclosure: a summary that is always there, and content that is only there once the

@@ -3,7 +3,7 @@ import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { HeadingProps, HeadingSize } from "./Heading.types";
 
-const headingVariants = cva("m-0", {
+const headingVariants = cva("heading", {
     variants: {
         size: {
             large: "text-title-large",

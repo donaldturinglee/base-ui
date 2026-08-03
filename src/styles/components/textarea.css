@@ -1,0 +1,115 @@
+@layer components {
+    /* The wrapper carries the field styling so the native control can stay transparent and
+       keep its own resize handle */
+    .textarea-field {
+        position: relative;
+        display: inline-flex;
+        align-items: stretch;
+        overflow: hidden;
+        vertical-align: middle;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-inset);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+
+        &:focus-within {
+            border-color: var(--border-color-accent-emphasis);
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: -1px;
+        }
+    }
+
+    .textarea-field-block {
+        display: flex;
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .textarea-field-contrast {
+        background-color: var(--background-color-inset);
+    }
+
+    .textarea-field-disabled {
+        background-color: var(--control-background-color-disabled);
+        border-color: var(--control-border-color-disabled);
+        box-shadow: none;
+        color: var(--foreground-color-disabled);
+
+        & textarea {
+            cursor: not-allowed;
+        }
+    }
+
+    /* Last, so a field that is both disabled and invalid still reads as invalid */
+    .textarea-field-error {
+        border-color: var(--border-color-danger-emphasis);
+
+        &:focus-within {
+            border-color: var(--control-border-color-danger);
+            outline-color: var(--control-border-color-danger);
+        }
+    }
+
+    .textarea-field-success {
+        border-color: var(--background-color-success-emphasis);
+    }
+
+    /* The field owns the focus ring, so the control inside it drops its own */
+    .textarea {
+        width: 100%;
+        padding: var(--base-size-12);
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        outline: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:disabled {
+            resize: none;
+        }
+    }
+
+    .textarea-resize-none {
+        resize: none;
+    }
+
+    .textarea-resize-both {
+        resize: both;
+    }
+
+    .textarea-resize-horizontal {
+        resize: horizontal;
+    }
+
+    .textarea-resize-vertical {
+        resize: vertical;
+    }
+
+    .textarea-counter {
+        display: flex;
+        align-items: center;
+        gap: var(--control-xsmall-gap);
+        color: var(--foreground-color-muted);
+    }
+
+    .textarea-counter-over-limit {
+        color: var(--foreground-color-danger);
+    }
+
+    .textarea-counter-icon {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+}

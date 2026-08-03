@@ -120,7 +120,7 @@ describe("Collapsible", () => {
 
         it("dims the trigger", () => {
             render(collapsible({ disabled: true }));
-            expect(trigger()).toHaveClass("[color:var(--control-foreground-color-disabled)]");
+            expect(trigger()).toHaveClass("collapsible-trigger-disabled");
         });
 
         it("leaves a disclosure that was already open showing", () => {

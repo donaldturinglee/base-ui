@@ -1,0 +1,9 @@
+@layer components {
+    /* The overlay is only as wide as the widest item, and gives way to a scrollbar rather
+       than growing past the screen */
+    .action-menu-overlay {
+        min-width: var(--overlay-width-xsmall);
+        max-height: inherit;
+        overflow: auto;
+    }
+}

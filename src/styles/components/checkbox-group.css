@@ -1,0 +1,80 @@
+@layer components {
+    .checkbox-group {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .checkbox-group-legend {
+        padding: 0;
+    }
+
+    .checkbox-group-legend-visible {
+        margin-bottom: var(--base-size-8);
+    }
+
+    /* The boxes stack, each one spaced from the last */
+    .checkbox-group-body {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        & > * + * {
+            margin-top: var(--base-size-8);
+        }
+    }
+
+    .checkbox-group-label {
+        display: block;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .checkbox-group-label-disabled {
+        color: var(--foreground-color-muted);
+    }
+
+    .checkbox-group-label-required {
+        margin-inline-start: var(--base-size-4);
+    }
+
+    .checkbox-group-caption {
+        display: block;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* The wrapper the group stands the validation message in */
+    .checkbox-group-validation-slot {
+        margin-top: var(--base-size-8);
+    }
+
+    .checkbox-group-validation {
+        display: flex;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+
+        & a {
+            text-decoration: underline;
+            color: currentcolor;
+        }
+    }
+
+    .checkbox-group-validation-success {
+        color: var(--foreground-color-success);
+    }
+
+    .checkbox-group-validation-error {
+        color: var(--foreground-color-danger);
+    }
+
+    .checkbox-group-validation-icon {
+        flex-shrink: 0;
+        width: var(--base-size-12);
+        height: var(--base-size-12);
+        margin-top: var(--base-size-2);
+        margin-inline-end: var(--base-size-4);
+    }
+}

@@ -1,0 +1,70 @@
+@layer components {
+    .skeleton-text-wrapper {
+        padding-block: 0.1px;
+    }
+
+    .skeleton-text {
+        --skeleton-text-leading: calc(
+            var(--skeleton-text-font-size) * var(--skeleton-text-line-height) -
+                var(--skeleton-text-font-size)
+        );
+
+        margin-block: calc(var(--skeleton-text-leading) / 2);
+    }
+
+    .skeleton-text-display {
+        --skeleton-text-font-size: var(--text-display-size);
+        --skeleton-text-line-height: var(--text-display-line-height);
+
+        border-radius: var(--border-radius-medium);
+    }
+
+    .skeleton-text-title-large {
+        --skeleton-text-font-size: var(--text-title-size-large);
+        --skeleton-text-line-height: var(--text-title-line-height-large);
+
+        border-radius: var(--border-radius-medium);
+    }
+
+    .skeleton-text-title-medium {
+        --skeleton-text-font-size: var(--text-title-size-medium);
+        --skeleton-text-line-height: var(--text-title-line-height-medium);
+    }
+
+    .skeleton-text-title-small {
+        --skeleton-text-font-size: var(--text-title-size-small);
+        --skeleton-text-line-height: var(--text-title-line-height-small);
+    }
+
+    .skeleton-text-body-large {
+        --skeleton-text-font-size: var(--text-body-size-large);
+        --skeleton-text-line-height: var(--text-body-line-height-large);
+    }
+
+    .skeleton-text-body-medium {
+        --skeleton-text-font-size: var(--text-body-size-medium);
+        --skeleton-text-line-height: var(--text-body-line-height-medium);
+    }
+
+    .skeleton-text-body-small {
+        --skeleton-text-font-size: var(--text-body-size-small);
+        --skeleton-text-line-height: var(--text-body-line-height-small);
+    }
+
+    .skeleton-text-subtitle {
+        --skeleton-text-font-size: var(--text-subtitle-size);
+        --skeleton-text-line-height: var(--text-subtitle-line-height);
+    }
+
+    /* Every line but the last carries the gap, and the last is cut short so the block reads
+       as a paragraph rather than a stack of bars */
+    .skeleton-text-multiline {
+        margin-bottom: calc(var(--skeleton-text-leading) * 2);
+
+        &:last-child {
+            margin-bottom: 0;
+            min-width: 50px;
+            max-width: 65%;
+        }
+    }
+}

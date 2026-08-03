@@ -276,7 +276,7 @@ describe("FilteredActionList", () => {
         // The box the message is laid out in is what a container query inside it measures
         // itself against, so it has to fill the list rather than sit at the width of its own
         // text
-        expect(box).toHaveClass("grow");
+        expect(box).toHaveClass("filtered-action-list-message");
     });
 
     it("shows a box that picks every item at once, where the caller asks for one", () => {
@@ -485,7 +485,7 @@ describe("FilteredActionList", () => {
         it("stands the list as tall as the whole of it would be", () => {
             renderList({ items: manyItems, virtualized: true });
 
-            expect(list()).toHaveClass("relative");
+            expect(list()).toHaveClass("filtered-action-list-virtual-list");
             expect(list().style.height).not.toBe("");
         });
 

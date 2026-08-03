@@ -34,7 +34,7 @@ describe("Hidden", () => {
                 Content
             </Hidden>,
         );
-        expect(screen.getByTestId("hidden")).toHaveClass("max-medium:hidden");
+        expect(screen.getByTestId("hidden")).toHaveClass("hidden-narrow");
     });
 
     it("hides the content between the medium and xxlarge breakpoints for the regular viewport", () => {
@@ -43,7 +43,7 @@ describe("Hidden", () => {
                 Content
             </Hidden>,
         );
-        expect(screen.getByTestId("hidden")).toHaveClass("medium:max-xxlarge:hidden");
+        expect(screen.getByTestId("hidden")).toHaveClass("hidden-regular");
     });
 
     it("hides the content from the xxlarge breakpoint up for the wide viewport", () => {
@@ -52,7 +52,7 @@ describe("Hidden", () => {
                 Content
             </Hidden>,
         );
-        expect(screen.getByTestId("hidden")).toHaveClass("xxlarge:hidden");
+        expect(screen.getByTestId("hidden")).toHaveClass("hidden-wide");
     });
 
     it("hides the content at every viewport passed as an array", () => {
@@ -62,8 +62,8 @@ describe("Hidden", () => {
             </Hidden>,
         );
         const hidden = screen.getByTestId("hidden");
-        expect(hidden).toHaveClass("max-medium:hidden", "xxlarge:hidden");
-        expect(hidden).not.toHaveClass("medium:max-xxlarge:hidden");
+        expect(hidden).toHaveClass("hidden-narrow", "hidden-wide");
+        expect(hidden).not.toHaveClass("hidden-regular");
     });
 
     it("records the viewports in a data attribute", () => {

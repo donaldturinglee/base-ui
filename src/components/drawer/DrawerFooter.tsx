@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DrawerFooterProps } from "./Drawer.types";
 
 const classes = {
-    root: "z-1 shrink-0 flex flex-wrap justify-end p-[var(--base-size-16)] gap-[var(--base-size-8)]",
+    root: "drawer-footer",
 };
 
 function DrawerFooter<As extends React.ElementType = "div">(

@@ -5,7 +5,7 @@ import PageSidebarRegion from "./PageSidebarRegion";
 import type { PageSidebarChildProps } from "./PageSidebar.types";
 
 const classes = {
-    root: "flex flex-row flex-wrap items-center gap-[var(--stack-gap-condensed)]",
+    root: "page-sidebar-actions",
 };
 
 // What can be done from the sidebar itself rather than from the page: adding to whatever the

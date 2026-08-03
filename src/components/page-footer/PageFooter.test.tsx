@@ -64,14 +64,14 @@ describe("PageFooter", () => {
             render(withCopyright());
 
             expect(footer()).toHaveAttribute("data-size-variant", "normal");
-            expect(footer()).toHaveClass("[--page-footer-text-size:var(--text-body-size-medium)]");
+            expect(footer()).toHaveClass("page-footer-normal");
         });
 
         it("is set in the size it is given", () => {
             render(withCopyright({ variant: "condensed" }));
 
             expect(footer()).toHaveAttribute("data-size-variant", "condensed");
-            expect(footer()).toHaveClass("[--page-footer-text-size:var(--text-body-size-small)]");
+            expect(footer()).toHaveClass("page-footer-condensed");
         });
 
         it("takes a different size at each viewport range", () => {
@@ -79,26 +79,22 @@ describe("PageFooter", () => {
 
             expect(footer()).toHaveAttribute("data-size-variant-narrow", "condensed");
             expect(footer()).toHaveAttribute("data-size-variant-regular", "normal");
-            expect(footer()).toHaveClass(
-                "max-medium:[--page-footer-text-size:var(--text-body-size-small)]",
-            );
-            expect(footer()).toHaveClass(
-                "medium:max-xxlarge:[--page-footer-text-size:var(--text-body-size-medium)]",
-            );
+            expect(footer()).toHaveClass("page-footer-narrow-condensed");
+            expect(footer()).toHaveClass("page-footer-regular-normal");
         });
     });
 
     describe("the line above the footer", () => {
         it("draws no line unless it is asked for", () => {
             render(withCopyright());
-            expect(footer()).not.toHaveClass("border-t-border-default");
+            expect(footer()).not.toHaveClass("page-footer-border");
         });
 
         it("draws a line where there is no navigation", () => {
             render(withCopyright({ hasBorder: true }));
 
             expect(footer()).toHaveAttribute("data-has-border", "");
-            expect(footer()).toHaveClass("border-t-border-default");
+            expect(footer()).toHaveClass("page-footer-border");
         });
 
         it("leaves the line off where a navigation is showing", () => {
@@ -110,7 +106,7 @@ describe("PageFooter", () => {
             );
 
             expect(footer()).toHaveAttribute("data-has-navigation", "");
-            expect(footer()).not.toHaveClass("border-t-border-default");
+            expect(footer()).not.toHaveClass("page-footer-border");
         });
 
         it("draws the line only where the navigation is hidden", () => {
@@ -123,8 +119,8 @@ describe("PageFooter", () => {
                 </PageFooter>,
             );
 
-            expect(footer()).toHaveClass("max-medium:border-t-border-default");
-            expect(footer()).not.toHaveClass("border-t-border-default");
+            expect(footer()).toHaveClass("page-footer-border-narrow");
+            expect(footer()).not.toHaveClass("page-footer-border");
         });
 
         it("reads a navigation through a fragment", () => {
@@ -160,7 +156,7 @@ describe("PageFooter", () => {
                 </PageFooter>,
             );
 
-            expect(part("Description")).toHaveClass("medium:max-xxlarge:hidden");
+            expect(part("Description")).toHaveClass("hidden-regular");
             expect(part("Description")).toHaveAttribute("data-hidden", "regular");
         });
 

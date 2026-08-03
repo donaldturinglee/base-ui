@@ -1,0 +1,75 @@
+@layer components {
+    .progress-bar {
+        display: flex;
+        gap: var(--base-size-2);
+        overflow: hidden;
+        background-color: var(--progress-bar-track-background-color);
+        border-radius: var(--border-radius-small);
+        outline: var(--border-width-thin) solid var(--progress-bar-track-border-color);
+        outline-offset: -1px;
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: CanvasText;
+        }
+    }
+
+    /* The track heights are 5px, 8px and 10px, which the base size scale has no steps for */
+    .progress-bar-small {
+        height: 0.3125rem;
+    }
+
+    .progress-bar-medium {
+        height: 0.5rem;
+    }
+
+    .progress-bar-large {
+        height: 0.625rem;
+    }
+
+    .progress-bar-inline {
+        display: inline-flex;
+    }
+
+    /* The fallback lives in the class, so leaving the progress unset renders an empty segment */
+    .progress-bar-item {
+        width: var(--progress-bar-item-width, 0%);
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: LinkText;
+        }
+    }
+
+    .progress-bar-item-accent {
+        background-color: var(--progress-bar-background-color-accent);
+    }
+
+    .progress-bar-item-attention {
+        background-color: var(--progress-bar-background-color-attention);
+    }
+
+    .progress-bar-item-danger {
+        background-color: var(--progress-bar-background-color-danger);
+    }
+
+    .progress-bar-item-done {
+        background-color: var(--progress-bar-background-color-done);
+    }
+
+    .progress-bar-item-neutral {
+        background-color: var(--progress-bar-background-color-neutral);
+    }
+
+    .progress-bar-item-severe {
+        background-color: var(--progress-bar-background-color-severe);
+    }
+
+    .progress-bar-item-sponsors {
+        background-color: var(--progress-bar-background-color-sponsors);
+    }
+
+    .progress-bar-item-success {
+        background-color: var(--progress-bar-background-color-success);
+    }
+}

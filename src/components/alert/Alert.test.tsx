@@ -29,18 +29,18 @@ describe("Alert", () => {
         render(<Alert data-testid="alert">Message</Alert>);
         const alert = screen.getByTestId("alert");
         expect(alert).toHaveAttribute("data-variant", "default");
-        expect(alert).toHaveClass("bg-background-accent-muted");
+        expect(alert).toHaveClass("alert-default");
     });
 
     it("respects the variant prop", () => {
         const variants: Record<AlertVariant, string> = {
-            default: "accent",
-            success: "success",
-            warning: "attention",
-            danger: "danger",
+            default: "alert-default",
+            success: "alert-success",
+            warning: "alert-warning",
+            danger: "alert-danger",
         };
 
-        for (const [variant, token] of Object.entries(variants)) {
+        for (const [variant, expected] of Object.entries(variants)) {
             const { unmount } = render(
                 <Alert variant={variant as AlertVariant} data-testid="alert">
                     Message
@@ -48,8 +48,7 @@ describe("Alert", () => {
             );
             const alert = screen.getByTestId("alert");
             expect(alert).toHaveAttribute("data-variant", variant);
-            expect(alert).toHaveClass(`bg-background-${token}-muted`);
-            expect(alert).toHaveClass(`border-border-${token}-muted`);
+            expect(alert).toHaveClass(expected);
             unmount();
         }
     });
@@ -60,19 +59,12 @@ describe("Alert", () => {
                 Message
             </Alert>,
         );
-        expect(screen.getByTestId("alert")).toHaveClass("[&_svg]:text-foreground-danger");
+        expect(screen.getByTestId("alert")).toHaveClass("alert-danger");
     });
 
-    it("spaces descendant icons from the message", () => {
+    it("carries the shape and the spacing the message is drawn in", () => {
         render(<Alert data-testid="alert">Message</Alert>);
-        expect(screen.getByTestId("alert")).toHaveClass("[&_svg]:mr-[var(--base-size-8)]");
-    });
-
-    it("rounds the corners and borders every side", () => {
-        render(<Alert data-testid="alert">Message</Alert>);
-        const alert = screen.getByTestId("alert");
-        expect(alert).toHaveClass("border-[length:var(--border-width-thin)]");
-        expect(alert).toHaveClass("rounded-[var(--border-radius-medium)]");
+        expect(screen.getByTestId("alert")).toHaveClass("alert");
     });
 
     it("does not leak the variant prop onto the element", () => {

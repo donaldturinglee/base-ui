@@ -5,8 +5,7 @@ import "@testing-library/jest-dom/jest-globals";
 import { Avatar } from "../avatar";
 import AvatarStack from "./AvatarStack";
 
-const maskClass =
-    "[mask-image:radial-gradient(at_50%_50%,rgb(0,0,0)_70%,rgb(0,0,0,0)_71%),linear-gradient(rgb(0,0,0)_0_0)]";
+const maskClass = "avatar-stack-item-mask";
 
 const avatars = (count: number) =>
     Array.from({ length: count }, (_, index) => (
@@ -56,9 +55,7 @@ describe("AvatarStack", () => {
         render(<AvatarStack data-testid="stack">{avatars(2)}</AvatarStack>);
         const stack = screen.getByTestId("stack");
         expect(stack).toHaveAttribute("data-variant", "cascade");
-        expect(stack).toHaveClass(
-            "[--avatar-stack-overlap-large:calc(var(--avatar-stack-size)*0.85)]",
-        );
+        expect(stack).toHaveClass("avatar-stack-cascade");
     });
 
     it("overlaps every avatar evenly in the stack variant", () => {
@@ -69,24 +66,22 @@ describe("AvatarStack", () => {
         );
         const stack = screen.getByTestId("stack");
         expect(stack).toHaveAttribute("data-variant", "stack");
-        expect(stack).toHaveClass(
-            "[--avatar-stack-overlap-large:calc(var(--avatar-stack-size)*0.55)]",
-        );
+        expect(stack).toHaveClass("avatar-stack-stack");
     });
 
     it("widens the track as avatars are added", () => {
         const { unmount } = render(<AvatarStack data-testid="stack">{avatars(1)}</AvatarStack>);
-        expect(screen.getByTestId("stack").className).not.toContain("min-w-[calc(");
+        expect(screen.getByTestId("stack")).not.toHaveClass("avatar-stack-cascade-three");
         unmount();
 
         render(<AvatarStack data-testid="stack">{avatars(3)}</AvatarStack>);
-        expect(screen.getByTestId("stack").className).toContain("min-w-[calc(");
+        expect(screen.getByTestId("stack")).toHaveClass("avatar-stack-cascade-three");
     });
 
     it("falls back to the circle shape", () => {
         render(<AvatarStack data-testid="stack">{avatars(2)}</AvatarStack>);
         expect(screen.getByTestId("stack")).toHaveAttribute("data-shape", "circle");
-        expect(screen.getByTestId("avatar-1")).toHaveClass("rounded-[var(--border-radius-full)]");
+        expect(screen.getByTestId("avatar-1")).toHaveClass("avatar-stack-item-circle");
     });
 
     it("respects the square shape", () => {
@@ -96,9 +91,7 @@ describe("AvatarStack", () => {
             </AvatarStack>,
         );
         expect(screen.getByTestId("stack")).toHaveAttribute("data-shape", "square");
-        expect(screen.getByTestId("avatar-1")).not.toHaveClass(
-            "rounded-[var(--border-radius-full)]",
-        );
+        expect(screen.getByTestId("avatar-1")).not.toHaveClass("avatar-stack-item-circle");
     });
 
     it("masks each overlapping circle out of the one before it", () => {
@@ -120,20 +113,14 @@ describe("AvatarStack", () => {
 
     it("pulls every avatar past the first back over the one before it", () => {
         render(<AvatarStack data-testid="stack">{avatars(2)}</AvatarStack>);
-        expect(screen.getByTestId("avatar-0")).toHaveClass("ms-0");
-        expect(screen.getByTestId("avatar-1")).toHaveClass(
-            "ms-[calc(var(--avatar-stack-overlap)*-1)]",
-        );
+        expect(screen.getByTestId("avatar-0")).toHaveClass("avatar-stack-item-first");
+        expect(screen.getByTestId("avatar-1")).toHaveClass("avatar-stack-item-overlapped");
     });
 
     it("fades each avatar past the second in the cascade variant", () => {
         render(<AvatarStack data-testid="stack">{avatars(4)}</AvatarStack>);
-        expect(screen.getByTestId("avatar-2")).toHaveClass(
-            "opacity-[calc(100%-2*var(--avatar-stack-opacity-step))]",
-        );
-        expect(screen.getByTestId("avatar-3")).toHaveClass(
-            "opacity-[calc(100%-3*var(--avatar-stack-opacity-step))]",
-        );
+        expect(screen.getByTestId("avatar-2")).toHaveClass("avatar-stack-item-fade-third");
+        expect(screen.getByTestId("avatar-3")).toHaveClass("avatar-stack-item-fade-fourth");
     });
 
     it("does not fade the avatars in the stack variant", () => {
@@ -142,16 +129,14 @@ describe("AvatarStack", () => {
                 {avatars(4)}
             </AvatarStack>,
         );
-        expect(screen.getByTestId("avatar-3")).not.toHaveClass(
-            "opacity-[calc(100%-3*var(--avatar-stack-opacity-step))]",
-        );
+        expect(screen.getByTestId("avatar-3")).not.toHaveClass("avatar-stack-item-fade-fourth");
     });
 
     it("hides every avatar past the fifth until the stack expands", () => {
         render(<AvatarStack data-testid="stack">{avatars(7)}</AvatarStack>);
-        expect(screen.getByTestId("avatar-4")).not.toHaveClass("invisible");
-        expect(screen.getByTestId("avatar-5")).toHaveClass("invisible", "opacity-0");
-        expect(screen.getByTestId("avatar-5")).toHaveClass("group-hover:visible");
+        expect(screen.getByTestId("avatar-4")).not.toHaveClass("avatar-stack-item-overflow");
+        expect(screen.getByTestId("avatar-5")).toHaveClass("avatar-stack-item-overflow");
+        expect(screen.getByTestId("avatar-5")).toHaveClass("avatar-stack-item-expanded");
     });
 
     it("takes focus so the stack can be expanded from the keyboard", () => {
@@ -186,8 +171,8 @@ describe("AvatarStack", () => {
             .querySelector('[data-component="AvatarStack.Body"]');
         expect(body).not.toHaveAttribute("tabindex");
         expect(body).toHaveAttribute("data-disable-expand", "true");
-        expect(body).toHaveClass("relative");
-        expect(body).not.toHaveClass("group");
+        expect(body).toHaveClass("avatar-stack-body");
+        expect(body).not.toHaveClass("avatar-stack-body-expandable");
     });
 
     it("runs the stack right to left when aligned right", () => {
@@ -198,7 +183,7 @@ describe("AvatarStack", () => {
         );
         const stack = screen.getByTestId("stack");
         expect(stack).toHaveAttribute("data-align-right", "true");
-        expect(stack).toHaveClass("[direction:rtl]", "[--avatar-stack-mask-start:1]");
+        expect(stack).toHaveClass("avatar-stack-align-right");
     });
 
     it("sizes itself from a fixed size prop", () => {

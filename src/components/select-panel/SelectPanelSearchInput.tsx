@@ -8,9 +8,7 @@ import { SelectPanelContext } from "./SelectPanelContext";
 import type { SelectPanelSearchInputProps } from "./SelectPanel.types";
 
 const classes = {
-    // The field is drawn edge to edge under the title, so it gives up the padding a field
-    // standing on its own would keep before its leading visual
-    root: "ps-[var(--base-size-8)]",
+    root: "select-panel-search-input",
 };
 
 // The field that filters the list. What is typed into it is reported to the caller, which

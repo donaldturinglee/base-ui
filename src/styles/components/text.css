@@ -1,0 +1,37 @@
+@layer components {
+    .text {
+        font-family: var(--font-stack-sans-serif);
+        font-weight: var(--text-body-weight);
+    }
+
+    .text-size-large {
+        font-size: var(--text-body-size-large);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    .text-size-medium {
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .text-size-small {
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .text-weight-light {
+        font-weight: var(--base-text-weight-light);
+    }
+
+    .text-weight-normal {
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .text-weight-medium {
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .text-weight-semibold {
+        font-weight: var(--base-text-weight-semibold);
+    }
+}

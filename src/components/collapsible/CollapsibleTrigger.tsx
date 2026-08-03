@@ -6,15 +6,12 @@ import { CollapsibleContext } from "./CollapsibleContext";
 import type { CollapsibleTriggerProps } from "./Collapsible.types";
 
 const classes = {
-    root: "flex items-center gap-[var(--base-size-8)] w-full m-0 px-[var(--base-size-8)] py-[var(--base-size-8)] text-start cursor-pointer appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] text-foreground-default [font-family:inherit] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)] transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-transparent-background-color-hover)]",
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    disabled:
-        "cursor-not-allowed [color:var(--control-foreground-color-disabled)] hover:bg-transparent",
+    root: "collapsible-trigger",
+    disabled: "collapsible-trigger-disabled",
     // A chevron at the end is pushed there by the label, which takes the room between them
     labelEnd: "min-w-0 grow",
     label: "min-w-0",
-    indicator:
-        "shrink-0 size-[var(--base-size-16)] text-foreground-muted transition-transform duration-short ease-move motion-reduce:transition-none",
+    indicator: "collapsible-trigger-indicator",
     // A chevron after the label turns over to point back the way the content came from
     indicatorOpen: "rotate-180",
     // One before the label points at what it opens, and turns down onto it
@@ -63,12 +60,7 @@ function CollapsibleTrigger(
             ref={ref}
             type="button"
             id={triggerId}
-            className={classNames(
-                classes.root,
-                classes.focus,
-                disabled && classes.disabled,
-                className,
-            )}
+            className={classNames(classes.root, disabled && classes.disabled, className)}
             onClick={handleClick}
             disabled={disabled}
             aria-expanded={Boolean(isOpen)}

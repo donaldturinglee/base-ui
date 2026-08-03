@@ -5,10 +5,10 @@ import { RadioGroupContext } from "./RadioGroupContext";
 import type { RadioGroupLabelProps } from "./RadioGroup.types";
 
 const classes = {
-    root: "block [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
-    disabled: "text-foreground-muted",
+    root: "radio-group-label",
+    disabled: "radio-group-label-disabled",
     hidden: "sr-only",
-    required: "ms-[var(--base-size-4)]",
+    required: "radio-group-label-required",
 };
 
 function RadioGroupLabel(

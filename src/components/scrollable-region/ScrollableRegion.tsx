@@ -6,9 +6,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { ScrollableRegionProps } from "./ScrollableRegion.types";
 
 const classes = {
-    // `relative` goes with the overflow so that absolutely positioned descendants, such as
-    // anything using `sr-only`, cannot escape and put scrollbars on the page
-    root: "relative overflow-auto",
+    root: "scrollable-region",
 };
 
 function ScrollableRegion<As extends React.ElementType = "div">(

@@ -1,0 +1,97 @@
+@layer components {
+    /* The rule runs the length of the tablist, and each tab draws over its own part of it */
+    .tab-list {
+        display: flex;
+        border-style: solid;
+        border-width: 0;
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-muted);
+    }
+
+    /* Standing beside the panels rather than above them turns the rule onto the other side */
+    .tab-list-vertical {
+        flex-direction: column;
+        border-bottom-width: 0;
+        border-inline-end-width: var(--border-width-thin);
+        border-inline-end-color: var(--border-color-muted);
+    }
+
+    /* The line under the selected tab is the tab's own border, drawn over the rule the
+       tablist carries */
+    .tab {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--base-size-8);
+        margin: 0;
+        padding-block: var(--base-size-8);
+        padding-inline: var(--base-size-12);
+        cursor: pointer;
+        white-space: nowrap;
+        background-color: transparent;
+        border-style: solid;
+        border-width: 0;
+        border-bottom-width: var(--base-size-2);
+        border-bottom-color: transparent;
+        border-top-left-radius: var(--border-radius-medium);
+        border-top-right-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-family: inherit;
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+        transition:
+            background-color var(--motion-transition-hover),
+            border-color var(--motion-transition-hover);
+
+        /* The ring is drawn inside the tab, so it is not cut off by the tablist around it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(var(--focus-outline-offset) * -1);
+        }
+    }
+
+    /* A tablist standing beside the panels turns the line onto the other side, which the tabs
+       follow from the tablist rather than being told of it */
+    .tab-list[data-orientation="vertical"] .tab-vertical {
+        justify-content: flex-start;
+        border-bottom-width: 0;
+        border-inline-end-width: var(--base-size-2);
+        border-inline-end-color: transparent;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-start-start-radius: var(--border-radius-medium);
+        border-end-start-radius: var(--border-radius-medium);
+    }
+
+    .tab-hover:hover {
+        background-color: var(--control-transparent-background-color-hover);
+        border-bottom-color: var(--underline-nav-border-color-hover);
+    }
+
+    .tab-list[data-orientation="vertical"] .tab-hover:hover {
+        border-inline-end-color: var(--underline-nav-border-color-hover);
+    }
+
+    .tab-selected {
+        border-bottom-color: var(--underline-nav-border-color-active);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .tab-list[data-orientation="vertical"] .tab-selected {
+        border-inline-end-color: var(--underline-nav-border-color-active);
+    }
+
+    .tab-disabled {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+
+        &:hover {
+            background-color: transparent;
+            border-bottom-color: transparent;
+        }
+    }
+
+    .tab-list[data-orientation="vertical"] .tab-disabled:hover {
+        border-inline-end-color: transparent;
+    }
+}

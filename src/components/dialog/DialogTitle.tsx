@@ -4,9 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DialogTitleProps } from "./Dialog.types";
 
 const classes = {
-    // The dialog is a document of its own while it is open, so its title reads as the
-    // heading of one rather than taking the size that comes with it
-    root: "m-0 [font-size:var(--text-body-size-medium)] [font-weight:var(--text-title-weight-large)]",
+    root: "dialog-title",
 };
 
 function DialogTitle<As extends React.ElementType = "h1">(

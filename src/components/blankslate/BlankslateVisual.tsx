@@ -4,10 +4,8 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { BlankslateVisualProps } from "./Blankslate.types";
 
 const classes = {
-    // `inline-flex` keeps the box the size of the icon inside it. The max width is only set
-    // at the small size, so the fallback leaves the icon at its own size otherwise
-    root: "inline-flex text-foreground-muted mb-[var(--base-size-8)] max-w-[var(--blankslate-visual-size,none)] [&_svg]:w-full",
-    tight: "@max-[34rem]/blankslate:max-w-[var(--base-size-24)]",
+    root: "blankslate-visual",
+    tight: "blankslate-visual-tight",
 };
 
 function BlankslateVisual(

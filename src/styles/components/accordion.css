@@ -1,0 +1,85 @@
+/* The classes below sit in the components layer, which is drawn before the utilities layer.
+   A class a caller passes in is a utility, so it still wins over anything named here */
+@layer components {
+    /* A rule above the first item, with each item carrying the one below it, closes the set off */
+    .accordion {
+        display: block;
+        border-top-width: var(--border-width-thin);
+        border-top-color: var(--border-color-muted);
+    }
+
+    .accordion-item {
+        border-bottom-width: var(--border-width-thin);
+        border-bottom-color: var(--border-color-muted);
+    }
+
+    /* The heading is there for the outline rather than for the look, so it takes its type from
+     the button inside it */
+    .accordion-header {
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+
+    .accordion-header-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--base-size-8);
+        width: 100%;
+        margin: 0;
+        padding-block: var(--base-size-12);
+        padding-inline: var(--base-size-8);
+        text-align: start;
+        cursor: pointer;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-family: inherit;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+        transition: background-color var(--motion-transition-hover);
+
+        &:hover {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    .accordion-header-button-disabled {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    /* The chevron turns over to point back the way the panel came from */
+    .accordion-header-indicator {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        color: var(--foreground-color-muted);
+        transition: transform var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    .accordion-panel {
+        padding-bottom: var(--base-size-12);
+        padding-inline: var(--base-size-8);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+}

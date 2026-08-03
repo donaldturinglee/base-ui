@@ -5,7 +5,7 @@ import PageFooterRegion from "./PageFooterRegion";
 import type { PageFooterNavigationProps } from "./PageFooter.types";
 
 const classes = {
-    root: "col-span-full row-start-1 block pb-[var(--base-size-16)]",
+    root: "page-footer-navigation",
 };
 
 // Moves on to the pages the reader is left with once this one is done, standing at the head

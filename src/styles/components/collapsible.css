@@ -1,0 +1,61 @@
+@layer components {
+    .collapsible-trigger {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        width: 100%;
+        margin: 0;
+        padding-block: var(--base-size-8);
+        padding-inline: var(--base-size-8);
+        text-align: start;
+        cursor: pointer;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-family: inherit;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+        transition: background-color var(--motion-transition-hover);
+
+        &:hover {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    .collapsible-trigger-disabled {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    .collapsible-trigger-indicator {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        color: var(--foreground-color-muted);
+        transition: transform var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    .collapsible-content {
+        padding-inline: var(--base-size-8);
+        padding-bottom: var(--base-size-12);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+}

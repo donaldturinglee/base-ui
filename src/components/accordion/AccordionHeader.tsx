@@ -7,17 +7,11 @@ import { AccordionItemContext } from "./AccordionItemContext";
 import type { AccordionHeaderProps } from "./Accordion.types";
 
 const classes = {
-    // The heading is there for the outline rather than for the look, so it takes its type
-    // from the button inside it
-    heading: "m-0 [font-size:inherit] [font-weight:inherit]",
-    button: "flex items-center justify-between gap-[var(--base-size-8)] w-full m-0 py-[var(--base-size-12)] px-[var(--base-size-8)] text-start cursor-pointer appearance-none bg-transparent border-0 rounded-[var(--border-radius-medium)] text-foreground-default [font-family:inherit] [font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)] [line-height:var(--text-body-line-height-medium)] transition-[background-color] duration-micro ease-hover hover:bg-[var(--control-transparent-background-color-hover)]",
-    focus: "focus-visible:outline-solid focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[color:var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]",
-    disabled:
-        "cursor-not-allowed [color:var(--control-foreground-color-disabled)] hover:bg-transparent",
+    heading: "accordion-header",
+    button: "accordion-header-button",
+    disabled: "accordion-header-button-disabled",
     label: "min-w-0",
-    // The chevron turns over to point back the way the panel came from
-    indicator:
-        "shrink-0 size-[var(--base-size-16)] text-foreground-muted transition-transform duration-short ease-move motion-reduce:transition-none",
+    indicator: "accordion-header-indicator",
     indicatorOpen: "rotate-180",
 };
 
@@ -38,12 +32,7 @@ function AccordionHeader(
                 ref={ref}
                 type="button"
                 id={headerId}
-                className={classNames(
-                    classes.button,
-                    classes.focus,
-                    disabled && classes.disabled,
-                    className,
-                )}
+                className={classNames(classes.button, disabled && classes.disabled, className)}
                 onClick={toggle}
                 disabled={disabled}
                 aria-expanded={Boolean(isOpen)}

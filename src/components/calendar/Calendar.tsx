@@ -25,26 +25,17 @@ import type { Dayjs } from "dayjs";
 import type { CalendarElementProps, CalendarProps, CalendarRange } from "./Calendar.types";
 
 const classes = {
-    // The calendar is only as wide as the grid it holds, so it can stand on a page or in an
-    // overlay without either having to say how much room to give it
-    root: "inline-block",
-    header: "flex items-center justify-between gap-[var(--base-size-4)] pb-[var(--base-size-8)]",
-    caption:
-        "[font-size:var(--text-body-size-medium)] [font-weight:var(--base-text-weight-semibold)]",
-    grid: "border-collapse",
-    weekday:
-        "p-0 pb-[var(--base-size-4)] text-foreground-muted [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-normal)]",
-    weekNumberHeader: "p-0",
-    weekNumber:
-        "pe-[var(--base-size-8)] text-foreground-muted [font-size:var(--text-body-size-small)] [font-variant-numeric:tabular-nums] [font-weight:var(--base-text-weight-normal)]",
-    // The room between one day and the next is given by the cell around it, so that the days
-    // themselves stay square
-    cell: "p-[var(--base-size-2)]",
-    // The bar running from one end of a stretch of days to the other is drawn by the cells
-    // rather than by the days, so that it runs unbroken across the room between them
-    rangeCell: "bg-background-accent-muted",
-    rangeCellStart: "rounded-s-[var(--border-radius-medium)]",
-    rangeCellEnd: "rounded-e-[var(--border-radius-medium)]",
+    root: "calendar",
+    header: "calendar-header",
+    caption: "calendar-caption",
+    grid: "calendar-grid",
+    weekday: "calendar-weekday",
+    weekNumberHeader: "calendar-week-number-header",
+    weekNumber: "calendar-week-number",
+    cell: "calendar-cell",
+    rangeCell: "calendar-cell-range",
+    rangeCellStart: "calendar-cell-range-start",
+    rangeCellEnd: "calendar-cell-range-end",
     hidden: "sr-only",
 };
 

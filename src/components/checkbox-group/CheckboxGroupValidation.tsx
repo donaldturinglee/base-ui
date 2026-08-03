@@ -14,20 +14,17 @@ const icons = {
 } satisfies Record<CheckboxGroupValidationStatus, React.ElementType>;
 
 const classes = {
-    icon: "shrink-0 mt-[var(--base-size-2)] me-[var(--base-size-4)] size-[var(--base-size-12)]",
+    icon: "checkbox-group-validation-icon",
 };
 
-const checkboxGroupValidationVariants = cva(
-    "flex [font-size:var(--text-body-size-small)] [font-weight:var(--base-text-weight-semibold)] [&_a]:underline [&_a]:[color:currentColor]",
-    {
-        variants: {
-            variant: {
-                success: "text-foreground-success",
-                error: "text-foreground-danger",
-            } satisfies Record<CheckboxGroupValidationStatus, string>,
-        },
+const checkboxGroupValidationVariants = cva("checkbox-group-validation", {
+    variants: {
+        variant: {
+            success: "checkbox-group-validation-success",
+            error: "checkbox-group-validation-error",
+        } satisfies Record<CheckboxGroupValidationStatus, string>,
     },
-);
+});
 
 function CheckboxGroupValidation(
     props: CheckboxGroupValidationProps,

@@ -1,0 +1,38 @@
+@layer components {
+    /* The line is drawn as a fill rather than as a border, so one set of rules serves both
+       orientations. Its colour comes through a custom property, so a caller can repaint the
+       line without having to unpick the class it came with */
+    .separator {
+        flex-shrink: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-color: var(--separator-color);
+    }
+
+    .separator-horizontal {
+        width: 100%;
+        height: var(--border-width-thin);
+    }
+
+    /* A vertical line takes its height from whatever it stands beside, and keeps a minimum of
+       its own so it is still there where nothing stretches it */
+    .separator-vertical {
+        align-self: stretch;
+        width: var(--border-width-thin);
+        height: auto;
+        min-height: var(--base-size-16);
+    }
+
+    .separator-subtle {
+        --separator-color: var(--border-color-muted);
+    }
+
+    .separator-default {
+        --separator-color: var(--border-color-default);
+    }
+
+    .separator-emphasis {
+        --separator-color: var(--border-color-emphasis);
+    }
+}

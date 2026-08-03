@@ -5,15 +5,11 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { ButtonGroupProps } from "./ButtonGroup.types";
 
 const classes = {
-    // `isolate` keeps a raised item stacking against the group rather than the rest of the page
-    root: "inline-flex align-middle isolate",
+    root: "button-group",
     item: {
-        // Neighbouring items overlap by their border so that the two share a single line, and
-        // whichever one is being used is raised so its border and focus ring are drawn whole
-        root: "relative -me-px [&_button]:rounded-none [&_a]:rounded-none hover:z-1 focus-within:z-1 active:z-1",
-        // Only the outer edges of the group stay rounded
-        first: "[&_button]:rounded-s-[var(--border-radius-medium)] [&_a]:rounded-s-[var(--border-radius-medium)]",
-        last: "[&_button]:rounded-e-[var(--border-radius-medium)] [&_a]:rounded-e-[var(--border-radius-medium)]",
+        root: "button-group-item",
+        first: "button-group-item-first",
+        last: "button-group-item-last",
     },
 };
 

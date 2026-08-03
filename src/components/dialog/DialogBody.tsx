@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { DialogBodyProps } from "./Dialog.types";
 
 const classes = {
-    root: "grow p-[var(--base-size-16)] overflow-auto",
+    root: "dialog-body",
 };
 
 function DialogBody<As extends React.ElementType = "div">(

@@ -27,7 +27,11 @@ describe("ProgressBar", () => {
     });
 
     it("respects the size prop", () => {
-        const sizes = { small: "h-[0.3125rem]", medium: "h-[0.5rem]", large: "h-[0.625rem]" };
+        const sizes = {
+            small: "progress-bar-small",
+            medium: "progress-bar-medium",
+            large: "progress-bar-large",
+        };
 
         for (const [size, expected] of Object.entries(sizes)) {
             const { unmount } = render(
@@ -48,7 +52,7 @@ describe("ProgressBar", () => {
         render(<ProgressBar inline progress={50} data-testid="progress-bar" />);
         const track = screen.getByTestId("progress-bar");
         expect(track).toHaveAttribute("data-inline", "true");
-        expect(track).toHaveClass("inline-flex");
+        expect(track).toHaveClass("progress-bar-inline");
     });
 
     it("leaves the inline attribute unset by default", () => {
@@ -99,7 +103,7 @@ describe("ProgressBar", () => {
         render(<ProgressBar progress={50} />);
         const item = screen.getByRole("progressbar");
         expect(item).toHaveAttribute("data-variant", "success");
-        expect(item).toHaveClass("bg-[var(--progress-bar-background-color-success)]");
+        expect(item).toHaveClass("progress-bar-item-success");
     });
 
     it("respects the variant prop", () => {
@@ -116,9 +120,7 @@ describe("ProgressBar", () => {
 
         for (const variant of variants) {
             const { unmount } = render(<ProgressBar progress={50} variant={variant} />);
-            expect(screen.getByRole("progressbar")).toHaveClass(
-                `bg-[var(--progress-bar-background-color-${variant})]`,
-            );
+            expect(screen.getByRole("progressbar")).toHaveClass(`progress-bar-item-${variant}`);
             unmount();
         }
     });
@@ -147,8 +149,8 @@ describe("ProgressBar", () => {
 
         const items = screen.getAllByRole("progressbar");
         expect(items).toHaveLength(2);
-        expect(items[0]).toHaveClass("bg-[var(--progress-bar-background-color-danger)]");
-        expect(items[1]).toHaveClass("bg-[var(--progress-bar-background-color-accent)]");
+        expect(items[0]).toHaveClass("progress-bar-item-danger");
+        expect(items[1]).toHaveClass("progress-bar-item-accent");
         expect(items[0]).toHaveStyle({ "--progress-bar-item-width": "30%" });
     });
 

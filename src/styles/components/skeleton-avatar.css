@@ -1,0 +1,35 @@
+@layer components {
+    /* Named from the skeleton box it is drawn as, so that the shape and the display it asks
+       for here stand over what the box says */
+    .skeleton-box.skeleton-avatar {
+        display: inline-block;
+        line-height: 1;
+    }
+
+    .skeleton-box.skeleton-avatar-circle {
+        border-radius: var(--border-radius-full);
+    }
+
+    /* The radius grows with the avatar, so small squares stay only slightly rounded */
+    .skeleton-box.skeleton-avatar-square {
+        border-radius: clamp(
+            var(--base-size-4),
+            calc(var(--avatar-size-regular) - var(--base-size-24)),
+            var(--border-radius-medium)
+        );
+    }
+
+    /* The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular
+       one. The widths match --breakpoint-medium and --breakpoint-xxlarge in variables.css */
+    .skeleton-box.skeleton-avatar-responsive {
+        @media (width < 48rem) {
+            width: var(--avatar-size-narrow, var(--avatar-size-regular));
+            height: var(--avatar-size-narrow, var(--avatar-size-regular));
+        }
+
+        @media (width >= 87.5rem) {
+            width: var(--avatar-size-wide, var(--avatar-size-regular));
+            height: var(--avatar-size-wide, var(--avatar-size-regular));
+        }
+    }
+}

@@ -1,0 +1,136 @@
+@layer components {
+    .card {
+        position: relative;
+        display: grid;
+        grid-auto-rows: max-content auto;
+        gap: var(--stack-gap-normal);
+        overflow: hidden;
+        background-color: var(--card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        box-shadow: var(--shadow-resting-small);
+    }
+
+    .card-radius-medium {
+        border-radius: var(--border-radius-medium);
+    }
+
+    .card-radius-large {
+        border-radius: var(--border-radius-large);
+    }
+
+    /* A compact card lays its parts out in a row rather than stacking them */
+    .card-compact {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .card-padding-none {
+        padding: 0;
+    }
+
+    .card-padding-condensed {
+        padding: var(--stack-padding-condensed);
+    }
+
+    .card-padding-normal {
+        padding: var(--stack-padding-spacious);
+    }
+
+    /* A compact card pulls its normal padding in by a step */
+    .card-compact-padding-normal {
+        padding: var(--stack-padding-normal);
+    }
+
+    .card-header {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    /* An image runs to the card's edges, so the header cancels the padding around it */
+    .card-header-edge-to-edge {
+        margin-top: calc(-1 * var(--stack-padding-spacious));
+        margin-inline: calc(-1 * var(--stack-padding-spacious));
+        width: calc(100% + 2 * var(--stack-padding-spacious));
+    }
+
+    .card-header-compact {
+        flex: none;
+        width: auto;
+    }
+
+    .card-body {
+        display: grid;
+        gap: var(--stack-gap-normal);
+    }
+
+    .card-body-compact {
+        flex: auto;
+    }
+
+    .card-content {
+        display: grid;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* Sits over the card's own content in the top corner */
+    .card-action {
+        position: absolute;
+        top: var(--base-size-16);
+        right: var(--base-size-16);
+        z-index: 1;
+    }
+
+    .card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: var(--foreground-color-muted);
+    }
+
+    /* The default layout sits the icon on a tile of its own; a compact card leaves it bare */
+    .card-icon-tile {
+        justify-content: center;
+        width: var(--base-size-32);
+        height: var(--base-size-32);
+        background-color: var(--background-color-muted);
+        border-radius: var(--border-radius-medium);
+    }
+
+    .card-image {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .card-heading {
+        margin: 0;
+        color: var(--foreground-color-default);
+        font-family: var(--font-stack-sans-serif);
+        font-size: var(--text-title-size-small);
+        font-weight: var(--text-title-weight-small);
+        line-height: var(--text-title-line-height-small);
+    }
+
+    /* A compact heading drops to body size and lifts to sit level with the icon beside it */
+    .card-heading-compact {
+        position: relative;
+        top: calc(-1 * var(--base-size-4));
+        font-size: var(--text-body-size-medium);
+    }
+
+    .card-description {
+        margin: 0;
+        color: var(--foreground-color-muted);
+    }
+
+    .card-metadata {
+        display: flex;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        color: var(--foreground-color-muted);
+    }
+}

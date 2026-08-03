@@ -12,9 +12,8 @@ import type {
 } from "./Autocomplete.types";
 
 const classes = {
-    loading: "flex justify-center p-[var(--base-size-16)]",
-    emptyState:
-        "p-[var(--base-size-16)] [font-size:var(--text-body-size-medium)] text-foreground-muted",
+    loading: "autocomplete-menu-loading",
+    emptyState: "autocomplete-menu-empty-state",
     hidden: "sr-only",
 };
 

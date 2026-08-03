@@ -1,0 +1,318 @@
+@layer components {
+    /* The track the segments stand in. The widths match --breakpoint-medium and
+       --breakpoint-xxlarge in variables.css */
+    .segmented-control {
+        --segment-icon-width: var(--control-medium-size);
+
+        display: inline-flex;
+        width: auto;
+        height: var(--control-medium-size);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: var(--control-track-background-color-rest);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-track-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        font-size: var(--text-body-size-medium);
+
+        /* A control that fills its container hands the room out to its segments, and lets an
+           icon segment give up the square it would otherwise keep to. Each range says what it
+           wants in full, since the wider one is what lands */
+        &[data-full-width="true"] {
+            --segment-icon-width: 100%;
+
+            width: 100%;
+        }
+
+        &[data-full-width="false"] {
+            --segment-icon-width: var(--control-medium-size);
+
+            width: auto;
+        }
+
+        /* Wherever the menu stands in for the control, the row of segments is put away */
+        &[data-variant="dropdown"] {
+            display: none;
+        }
+
+        @media (width < 48rem) {
+            &[data-full-width-narrow="true"] {
+                --segment-icon-width: 100%;
+
+                width: 100%;
+            }
+
+            &[data-full-width-narrow="false"] {
+                --segment-icon-width: var(--control-medium-size);
+
+                width: auto;
+            }
+
+            &[data-variant-narrow="dropdown"] {
+                display: none;
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-full-width-regular="true"] {
+                --segment-icon-width: 100%;
+
+                width: 100%;
+            }
+
+            &[data-full-width-regular="false"] {
+                --segment-icon-width: var(--control-medium-size);
+
+                width: auto;
+            }
+
+            &[data-variant-regular="dropdown"] {
+                display: none;
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-full-width-wide="true"] {
+                --segment-icon-width: 100%;
+
+                width: 100%;
+            }
+
+            &[data-full-width-wide="false"] {
+                --segment-icon-width: var(--control-medium-size);
+
+                width: auto;
+            }
+
+            &[data-variant-wide="dropdown"] {
+                display: none;
+            }
+        }
+    }
+
+    .segmented-control-small {
+        height: var(--control-small-size);
+        font-size: var(--text-body-size-small);
+    }
+
+    /* ...and only there is the menu drawn in its place */
+    .segmented-control-dropdown {
+        display: none;
+
+        &[data-variant="dropdown"] {
+            display: block;
+        }
+
+        @media (width < 48rem) {
+            &[data-variant-narrow="dropdown"] {
+                display: block;
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-variant-regular="dropdown"] {
+                display: block;
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-variant-wide="dropdown"] {
+                display: block;
+            }
+        }
+    }
+
+    /* Neighbouring segments pull over the track's own border, so the row keeps a single
+       outline rather than drawing one around every segment */
+    .segmented-control-segment {
+        position: relative;
+        display: block;
+        flex-grow: 1;
+        margin-block: -1px;
+
+        &:first-child {
+            margin-inline-start: -1px;
+        }
+
+        &:last-child {
+            margin-inline-end: -1px;
+        }
+
+        &:not(:last-child) {
+            margin-inline-end: 1px;
+        }
+    }
+
+    /* The line between two segments is drawn by the one on the left, and stops short of the
+       track at both ends */
+    .segmented-control-segment-separator:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: var(--base-size-8);
+        bottom: var(--base-size-8);
+        inset-inline-end: calc(-1 * var(--base-size-2));
+        width: 1px;
+        background-color: var(--border-color-default);
+    }
+
+    /* The segment being shown is already set apart by the knob it carries, so no line is
+       drawn on either side of it. Nor is one drawn where it would show through a focus ring */
+    .segmented-control-segment-separator-hidden {
+        &:not(:last-child)[data-selected]::after,
+        &:not(:last-child):has(+ [data-selected])::after {
+            background-color: transparent;
+        }
+
+        &:not(:last-child):has(:focus-visible)::after {
+            width: 0;
+        }
+    }
+
+    /* The button fills the segment and holds its content in by the room the knob needs to
+       stand clear of the track */
+    .segmented-control-button {
+        width: 100%;
+        height: 100%;
+        padding: var(--base-size-4);
+        cursor: pointer;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        color: currentcolor;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: var(--base-text-weight-normal);
+
+        /* The ring is drawn just inside the track's border, where an offset of its own would
+           leave it sitting on top of it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(-1 * var(--border-width-thin));
+        }
+
+        /* A coarse pointer is given a target taller than the segment itself to aim at */
+        @media (pointer: coarse) {
+            &::before {
+                content: "";
+                position: absolute;
+                inset-inline: 0;
+                top: 50%;
+                translate: 0 -50%;
+                min-height: var(--control-min-target-coarse);
+            }
+        }
+    }
+
+    /* The knob takes the room the button was inset by, so the label keeps its place as the
+       reader moves along the row */
+    .segmented-control-button-selected {
+        padding: 0;
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .segmented-control-button-disabled {
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+    }
+
+    /* What is drawn inside the button: the knob where the segment is the one being shown, and
+       the hover and press states where it is not */
+    .segmented-control-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding-inline: calc(var(--control-medium-padding-inline-normal) - var(--base-size-4));
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: transparent;
+        border-radius: calc(var(--border-radius-medium) - var(--base-size-2));
+    }
+
+    .segmented-control-content-selected {
+        padding-inline: var(--control-medium-padding-inline-normal);
+        background-color: var(--control-knob-background-color-rest);
+        border-color: var(--control-knob-border-color-rest);
+        border-radius: var(--border-radius-medium);
+    }
+
+    /* Only a segment that can still be picked answers the pointer */
+    .segmented-control-button:hover .segmented-control-content-interactive {
+        background-color: var(--control-track-background-color-hover);
+    }
+
+    .segmented-control-button:active .segmented-control-content-interactive {
+        background-color: var(--control-track-background-color-active);
+    }
+
+    .segmented-control-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        margin-inline-end: var(--base-size-4);
+        color: var(--foreground-color-muted);
+    }
+
+    .segmented-control-visual-disabled {
+        color: var(--foreground-color-disabled);
+    }
+
+    /* The label reserves the room its bold form would take, so the row does not shift as the
+       reader moves along it */
+    .segmented-control-text::after {
+        content: attr(data-text);
+        display: block;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        pointer-events: none;
+        user-select: none;
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* Where the control was told to drop its labels, the icons are all that is left of the
+       segments. The label is still there to be read, only not drawn */
+    .segmented-control[data-variant="hideLabels"] .segmented-control-text-hidden {
+        display: none;
+    }
+
+    @media (width < 48rem) {
+        .segmented-control[data-variant-narrow="hideLabels"] .segmented-control-text-hidden {
+            display: none;
+        }
+    }
+
+    @media (width >= 48rem) {
+        .segmented-control[data-variant-regular="hideLabels"] .segmented-control-text-hidden {
+            display: none;
+        }
+    }
+
+    @media (width >= 87.5rem) {
+        .segmented-control[data-variant-wide="hideLabels"] .segmented-control-text-hidden {
+            display: none;
+        }
+    }
+
+    .segmented-control-counter {
+        display: flex;
+        align-items: center;
+        margin-inline-start: var(--base-size-8);
+    }
+
+    /* An icon segment is as wide as the control says, which is a square while the row takes
+       only the room it needs and an even share of it once the row fills its container */
+    .segmented-control-icon-button {
+        width: var(--segment-icon-width);
+    }
+
+    .segmented-control-icon-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        color: var(--foreground-color-muted);
+    }
+}

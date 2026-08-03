@@ -34,67 +34,61 @@ import type {
 
 const classes = {
     backdrop:
-        "fixed inset-0 flex bg-[var(--overlay-backdrop-background-color)] motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
+        "dialog-backdrop motion-safe:animate-in motion-safe:fade-in motion-safe:duration-short",
     backdropPosition: {
-        center: "items-center justify-center",
-        left: "items-center justify-start",
-        right: "items-center justify-end",
+        center: "dialog-backdrop-center",
+        left: "dialog-backdrop-left",
+        right: "dialog-backdrop-right",
     } satisfies Record<DialogPosition, string>,
     backdropNarrowPosition: {
-        center: "max-medium:items-center max-medium:justify-center",
-        bottom: "max-medium:items-end max-medium:justify-center",
-        fullscreen: "max-medium:items-center max-medium:justify-center",
+        center: "dialog-backdrop-narrow-center",
+        bottom: "dialog-backdrop-narrow-bottom",
+        fullscreen: "dialog-backdrop-narrow-fullscreen",
     } satisfies Record<DialogNarrowPosition, string>,
     backdropAlign: {
-        top: "items-start",
-        center: "items-center",
-        bottom: "items-end",
+        top: "dialog-backdrop-align-top",
+        center: "dialog-backdrop-align-center",
+        bottom: "dialog-backdrop-align-bottom",
     } satisfies Record<DialogAlign, string>,
-    // A narrow viewport lays the dialog out again from the start, so where it still
-    // centres the dialog it has to say where down the screen a second time
     backdropNarrowAlign: {
-        top: "max-medium:items-start",
-        center: "max-medium:items-center",
-        bottom: "max-medium:items-end",
+        top: "dialog-backdrop-narrow-align-top",
+        center: "dialog-backdrop-narrow-align-center",
+        bottom: "dialog-backdrop-narrow-align-bottom",
     } satisfies Record<DialogAlign, string>,
-    root: "flex flex-col min-w-[var(--overlay-width-xsmall)] max-w-[calc(100dvw_-_var(--base-size-64))] max-h-[calc(100dvh_-_var(--base-size-64))] bg-[var(--overlay-background-color)] rounded-[var(--border-radius-large)] [box-shadow:var(--shadow-floating-small)] motion-safe:animate-in motion-safe:duration-short",
+    root: "dialog motion-safe:animate-in motion-safe:duration-short",
     width: {
-        small: "w-[var(--overlay-width-small)]",
-        medium: "w-[var(--overlay-width-medium)]",
-        large: "w-[var(--overlay-width-large)]",
-        xlarge: "w-[var(--overlay-width-xlarge)]",
+        small: "dialog-width-small",
+        medium: "dialog-width-medium",
+        large: "dialog-width-large",
+        xlarge: "dialog-width-xlarge",
     } satisfies Record<DialogNamedWidth, string>,
-    // A width that is not a step of the scale is carried in a variable of its own
-    customWidth: "w-[var(--dialog-width)]",
+    customWidth: "dialog-width-custom",
     height: {
-        small: "h-[var(--overlay-height-small)]",
-        large: "h-[var(--overlay-height-large)]",
-        auto: "h-auto",
+        small: "dialog-height-small",
+        large: "dialog-height-large",
+        auto: "dialog-height-auto",
     } satisfies Record<DialogHeight, string>,
+    // A dialog arrives from the edge it settles against, so where it comes from is what the
+    // position says here beside the shape it takes
     position: {
         center: "motion-safe:fade-in motion-safe:zoom-in-50",
-        // A side sheet fills the height of the screen and gives up the corners it meets,
-        // arriving from the edge it settles against
-        left: "h-dvh max-h-none rounded-l-none motion-safe:slide-in-from-left",
-        right: "h-dvh max-h-none rounded-r-none motion-safe:slide-in-from-right",
+        left: "dialog-left motion-safe:slide-in-from-left",
+        right: "dialog-right motion-safe:slide-in-from-right",
     } satisfies Record<DialogPosition, string>,
     narrowPosition: {
         center: "",
-        bottom: "max-medium:w-dvw max-medium:max-w-[100dvw] max-medium:h-auto max-medium:max-h-[calc(100dvh_-_var(--base-size-64))] max-medium:m-0 max-medium:rounded-b-none max-medium:motion-safe:zoom-in-100 max-medium:motion-safe:slide-in-from-bottom",
-        fullscreen:
-            "max-medium:grow max-medium:w-full max-medium:max-w-[100dvw] max-medium:h-full max-medium:max-h-[100dvh] max-medium:m-0 max-medium:rounded-none",
+        bottom: "dialog-narrow-bottom max-medium:motion-safe:zoom-in-100 max-medium:motion-safe:slide-in-from-bottom",
+        fullscreen: "dialog-narrow-fullscreen",
     } satisfies Record<DialogNarrowPosition, string>,
     align: {
-        top: "mt-[var(--base-size-64)]",
+        top: "dialog-align-top",
         center: "",
-        bottom: "mb-[var(--base-size-64)]",
+        bottom: "dialog-align-bottom",
     } satisfies Record<DialogAlign, string>,
-    headerInner: "flex",
-    headerContent: "flex flex-col grow px-[var(--base-size-8)] py-[var(--base-size-6)]",
-    overflowWrapper: "grow",
-    // The line above the footer is only there to say that the body has more to be read
-    // past the end of the box
-    overflowWrapperBordered: "border-b-[length:var(--border-width-thin)] border-b-border-default",
+    headerInner: "dialog-header-inner",
+    headerContent: "dialog-header-content",
+    overflowWrapper: "dialog-overflow-wrapper",
+    overflowWrapperBordered: "dialog-overflow-wrapper-bordered",
 };
 
 // Where the body is left with less room than this, the footer buttons are scrolled

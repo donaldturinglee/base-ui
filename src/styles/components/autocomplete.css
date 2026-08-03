@@ -1,0 +1,102 @@
+@layer components {
+    /* The surface is laid out against the viewport, because that is what the field it stands
+       under is measured against. Where it ends up is carried in variables rather than
+       written straight onto the element, so that a narrow viewport can put it somewhere
+       else */
+    .autocomplete-overlay {
+        position: fixed;
+        top: var(--autocomplete-overlay-top);
+        left: var(--autocomplete-overlay-left);
+        overflow: auto;
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        transition: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    .autocomplete-overlay-width-xsmall {
+        width: var(--overlay-width-xsmall);
+    }
+
+    .autocomplete-overlay-width-small {
+        width: var(--overlay-width-small);
+    }
+
+    .autocomplete-overlay-width-medium {
+        width: var(--overlay-width-medium);
+    }
+
+    .autocomplete-overlay-width-large {
+        width: var(--overlay-width-large);
+    }
+
+    .autocomplete-overlay-width-xlarge {
+        width: var(--overlay-width-xlarge);
+    }
+
+    .autocomplete-overlay-width-auto {
+        width: auto;
+    }
+
+    /* As wide as the field it stands under, which is where a reader looks for the list
+       belonging to a field */
+    .autocomplete-overlay-width-anchor {
+        width: var(--autocomplete-overlay-anchor-width);
+    }
+
+    .autocomplete-overlay-height-small {
+        height: var(--overlay-height-small);
+    }
+
+    .autocomplete-overlay-height-medium {
+        height: var(--overlay-height-medium);
+    }
+
+    .autocomplete-overlay-height-large {
+        height: var(--overlay-height-large);
+    }
+
+    .autocomplete-overlay-height-xlarge {
+        height: var(--overlay-height-xlarge);
+    }
+
+    .autocomplete-overlay-height-auto {
+        height: auto;
+    }
+
+    .autocomplete-overlay-max-height-small {
+        max-height: var(--overlay-height-small);
+    }
+
+    .autocomplete-overlay-max-height-medium {
+        max-height: var(--overlay-height-medium);
+    }
+
+    .autocomplete-overlay-max-height-large {
+        max-height: var(--overlay-height-large);
+    }
+
+    .autocomplete-overlay-max-height-xlarge {
+        max-height: var(--overlay-height-xlarge);
+    }
+
+    .autocomplete-menu-loading {
+        display: flex;
+        justify-content: center;
+        padding: var(--base-size-16);
+    }
+
+    .autocomplete-menu-empty-state {
+        padding: var(--base-size-16);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+}

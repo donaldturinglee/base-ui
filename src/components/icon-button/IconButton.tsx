@@ -5,21 +5,15 @@ import ButtonBase from "../button/ButtonBase";
 import type { ButtonSize } from "../button";
 import type { IconButtonElementProps, IconButtonProps } from "./IconButton.types";
 
-const iconButtonVariants = cva(
-    // An icon button is square, with the icon centred rather than laid out on a grid. The
-    // centring is spelled out longhand so that it replaces the button's own alignment rather
-    // than sitting beside it
-    "inline-grid justify-center content-center shrink-0 min-w-[unset] p-0",
-    {
-        variants: {
-            size: {
-                small: "w-[var(--control-small-size)]",
-                medium: "w-[var(--control-medium-size)]",
-                large: "w-[var(--control-large-size)]",
-            } satisfies Record<ButtonSize, string>,
-        },
+const iconButtonVariants = cva("icon-button", {
+    variants: {
+        size: {
+            small: "icon-button-small",
+            medium: "icon-button-medium",
+            large: "icon-button-large",
+        } satisfies Record<ButtonSize, string>,
     },
-);
+});
 
 function IconButton<As extends React.ElementType = "button">(
     props: IconButtonProps<As>,

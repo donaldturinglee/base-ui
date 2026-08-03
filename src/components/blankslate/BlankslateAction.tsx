@@ -4,10 +4,8 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { BlankslateActionProps } from "./Blankslate.types";
 
 const classes = {
-    // The last action carries the blankslate's bottom padding, so the two actions can sit
-    // together without doubling the gap beneath them
-    root: "[font:var(--blankslate-description-text)] mt-[var(--base-size-16)] last-of-type:mb-[var(--blankslate-action-margin-block-end)]",
-    tight: "@max-[34rem]/blankslate:mt-[var(--base-size-8)] @max-[34rem]/blankslate:first-of-type:mt-[var(--base-size-16)] @max-[34rem]/blankslate:last-of-type:mb-[calc(var(--base-size-8)/2)]",
+    root: "blankslate-action",
+    tight: "blankslate-action-tight",
 };
 
 // Shared layout for the two action slots. Not part of the public Blankslate namespace.

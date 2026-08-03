@@ -8,12 +8,9 @@ import { useTypeahead } from "./useTypeahead";
 import type { TreeViewProps } from "./TreeView.types";
 
 const classes = {
-    root: "list-none m-0 p-0",
-    // The lines running down the tree are only drawn while it is being used, so that a tree
-    // at rest reads as a list rather than as a diagram. One inherited property is flipped
-    // rather than every line being matched again, which a tree of thousands of rows feels
-    hover: "[@media(hover:hover)]:[--tree-view-line-color:transparent] [@media(hover:hover)]:hover:[--tree-view-line-color:var(--border-color-muted)] [@media(hover:hover)]:focus-within:[--tree-view-line-color:var(--border-color-muted)]",
-    coarse: "[@media(pointer:coarse)]:[--tree-view-line-color:var(--border-color-muted)]",
+    root: "tree-view",
+    hover: "tree-view-hover",
+    coarse: "tree-view-coarse",
     hidden: "sr-only",
 };
 

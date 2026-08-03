@@ -382,8 +382,8 @@ describe("Drawer", () => {
             const header = drawer().querySelector("[data-component='Drawer.Header']");
 
             // Without the row the title takes the whole width and the button drops beneath it
-            expect(header).toHaveClass("flex");
-            expect(button("Close")).toHaveClass("ms-auto");
+            expect(header).toHaveClass("drawer-header");
+            expect(button("Close")).toHaveClass("drawer-close-button");
         });
 
         it("gives a title written straight into the header the rhythm the grouped one gets", () => {
@@ -400,12 +400,7 @@ describe("Drawer", () => {
 
             // Without these the title sits against the edge, and rides above the button beside
             // it rather than standing to the same height
-            expect(header).toHaveClass(
-                "[&>[data-component='Drawer.Title']]:px-[var(--base-size-8)]",
-            );
-            expect(header).toHaveClass(
-                "[&>[data-component='Drawer.Title']]:py-[var(--base-size-6)]",
-            );
+            expect(header).toHaveClass("drawer-header-direct-title");
         });
 
         it("closes from a close button standing in a header of the caller's own", () => {
