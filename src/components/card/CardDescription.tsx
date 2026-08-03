@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { CardDescriptionProps } from "./Card.types";
 
 const classes = {
-    root: "m-0 [color:var(--foreground-color-muted)] [font-family:var(--font-stack-sans-serif)] [font-weight:var(--text-body-weight)] [font-size:var(--text-body-size-medium)] [line-height:var(--text-body-line-height-medium)]",
+    root: "m-0 text-body-medium [color:var(--foreground-color-muted)]",
 };
 
 function CardDescription(

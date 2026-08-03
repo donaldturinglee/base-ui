@@ -6,9 +6,9 @@ import type { HeadingProps, HeadingSize } from "./Heading.types";
 const classes = {
     root: "m-0",
     size: {
-        large: "[font:var(--text-title-shorthand-large)]",
-        medium: "[font:var(--text-title-shorthand-medium)]",
-        small: "[font:var(--text-title-shorthand-small)]",
+        large: "text-title-large",
+        medium: "text-title-medium",
+        small: "text-title-small",
     } satisfies Record<HeadingSize, string>,
 };
 

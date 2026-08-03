@@ -71,3 +71,48 @@
   --text-title-shorthand-medium: var(--text-title-weight-medium) var(--text-title-size-medium) / var(--text-title-line-height-medium) var(--font-stack-sans-serif-display); /** Default page title. The 32px-equivalent line-height matches with button and other medium control heights. Great for page header composition. */
   --text-title-shorthand-small: var(--text-title-weight-small) var(--text-title-size-small) / var(--text-title-line-height-small) var(--font-stack-sans-serif); /** Uses the same size as body (large) with a heavier weight of semibold (600). */
 }
+
+/* Semantic text: class names for the shorthand font declarations above */
+@utility text-body-large {
+  font: var(--text-body-shorthand-large);
+}
+
+@utility text-body-medium {
+  font: var(--text-body-shorthand-medium);
+}
+
+@utility text-body-small {
+  font: var(--text-body-shorthand-small);
+}
+
+@utility text-caption {
+  font: var(--text-caption-shorthand);
+}
+
+@utility text-code-block {
+  font: var(--text-code-block-shorthand);
+}
+
+@utility text-code-inline {
+  font: var(--text-code-inline-shorthand);
+}
+
+@utility text-display {
+  font: var(--text-display-shorthand);
+}
+
+@utility text-subtitle {
+  font: var(--text-subtitle-shorthand);
+}
+
+@utility text-title-large {
+  font: var(--text-title-shorthand-large);
+}
+
+@utility text-title-medium {
+  font: var(--text-title-shorthand-medium);
+}
+
+@utility text-title-small {
+  font: var(--text-title-shorthand-small);
+}

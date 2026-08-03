@@ -22,12 +22,12 @@ describe("Heading", () => {
 
     it("applies the large size by default", () => {
         render(<Heading>Content heading</Heading>);
-        expect(screen.getByRole("heading")).toHaveClass("[font:var(--text-title-shorthand-large)]");
+        expect(screen.getByRole("heading")).toHaveClass("text-title-large");
     });
 
     it("applies the requested size", () => {
         render(<Heading size="small">Content heading</Heading>);
-        expect(screen.getByRole("heading")).toHaveClass("[font:var(--text-title-shorthand-small)]");
+        expect(screen.getByRole("heading")).toHaveClass("text-title-small");
     });
 
     it("exposes the size through the data-size attribute", () => {

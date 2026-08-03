@@ -4,7 +4,7 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { CardMetadataProps } from "./Card.types";
 
 const classes = {
-    root: "flex items-center gap-[var(--stack-gap-condensed)] [color:var(--foreground-color-muted)] [font-family:var(--font-stack-sans-serif)] [font-weight:var(--text-body-weight)] [font-size:var(--text-body-size-small)] [line-height:var(--text-body-line-height-small)]",
+    root: "flex items-center gap-[var(--stack-gap-condensed)] text-body-small [color:var(--foreground-color-muted)]",
 };
 
 function CardMetadata(
