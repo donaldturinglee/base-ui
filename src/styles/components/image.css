@@ -1,0 +1,49 @@
+@layer components {
+    /* The picture is laid out as a block, so it does not sit on a text baseline with a gap
+       left beneath it, and it is held to the width of whatever it is put in, so a source
+       larger than its place on the page cannot push the page wider than it should be */
+    .image {
+        display: block;
+        max-width: 100%;
+    }
+
+    .image-fit-contain {
+        object-fit: contain;
+    }
+
+    .image-fit-cover {
+        object-fit: cover;
+    }
+
+    .image-fit-fill {
+        object-fit: fill;
+    }
+
+    .image-fit-none {
+        object-fit: none;
+    }
+
+    .image-fit-scale-down {
+        object-fit: scale-down;
+    }
+
+    .image-radius-none {
+        border-radius: 0;
+    }
+
+    .image-radius-small {
+        border-radius: var(--border-radius-small);
+    }
+
+    .image-radius-medium {
+        border-radius: var(--border-radius-medium);
+    }
+
+    .image-radius-large {
+        border-radius: var(--border-radius-large);
+    }
+
+    .image-radius-full {
+        border-radius: var(--border-radius-full);
+    }
+}

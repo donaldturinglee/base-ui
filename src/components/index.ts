@@ -36,6 +36,7 @@ export * from "./form-control";
 export * from "./heading";
 export * from "./hidden";
 export * from "./icon-button";
+export * from "./image";
 export * from "./inline-message";
 export * from "./keybinding-hint";
 export * from "./label";
