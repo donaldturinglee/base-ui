@@ -59,8 +59,24 @@
         margin: 0;
         padding-block: var(--base-size-12);
         padding-inline: var(--base-size-16);
-        width: max-content;
         min-width: 100%;
+    }
+
+    /* A listing whose lines keep the length they were written at. It stands as wide as its
+       longest line, so whatever will not fit is reached through the content above */
+    .code-block-nowrap .code-block-pre {
+        width: max-content;
+        white-space: pre;
+    }
+
+    /* A listing that runs a line too long for the block onto the next one instead. The width
+       goes back to the block's own, since there is no longer anything standing outside it to
+       reach, and a run with no break in it long enough to overflow on its own is broken
+       rather than left to widen the block again */
+    .code-block-wrap .code-block-pre {
+        width: auto;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
     }
 
     /* The size and the face are named on the code element rather than the pre around it, since
@@ -94,6 +110,11 @@
     /* The numbers are drawn rather than written into the markup, so what a reader copies out
        is the listing and not the gutter beside it. The width holds three digits before it
        gives, which is further than most listings read */
+    .code-block-numbered {
+        --code-block-gutter-width: var(--base-size-24);
+        --code-block-gutter-gap: var(--base-size-16);
+    }
+
     .code-block-numbered .code-block-code {
         counter-reset: code-block-line;
     }
@@ -105,10 +126,23 @@
     .code-block-numbered .code-block-line::before {
         content: counter(code-block-line);
         display: inline-block;
-        min-width: var(--base-size-24);
-        margin-right: var(--base-size-16);
+        min-width: var(--code-block-gutter-width);
+        margin-right: var(--code-block-gutter-gap);
         text-align: right;
         color: var(--foreground-color-muted);
         user-select: none;
+    }
+
+    /* What a wrapped line runs on to would otherwise start under the gutter and read as a line
+       of its own. The listing is set in by the width of the gutter and every number pulled
+       back out into it, so what runs on lines up with the line it ran on from */
+    .code-block-wrap.code-block-numbered .code-block-pre {
+        padding-inline-start: calc(
+            var(--base-size-16) + var(--code-block-gutter-width) + var(--code-block-gutter-gap)
+        );
+    }
+
+    .code-block-wrap.code-block-numbered .code-block-line::before {
+        margin-left: calc(-1 * (var(--code-block-gutter-width) + var(--code-block-gutter-gap)));
     }
 }

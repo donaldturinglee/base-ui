@@ -8,6 +8,8 @@ import type { CodeBlockProps } from "./CodeBlock.types";
 const classes = {
     root: "code-block",
     numbered: "code-block-numbered",
+    wrap: "code-block-wrap",
+    nowrap: "code-block-nowrap",
 };
 
 // A listing set apart from the prose around it, with its line breaks and its indentation kept
@@ -30,16 +32,22 @@ function CodeBlock<As extends React.ElementType = "div">(
         lightTheme = DEFAULT_LIGHT_THEME,
         darkTheme = DEFAULT_DARK_THEME,
         showLineNumbers = false,
+        wrap = "nowrap",
         ...rest
     } = props as CodeBlockProps<"div">;
 
-    const context = { language, lightTheme, darkTheme, showLineNumbers };
+    const context = { language, lightTheme, darkTheme, showLineNumbers, wrap };
 
     return (
         <CodeBlockContext.Provider value={context}>
             <Component
                 ref={ref}
-                className={classNames(classes.root, showLineNumbers && classes.numbered, className)}
+                className={classNames(
+                    classes.root,
+                    showLineNumbers && classes.numbered,
+                    classes[wrap],
+                    className,
+                )}
                 data-component="CodeBlock"
                 data-language={language}
                 {...rest}

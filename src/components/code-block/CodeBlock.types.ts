@@ -10,6 +10,10 @@ export type CodeBlockLanguage = BundledLanguage | SpecialLanguage;
 // A theme shiki carries in its bundle, fetched by name on the same terms as the grammar above
 export type CodeBlockTheme = BundledTheme;
 
+// What becomes of a line too long for the block: it runs on to the next one, or it keeps the
+// length it was written at and is left to be scrolled to
+export type CodeBlockWrap = "wrap" | "nowrap";
+
 // One run of a line, as the grammar found it. The colours both themes gave the run are custom
 // properties rather than a colour, which React's own style type has no room for, so what goes
 // onto the element is described by what is actually put in it
@@ -32,6 +36,9 @@ export type CodeBlockProps<As extends React.ElementType = "div"> = PolymorphicPr
         darkTheme?: CodeBlockTheme;
         // Numbers the lines of every listing in the block
         showLineNumbers?: boolean;
+        // Whether a line too long for the block runs on to the next one or is left to be
+        // scrolled to
+        wrap?: CodeBlockWrap;
         className?: string;
     }
 >;
@@ -74,4 +81,5 @@ export type CodeBlockContextValue = {
     lightTheme?: CodeBlockTheme;
     darkTheme?: CodeBlockTheme;
     showLineNumbers?: boolean;
+    wrap?: CodeBlockWrap;
 };

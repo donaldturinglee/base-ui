@@ -124,6 +124,27 @@ describe("CodeBlock", () => {
         expect(screen.getByTestId("block")).not.toHaveClass("code-block-numbered");
     });
 
+    it("wraps the lines when asked to", () => {
+        render(<CodeBlock wrap="wrap" data-testid="block" />);
+        expect(screen.getByTestId("block")).toHaveClass("code-block-wrap");
+    });
+
+    it("keeps the lines at the length they were written when asked to", () => {
+        render(<CodeBlock wrap="nowrap" data-testid="block" />);
+        expect(screen.getByTestId("block")).toHaveClass("code-block-nowrap");
+    });
+
+    it("leaves a long line to be scrolled to by default", () => {
+        render(<CodeBlock data-testid="block" />);
+        expect(screen.getByTestId("block")).toHaveClass("code-block-nowrap");
+        expect(screen.getByTestId("block")).not.toHaveClass("code-block-wrap");
+    });
+
+    it("does not forward the wrap prop to the element", () => {
+        render(<CodeBlock wrap="wrap" data-testid="block" />);
+        expect(screen.getByTestId("block")).not.toHaveAttribute("wrap");
+    });
+
     describe("Header", () => {
         it("renders a header holding a title", () => {
             render(

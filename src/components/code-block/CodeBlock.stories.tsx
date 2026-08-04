@@ -1,6 +1,6 @@
 import type { Decorator, StoryFn, Meta } from "@storybook/react-vite";
 import { CodeBlock } from ".";
-import type { CodeBlockLanguage, CodeBlockTheme } from "./CodeBlock.types";
+import type { CodeBlockLanguage, CodeBlockTheme, CodeBlockWrap } from "./CodeBlock.types";
 
 const classes = {
     // A block fills its container, so the stories give it one to fill
@@ -43,6 +43,7 @@ type PlaygroundArgs = {
     lightTheme?: CodeBlockTheme;
     darkTheme?: CodeBlockTheme;
     showLineNumbers?: boolean;
+    wrap?: CodeBlockWrap;
 };
 
 export const Playground: StoryFn<PlaygroundArgs> = ({
@@ -50,12 +51,14 @@ export const Playground: StoryFn<PlaygroundArgs> = ({
     lightTheme,
     darkTheme,
     showLineNumbers,
+    wrap,
 }) => (
     <CodeBlock
         language={language}
         lightTheme={lightTheme}
         darkTheme={darkTheme}
         showLineNumbers={showLineNumbers}
+        wrap={wrap}
     >
         <CodeBlock.Header>
             <CodeBlock.Title>Counter.tsx</CodeBlock.Title>
@@ -71,6 +74,7 @@ Playground.args = {
     lightTheme: "github-light",
     darkTheme: "github-dark",
     showLineNumbers: false,
+    wrap: "nowrap",
 };
 
 Playground.argTypes = {
@@ -100,5 +104,12 @@ Playground.argTypes = {
             type: "boolean",
         },
         description: "Numbers the lines of every listing in the block",
+    },
+    wrap: {
+        control: {
+            type: "radio",
+        },
+        options: ["wrap", "nowrap"],
+        description: "Whether a line too long for the block runs on to the next one",
     },
 };

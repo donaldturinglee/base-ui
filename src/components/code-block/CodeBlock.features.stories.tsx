@@ -33,7 +33,7 @@ const css = `.code-block {
 const shell = `npm install @gamecrafters/base-ui
 npm run storybook`;
 
-const longLine = `const themes = ["github-light", "github-dark", "min-light", "min-dark", "nord"];`;
+const longLine = `const themes = ["github-light", "github-dark", "min-light", "min-dark", "nord", "vitesse-light", "vitesse-dark"];`;
 
 const withContainer: Decorator = (Story) => (
     <div className={classes.container}>
@@ -135,6 +135,30 @@ export const Overflowing: StoryFn<typeof CodeBlock> = () => (
             <CodeBlock.Code>{longLine}</CodeBlock.Code>
         </CodeBlock.Content>
     </CodeBlock>
+);
+
+// Wrapping, where a line too long for the block runs on to the next one rather than being
+// left to be scrolled to. What runs on is set in beside the gutter when the lines are
+// numbered, so it reads as the line it ran on from and not as a line of its own
+export const Wrapping: StoryFn<typeof CodeBlock> = () => (
+    <Stack gap="normal">
+        <CodeBlock language="ts" wrap="wrap">
+            <CodeBlock.Header>
+                <CodeBlock.Title>themes.ts</CodeBlock.Title>
+            </CodeBlock.Header>
+            <CodeBlock.Content>
+                <CodeBlock.Code>{longLine}</CodeBlock.Code>
+            </CodeBlock.Content>
+        </CodeBlock>
+        <CodeBlock language="ts" wrap="wrap" showLineNumbers>
+            <CodeBlock.Header>
+                <CodeBlock.Title>themes.ts</CodeBlock.Title>
+            </CodeBlock.Header>
+            <CodeBlock.Content>
+                <CodeBlock.Code>{longLine}</CodeBlock.Code>
+            </CodeBlock.Content>
+        </CodeBlock>
+    </Stack>
 );
 
 // Plain Text, for a listing no grammar is read over. It is still set apart from the prose
