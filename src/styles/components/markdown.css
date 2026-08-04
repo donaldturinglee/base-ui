@@ -1,0 +1,231 @@
+@layer components {
+    /* Markdown drawn as the prose it stands for. This is content on a page rather than a field
+       on a form, so it carries no frame and no focus ring: only what the writing is.
+
+       The blocks are parted from one another here once, for the whole of it, and the first has
+       nothing above it to be parted from */
+    .markdown {
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+
+        & > * {
+            margin-block: 0;
+        }
+
+        & > * + * {
+            margin-block-start: var(--base-size-16);
+        }
+    }
+
+    /* Headings are given more room above them than an ordinary block, since what parts one
+       section from the next is the space before its title rather than after it. The first
+       heading keeps the ordinary spacing, having nothing above it to be parted from */
+    .markdown
+        > :is(
+            .markdown-heading-1,
+            .markdown-heading-2,
+            .markdown-heading-3,
+            .markdown-heading-4,
+            .markdown-heading-5,
+            .markdown-heading-6
+        ):not(:first-child) {
+        margin-block-start: var(--base-size-24);
+    }
+
+    .markdown-heading-1 {
+        font-size: var(--text-title-size-large);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-large);
+    }
+
+    .markdown-heading-2 {
+        font-size: var(--text-title-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-medium);
+    }
+
+    .markdown-heading-3 {
+        font-size: var(--text-title-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-small);
+    }
+
+    .markdown-heading-4 {
+        font-size: var(--text-body-size-large);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    .markdown-heading-5 {
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The smallest heading has run out of sizes to be larger than the prose by, so it is set
+       apart by its colour instead */
+    .markdown-heading-6 {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* A quote is marked by a rule down its side rather than by quotation marks, which are the
+       writer's to put in and not the renderer's */
+    .markdown-quote {
+        padding-inline-start: var(--base-size-16);
+        border-inline-start: var(--base-size-4) solid var(--border-color-muted);
+        color: var(--foreground-color-muted);
+    }
+
+    .markdown-link {
+        color: var(--foreground-color-accent);
+        text-decoration: underline;
+    }
+
+    .markdown-list-bullet,
+    .markdown-list-number {
+        padding-inline-start: var(--base-size-24);
+    }
+
+    .markdown-list-bullet {
+        list-style: disc outside;
+    }
+
+    .markdown-list-number {
+        list-style: decimal outside;
+    }
+
+    /* Items of a list sit closer together than the blocks around them, since a list is read as
+       one thing rather than as a run of them */
+    .markdown-list-item + .markdown-list-item {
+        margin-block-start: var(--base-size-4);
+    }
+
+    /* A list hanging under an item is drawn without a marker of its own, since the item it
+       hangs under already carries one */
+    .markdown-list-item-nested {
+        list-style-type: none;
+    }
+
+    /* A task list carries its own marks rather than the list's, so the marker is taken away and
+       the room it had is given to the box drawn below */
+    .markdown-list-check {
+        padding-inline-start: 0;
+        list-style: none;
+    }
+
+    .markdown-list-item-checked,
+    .markdown-list-item-unchecked {
+        /* How far down the box sits: half of what the line has over and above the box's own
+           height. It is centred against the first line of the item rather than the whole of it,
+           so a task running onto a second line keeps its box beside the words it starts with.
+
+           A line height is a ratio rather than a length, so it is taken against the text's own
+           size before the box can be measured off it */
+        --markdown-check-offset: calc(
+            (var(--text-body-line-height-medium) * 1em - var(--base-size-16)) / 2
+        );
+
+        position: relative;
+        padding-inline-start: var(--base-size-24);
+        list-style: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset-inline-start: 0;
+            top: var(--markdown-check-offset);
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+            background-color: var(--background-color-default);
+            border-style: solid;
+            border-width: var(--border-width-thin);
+            border-color: var(--control-border-color-emphasis);
+            border-radius: var(--border-radius-small);
+        }
+    }
+
+    /* The tick is two sides of a box turned on the diagonal, which is the shape of a check mark
+       and asks for nothing to be fetched to draw it */
+    .markdown-list-item-checked {
+        &::before {
+            background-color: var(--control-checked-background-color-rest);
+            border-color: var(--control-checked-background-color-rest);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset-inline-start: 6px;
+            top: calc(var(--markdown-check-offset) + 3px);
+            width: 4px;
+            height: 8px;
+            border-style: solid;
+            border-color: var(--control-checked-foreground-color-rest);
+            border-width: 0 2px 2px 0;
+            rotate: 45deg;
+        }
+
+        @media (forced-colors: active) {
+            &::before {
+                background-color: Highlight;
+                border-color: Highlight;
+            }
+
+            &::after {
+                border-color: HighlightText;
+            }
+        }
+    }
+
+    /* Lexical lays `white-space: pre-wrap` on the prose itself, so a listing keeps its line
+       breaks and its indentation without being asked to, and a line too long for the page runs
+       on rather than being cut off. The scroll is there for what still cannot be wrapped */
+    .markdown-code-block {
+        display: block;
+        overflow-x: auto;
+        padding: var(--base-size-12);
+        background-color: var(--background-color-muted);
+        border-radius: var(--border-radius-medium);
+        font-family: var(--font-stack-monospace);
+        font-size: var(--text-code-block-size);
+        line-height: var(--text-code-block-line-height);
+        tab-size: 2;
+    }
+
+    .markdown-code-inline {
+        padding: var(--base-size-2) var(--base-size-4);
+        background-color: var(--background-color-neutral-muted);
+        border-radius: var(--border-radius-small);
+        font-family: var(--font-stack-monospace);
+        font-size: var(--text-code-inline-size);
+    }
+
+    .markdown-bold {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .markdown-italic {
+        font-style: italic;
+    }
+
+    .markdown-strikethrough {
+        text-decoration: line-through;
+    }
+
+    .markdown-highlight {
+        background-color: var(--background-color-attention-muted);
+        color: var(--foreground-color-default);
+    }
+
+    .markdown-ltr {
+        text-align: start;
+    }
+
+    .markdown-rtl {
+        text-align: end;
+    }
+}

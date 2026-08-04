@@ -45,5 +45,7 @@ export default {
         "react-is",
         "@oddbird/popover-polyfill/fn",
         "shiki",
+        "lexical",
+        /^@lexical\//,
     ],
 };

@@ -1,0 +1,222 @@
+@layer components {
+    /* A field for writing prose in. The frame is the design system's own — the same one a
+       textarea is drawn in — so an editor sits with the rest of a form rather than opening a
+       window of its own onto it.
+
+       The frame carries the focus ring on behalf of the writing area inside it, since what
+       takes the focus is a box with no border of its own and the ring belongs on the field a
+       reader sees */
+    .rich-text-editor {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-inset);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+
+        &:focus-within {
+            border-color: var(--border-color-accent-emphasis);
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: -1px;
+        }
+    }
+
+    /* Writing that is only to be read keeps its colours: what it says is the whole of what it
+       is for, and a page redrawn in grey would be harder to read rather than plainer to place */
+    .rich-text-editor-read-only {
+        background-color: var(--background-color-inset);
+    }
+
+    .rich-text-editor-toolbar {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        border-block-end: var(--border-width-thin) solid var(--border-color-muted);
+    }
+
+    /* The buttons wrap onto another line rather than being cut off, since a toolbar that has
+       run out of room still has to offer everything it holds */
+    .rich-text-editor-toolbar-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--base-size-2);
+        padding: var(--base-size-4);
+    }
+
+    .rich-text-editor-toolbar-group {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-2);
+    }
+
+    .rich-text-editor-toolbar-divider {
+        flex-shrink: 0;
+        width: var(--border-width-thin);
+        height: var(--base-size-20);
+        margin-inline: var(--base-size-4);
+        background-color: var(--border-color-muted);
+    }
+
+    .rich-text-editor-link-field {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        padding: var(--base-size-8);
+        border-block-start: var(--border-width-thin) solid var(--border-color-muted);
+    }
+
+    .rich-text-editor-link-input {
+        flex-grow: 1;
+    }
+
+    /* The writing area grows with what is written and this is what holds it to a height, so the
+       frame around it stays where it was put and the rest of the writing is scrolled to */
+    .rich-text-editor-scroll {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    /* The field owns the focus ring, so the box that takes the focus drops its own */
+    .rich-text-editor-content {
+        flex-grow: 1;
+        padding: var(--base-size-12);
+        outline: none;
+        tab-size: 1;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    /* The placeholder is laid over the writing area rather than inside it, since what is
+       written there belongs to the editor and nothing else may sit among it. It is left out of
+       the pointer's way so that clicking the words still puts the cursor behind them */
+    .rich-text-editor-placeholder {
+        position: absolute;
+        top: var(--base-size-12);
+        inset-inline: var(--base-size-12);
+        overflow: hidden;
+        color: var(--control-foreground-color-placeholder);
+        pointer-events: none;
+        user-select: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* What the writing is drawn as. The editor is a small page of prose rather than a run of
+       components, so the spacing is written here once for the whole of it: every block is
+       parted from the one before it, and the first has nothing above it to be parted from */
+    .rich-text-editor-content > * {
+        margin-block: 0;
+
+        & + * {
+            margin-block-start: var(--base-size-8);
+        }
+    }
+
+    .rich-text-editor-paragraph {
+        position: relative;
+    }
+
+    .rich-text-editor-heading-1 {
+        font-size: var(--text-title-size-large);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-large);
+    }
+
+    .rich-text-editor-heading-2 {
+        font-size: var(--text-title-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-medium);
+    }
+
+    .rich-text-editor-heading-3 {
+        font-size: var(--text-title-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-small);
+    }
+
+    /* A quote is marked by a rule down its side rather than by quotation marks, which are the
+       writer's to put in and not the editor's */
+    .rich-text-editor-quote {
+        padding-inline-start: var(--base-size-12);
+        border-inline-start: var(--base-size-4) solid var(--border-color-muted);
+        color: var(--foreground-color-muted);
+    }
+
+    .rich-text-editor-link {
+        color: var(--foreground-color-accent);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .rich-text-editor-list-bullet,
+    .rich-text-editor-list-number {
+        padding-inline-start: var(--base-size-24);
+    }
+
+    .rich-text-editor-list-bullet {
+        list-style: disc outside;
+    }
+
+    .rich-text-editor-list-number {
+        list-style: decimal outside;
+    }
+
+    .rich-text-editor-list-item {
+        margin-block: 0;
+    }
+
+    /* A list hanging under an item is drawn without a marker of its own, since the item it
+       hangs under already carries one */
+    .rich-text-editor-list-item-nested {
+        list-style-type: none;
+    }
+
+    .rich-text-editor-bold {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .rich-text-editor-italic {
+        font-style: italic;
+    }
+
+    .rich-text-editor-underline {
+        text-decoration: underline;
+    }
+
+    .rich-text-editor-strikethrough {
+        text-decoration: line-through;
+    }
+
+    /* Both marks at once are one declaration, since a line under and a line through are the
+       same property and the second would otherwise stand over the first */
+    .rich-text-editor-underline-strikethrough {
+        text-decoration: underline line-through;
+    }
+
+    .rich-text-editor-inline-code {
+        padding: var(--base-size-2) var(--base-size-4);
+        background-color: var(--background-color-neutral-muted);
+        border-radius: var(--border-radius-small);
+        font-family: var(--font-stack-monospace);
+        font-size: var(--text-code-inline-size);
+    }
+
+    .rich-text-editor-ltr {
+        text-align: start;
+    }
+
+    .rich-text-editor-rtl {
+        text-align: end;
+    }
+}

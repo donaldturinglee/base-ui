@@ -49,6 +49,7 @@
 @import "./label.css";
 @import "./link.css";
 @import "./mark.css";
+@import "./markdown.css";
 @import "./nav-list.css";
 @import "./page-content.css";
 @import "./page-footer.css";
@@ -63,6 +64,7 @@
 @import "./radio.css";
 @import "./radio-group.css";
 @import "./rating.css";
+@import "./rich-text-editor.css";
 @import "./scrollable-region.css";
 @import "./segmented-control.css";
 @import "./select.css";
