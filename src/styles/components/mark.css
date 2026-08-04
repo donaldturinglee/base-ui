@@ -1,0 +1,62 @@
+@layer components {
+    /* The run is picked out by the ground it sits on rather than by anything done to the
+       letters, so a marked phrase keeps the family, the size and the weight of the line it is
+       read in. The ground's colour comes through a custom property, so a caller can repaint it
+       without having to unpick the class it came with, and it is named on the element itself so
+       that a mark set on something other than a mark element is still drawn the same way */
+    .mark {
+        background-color: var(--mark-background-color);
+        color: var(--foreground-color-default);
+    }
+
+    .mark-attention {
+        --mark-background-color: var(--background-color-attention-muted);
+    }
+
+    .mark-accent {
+        --mark-background-color: var(--background-color-accent-muted);
+    }
+
+    .mark-success {
+        --mark-background-color: var(--background-color-success-muted);
+    }
+
+    .mark-danger {
+        --mark-background-color: var(--background-color-danger-muted);
+    }
+
+    .mark-neutral {
+        --mark-background-color: var(--background-color-neutral-muted);
+    }
+
+    .mark-size-large {
+        font-size: var(--text-body-size-large);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    .mark-size-medium {
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .mark-size-small {
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .mark-weight-light {
+        font-weight: var(--base-text-weight-light);
+    }
+
+    .mark-weight-normal {
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .mark-weight-medium {
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .mark-weight-semibold {
+        font-weight: var(--base-text-weight-semibold);
+    }
+}
