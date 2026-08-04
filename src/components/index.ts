@@ -59,6 +59,7 @@ export * from "./progress-bar";
 export * from "./progress-circle";
 export * from "./radio";
 export * from "./radio-group";
+export * from "./rating";
 export * from "./relative-time";
 export * from "./scrollable-region";
 export * from "./segmented-control";
