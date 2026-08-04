@@ -1,0 +1,118 @@
+@layer components {
+    /* The reading a progress bar gives, drawn as a ring for the places a line has no room to
+       run: the corner of a card, a cell in a table, the space an avatar would otherwise take.
+
+       The ring is laid behind whatever is written in the middle rather than beside it, so the
+       words are centred by the box itself and the circle around them asks for no room of its own.
+
+       The colour and the thickness of the line come through custom properties, so a caller can
+       repaint or thin the ring without having to unpick the classes it came with */
+    .progress-circle {
+        --progress-circle-stroke-width: 4;
+
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* The words in the middle need a circle big enough to hold them, so they belong to the larger
+       sizes. The smaller ones are read as the ring alone */
+    .progress-circle-small {
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        font-size: var(--text-caption-size);
+    }
+
+    .progress-circle-medium {
+        width: var(--base-size-32);
+        height: var(--base-size-32);
+        font-size: var(--text-caption-size);
+    }
+
+    .progress-circle-large {
+        width: var(--base-size-64);
+        height: var(--base-size-64);
+        font-size: var(--text-body-size-medium);
+    }
+
+    /* A circle is drawn from three o'clock, so the ring is turned a quarter back to start the arc
+       at the top and run it round the way a dial is read */
+    .progress-circle-ring {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    .progress-circle-track,
+    .progress-circle-indicator {
+        fill: none;
+        stroke-width: var(--progress-circle-stroke-width);
+    }
+
+    .progress-circle-track {
+        stroke: var(--border-color-default);
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            stroke: CanvasText;
+        }
+    }
+
+    /* The path is normalised to a hundred units, so the length drawn is the percentage itself and
+       the gap after it is long enough to leave the rest of the ring bare.
+
+       The fallback lives in the class, so leaving the progress unset draws an empty ring */
+    .progress-circle-indicator {
+        stroke: var(--progress-circle-color);
+        stroke-dasharray: var(--progress-circle-progress, 0) 100;
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            stroke: LinkText;
+        }
+    }
+
+    /* The figures are held to one width, so a percentage counting up does not shift under the eye
+       as its digits change */
+    .progress-circle-label {
+        color: var(--foreground-color-default);
+        line-height: var(--text-caption-line-height);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .progress-circle-accent {
+        --progress-circle-color: var(--background-color-accent-emphasis);
+    }
+
+    .progress-circle-attention {
+        --progress-circle-color: var(--background-color-attention-emphasis);
+    }
+
+    .progress-circle-danger {
+        --progress-circle-color: var(--background-color-danger-emphasis);
+    }
+
+    .progress-circle-done {
+        --progress-circle-color: var(--background-color-done-emphasis);
+    }
+
+    .progress-circle-neutral {
+        --progress-circle-color: var(--background-color-neutral-emphasis);
+    }
+
+    .progress-circle-severe {
+        --progress-circle-color: var(--background-color-severe-emphasis);
+    }
+
+    .progress-circle-sponsors {
+        --progress-circle-color: var(--background-color-sponsors-emphasis);
+    }
+
+    .progress-circle-success {
+        --progress-circle-color: var(--background-color-success-emphasis);
+    }
+}
