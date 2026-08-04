@@ -70,6 +70,7 @@ export * from "./slider";
 export * from "./spinner";
 export * from "./stack";
 export * from "./state-label";
+export * from "./status";
 export * from "./tabs";
 export * from "./text";
 export * from "./text-input";

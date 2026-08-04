@@ -1,0 +1,117 @@
+@layer components {
+    /* The condition a thing is in, read as a dot with the words beside it. The dot carries the
+       colour and the words are left in the ordinary foreground, so the colour draws the eye down
+       a column of these while the words say which one it stopped at, and neither is asked to do
+       the other's work.
+
+       The dot's colour comes through a custom property, so a caller can repaint it without
+       having to unpick the class it came with */
+    .status {
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        color: var(--foreground-color-default);
+    }
+
+    /* The gap grows with the dot, so the two stay the same distance apart to the eye at every
+       size rather than closing up as the dot gets bigger */
+    .status-small {
+        gap: var(--base-size-4);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .status-medium {
+        gap: var(--base-size-6);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .status-large {
+        gap: var(--base-size-8);
+        font-size: var(--text-body-size-large);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    /* The dot keeps its width when the words beside it run out of room, so a long label is what
+       gives way rather than the one part that carries the colour */
+    .status-indicator {
+        flex-shrink: 0;
+        border-radius: var(--border-radius-full);
+        background-color: var(--status-indicator-color);
+    }
+
+    .status-indicator-small {
+        width: var(--base-size-6);
+        height: var(--base-size-6);
+    }
+
+    .status-indicator-medium {
+        width: var(--base-size-8);
+        height: var(--base-size-8);
+    }
+
+    .status-indicator-large {
+        width: var(--base-size-12);
+        height: var(--base-size-12);
+    }
+
+    /* The colour is named on the dot as well as on the status around it, so a dot read where a
+       status is not is still painted, and one asked for a colour of its own overrides what it
+       would otherwise have inherited */
+    .status-indicator-accent {
+        --status-indicator-color: var(--background-color-accent-emphasis);
+    }
+
+    .status-indicator-success {
+        --status-indicator-color: var(--background-color-success-emphasis);
+    }
+
+    .status-indicator-attention {
+        --status-indicator-color: var(--background-color-attention-emphasis);
+    }
+
+    .status-indicator-severe {
+        --status-indicator-color: var(--background-color-severe-emphasis);
+    }
+
+    .status-indicator-danger {
+        --status-indicator-color: var(--background-color-danger-emphasis);
+    }
+
+    .status-indicator-done {
+        --status-indicator-color: var(--background-color-done-emphasis);
+    }
+
+    .status-indicator-neutral {
+        --status-indicator-color: var(--background-color-neutral-emphasis);
+    }
+
+    .status-accent {
+        --status-indicator-color: var(--background-color-accent-emphasis);
+    }
+
+    .status-success {
+        --status-indicator-color: var(--background-color-success-emphasis);
+    }
+
+    .status-attention {
+        --status-indicator-color: var(--background-color-attention-emphasis);
+    }
+
+    .status-severe {
+        --status-indicator-color: var(--background-color-severe-emphasis);
+    }
+
+    .status-danger {
+        --status-indicator-color: var(--background-color-danger-emphasis);
+    }
+
+    .status-done {
+        --status-indicator-color: var(--background-color-done-emphasis);
+    }
+
+    .status-neutral {
+        --status-indicator-color: var(--background-color-neutral-emphasis);
+    }
+}
