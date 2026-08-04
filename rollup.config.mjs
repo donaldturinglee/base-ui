@@ -44,5 +44,6 @@ export default {
         "react-dom/client",
         "react-is",
         "@oddbird/popover-polyfill/fn",
+        "shiki",
     ],
 };
