@@ -35,6 +35,7 @@ export * from "./filtered-action-list";
 export * from "./form-control";
 export * from "./heading";
 export * from "./hidden";
+export * from "./highlight";
 export * from "./icon-button";
 export * from "./image";
 export * from "./inline-message";
