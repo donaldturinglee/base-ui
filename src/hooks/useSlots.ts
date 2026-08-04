@@ -15,11 +15,7 @@ type SlotElements<Config extends SlotConfig> = {
 
 type SlotValue<Config, Property extends keyof Config> = Config[Property] extends React.ElementType
     ? React.ReactElement<React.ComponentPropsWithoutRef<Config[Property]>, Config[Property]>
-    : Config[Property] extends readonly [
-            infer ElementType extends React.ElementType,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            infer _testFn,
-        ]
+    : Config[Property] extends readonly [infer ElementType extends React.ElementType, infer _testFn]
       ? React.ReactElement<React.ComponentPropsWithoutRef<ElementType>, ElementType>
       : never;
 

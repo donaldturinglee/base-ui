@@ -98,7 +98,6 @@ const accessibleKeyNames = (platform: Platform): Record<string, string | undefin
     ";": "semicolon",
     ":": "colon",
     "'": "single quote",
-    // eslint-disable-next-line quotes
     '"': "double quote",
     ",": "comma",
     "<": "left angle bracket",

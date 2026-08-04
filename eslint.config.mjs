@@ -9,6 +9,7 @@ import globals from "globals";
 
 export default tseslint.config(
     eslint.configs.recommended,
+    ...tseslint.configs.recommended,
     {
         files: ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.ts"],
         languageOptions: {
@@ -25,9 +26,11 @@ export default tseslint.config(
         },
         rules: {
             // Enforce consistent indentation (4 spaces in this case)
-            indent: ["error", 4],
+            // SwitchCase: 1 keeps `case` clauses aligned with Prettier's output
+            indent: ["error", 4, { SwitchCase: 1 }],
             // Enforce the use of double quotes for strings
-            quotes: ["error", "double"],
+            // avoidEscape allows single quotes when the string contains double quotes
+            quotes: ["error", "double", { avoidEscape: true }],
             // Enforce semicolons at the end of statements
             semi: ["error", "always"],
             // Enforce consistent line breaks (LF for Unix)
@@ -36,6 +39,15 @@ export default tseslint.config(
             eqeqeq: ["error", "always"],
             // Enforce a maximum line length (usually 80 or 100 characters)
             "max-len": ["error", { code: 100 }],
+            // Allow intentionally unused bindings when prefixed with an underscore
+            "@typescript-eslint/no-unused-vars": [
+                "error",
+                {
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_",
+                },
+            ],
             // Enable Prettier as a lint rule
             "prettier/prettier": [
                 "error",
@@ -46,6 +58,5 @@ export default tseslint.config(
             ],
         },
     },
-    ...tseslint.configs.recommended,
     storybook.configs["flat/recommended"],
 );

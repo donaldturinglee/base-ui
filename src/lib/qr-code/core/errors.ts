@@ -3,13 +3,13 @@
  */
 
 export class QRCodeError extends Error {
-  override name = "QRCodeError";
+    override name = "QRCodeError";
 }
 
 export class InvalidInputError extends QRCodeError {
-  override name = "InvalidInputError";
+    override name = "InvalidInputError";
 }
 
 export class CapacityError extends QRCodeError {
-  override name = "CapacityError";
+    override name = "CapacityError";
 }

@@ -21,8 +21,7 @@ type MaxLength = ArrayOfLength<10>[number];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ArrayIndex<A extends ReadonlyArray<any>, Keys extends number = never> = A extends readonly []
     ? Keys
-    : // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      A extends readonly [infer _, ...infer Tail]
+    : A extends readonly [infer _, ...infer Tail]
       ? ArrayIndex<Tail, Keys | Tail["length"]>
       : Keys;
 
