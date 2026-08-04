@@ -21,6 +21,7 @@ export * from "./chart";
 export * from "./checkbox";
 export * from "./checkbox-group";
 export * from "./code";
+export * from "./code-block";
 export * from "./collapsible";
 export * from "./command-palette";
 export * from "./confirmation-dialog";

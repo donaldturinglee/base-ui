@@ -1,0 +1,114 @@
+@layer components {
+    /* A listing set apart from the prose around it. The frame, the ground it sits on and the
+       rule under the header are all the design system's own, and only the colour of the runs
+       inside comes from the theme the grammar was read under, so a block sits with the rest
+       of the page rather than opening a window of its own onto it.
+
+       The ground comes through a custom property, as the inline Code component's does, so a
+       caller can repaint it without having to unpick the class it came with */
+    .code-block {
+        --code-block-background-color: var(--background-color-muted);
+
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background-color: var(--code-block-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+    }
+
+    /* The title is set at the start and everything else at the end, so a copy button beside a
+       file name lays out without being told where to stand */
+    .code-block-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--stack-gap-condensed);
+        padding-block: var(--base-size-8);
+        padding-inline: var(--base-size-12);
+        border-bottom: var(--border-width-thin) solid var(--border-color-muted);
+        color: var(--foreground-color-muted);
+    }
+
+    /* A file name is read from its end as often as from its start, so what will not fit is
+       cut rather than wrapped onto a second line the header has no room for */
+    .code-block-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--foreground-color-muted);
+        font: var(--text-body-shorthand-small);
+    }
+
+    /* A listing keeps its lines as long as they were written, so anything that will not fit is
+       scrolled to rather than wrapped. `position: relative` goes with the overflow so that
+       absolutely positioned descendants cannot escape and put scrollbars on the page */
+    .code-block-content {
+        position: relative;
+        overflow: auto;
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    .code-block-pre {
+        margin: 0;
+        padding-block: var(--base-size-12);
+        padding-inline: var(--base-size-16);
+        width: max-content;
+        min-width: 100%;
+    }
+
+    /* The size and the face are named on the code element rather than the pre around it, since
+       a code element carries a monospaced family of its own that would otherwise win */
+    .code-block-code {
+        color: var(--foreground-color-default);
+        font: var(--text-code-block-shorthand);
+        tab-size: 4;
+    }
+
+    /* Both themes were read over the listing at once and every run carries the colour each of
+       them gave it, so the scheme in force picks one of the two and nothing is read a second
+       time when it changes. A run the grammar gave nothing to falls back to the colour of the
+       listing around it */
+    .code-block-token {
+        color: var(--shiki-light, inherit);
+        background-color: var(--shiki-light-bg, transparent);
+        font-style: var(--shiki-light-font-style, inherit);
+        font-weight: var(--shiki-light-font-weight, inherit);
+        text-decoration: var(--shiki-light-text-decoration, none);
+    }
+
+    [data-theme="dark"] .code-block-token {
+        color: var(--shiki-dark, inherit);
+        background-color: var(--shiki-dark-bg, transparent);
+        font-style: var(--shiki-dark-font-style, inherit);
+        font-weight: var(--shiki-dark-font-weight, inherit);
+        text-decoration: var(--shiki-dark-text-decoration, none);
+    }
+
+    /* The numbers are drawn rather than written into the markup, so what a reader copies out
+       is the listing and not the gutter beside it. The width holds three digits before it
+       gives, which is further than most listings read */
+    .code-block-numbered .code-block-code {
+        counter-reset: code-block-line;
+    }
+
+    .code-block-numbered .code-block-line {
+        counter-increment: code-block-line;
+    }
+
+    .code-block-numbered .code-block-line::before {
+        content: counter(code-block-line);
+        display: inline-block;
+        min-width: var(--base-size-24);
+        margin-right: var(--base-size-16);
+        text-align: right;
+        color: var(--foreground-color-muted);
+        user-select: none;
+    }
+}
