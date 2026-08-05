@@ -1,0 +1,115 @@
+@layer components {
+    /* One headline figure drawn as a card. What the card is drawn in comes through a custom
+       property so that the quiet parts of it take their colour from one place rather than
+       naming it again for each */
+    .statistic-card {
+        --statistic-card-muted-color: var(--foreground-color-muted);
+
+        display: flex;
+        align-items: flex-start;
+        gap: var(--stack-gap-condensed);
+        padding: var(--stack-padding-normal);
+        background-color: var(--card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-resting-small);
+        color: var(--foreground-color-default);
+    }
+
+    /* The words are the one part of the row with no length of its own, so they are what gives
+       when the card runs out of room */
+    .statistic-card-body {
+        display: flex;
+        flex: auto;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        min-width: 0;
+    }
+
+    .statistic-card-label {
+        color: var(--statistic-card-muted-color);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The figure and the way it has moved are read as one, so they sit on a line together and
+       settle on the feet of the digits rather than on their middles */
+    .statistic-card-figure {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The digits keep the widths the font gives them rather than each being widened to a zero,
+       which at this size leaves a short number looking gappy. Widths are only worth evening out
+       where numbers are stacked in a column and have to line up */
+    .statistic-card-value {
+        color: var(--foreground-color-default);
+        font-size: var(--text-title-size-large);
+        font-weight: var(--base-text-weight-semibold);
+        font-variant-numeric: proportional-nums;
+        line-height: var(--text-title-line-height-large);
+    }
+
+    /* The move is drawn in the colour of what it means rather than of the way it points, since
+       a rise is not always the good news */
+    .statistic-card-trend {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--base-size-4);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-medium);
+        line-height: var(--text-body-line-height-medium);
+
+        & > svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+    }
+
+    .statistic-card-trend-positive {
+        color: var(--foreground-color-success);
+    }
+
+    .statistic-card-trend-negative {
+        color: var(--foreground-color-danger);
+    }
+
+    .statistic-card-trend-neutral {
+        color: var(--statistic-card-muted-color);
+    }
+
+    .statistic-card-description {
+        color: var(--statistic-card-muted-color);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The mark is held at the end of the row rather than before the words, so it is found in the
+       same place on every card in a run however long their lines happen to be */
+    .statistic-card-trailing-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        margin-inline-start: auto;
+        color: var(--statistic-card-muted-color);
+
+        & > svg {
+            width: var(--base-size-20);
+            height: var(--base-size-20);
+        }
+    }
+
+    /* A move told apart by colour alone says nothing in forced colours, so the arrow beside the
+       figure is what is left to read it by */
+    @media (forced-colors: active) {
+        .statistic-card-trend {
+            color: canvastext;
+        }
+    }
+}

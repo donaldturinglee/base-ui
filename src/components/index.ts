@@ -79,6 +79,7 @@ export * from "./slider";
 export * from "./spinner";
 export * from "./stack";
 export * from "./state-label";
+export * from "./statistic-card";
 export * from "./status";
 export * from "./steps";
 export * from "./tabs";
