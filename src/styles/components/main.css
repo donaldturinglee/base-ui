@@ -39,6 +39,7 @@
 @import "./drawer.css";
 @import "./em.css";
 @import "./empty-state.css";
+@import "./file-upload.css";
 @import "./filtered-action-list.css";
 @import "./form-control.css";
 @import "./heading.css";
@@ -99,4 +100,3 @@
 @import "./topic-tag.css";
 @import "./tree-view.css";
 @import "./truncate.css";
-@import "./upload.css";

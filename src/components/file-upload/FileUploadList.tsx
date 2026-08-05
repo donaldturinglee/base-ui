@@ -1,16 +1,16 @@
 import * as React from "react";
 import { classNames } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { UploadListProps } from "./Upload.types";
+import type { FileUploadListProps } from "./FileUpload.types";
 
 const classes = {
     // A list drawn without its markers is no longer read as one in every browser, so the role
     // below puts back what the styling takes away
-    root: "upload-list",
+    root: "file-upload-list",
 };
 
-function UploadList(
-    props: UploadListProps,
+function FileUploadList(
+    props: FileUploadListProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -26,7 +26,7 @@ function UploadList(
             ref={ref}
             role="list"
             className={classNames(classes.root, className)}
-            data-component="Upload.List"
+            data-component="FileUpload.List"
             {...rest}
         >
             {children}
@@ -34,6 +34,6 @@ function UploadList(
     );
 }
 
-UploadList.displayName = "Upload.List";
+FileUploadList.displayName = "FileUpload.List";
 
-export default fixedForwardRef(UploadList);
+export default fixedForwardRef(FileUploadList);

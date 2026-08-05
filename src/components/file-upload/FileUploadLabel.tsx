@@ -1,20 +1,20 @@
 import * as React from "react";
 import { classNames } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import { UploadContext } from "./UploadContext";
-import type { UploadLabelProps } from "./Upload.types";
+import { FileUploadContext } from "./FileUploadContext";
+import type { FileUploadLabelProps } from "./FileUpload.types";
 
 const classes = {
-    root: "upload-label",
+    root: "file-upload-label",
 };
 
-function UploadLabel(
-    props: UploadLabelProps,
+function FileUploadLabel(
+    props: FileUploadLabelProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
     const { className, id, ...rest } = props;
-    const { labelId } = React.useContext(UploadContext);
+    const { labelId } = React.useContext(FileUploadContext);
 
     return (
         <span
@@ -23,12 +23,12 @@ function UploadLabel(
             // pointing at unless the caller has named one of their own
             id={id ?? labelId}
             className={classNames(classes.root, className)}
-            data-component="Upload.Label"
+            data-component="FileUpload.Label"
             {...rest}
         />
     );
 }
 
-UploadLabel.displayName = "Upload.Label";
+FileUploadLabel.displayName = "FileUpload.Label";
 
-export default fixedForwardRef(UploadLabel);
+export default fixedForwardRef(FileUploadLabel);

@@ -1,20 +1,20 @@
 import * as React from "react";
 import { classNames } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import { UploadContext } from "./UploadContext";
-import type { UploadDescriptionProps } from "./Upload.types";
+import { FileUploadContext } from "./FileUploadContext";
+import type { FileUploadDescriptionProps } from "./FileUpload.types";
 
 const classes = {
-    root: "upload-description",
+    root: "file-upload-description",
 };
 
-function UploadDescription(
-    props: UploadDescriptionProps,
+function FileUploadDescription(
+    props: FileUploadDescriptionProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
     const { className, id, ...rest } = props;
-    const { descriptionId } = React.useContext(UploadContext);
+    const { descriptionId } = React.useContext(FileUploadContext);
 
     return (
         <span
@@ -23,12 +23,12 @@ function UploadDescription(
             // pointing at unless the caller has named one of their own
             id={id ?? descriptionId}
             className={classNames(classes.root, className)}
-            data-component="Upload.Description"
+            data-component="FileUpload.Description"
             {...rest}
         />
     );
 }
 
-UploadDescription.displayName = "Upload.Description";
+FileUploadDescription.displayName = "FileUpload.Description";
 
-export default fixedForwardRef(UploadDescription);
+export default fixedForwardRef(FileUploadDescription);

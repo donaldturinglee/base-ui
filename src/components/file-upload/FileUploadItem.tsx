@@ -10,20 +10,20 @@ import { fixedForwardRef } from "../../utilities/polymorphic";
 import { IconButton } from "../icon-button";
 import { ProgressBar } from "../progress-bar";
 import { formatFileSize } from "./files";
-import type { UploadItemProps } from "./Upload.types";
+import type { FileUploadItemProps } from "./FileUpload.types";
 
 const classes = {
-    root: "upload-item",
-    icon: "upload-item-icon",
-    body: "upload-item-body",
-    heading: "upload-item-heading",
-    name: "upload-item-name",
-    fileSize: "upload-item-file-size",
-    description: "upload-item-description",
-    descriptionError: "upload-item-description-error",
-    status: "upload-item-status",
-    statusSuccess: "upload-item-status-success",
-    statusError: "upload-item-status-error",
+    root: "file-upload-item",
+    icon: "file-upload-item-icon",
+    body: "file-upload-item-body",
+    heading: "file-upload-item-heading",
+    name: "file-upload-item-name",
+    fileSize: "file-upload-item-file-size",
+    description: "file-upload-item-description",
+    descriptionError: "file-upload-item-description-error",
+    status: "file-upload-item-status",
+    statusSuccess: "file-upload-item-status-success",
+    statusError: "file-upload-item-status-error",
 };
 
 // A file that has arrived and one that has gone wrong are marked at the end of the row. One
@@ -36,8 +36,8 @@ const statusMarks = {
 
 // One file in the list under a drop zone: what it is called, what it weighs, how far it has
 // got and a way of taking it back out
-function UploadItem(
-    props: UploadItemProps,
+function FileUploadItem(
+    props: FileUploadItemProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -62,21 +62,21 @@ function UploadItem(
         <li
             ref={ref}
             className={classNames(classes.root, className)}
-            data-component="Upload.Item"
+            data-component="FileUpload.Item"
             data-status={status}
             {...rest}
         >
-            <span className={classes.icon} aria-hidden="true" data-component="Upload.Item.Icon">
+            <span className={classes.icon} aria-hidden="true" data-component="FileUpload.Item.Icon">
                 <Icon />
             </span>
 
             <span className={classes.body}>
                 <span className={classes.heading}>
-                    <span className={classes.name} data-component="Upload.Item.Name">
+                    <span className={classes.name} data-component="FileUpload.Item.Name">
                         {name}
                     </span>
                     {fileSize === undefined ? null : (
-                        <span className={classes.fileSize} data-component="Upload.Item.Size">
+                        <span className={classes.fileSize} data-component="FileUpload.Item.Size">
                             {formatFileSize(fileSize)}
                         </span>
                     )}
@@ -98,7 +98,7 @@ function UploadItem(
                             classes.description,
                             status === "error" && classes.descriptionError,
                         )}
-                        data-component="Upload.Item.Description"
+                        data-component="FileUpload.Item.Description"
                     >
                         {description}
                     </span>
@@ -111,7 +111,7 @@ function UploadItem(
                 <span
                     className={classNames(classes.status, mark?.className)}
                     aria-hidden="true"
-                    data-component="Upload.Item.Status"
+                    data-component="FileUpload.Item.Status"
                 >
                     <Mark />
                 </span>
@@ -124,13 +124,13 @@ function UploadItem(
                     size="small"
                     aria-label={removeLabel ?? `Remove ${name}`}
                     onClick={onRemove}
-                    data-component="Upload.Item.RemoveButton"
+                    data-component="FileUpload.Item.RemoveButton"
                 />
             ) : null}
         </li>
     );
 }
 
-UploadItem.displayName = "Upload.Item";
+FileUploadItem.displayName = "FileUpload.Item";
 
-export default fixedForwardRef(UploadItem);
+export default fixedForwardRef(FileUploadItem);

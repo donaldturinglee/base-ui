@@ -1,6 +1,6 @@
 import type { Decorator, StoryFn, Meta } from "@storybook/react-vite";
-import { Upload } from ".";
-import type { UploadProps } from "./Upload.types";
+import { FileUpload } from ".";
+import type { FileUploadProps } from "./FileUpload.types";
 
 const classes = {
     // A drop zone fills its container, so the stories give it one to fill
@@ -14,28 +14,28 @@ const withContainer: Decorator = (Story) => (
 );
 
 export default {
-    title: "Components/Upload",
-    component: Upload,
+    title: "Components/FileUpload",
+    component: FileUpload,
     decorators: [withContainer],
-} as Meta<typeof Upload>;
+} as Meta<typeof FileUpload>;
 
-export const Default: StoryFn<typeof Upload> = () => (
-    <Upload>
-        <Upload.Icon />
-        <Upload.Label>Drag and drop files here, or browse</Upload.Label>
-        <Upload.Description>Any file type, up to 25 MB each</Upload.Description>
-    </Upload>
+export const Default: StoryFn<typeof FileUpload> = () => (
+    <FileUpload>
+        <FileUpload.Icon />
+        <FileUpload.Label>Drag and drop files here, or browse</FileUpload.Label>
+        <FileUpload.Description>Any file type, up to 25 MB each</FileUpload.Description>
+    </FileUpload>
 );
 
-export const Playground: StoryFn<UploadProps> = (args) => (
-    <Upload {...args}>
-        <Upload.Icon />
-        <Upload.Label>Drag and drop files here, or browse</Upload.Label>
-        <Upload.Description>Any file type, up to 25 MB each</Upload.Description>
-        <Upload.List>
-            <Upload.Item name="proposal.pdf" fileSize={248_320} onRemove={() => {}} />
-        </Upload.List>
-    </Upload>
+export const Playground: StoryFn<FileUploadProps> = (args) => (
+    <FileUpload {...args}>
+        <FileUpload.Icon />
+        <FileUpload.Label>Drag and drop files here, or browse</FileUpload.Label>
+        <FileUpload.Description>Any file type, up to 25 MB each</FileUpload.Description>
+        <FileUpload.List>
+            <FileUpload.Item name="proposal.pdf" fileSize={248_320} onRemove={() => {}} />
+        </FileUpload.List>
+    </FileUpload>
 );
 
 Playground.args = {

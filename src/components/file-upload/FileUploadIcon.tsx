@@ -2,14 +2,14 @@ import * as React from "react";
 import { ArrowUploadRegular } from "@gamecrafters/base-ui-icons";
 import { classNames } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { UploadIconProps } from "./Upload.types";
+import type { FileUploadIconProps } from "./FileUpload.types";
 
 const classes = {
-    root: "upload-icon",
+    root: "file-upload-icon",
 };
 
-function UploadIcon(
-    props: UploadIconProps,
+function FileUploadIcon(
+    props: FileUploadIconProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -23,7 +23,7 @@ function UploadIcon(
             aria-label={ariaLabel}
             aria-hidden={ariaLabel ? undefined : true}
             className={classNames(classes.root, className)}
-            data-component="Upload.Icon"
+            data-component="FileUpload.Icon"
             {...rest}
         >
             <Icon />
@@ -31,6 +31,6 @@ function UploadIcon(
     );
 }
 
-UploadIcon.displayName = "Upload.Icon";
+FileUploadIcon.displayName = "FileUpload.Icon";
 
-export default fixedForwardRef(UploadIcon);
+export default fixedForwardRef(FileUploadIcon);

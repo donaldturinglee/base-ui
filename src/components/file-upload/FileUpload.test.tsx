@@ -2,7 +2,7 @@ import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, jest } from "@jest/globals";
 import "@testing-library/jest-dom/jest-globals";
-import { Upload } from ".";
+import { FileUpload } from ".";
 import { formatFileSize, isFileAccepted, triageFiles } from "./files";
 
 const makeFile = (name: string, type = "text/plain", size = 8) => {
@@ -13,9 +13,9 @@ const makeFile = (name: string, type = "text/plain", size = 8) => {
     return file;
 };
 
-const control = () => screen.getByTestId("upload").querySelector("input") as HTMLInputElement;
+const control = () => screen.getByTestId("file-upload").querySelector("input") as HTMLInputElement;
 
-const zone = () => screen.getByTestId("upload").querySelector("label") as HTMLLabelElement;
+const zone = () => screen.getByTestId("file-upload").querySelector("label") as HTMLLabelElement;
 
 const pick = (files: File[]) => {
     fireEvent.change(control(), { target: { files } });
@@ -25,19 +25,19 @@ const drop = (files: File[]) => {
     fireEvent.drop(zone(), { dataTransfer: { files, types: ["Files"] } });
 };
 
-describe("Upload", () => {
-    it("renders a file input tagged as an Upload", () => {
-        render(<Upload data-testid="upload" />);
+describe("FileUpload", () => {
+    it("renders a file input tagged as a FileUpload", () => {
+        render(<FileUpload data-testid="file-upload" />);
 
-        expect(screen.getByTestId("upload")).toHaveAttribute("data-component", "Upload");
+        expect(screen.getByTestId("file-upload")).toHaveAttribute("data-component", "FileUpload");
         expect(control()).toHaveAttribute("type", "file");
-        expect(control()).toHaveAttribute("data-component", "Upload.Input");
+        expect(control()).toHaveAttribute("data-component", "FileUpload.Input");
     });
 
     it("hands the control what it takes and how it is posted", () => {
         render(
-            <Upload
-                data-testid="upload"
+            <FileUpload
+                data-testid="file-upload"
                 name="attachment"
                 accept=".pdf,image/*"
                 multiple
@@ -52,22 +52,22 @@ describe("Upload", () => {
     });
 
     it("stands at the medium step of the control scale by default", () => {
-        render(<Upload data-testid="upload" />);
+        render(<FileUpload data-testid="file-upload" />);
 
-        expect(screen.getByTestId("upload")).toHaveAttribute("data-size", "medium");
+        expect(screen.getByTestId("file-upload")).toHaveAttribute("data-size", "medium");
     });
 
     it("stands at whichever step of the scale it is given", () => {
-        render(<Upload data-testid="upload" size="large" />);
+        render(<FileUpload data-testid="file-upload" size="large" />);
 
-        expect(screen.getByTestId("upload")).toHaveAttribute("data-size", "large");
+        expect(screen.getByTestId("file-upload")).toHaveAttribute("data-size", "large");
     });
 
     it("names the control after its label", () => {
         render(
-            <Upload data-testid="upload">
-                <Upload.Label>Drop files here</Upload.Label>
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.Label>Drop files here</FileUpload.Label>
+            </FileUpload>,
         );
 
         expect(screen.getByLabelText("Drop files here")).toBe(control());
@@ -75,9 +75,9 @@ describe("Upload", () => {
 
     it("keeps the name the caller gave the control", () => {
         render(
-            <Upload data-testid="upload" aria-label="Attachments">
-                <Upload.Label>Drop files here</Upload.Label>
-            </Upload>,
+            <FileUpload data-testid="file-upload" aria-label="Attachments">
+                <FileUpload.Label>Drop files here</FileUpload.Label>
+            </FileUpload>,
         );
 
         expect(control()).toHaveAccessibleName("Attachments");
@@ -85,10 +85,10 @@ describe("Upload", () => {
 
     it("describes the control with the line below its label", () => {
         render(
-            <Upload data-testid="upload">
-                <Upload.Label>Drop files here</Upload.Label>
-                <Upload.Description>Up to 25 MB</Upload.Description>
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.Label>Drop files here</FileUpload.Label>
+                <FileUpload.Description>Up to 25 MB</FileUpload.Description>
+            </FileUpload>,
         );
 
         expect(control()).toHaveAccessibleDescription("Up to 25 MB");
@@ -96,11 +96,11 @@ describe("Upload", () => {
 
     it("renders the icon, the label and the description inside the zone", () => {
         render(
-            <Upload data-testid="upload">
-                <Upload.Icon />
-                <Upload.Label>Drop files here</Upload.Label>
-                <Upload.Description>Up to 25 MB</Upload.Description>
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.Icon />
+                <FileUpload.Label>Drop files here</FileUpload.Label>
+                <FileUpload.Description>Up to 25 MB</FileUpload.Description>
+            </FileUpload>,
         );
 
         expect(zone()).toContainElement(screen.getByText("Drop files here"));
@@ -109,30 +109,30 @@ describe("Upload", () => {
 
     it("renders the list of files outside the zone, so pressing it does not open the picker", () => {
         render(
-            <Upload data-testid="upload">
-                <Upload.Label>Drop files here</Upload.Label>
-                <Upload.List>
-                    <Upload.Item name="notes.txt" />
-                </Upload.List>
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.Label>Drop files here</FileUpload.Label>
+                <FileUpload.List>
+                    <FileUpload.Item name="notes.txt" />
+                </FileUpload.List>
+            </FileUpload>,
         );
 
         const list = screen.getByRole("list");
-        expect(screen.getByTestId("upload")).toContainElement(list);
+        expect(screen.getByTestId("file-upload")).toContainElement(list);
         expect(zone()).not.toContainElement(list);
     });
 
     it("reads as invalid where it is drawn as invalid", () => {
-        render(<Upload data-testid="upload" validationStatus="error" />);
+        render(<FileUpload data-testid="file-upload" validationStatus="error" />);
 
-        expect(screen.getByTestId("upload")).toHaveAttribute("data-validation", "error");
+        expect(screen.getByTestId("file-upload")).toHaveAttribute("data-validation", "error");
         expect(control()).toBeInvalid();
     });
 
     describe("choosing files", () => {
         it("hands over what was picked", () => {
             const onSelect = jest.fn();
-            render(<Upload data-testid="upload" multiple onSelect={onSelect} />);
+            render(<FileUpload data-testid="file-upload" multiple onSelect={onSelect} />);
 
             const files = [makeFile("one.txt"), makeFile("two.txt")];
             pick(files);
@@ -143,7 +143,7 @@ describe("Upload", () => {
 
         it("hands over what was dropped", () => {
             const onSelect = jest.fn();
-            render(<Upload data-testid="upload" multiple onSelect={onSelect} />);
+            render(<FileUpload data-testid="file-upload" multiple onSelect={onSelect} />);
 
             const files = [makeFile("one.txt")];
             drop(files);
@@ -155,8 +155,8 @@ describe("Upload", () => {
             const onSelect = jest.fn();
             const onReject = jest.fn();
             render(
-                <Upload
-                    data-testid="upload"
+                <FileUpload
+                    data-testid="file-upload"
                     accept="image/*"
                     onSelect={onSelect}
                     onReject={onReject}
@@ -174,8 +174,8 @@ describe("Upload", () => {
             const onSelect = jest.fn();
             const onReject = jest.fn();
             render(
-                <Upload
-                    data-testid="upload"
+                <FileUpload
+                    data-testid="file-upload"
                     maxSize={16}
                     onSelect={onSelect}
                     onReject={onReject}
@@ -193,7 +193,9 @@ describe("Upload", () => {
         it("keeps the first file where it only takes one at a time", () => {
             const onSelect = jest.fn();
             const onReject = jest.fn();
-            render(<Upload data-testid="upload" onSelect={onSelect} onReject={onReject} />);
+            render(
+                <FileUpload data-testid="file-upload" onSelect={onSelect} onReject={onReject} />,
+            );
 
             const first = makeFile("one.txt");
             const second = makeFile("two.txt");
@@ -205,7 +207,7 @@ describe("Upload", () => {
 
         it("says nothing where nothing was taken", () => {
             const onSelect = jest.fn();
-            render(<Upload data-testid="upload" accept="image/*" onSelect={onSelect} />);
+            render(<FileUpload data-testid="file-upload" accept="image/*" onSelect={onSelect} />);
 
             pick([makeFile("notes.txt")]);
 
@@ -215,64 +217,64 @@ describe("Upload", () => {
 
     describe("dragging over the zone", () => {
         it("answers a file held over it", () => {
-            render(<Upload data-testid="upload" />);
+            render(<FileUpload data-testid="file-upload" />);
 
             fireEvent.dragEnter(zone());
 
-            expect(screen.getByTestId("upload")).toHaveAttribute("data-dragging", "true");
+            expect(screen.getByTestId("file-upload")).toHaveAttribute("data-dragging", "true");
         });
 
         it("lets go once as much has left the zone as arrived", () => {
-            render(<Upload data-testid="upload" />);
+            render(<FileUpload data-testid="file-upload" />);
 
             fireEvent.dragEnter(zone());
             fireEvent.dragEnter(zone());
             fireEvent.dragLeave(zone());
 
-            expect(screen.getByTestId("upload")).toHaveAttribute("data-dragging", "true");
+            expect(screen.getByTestId("file-upload")).toHaveAttribute("data-dragging", "true");
 
             fireEvent.dragLeave(zone());
 
-            expect(screen.getByTestId("upload")).not.toHaveAttribute("data-dragging");
+            expect(screen.getByTestId("file-upload")).not.toHaveAttribute("data-dragging");
         });
 
         it("lets go once the files have been dropped", () => {
-            render(<Upload data-testid="upload" />);
+            render(<FileUpload data-testid="file-upload" />);
 
             fireEvent.dragEnter(zone());
             drop([makeFile("one.txt")]);
 
-            expect(screen.getByTestId("upload")).not.toHaveAttribute("data-dragging");
+            expect(screen.getByTestId("file-upload")).not.toHaveAttribute("data-dragging");
         });
     });
 
     describe("disabled", () => {
         it("stops the control being used", () => {
-            render(<Upload data-testid="upload" disabled />);
+            render(<FileUpload data-testid="file-upload" disabled />);
 
             expect(control()).toBeDisabled();
-            expect(screen.getByTestId("upload")).toHaveAttribute("data-disabled", "true");
+            expect(screen.getByTestId("file-upload")).toHaveAttribute("data-disabled", "true");
         });
 
         it("takes nothing that is dropped on it", () => {
             const onSelect = jest.fn();
-            render(<Upload data-testid="upload" disabled onSelect={onSelect} />);
+            render(<FileUpload data-testid="file-upload" disabled onSelect={onSelect} />);
 
             fireEvent.dragEnter(zone());
             drop([makeFile("one.txt")]);
 
             expect(onSelect).not.toHaveBeenCalled();
-            expect(screen.getByTestId("upload")).not.toHaveAttribute("data-dragging");
+            expect(screen.getByTestId("file-upload")).not.toHaveAttribute("data-dragging");
         });
     });
 });
 
-describe("Upload.List", () => {
+describe("FileUpload.List", () => {
     it("renders nothing where there is nothing in it", () => {
         render(
-            <Upload data-testid="upload">
-                <Upload.List />
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.List />
+            </FileUpload>,
         );
 
         expect(screen.queryByRole("list")).not.toBeInTheDocument();
@@ -280,42 +282,42 @@ describe("Upload.List", () => {
 
     it("is read as a list even though it is drawn without its markers", () => {
         render(
-            <Upload data-testid="upload">
-                <Upload.List>
-                    <Upload.Item name="notes.txt" />
-                </Upload.List>
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.List>
+                    <FileUpload.Item name="notes.txt" />
+                </FileUpload.List>
+            </FileUpload>,
         );
 
-        expect(screen.getByRole("list")).toHaveAttribute("data-component", "Upload.List");
+        expect(screen.getByRole("list")).toHaveAttribute("data-component", "FileUpload.List");
         expect(screen.getAllByRole("listitem")).toHaveLength(1);
     });
 });
 
-describe("Upload.Item", () => {
+describe("FileUpload.Item", () => {
     const renderItem = (item: React.ReactNode) =>
         render(
-            <Upload data-testid="upload">
-                <Upload.List>{item}</Upload.List>
-            </Upload>,
+            <FileUpload data-testid="file-upload">
+                <FileUpload.List>{item}</FileUpload.List>
+            </FileUpload>,
         );
 
     it("says what the file is called and what it weighs", () => {
-        renderItem(<Upload.Item name="notes.txt" fileSize={2048} />);
+        renderItem(<FileUpload.Item name="notes.txt" fileSize={2048} />);
 
         expect(screen.getByText("notes.txt")).toBeInTheDocument();
         expect(screen.getByText("2 KB")).toBeInTheDocument();
     });
 
     it("leaves the size out where it was not given one", () => {
-        renderItem(<Upload.Item name="notes.txt" />);
+        renderItem(<FileUpload.Item name="notes.txt" />);
 
         expect(screen.getByRole("listitem")).toHaveAttribute("data-status", "pending");
         expect(screen.queryByText(/bytes|KB/)).not.toBeInTheDocument();
     });
 
     it("draws how far a file on its way has got", () => {
-        renderItem(<Upload.Item name="clip.mp4" status="uploading" progress={40} />);
+        renderItem(<FileUpload.Item name="clip.mp4" status="uploading" progress={40} />);
 
         const bar = screen.getByRole("progressbar");
         expect(bar).toHaveAttribute("aria-valuenow", "40");
@@ -323,14 +325,14 @@ describe("Upload.Item", () => {
     });
 
     it("draws no bar for a file that is not on its way", () => {
-        renderItem(<Upload.Item name="notes.txt" status="success" progress={100} />);
+        renderItem(<FileUpload.Item name="notes.txt" status="success" progress={100} />);
 
         expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     });
 
     it("says what went wrong", () => {
         renderItem(
-            <Upload.Item name="notes.txt" status="error" description="The upload timed out" />,
+            <FileUpload.Item name="notes.txt" status="error" description="The upload timed out" />,
         );
 
         expect(screen.getByRole("listitem")).toHaveAttribute("data-status", "error");
@@ -339,7 +341,7 @@ describe("Upload.Item", () => {
 
     it("takes the file back out", () => {
         const onRemove = jest.fn();
-        renderItem(<Upload.Item name="notes.txt" onRemove={onRemove} />);
+        renderItem(<FileUpload.Item name="notes.txt" onRemove={onRemove} />);
 
         fireEvent.click(screen.getByRole("button", { name: "Remove notes.txt" }));
 
@@ -347,13 +349,13 @@ describe("Upload.Item", () => {
     });
 
     it("names the button that takes the file out however it is asked to", () => {
-        renderItem(<Upload.Item name="notes.txt" onRemove={() => {}} removeLabel="Discard" />);
+        renderItem(<FileUpload.Item name="notes.txt" onRemove={() => {}} removeLabel="Discard" />);
 
         expect(screen.getByRole("button", { name: "Discard" })).toBeInTheDocument();
     });
 
     it("draws no button where there is nothing to take the file out", () => {
-        renderItem(<Upload.Item name="notes.txt" />);
+        renderItem(<FileUpload.Item name="notes.txt" />);
 
         expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });

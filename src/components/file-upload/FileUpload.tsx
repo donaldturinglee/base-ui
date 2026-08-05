@@ -4,12 +4,17 @@ import { useSlots } from "../../hooks/useSlots";
 import { classNames, cva } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { triageFiles } from "./files";
-import { UploadContext } from "./UploadContext";
-import UploadDescription from "./UploadDescription";
-import UploadIcon from "./UploadIcon";
-import UploadLabel from "./UploadLabel";
-import UploadList from "./UploadList";
-import type { UploadProps, UploadSize, UploadSource, UploadValidationStatus } from "./Upload.types";
+import { FileUploadContext } from "./FileUploadContext";
+import FileUploadDescription from "./FileUploadDescription";
+import FileUploadIcon from "./FileUploadIcon";
+import FileUploadLabel from "./FileUploadLabel";
+import FileUploadList from "./FileUploadList";
+import type {
+    FileUploadProps,
+    FileUploadSize,
+    FileUploadSource,
+    FileUploadValidationStatus,
+} from "./FileUpload.types";
 
 const classes = {
     // The control is what the picker opens from and what the reader tabs to, so it is taken
@@ -17,32 +22,32 @@ const classes = {
     input: "sr-only",
 };
 
-const uploadVariants = cva("upload", {
+const fileUploadVariants = cva("file-upload", {
     variants: {
         // The size sets how much room the zone keeps and how big the pieces it is drawn from
         // are, and it is written on the root so that the list below the zone is sized by it too
         size: {
-            small: "upload-small",
-            medium: "upload-medium",
-            large: "upload-large",
-        } satisfies Record<UploadSize, string>,
+            small: "file-upload-small",
+            medium: "file-upload-medium",
+            large: "file-upload-large",
+        } satisfies Record<FileUploadSize, string>,
     },
 });
 
-const uploadZoneVariants = cva("upload-zone", {
+const fileUploadZoneVariants = cva("file-upload-zone", {
     variants: {
         dragging: {
-            true: "upload-zone-dragging",
+            true: "file-upload-zone-dragging",
             false: "",
         },
         disabled: {
-            true: "upload-zone-disabled",
-            false: "upload-zone-interactive",
+            true: "file-upload-zone-disabled",
+            false: "file-upload-zone-interactive",
         },
         validation: {
-            error: "upload-zone-error",
-            success: "upload-zone-success",
-        } satisfies Record<UploadValidationStatus, string>,
+            error: "file-upload-zone-error",
+            success: "file-upload-zone-success",
+        } satisfies Record<FileUploadValidationStatus, string>,
     },
 });
 
@@ -62,9 +67,9 @@ const fillInput = (input: HTMLInputElement | null, files: File[]) => {
 
 // A place to drop files on, or to open a file picker from. The native control does the
 // picking, the naming and the keyboard; the zone around it is what makes a drop land
-// somewhere, and Upload.List is where the files that arrived are shown
-function Upload(
-    props: UploadProps,
+// somewhere, and FileUpload.List is where the files that arrived are shown
+function FileUpload(
+    props: FileUploadProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -100,15 +105,15 @@ function Upload(
     const [isDragging, setIsDragging] = React.useState(false);
 
     const [slots, extras] = useSlots(children, {
-        icon: UploadIcon,
-        label: UploadLabel,
-        description: UploadDescription,
-        list: UploadList,
+        icon: FileUploadIcon,
+        label: FileUploadLabel,
+        description: FileUploadDescription,
+        list: FileUploadList,
     });
 
     // Whichever way the files arrived, the same rules are applied to them and the same two
     // callbacks are told about it
-    const takeFiles = (files: File[], source: UploadSource) => {
+    const takeFiles = (files: File[], source: FileUploadSource) => {
         const { accepted, rejected } = triageFiles(files, { accept, maxSize, multiple });
 
         if (source === "drop" && accepted.length > 0) {
@@ -184,11 +189,11 @@ function Upload(
             .join(" ") || undefined;
 
     return (
-        <UploadContext.Provider value={{ labelId, descriptionId }}>
+        <FileUploadContext.Provider value={{ labelId, descriptionId }}>
             <div
                 ref={ref}
-                className={classNames(uploadVariants({ size }), className)}
-                data-component="Upload"
+                className={classNames(fileUploadVariants({ size }), className)}
+                data-component="FileUpload"
                 data-size={size}
                 data-disabled={disabled}
                 data-dragging={isDragging || undefined}
@@ -197,7 +202,7 @@ function Upload(
             >
                 <label
                     className={classNames(
-                        uploadZoneVariants({
+                        fileUploadZoneVariants({
                             dragging: isDragging,
                             disabled: Boolean(disabled),
                             validation: validationStatus,
@@ -207,7 +212,7 @@ function Upload(
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    data-component="Upload.Zone"
+                    data-component="FileUpload.Zone"
                 >
                     <input
                         ref={inputRef}
@@ -224,7 +229,7 @@ function Upload(
                         aria-labelledby={labelledBy}
                         aria-describedby={describedBy}
                         aria-invalid={validationStatus === "error" ? true : undefined}
-                        data-component="Upload.Input"
+                        data-component="FileUpload.Input"
                     />
 
                     {slots.icon}
@@ -235,10 +240,10 @@ function Upload(
                 {slots.list}
                 {extras}
             </div>
-        </UploadContext.Provider>
+        </FileUploadContext.Provider>
     );
 }
 
-Upload.displayName = "Upload";
+FileUpload.displayName = "FileUpload";
 
-export default fixedForwardRef(Upload);
+export default fixedForwardRef(FileUpload);

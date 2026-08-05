@@ -1,4 +1,4 @@
-import type { UploadRejection } from "./Upload.types";
+import type { FileUploadRejection } from "./FileUpload.types";
 
 // Files are measured in steps of 1024, the way a file system reports them
 const FILE_SIZE_STEP = 1024;
@@ -58,7 +58,7 @@ export const isFileAccepted = (file: File, accept?: string): boolean => {
 
 export type FileTriage = {
     accepted: File[];
-    rejected: UploadRejection[];
+    rejected: FileUploadRejection[];
 };
 
 export type FileTriageOptions = {
@@ -75,7 +75,7 @@ export const triageFiles = (files: File[], options: FileTriageOptions): FileTria
     const { accept, maxSize, multiple } = options;
 
     const accepted: File[] = [];
-    const rejected: UploadRejection[] = [];
+    const rejected: FileUploadRejection[] = [];
 
     files.forEach((file) => {
         if (!isFileAccepted(file, accept)) {
