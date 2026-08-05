@@ -1,0 +1,81 @@
+@layer components {
+    /* A code drawn as vectors from a string, for handing something over to a camera that would
+       otherwise have to be typed out: a link, a ticket, a key to pair a device by.
+
+       The colours come through custom properties, so a code can be repainted without having to
+       unpick the classes it came with. What they fall back to is a fixed black on white rather
+       than the theme around them: a scanner reads a code as dark on light, and one that inverted
+       with the theme would stop being read in half the places it was put.
+
+       The box is only as large as the code it holds, and holds the middle of it steady so
+       whatever is laid over it is centred by the box rather than measured into the drawing */
+    .qr-code {
+        --qr-code-color: var(--foreground-color-black);
+        --qr-code-background: var(--background-color-white);
+        --qr-code-logo-size: 30%;
+
+        position: relative;
+        display: inline-block;
+        line-height: 0;
+    }
+
+    /* The code is drawn to whatever width the box is given and keeps its own proportions, so a
+       code standing in a column narrower than it was drawn for is brought down to fit rather
+       than running past the edge of it */
+    .qr-code-canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+
+        /* A repainted code is an unread code, so the drawing keeps its own colours where the
+           rest of the page gives its up */
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+        }
+    }
+
+    .qr-code-background {
+        fill: var(--qr-code-background);
+    }
+
+    /* The modules and the finder squares are painted the same unless a corner is given a colour
+       of its own, which is laid on the shape itself and so stands ahead of this */
+    .qr-code-modules,
+    .qr-code-corner {
+        fill: var(--qr-code-color);
+    }
+
+    /* What sits in the middle is laid over the code rather than drawn into it, so it can be
+       anything React can draw. How much room it takes is settled by the component, which knows
+       the share of the code the modules beneath it were left out of.
+
+       Whatever it holds is brought down to that room rather than allowed to spill past it, since
+       past the modules that were hidden for it there is data being covered */
+    .qr-code-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--qr-code-logo-size);
+        height: var(--qr-code-logo-size);
+        line-height: var(--text-body-line-height-medium);
+        transform: translate(-50%, -50%);
+
+        & > * {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    /* What stands where a code could not be made. It is written rather than drawn, so the box
+       gives back the line spacing the code had no use for */
+    .qr-code-fallback {
+        display: grid;
+        place-items: center;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+}

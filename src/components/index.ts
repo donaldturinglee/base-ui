@@ -59,6 +59,7 @@ export * from "./placeholder";
 export * from "./portal";
 export * from "./progress-bar";
 export * from "./progress-circle";
+export * from "./qr-code";
 export * from "./radio";
 export * from "./radio-group";
 export * from "./rating";
