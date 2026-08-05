@@ -1,0 +1,125 @@
+@layer components {
+    /* An answer drawn as a card. The whole surface is a label, so anywhere on it ticks the
+       checkbox it holds, and what the card is drawn in comes through custom properties so that
+       the state it is in is settled in one place rather than being spelled out again for each
+       part */
+    .checkbox-card {
+        --checkbox-card-background-color: var(--card-background-color);
+        --checkbox-card-border-color: var(--border-color-default);
+        --checkbox-card-muted-color: var(--foreground-color-muted);
+
+        display: flex;
+        align-items: flex-start;
+        gap: var(--stack-gap-condensed);
+        padding: var(--stack-padding-normal);
+        cursor: pointer;
+        background-color: var(--checkbox-card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--checkbox-card-border-color);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        transition:
+            background-color var(--motion-transition-hover),
+            border-color var(--motion-transition-hover);
+    }
+
+    /* Only a card that can still be ticked answers the pointer */
+    .checkbox-card-interactive:hover {
+        --checkbox-card-background-color: var(--control-transparent-background-color-hover);
+        --checkbox-card-border-color: var(--border-color-emphasis);
+    }
+
+    /* A card that has been ticked is drawn out from the rest of them in the colour the box
+       inside it is filled with, and a card only part ticked is drawn the same way, since the
+       dash stands for an answer given rather than one still to give. It comes after the hover,
+       so a card already ticked keeps that colour rather than losing it under the pointer */
+    .checkbox-card:has(:checked),
+    .checkbox-card:has(:indeterminate) {
+        --checkbox-card-background-color: var(--background-color-accent-muted);
+        --checkbox-card-border-color: var(--border-color-accent-emphasis);
+    }
+
+    /* Named twice so it carries the same weight as the rule above and still lands on a card that
+       was ticked before it was turned off */
+    .checkbox-card.checkbox-card-disabled {
+        --checkbox-card-background-color: var(--control-background-color-disabled);
+        --checkbox-card-border-color: var(--control-border-color-disabled);
+        --checkbox-card-muted-color: var(--foreground-color-disabled);
+
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+    }
+
+    /* The validation colours come last, so a card that is both ticked and invalid still reads
+       as invalid */
+    .checkbox-card.checkbox-card-error {
+        --checkbox-card-border-color: var(--border-color-danger-emphasis);
+    }
+
+    .checkbox-card.checkbox-card-success {
+        --checkbox-card-border-color: var(--background-color-success-emphasis);
+    }
+
+    /* A card picked out by colour alone says nothing in forced colours, so the border of one
+       that has been ticked is drawn in a colour the system keeps apart */
+    @media (forced-colors: active) {
+        .checkbox-card:has(:checked),
+        .checkbox-card:has(:indeterminate) {
+            --checkbox-card-border-color: highlight;
+        }
+    }
+
+    /* The reader tabs to the checkbox but is aiming at the whole card, so the ring is drawn
+       around the card, just inside its border, and the checkbox's own ring is put away */
+    .checkbox-card:has(:focus-visible) {
+        outline: var(--focus-outline-width) solid var(--focus-outline-color);
+        outline-offset: calc(-1 * var(--border-width-thin));
+    }
+
+    .checkbox-card .checkbox-card-control:focus-visible {
+        outline: none;
+    }
+
+    /* The words are the one part of the row with no length of its own, so they are what gives
+       when the card runs out of room */
+    .checkbox-card-body {
+        display: flex;
+        flex: auto;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        min-width: 0;
+    }
+
+    .checkbox-card-label {
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .checkbox-card-description {
+        color: var(--checkbox-card-muted-color);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .checkbox-card-leading-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        color: var(--checkbox-card-muted-color);
+
+        & > svg {
+            width: var(--base-size-20);
+            height: var(--base-size-20);
+        }
+    }
+
+    /* The box is held at the end of the row rather than beside the words, so its state is found
+       in the same place on every card in the group however long their lines run */
+    .checkbox-card-control {
+        flex-shrink: 0;
+        margin-inline-start: auto;
+    }
+}

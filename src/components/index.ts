@@ -19,6 +19,7 @@ export * from "./card";
 export * from "./carousel";
 export * from "./chart";
 export * from "./checkbox";
+export * from "./checkbox-card";
 export * from "./checkbox-group";
 export * from "./code";
 export * from "./code-block";
