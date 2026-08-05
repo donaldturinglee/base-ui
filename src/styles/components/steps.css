@@ -1,0 +1,197 @@
+@layer components {
+    /* The way through a flow of several steps, read as a row or a column of them.
+
+       Every part of a step is drawn from the state the step carries, so the circle, the
+       connector leading out of it and the words beside it are settled in one place from one
+       answer rather than each being told the same thing again. The sizes come through custom
+       properties, so what the whole of a step is drawn from — the circle it is marked with, the
+       line joining it to the next — follows the size the list stands at without being spelled
+       out for each part */
+    .steps {
+        --steps-indicator-size: var(--base-size-32);
+        --steps-indicator-font-size: var(--text-body-size-small);
+        --steps-connector-width: var(--border-width-thick);
+        --steps-gap: var(--base-size-12);
+        --steps-run-gap: var(--base-size-24);
+
+        display: flex;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .steps-small {
+        --steps-indicator-size: var(--base-size-24);
+        --steps-indicator-font-size: var(--text-caption-size);
+        --steps-gap: var(--base-size-8);
+        --steps-run-gap: var(--base-size-16);
+    }
+
+    /* A row shares out what room there is between the steps, and the connector out of each of
+       them takes whatever the words beside it leave over, so the circles are spread evenly
+       however long those words run */
+    .steps-horizontal {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--steps-gap);
+    }
+
+    .steps-vertical {
+        flex-direction: column;
+    }
+
+    /* Each step draws the connector leading out of it rather than the list drawing them all, so
+       one step runs straight into the next however many there are. The last has nothing to lead
+       to, so it draws none */
+    .steps-item {
+        --steps-connector-color: var(--border-color-muted);
+
+        display: flex;
+        align-items: center;
+        gap: var(--steps-gap);
+        min-width: 0;
+    }
+
+    /* The connector out of a step that is done is drawn as done as well: it leads somewhere the
+       flow has already been */
+    .steps-item[data-status="complete"] {
+        --steps-connector-color: var(--background-color-accent-emphasis);
+    }
+
+    .steps-horizontal > .steps-item {
+        flex: 1;
+    }
+
+    /* With nothing to lead to, the last step asks only for the room its own words need rather
+       than for an even share of the row */
+    .steps-horizontal > .steps-item:last-child {
+        flex: 0 1 auto;
+    }
+
+    .steps-horizontal > .steps-item:not(:last-child)::after {
+        content: "";
+        flex: 1;
+        min-width: var(--base-size-16);
+        height: var(--steps-connector-width);
+        background-color: var(--steps-connector-color);
+    }
+
+    /* Standing in a column the steps are held apart by the room the connector runs through,
+       which is the step's own padding rather than a gap on the list: the line has to reach from
+       one circle to the next, and a gap would leave it with nothing to be drawn on */
+    .steps-vertical > .steps-item {
+        position: relative;
+        align-items: flex-start;
+        padding-bottom: var(--steps-run-gap);
+    }
+
+    .steps-vertical > .steps-item:last-child {
+        padding-bottom: 0;
+    }
+
+    /* The line starts where the circle ends and runs to the foot of the step, which is where the
+       next circle begins */
+    .steps-vertical > .steps-item:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        inset-block: var(--steps-indicator-size) 0;
+        inset-inline-start: calc((var(--steps-indicator-size) - var(--steps-connector-width)) / 2);
+        width: var(--steps-connector-width);
+        background-color: var(--steps-connector-color);
+    }
+
+    /* The circle keeps its size whatever it is given to hold, so a number, a checkmark and an
+       icon of the caller's own are all drawn at the same size down the list */
+    .steps-indicator {
+        --steps-indicator-background-color: var(--background-color-default);
+        --steps-indicator-border-color: var(--border-color-default);
+        --steps-indicator-color: var(--foreground-color-muted);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: var(--steps-indicator-size);
+        height: var(--steps-indicator-size);
+        background-color: var(--steps-indicator-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thick);
+        border-color: var(--steps-indicator-border-color);
+        border-radius: calc(infinity * 1px);
+        color: var(--steps-indicator-color);
+        font-size: var(--steps-indicator-font-size);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: 1;
+        transition:
+            background-color var(--motion-transition-state-change),
+            border-color var(--motion-transition-state-change),
+            color var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The step being worked on is ringed rather than filled, so the one filled circle in the
+       list is the last one the flow finished rather than the one it is standing on */
+    .steps-indicator[data-status="current"] {
+        --steps-indicator-border-color: var(--border-color-accent-emphasis);
+        --steps-indicator-color: var(--foreground-color-accent);
+    }
+
+    .steps-indicator[data-status="complete"] {
+        --steps-indicator-background-color: var(--background-color-accent-emphasis);
+        --steps-indicator-border-color: var(--background-color-accent-emphasis);
+        --steps-indicator-color: var(--foreground-color-on-emphasis);
+    }
+
+    /* A filled circle says nothing in forced colours, so the fill and the words on it are left
+       to the system and drawn in colours it keeps apart */
+    @media (forced-colors: active) {
+        .steps-indicator[data-status="complete"] {
+            --steps-indicator-background-color: Highlight;
+            --steps-indicator-border-color: Highlight;
+            --steps-indicator-color: HighlightText;
+
+            forced-color-adjust: none;
+        }
+
+        .steps-item[data-status="complete"] {
+            --steps-connector-color: Highlight;
+        }
+    }
+
+    .steps-indicator-icon {
+        width: calc(var(--steps-indicator-size) / 2);
+        height: calc(var(--steps-indicator-size) / 2);
+    }
+
+    .steps-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-2);
+        min-width: 0;
+    }
+
+    /* A step still to come is drawn back rather than out, so what is read first down the list is
+       where the flow has got to */
+    .steps-title {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+    }
+
+    .steps-item[data-status="complete"] .steps-title {
+        color: var(--foreground-color-default);
+    }
+
+    .steps-item[data-status="current"] .steps-title {
+        color: var(--foreground-color-default);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .steps-description {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+}
