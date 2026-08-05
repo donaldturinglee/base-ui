@@ -1,0 +1,33 @@
+@layer components {
+    /* The card is laid out against the viewport, because that is what the trigger it stands
+       against is measured against. Where it ends up is carried in variables rather than written
+       straight onto the element. Nothing on it is transitioned: it is measured as it opens, and
+       a transition would carry it into place from the corner it was first rendered in rather
+       than let it appear where it belongs */
+    .hover-card {
+        position: fixed;
+        top: var(--hover-card-top);
+        left: var(--hover-card-left);
+        overflow: auto;
+        /* A card runs as wide as what it holds, up to the point where a line of text in it
+           would be too long to follow back to its start */
+        max-width: var(--overlay-width-medium);
+        max-height: 100dvh;
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        transition: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    .hover-card-content {
+        padding: var(--stack-padding-normal);
+    }
+}

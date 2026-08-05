@@ -39,6 +39,7 @@ export * from "./form-control";
 export * from "./heading";
 export * from "./hidden";
 export * from "./highlight";
+export * from "./hover-card";
 export * from "./icon-button";
 export * from "./image";
 export * from "./inline-message";
