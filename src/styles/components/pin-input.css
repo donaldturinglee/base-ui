@@ -1,0 +1,35 @@
+@layer components {
+    /* A code typed into a row of boxes, one character to each */
+    .pin-input {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+    }
+
+    /* A box holds a single character, so it is as wide as it is tall and what is in it stands in
+       the middle rather than at the start a field of running text would begin at */
+    .pin-input-box {
+        flex: none;
+        width: var(--pin-input-box-size, var(--control-medium-size));
+
+        & input {
+            padding-inline: 0;
+            /* Every digit given the width of a zero. Unlike a lone figure, which reads loose
+               that way, a row of boxes wants its characters standing in the same place in each */
+            font-variant-numeric: tabular-nums;
+            text-align: center;
+        }
+    }
+
+    .pin-input-box-small {
+        --pin-input-box-size: var(--control-small-size);
+    }
+
+    .pin-input-box-medium {
+        --pin-input-box-size: var(--control-medium-size);
+    }
+
+    .pin-input-box-large {
+        --pin-input-box-size: var(--control-large-size);
+    }
+}
