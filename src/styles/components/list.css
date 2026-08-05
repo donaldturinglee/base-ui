@@ -1,0 +1,91 @@
+@layer components {
+    /* A run of related things, read as prose rather than laid out as a set of controls.
+
+       The indent is what makes room for the markers, so a list drawn without them gives it back
+       and stands where the writing around it does. Both the indent and the step between the
+       items come through custom properties, so a list hanging under an item is set off by the
+       same step as the one above it without having to be told it again.
+
+       How the words themselves are set is left to whatever the list stands in: a list says how
+       its items are marked and how far apart they sit, and nothing about the writing it holds */
+    .list {
+        --list-indent: var(--base-size-24);
+        --list-gap: var(--base-size-4);
+
+        margin-block: 0;
+        padding-inline-start: var(--list-indent);
+    }
+
+    /* The step is carried by whatever follows the first item, so a list of one has nothing
+       standing under it and a caller putting a plain `li` in the run is spaced with the rest */
+    .list > * + * {
+        margin-top: var(--list-gap);
+    }
+
+    /* The marker is furniture rather than words, so it is drawn back from what it marks */
+    .list > *::marker {
+        color: var(--foreground-color-muted);
+    }
+
+    /* Each run nested under another is marked differently from the one it hangs beneath, so how
+       deep an item sits can be read from the marker beside it */
+    .list-bullet {
+        list-style-type: disc;
+    }
+
+    .list-bullet .list-bullet {
+        list-style-type: circle;
+    }
+
+    .list-bullet .list-bullet .list-bullet {
+        list-style-type: square;
+    }
+
+    .list-number {
+        list-style-type: decimal;
+    }
+
+    .list-number .list-number {
+        list-style-type: lower-alpha;
+    }
+
+    .list-number .list-number .list-number {
+        list-style-type: lower-roman;
+    }
+
+    /* With nothing marking the items there is nothing for the indent to make room for, so the
+       list stands where the writing around it does */
+    .list-plain {
+        --list-indent: 0;
+
+        list-style: none;
+    }
+
+    /* A run read as prose sits on its line spacing alone, and one read as a set of things is
+       given room to be counted */
+    .list-condensed {
+        --list-gap: 0;
+    }
+
+    .list-normal {
+        --list-gap: var(--base-size-4);
+    }
+
+    .list-spacious {
+        --list-gap: var(--base-size-8);
+    }
+
+    .list-item {
+        /* Whatever the item holds sits in the run rather than parting it with margins of its
+           own, so how far apart the items stand is the list's to settle */
+        & > * {
+            margin-block: 0;
+        }
+    }
+
+    /* A list hanging under an item is part of the same run, so it is set off by the step the
+       run is spaced by rather than standing apart from it */
+    .list .list {
+        margin-top: var(--list-gap);
+    }
+}

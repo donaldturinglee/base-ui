@@ -45,6 +45,7 @@ export * from "./keybinding-hint";
 export * from "./label";
 export * from "./link";
 export * from "./link-button";
+export * from "./list";
 export * from "./mark";
 export * from "./markdown";
 export * from "./nav-list";
