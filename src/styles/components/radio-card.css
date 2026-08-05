@@ -1,0 +1,121 @@
+@layer components {
+    /* A choice drawn as a card. The whole surface is a label, so anywhere on it picks the radio
+       it holds, and what the card is drawn in comes through custom properties so that the state
+       it is in is settled in one place rather than being spelled out again for each part */
+    .radio-card {
+        --radio-card-background-color: var(--card-background-color);
+        --radio-card-border-color: var(--border-color-default);
+        --radio-card-muted-color: var(--foreground-color-muted);
+
+        display: flex;
+        align-items: flex-start;
+        gap: var(--stack-gap-condensed);
+        padding: var(--stack-padding-normal);
+        cursor: pointer;
+        background-color: var(--radio-card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--radio-card-border-color);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        transition:
+            background-color var(--motion-transition-hover),
+            border-color var(--motion-transition-hover);
+    }
+
+    /* Only a card that can still be picked answers the pointer */
+    .radio-card-interactive:hover {
+        --radio-card-background-color: var(--control-transparent-background-color-hover);
+        --radio-card-border-color: var(--border-color-emphasis);
+    }
+
+    /* The card that has been picked is drawn out from the rest of them in the colour the radio
+       inside it is filled with. It comes after the hover, so a card already picked keeps that
+       colour rather than losing it under the pointer */
+    .radio-card:has(:checked) {
+        --radio-card-background-color: var(--background-color-accent-muted);
+        --radio-card-border-color: var(--border-color-accent-emphasis);
+    }
+
+    /* Named twice so it carries the same weight as the rule above and still lands on a card that
+       was picked before it was turned off */
+    .radio-card.radio-card-disabled {
+        --radio-card-background-color: var(--control-background-color-disabled);
+        --radio-card-border-color: var(--control-border-color-disabled);
+        --radio-card-muted-color: var(--foreground-color-disabled);
+
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+    }
+
+    /* The validation colours come last, so a card that is both picked and invalid still reads
+       as invalid */
+    .radio-card.radio-card-error {
+        --radio-card-border-color: var(--border-color-danger-emphasis);
+    }
+
+    .radio-card.radio-card-success {
+        --radio-card-border-color: var(--background-color-success-emphasis);
+    }
+
+    /* A card picked out by colour alone says nothing in forced colours, so the border of the one
+       that has been picked is drawn in a colour the system keeps apart */
+    @media (forced-colors: active) {
+        .radio-card:has(:checked) {
+            --radio-card-border-color: highlight;
+        }
+    }
+
+    /* The reader tabs to the radio but is aiming at the whole card, so the ring is drawn around
+       the card, just inside its border, and the radio's own ring is put away */
+    .radio-card:has(:focus-visible) {
+        outline: var(--focus-outline-width) solid var(--focus-outline-color);
+        outline-offset: calc(-1 * var(--border-width-thin));
+    }
+
+    .radio-card .radio-card-control:focus-visible {
+        outline: none;
+    }
+
+    /* The words are the one part of the row with no length of its own, so they are what gives
+       when the card runs out of room */
+    .radio-card-body {
+        display: flex;
+        flex: auto;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        min-width: 0;
+    }
+
+    .radio-card-label {
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .radio-card-description {
+        color: var(--radio-card-muted-color);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .radio-card-leading-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        color: var(--radio-card-muted-color);
+
+        & > svg {
+            width: var(--base-size-20);
+            height: var(--base-size-20);
+        }
+    }
+
+    /* The radio is held at the end of the row rather than beside the words, so its state is
+       found in the same place on every card in the group however long their lines run */
+    .radio-card-control {
+        flex-shrink: 0;
+        margin-inline-start: auto;
+    }
+}

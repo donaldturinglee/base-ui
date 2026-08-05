@@ -61,6 +61,7 @@ export * from "./progress-bar";
 export * from "./progress-circle";
 export * from "./qr-code";
 export * from "./radio";
+export * from "./radio-card";
 export * from "./radio-group";
 export * from "./rating";
 export * from "./relative-time";
