@@ -1,0 +1,51 @@
+@layer components {
+    /* The browser draws a stepper of its own inside a number field, and only while the pointer
+       is over it. It is taken away, so the stepper the field carries is the only one standing
+       there and the room it takes does not come and go */
+    .number-input {
+        & input[type="number"] {
+            appearance: textfield;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                margin: 0;
+                appearance: none;
+            }
+        }
+    }
+
+    /* Stacked, so the pair takes no more room across the field than one of them would */
+    .number-input-stepper {
+        display: flex;
+        flex-shrink: 0;
+        flex-direction: column;
+        align-self: center;
+        margin-inline: var(--base-size-4);
+    }
+
+    /* Each half is half the height an action would be, so the two together stand as tall as one
+       and the field is no deeper for carrying them */
+    .button.number-input-step {
+        width: var(--text-input-action-size);
+        height: calc(var(--text-input-action-size) / 2);
+        min-height: 0;
+        padding: 0;
+        background-color: transparent;
+        color: var(--foreground-color-muted);
+
+        &:hover:not(:disabled) {
+            color: var(--foreground-color-default);
+        }
+
+        /* An end the value cannot pass is drawn as one, rather than being left to be found by
+           pressing at it */
+        &:disabled {
+            color: var(--foreground-color-disabled);
+        }
+
+        & > svg {
+            width: var(--base-size-12);
+            height: var(--base-size-12);
+        }
+    }
+}
