@@ -60,6 +60,7 @@ export * from "./page-header";
 export * from "./page-layout";
 export * from "./page-sidebar";
 export * from "./pagination";
+export * from "./password-input";
 export * from "./placeholder";
 export * from "./portal";
 export * from "./progress-bar";
