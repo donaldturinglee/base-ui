@@ -1,0 +1,267 @@
+@layer components {
+    /* The room the plot is drawn in. It is given a width by whatever it sits in and works its
+       height out from the ratio, so a chart never has to be told a size in pixels that another
+       screen would make the wrong one. A caller who wants a squarer plot, or a strip of one,
+       sets the ratio rather than the height */
+    .chart {
+        --chart-aspect-ratio: 16 / 9;
+
+        width: 100%;
+        aspect-ratio: var(--chart-aspect-ratio);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+
+        /* Recharts measures the box it was given and draws to that, so the wrapper it lays
+           down has to be the whole of it rather than shrink to the plot it holds */
+        & .recharts-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* A mark at the very edge of the plot, and a readout that reaches past it, are drawn
+           outside the box the axes bound rather than clipped by it */
+        & svg {
+            overflow: visible;
+        }
+    }
+
+    /* The words around the plot are read past rather than looked at, so they are drawn in the
+       quiet foreground the rest of the library uses for the same job */
+    .chart
+        :is(
+            .recharts-cartesian-axis-tick-value,
+            .recharts-polar-angle-axis-tick-value,
+            .recharts-polar-radius-axis-tick-value,
+            .recharts-pie-label-text
+        ) {
+        fill: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    /* What an axis is measuring is a heading for the numbers under it rather than one of them */
+    .chart .recharts-cartesian-axis .recharts-label {
+        fill: var(--foreground-color-default);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* The lines behind the marks are there to be read past */
+    .chart .recharts-cartesian-grid line,
+    .chart .recharts-polar-grid line,
+    .chart .recharts-polar-grid path {
+        stroke: var(--border-color-muted);
+    }
+
+    .chart .recharts-cartesian-axis-line,
+    .chart .recharts-cartesian-axis-tick-line {
+        stroke: var(--border-color-default);
+    }
+
+    /* The band under the pointer says which point is being read, so it has to be seen through
+       to the marks it covers */
+    .chart .recharts-rectangle.recharts-tooltip-cursor {
+        fill: var(--foreground-color-muted);
+        fill-opacity: 0.08;
+    }
+
+    .chart .recharts-curve.recharts-tooltip-cursor {
+        stroke: var(--border-color-default);
+    }
+
+    /* Recharts puts a chart read by keyboard in the tab order and moves along it with the arrow
+       keys, so the ring around it is the only thing saying where that reader is */
+    .chart .recharts-surface:focus-visible {
+        outline: var(--focus-outline-width) solid var(--focus-outline-color);
+        outline-offset: var(--base-size-2);
+    }
+
+    /* The colour is carried by the swatch beside the name rather than by the name itself. A
+       light hue is unreadable as text, and identity that lives only in the text colour is
+       identity a colour-blind reader cannot get at */
+    .chart-swatch {
+        flex-shrink: 0;
+        width: var(--base-size-8);
+        height: var(--base-size-8);
+        border-radius: var(--border-radius-full);
+
+        /* A line is named by a line rather than by a dot, so the mark beside a name in the
+           readout is the one that was drawn on the plot */
+        &[data-indicator="line"],
+        &[data-indicator="dashed"] {
+            width: var(--base-size-12);
+            height: var(--base-size-2);
+            border-radius: 0;
+        }
+
+        &[data-indicator="dashed"] {
+            background-image: linear-gradient(
+                to right,
+                var(--background-color-default) 0 25%,
+                transparent 25% 75%,
+                var(--background-color-default) 75% 100%
+            );
+        }
+    }
+
+    .chart-legend {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        padding-block: var(--base-size-12);
+
+        &[data-align="left"] {
+            align-items: flex-start;
+        }
+
+        &[data-align="center"] {
+            align-items: center;
+        }
+
+        &[data-align="right"] {
+            align-items: flex-end;
+        }
+    }
+
+    .chart-legend-title {
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .chart-legend-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: var(--base-size-16);
+        row-gap: var(--base-size-4);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        &[data-orientation="vertical"] {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    /* A series is faded rather than dropped while another is being read, so the legend keeps the
+       length it had and nothing under it moves */
+    .chart-legend-item {
+        display: flex;
+        align-items: center;
+        transition: opacity var(--motion-transition-hover);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The button is the whole of the entry rather than a control beside it, so what is pressed
+       is what is read */
+    .chart-legend-control {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-6);
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: 0;
+        border-radius: var(--border-radius-small);
+        color: inherit;
+        font: inherit;
+        text-align: start;
+
+        &:is(button) {
+            cursor: pointer;
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--base-size-2);
+        }
+    }
+
+    .chart-legend-label {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .chart-tooltip {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        min-width: var(--base-size-112);
+        padding: var(--base-size-8);
+        background-color: var(--overlay-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+
+        /* A readout naming one series has nothing to line up with, so it is only as wide as
+           what it says */
+        &[data-fit-content] {
+            min-width: 0;
+        }
+    }
+
+    .chart-tooltip-label {
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .chart-tooltip-rows {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-2);
+    }
+
+    .chart-tooltip-row {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-6);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* The name is what gives when the readout runs out of room, so the value it belongs to is
+       never the part that is cut */
+    .chart-tooltip-name {
+        flex-grow: 1;
+        min-width: 0;
+        overflow: hidden;
+        color: var(--foreground-color-muted);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* A column of numbers is the one place the digits are held to the same width, so that
+       they line up down the readout */
+    .chart-tooltip-value {
+        margin-inline-start: auto;
+        color: var(--foreground-color-default);
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .chart-tooltip-divider {
+        margin: 0;
+        border: 0;
+        border-top-style: solid;
+        border-top-width: var(--border-width-thin);
+        border-top-color: var(--border-color-muted);
+    }
+
+    .chart-radial-title {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .chart-radial-description {
+        font-size: var(--text-body-size-small);
+    }
+}

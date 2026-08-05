@@ -47,5 +47,7 @@ export default {
         "shiki",
         "lexical",
         /^@lexical\//,
+        "recharts",
+        /^recharts\//,
     ],
 };
