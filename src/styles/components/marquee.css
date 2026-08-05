@@ -1,0 +1,155 @@
+@layer components {
+    /* A run of content that travels across its own width and comes round again. How far it
+       travels and how long that takes are measured rather than written down here, because both
+       follow from how much content there is, and they arrive through custom properties */
+    .marquee {
+        --marquee-step: -1;
+
+        display: flex;
+        overflow: hidden;
+    }
+
+    /* Everything but which keyframes to run, since that is the one part of the travel that
+       depends on which way the run is laid out. The longhands are set rather than the shorthand,
+       which would clear the name the axis below goes on to set */
+    .marquee-track {
+        display: flex;
+        flex-shrink: 0;
+        animation-duration: var(--marquee-duration);
+        animation-timing-function: var(--motion-easing-linear);
+        animation-iteration-count: infinite;
+    }
+
+    /* The gap that follows a copy is carried by the copy itself rather than sitting between the
+       copies, so the distance the track travels is the size of one copy and nothing beside it
+       has to be measured to work the loop out */
+    .marquee-group {
+        /* Settled once here, so the room between the items and the room the next copy comes
+           round to are always the same, and so what a run falls back to where it has been given
+           no spacing of its own is written down in one place */
+        --marquee-group-gap: var(--marquee-gap, var(--stack-gap-normal));
+
+        display: flex;
+        flex-shrink: 0;
+        gap: var(--marquee-group-gap);
+    }
+
+    .marquee-spacing-none {
+        --marquee-gap: 0;
+    }
+
+    .marquee-spacing-tight {
+        --marquee-gap: var(--base-size-4);
+    }
+
+    .marquee-spacing-condensed {
+        --marquee-gap: var(--stack-gap-condensed);
+    }
+
+    .marquee-spacing-cozy {
+        --marquee-gap: var(--base-size-12);
+    }
+
+    .marquee-spacing-normal {
+        --marquee-gap: var(--stack-gap-normal);
+    }
+
+    .marquee-spacing-spacious {
+        --marquee-gap: var(--stack-gap-spacious);
+    }
+
+    /* A run travelling along the line is held back by the width of the page. Which way "the
+       start" lies is the reading direction's, so the run travels the way the page is read
+       rather than always leftwards */
+    .marquee-inline {
+        max-width: 100%;
+
+        &:dir(rtl) {
+            --marquee-step: 1;
+        }
+
+        & .marquee-track {
+            align-items: center;
+            animation-name: marquee-scroll-inline;
+        }
+
+        & .marquee-group {
+            align-items: center;
+            padding-inline-end: var(--marquee-group-gap);
+        }
+    }
+
+    /* A run travelling down the page is laid out in a column. Nothing holds a column back the
+       way the width of the page holds back a row, so one of these is only a run at all once it
+       has been given a height to be read through */
+    .marquee-block {
+        flex-direction: column;
+
+        & .marquee-track {
+            flex-direction: column;
+            animation-name: marquee-scroll-block;
+        }
+
+        & .marquee-group {
+            flex-direction: column;
+            padding-block-end: var(--marquee-group-gap);
+        }
+    }
+
+    /* Running the same travel backwards rather than describing it twice */
+    .marquee-reversed .marquee-track {
+        animation-direction: reverse;
+    }
+
+    /* Held still while the pointer rests on it, and held still while anything inside it has
+       focus whether or not it stops for the pointer: a reader who has tabbed onto a link in the
+       run cannot follow it while it is travelling away from them */
+    .marquee-pause-on-hover:hover .marquee-track,
+    .marquee:focus-within .marquee-track,
+    .marquee-paused .marquee-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee-scroll-inline {
+        from {
+            translate: 0 0;
+        }
+
+        to {
+            translate: calc(var(--marquee-step) * var(--marquee-distance)) 0;
+        }
+    }
+
+    @keyframes marquee-scroll-block {
+        from {
+            translate: 0 0;
+        }
+
+        to {
+            translate: 0 calc(var(--marquee-step) * var(--marquee-distance));
+        }
+    }
+
+    /* Content that travels on its own is content some readers cannot hold still. Where that has
+       been asked against, the run stands where it is and is scrolled by hand instead, and the
+       copies go with it: they were only ever there to keep the loop from emptying */
+    @media (prefers-reduced-motion: reduce) {
+        .marquee-inline {
+            overflow-x: auto;
+        }
+
+        .marquee-block {
+            overflow-y: auto;
+        }
+
+        /* Named through the run so that this carries the same weight as the rules that put the
+           keyframes on by axis, and comes after them */
+        .marquee .marquee-track {
+            animation-name: none;
+        }
+
+        .marquee-group[aria-hidden="true"] {
+            display: none;
+        }
+    }
+}

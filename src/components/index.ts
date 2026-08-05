@@ -50,6 +50,7 @@ export * from "./link-button";
 export * from "./list";
 export * from "./mark";
 export * from "./markdown";
+export * from "./marquee";
 export * from "./nav-list";
 export * from "./page-content";
 export * from "./page-footer";
