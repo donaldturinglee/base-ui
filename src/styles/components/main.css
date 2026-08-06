@@ -18,6 +18,7 @@
 @import "./blankslate.css";
 @import "./blockquote.css";
 @import "./breadcrumbs.css";
+@import "./bubble.css";
 @import "./button.css";
 @import "./button-group.css";
 @import "./calendar.css";
@@ -57,6 +58,7 @@
 @import "./mark.css";
 @import "./markdown.css";
 @import "./marquee.css";
+@import "./message.css";
 @import "./meter.css";
 @import "./navigation-list.css";
 @import "./number-input.css";

@@ -1,0 +1,210 @@
+@layer components {
+    /* A run of turns from one voice. They sit closer to one another than one run sits to the
+       next, so a run reads as a single stretch of talk rather than as several separate ones */
+    .bubble-group {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: var(--base-size-8);
+    }
+
+    /* The frame around one turn rather than the surface of it. What the variant paints is handed
+       down to the content through these properties, so a turn carrying a timestamp or a line of
+       controls below the words stands them beside the painted surface rather than on it, and a
+       caller who wants a rounder or roomier bubble repoints a property rather than unpicking the
+       classes it came with.
+
+       It takes only as much width as its words need, up to a share of the room it was given,
+       since a turn run to the full width would leave nothing to say which side of the
+       conversation it came from. It holds ground of its own because the reactions are pinned
+       to it */
+    .bubble {
+        --bubble-max-width: 80%;
+        --bubble-content-background-color: var(--control-checked-background-color-rest);
+        --bubble-content-background-color-hover: var(--control-checked-background-color-hover);
+        --bubble-content-foreground-color: var(--foreground-color-on-emphasis);
+        --bubble-content-border-color: var(--border-color-transparent);
+        --bubble-content-border-radius: var(--border-radius-large);
+        --bubble-content-padding-block: var(--base-size-8);
+        --bubble-content-padding-inline: var(--base-size-12);
+
+        position: relative;
+        display: flex;
+        min-width: 0;
+        max-width: var(--bubble-max-width);
+        width: fit-content;
+        flex-direction: column;
+        gap: var(--base-size-4);
+    }
+
+    .bubble-align-start {
+        align-self: flex-start;
+    }
+
+    .bubble-align-end {
+        align-self: flex-end;
+    }
+
+    /* The words themselves, on the ground the variant paints. A string with nowhere to break in
+       it is broken anyway, since a pasted address should stretch the bubble no further than the
+       room it was given */
+    .bubble-content {
+        overflow: hidden;
+        min-width: 0;
+        max-width: 100%;
+        width: fit-content;
+        padding-block: var(--bubble-content-padding-block);
+        padding-inline: var(--bubble-content-padding-inline);
+        color: var(--bubble-content-foreground-color);
+        background-color: var(--bubble-content-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--bubble-content-border-color);
+        border-radius: var(--bubble-content-border-radius);
+        font: var(--text-body-shorthand-medium);
+        overflow-wrap: break-word;
+    }
+
+    /* Where the bubble carries something wider than the words — a timestamp, a row of controls —
+       the surface keeps to the side the turn stands on rather than drifting to the start of it */
+    .bubble-align-end > .bubble-content {
+        align-self: flex-end;
+    }
+
+    /* A surface that can be acted on answers the pointer and takes a focus ring. Which of the two
+       it is comes from the element it was rendered as, so a surface that does nothing is never
+       drawn as though it does */
+    .bubble-content:is(button, a) {
+        cursor: pointer;
+        text-align: start;
+        text-decoration: none;
+        transition: background-color var(--motion-transition-hover);
+
+        &:hover {
+            background-color: var(--bubble-content-background-color-hover);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* The reader's own voice, painted in the accent so a run of them reads as one side of the
+       conversation without having to be labelled as one */
+    .bubble-default {
+        --bubble-content-background-color: var(--control-checked-background-color-rest);
+        --bubble-content-background-color-hover: var(--control-checked-background-color-hover);
+        --bubble-content-foreground-color: var(--foreground-color-on-emphasis);
+    }
+
+    /* The neutral surface a control is drawn on: the same fill the muted turn takes, but bordered,
+       which is how the tokens tell a raised surface from a recessed one. The two greys are the
+       same colour in the light scheme, so the border is what carries the difference there */
+    .bubble-secondary {
+        --bubble-content-background-color: var(--control-background-color-rest);
+        --bubble-content-background-color-hover: var(--control-background-color-hover);
+        --bubble-content-foreground-color: var(--foreground-color-default);
+        --bubble-content-border-color: var(--border-color-default);
+    }
+
+    /* The other voice: quieter than the accent and unbordered, so the two sides of a conversation
+       are told apart by weight as well as by the side they stand on */
+    .bubble-muted {
+        --bubble-content-background-color: var(--background-color-muted);
+        --bubble-content-background-color-hover: var(--control-background-color-hover);
+        --bubble-content-foreground-color: var(--foreground-color-default);
+    }
+
+    /* A wash of the accent rather than the accent itself, for a voice that should read as the
+       reader's own without saying so at full volume. The pair is the one a selected reaction is
+       already painted in, that being the only accent wash the tokens carry in both a resting and
+       a hovered state */
+    .bubble-tinted {
+        --bubble-content-background-color: var(--reaction-button-selected-background-color-rest);
+        --bubble-content-background-color-hover: var(
+            --reaction-button-selected-background-color-hover
+        );
+        --bubble-content-foreground-color: var(--foreground-color-default);
+    }
+
+    .bubble-outline {
+        --bubble-content-background-color: var(--background-color-default);
+        --bubble-content-background-color-hover: var(--control-transparent-background-color-hover);
+        --bubble-content-foreground-color: var(--foreground-color-default);
+        --bubble-content-border-color: var(--border-color-default);
+    }
+
+    /* No surface at all: the words stand on the page, and the bubble is only what holds them to
+       one side of it. For a turn that is not being framed as speech — a note about what happened,
+       or a stretch of prose long enough that a painted ground would sit under it as a slab */
+    .bubble-ghost {
+        --bubble-max-width: 100%;
+        --bubble-content-background-color: transparent;
+        --bubble-content-background-color-hover: var(--control-transparent-background-color-hover);
+        --bubble-content-foreground-color: var(--foreground-color-default);
+        --bubble-content-border-color: var(--border-color-transparent);
+        --bubble-content-border-radius: 0;
+        --bubble-content-padding-block: 0;
+        --bubble-content-padding-inline: 0;
+    }
+
+    /* A turn that failed to go anywhere, or one that says something went wrong. The hovered wash
+       is the stronger of the two danger grounds the tokens carry, since the resting one is the
+       ground already under it */
+    .bubble-danger {
+        --bubble-content-background-color: var(--background-color-danger-muted);
+        --bubble-content-background-color-hover: var(--control-danger-background-color-active);
+        --bubble-content-foreground-color: var(--foreground-color-danger);
+    }
+
+    /* Hung over one of the bubble's edges rather than set below it, so reacting to a turn does not
+       push everything said after it down the page. The ring is painted in the ground the
+       conversation stands on, which is what makes the pill read as sitting over the bubble rather
+       than as part of it, and it is a property so a conversation on some other ground can say
+       what that ground is */
+    .bubble-reactions {
+        --bubble-reactions-ring-color: var(--background-color-default);
+
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        width: fit-content;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        gap: var(--base-size-4);
+        padding-block: var(--base-size-2);
+        padding-inline: var(--base-size-6);
+        background-color: var(--background-color-muted);
+        border-radius: var(--border-radius-full);
+        box-shadow: 0 0 0 var(--border-width-thick) var(--bubble-reactions-ring-color);
+        font: var(--text-body-shorthand-small);
+    }
+
+    /* Where the reactions are themselves controls they carry room of their own, so the pill gives
+       its padding up rather than setting a second ring of it around them */
+    .bubble-reactions:has(button) {
+        padding: 0;
+    }
+
+    /* Three quarters of the pill hangs past the edge, which is what has it read as sitting astride
+       the bubble rather than inside it or below it */
+    .bubble-reactions-top {
+        top: 0;
+        transform: translateY(-75%);
+    }
+
+    .bubble-reactions-bottom {
+        bottom: 0;
+        transform: translateY(75%);
+    }
+
+    .bubble-reactions-align-start {
+        inset-inline-start: var(--base-size-12);
+    }
+
+    .bubble-reactions-align-end {
+        inset-inline-end: var(--base-size-12);
+    }
+}

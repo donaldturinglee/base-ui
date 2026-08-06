@@ -1,0 +1,102 @@
+@layer components {
+    /* A run of messages from one speaker. They sit closer to one another than one run sits to the
+       next, so a run reads as a single turn rather than as several */
+    .message-group {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: var(--base-size-8);
+    }
+
+    /* The row: who said it at one end, what they said filling the rest of it.
+
+       The gutter is what sets the lines above and below the words in from the edge by as much as
+       the words themselves are, so a name stands over the first letter of what was said rather
+       than over the corner of the bubble it is on. It is a property because the bubble the words
+       are on is not always painted, and an unpainted one has no padding for them to line up with */
+    .message {
+        --message-gutter: var(--base-size-12);
+        --message-avatar-size: var(--base-size-32);
+        --message-avatar-footer-offset: var(--base-size-32);
+
+        position: relative;
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        gap: var(--base-size-8);
+        font: var(--text-body-shorthand-medium);
+    }
+
+    .message-align-start {
+        flex-direction: row;
+    }
+
+    /* A message from the other side of the conversation is laid out from the other end rather
+       than written in a different order, so the same markup serves both speakers */
+    .message-align-end {
+        flex-direction: row-reverse;
+    }
+
+    /* Whoever said it, given a round ground to stand on so a set of speakers drawn from different
+       sources still reads as one column down the edge of the conversation. It settles beside the
+       last thing said rather than the first, which is where the eye goes for who is speaking */
+    .message-avatar {
+        display: flex;
+        overflow: hidden;
+        min-width: var(--message-avatar-size);
+        width: fit-content;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+        background-color: var(--background-color-muted);
+        border-radius: var(--border-radius-full);
+    }
+
+    /* Where the message carries a line below what was said, the speaker would otherwise settle at
+       the foot of that line rather than beside the words. They are lifted back by about the height
+       of one, which is a property so a taller line can say how much it took */
+    .message:has([data-component="Message.Footer"]) .message-avatar {
+        transform: translateY(calc(-1 * var(--message-avatar-footer-offset)));
+    }
+
+    .message-content {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        flex-direction: column;
+        gap: var(--base-size-8);
+        overflow-wrap: break-word;
+    }
+
+    /* Everything the message carries keeps to the side the message is on, so a turn read down the
+       trailing edge does not leave its own name stranded at the leading one */
+    .message-align-end > .message-content > * {
+        align-self: flex-end;
+    }
+
+    .message-header,
+    .message-footer {
+        display: flex;
+        max-width: 100%;
+        min-width: 0;
+        align-items: center;
+        padding-inline: var(--message-gutter);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .message-align-end > .message-content > .message-footer {
+        justify-content: flex-end;
+    }
+
+    /* A turn whose words stand on the page rather than on a painted ground has no padding of its
+       own for the lines above and below it to line up with, so the message gives its gutter up
+       too. The selector names the bubble because the two are built to stand together, and an
+       unpainted bubble is the one case where the gutter would push a message's own lines out of
+       line with what was said */
+    .message:has([data-component="Bubble"][data-variant="ghost"]) {
+        --message-gutter: 0;
+    }
+}
