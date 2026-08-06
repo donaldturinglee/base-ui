@@ -1,0 +1,123 @@
+@layer components {
+    /* A reading within a range that is already known, drawn as a groove with as much of it filled
+       as the reading has run to.
+
+       The colour and the height come through custom properties, as the code block's ground does,
+       so a caller can repaint or resize a meter without having to unpick the classes it came
+       with. How far the indicator runs is a property too, set on the meter by the component, so
+       the length is settled here along with everything else it is drawn from */
+    .meter {
+        --meter-track-background-color: var(--border-color-default);
+        --meter-indicator-background-color: var(--background-color-success-emphasis);
+        --meter-track-height: 0.5rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+    }
+
+    /* The name is set at the start and the reading at the end, which is where a reader looks for
+       each of them. They sit on the feet of their letters rather than their middles, so a reading
+       set larger than the name it belongs to still lines up with it */
+    .meter-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The name is the one part of the line with no length of its own, so it is what gives when
+       the meter runs out of room */
+    .meter-label {
+        overflow: hidden;
+        min-width: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--foreground-color-default);
+        font: var(--text-body-shorthand-small);
+    }
+
+    /* The reading keeps the room it needs, and its digits are all given the width of a zero, so a
+       meter that is being watched does not shuffle its own name along as the number changes */
+    .meter-value {
+        flex: none;
+        color: var(--foreground-color-muted);
+        font-variant-numeric: tabular-nums;
+        font: var(--text-body-shorthand-small);
+    }
+
+    /* The groove stands for the whole distance between the two ends, so it is drawn at its full
+       length whatever the reading is. In forced colours the two halves would otherwise come out
+       the same, so the track is painted in the window's own text colour and the indicator in its
+       link colour, which are the two that are guaranteed to differ */
+    .meter-track {
+        display: flex;
+        overflow: hidden;
+        height: var(--meter-track-height);
+        background-color: var(--meter-track-background-color);
+        border-radius: var(--border-radius-small);
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: CanvasText;
+        }
+    }
+
+    /* The fallback lives in the class, so an indicator standing outside a meter is drawn empty
+       rather than full */
+    .meter-indicator {
+        width: var(--meter-percentage, 0%);
+        background-color: var(--meter-indicator-background-color);
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: LinkText;
+        }
+    }
+
+    /* The track heights are 5px, 8px and 10px, the same three a progress bar is drawn at, so the
+       two read as the same weight of thing where they stand on a page together */
+    .meter-small {
+        --meter-track-height: 0.3125rem;
+    }
+
+    .meter-medium {
+        --meter-track-height: 0.5rem;
+    }
+
+    .meter-large {
+        --meter-track-height: 0.625rem;
+    }
+
+    .meter-accent {
+        --meter-indicator-background-color: var(--background-color-accent-emphasis);
+    }
+
+    .meter-attention {
+        --meter-indicator-background-color: var(--background-color-attention-emphasis);
+    }
+
+    .meter-danger {
+        --meter-indicator-background-color: var(--background-color-danger-emphasis);
+    }
+
+    .meter-done {
+        --meter-indicator-background-color: var(--background-color-done-emphasis);
+    }
+
+    .meter-neutral {
+        --meter-indicator-background-color: var(--background-color-neutral-emphasis);
+    }
+
+    .meter-severe {
+        --meter-indicator-background-color: var(--background-color-severe-emphasis);
+    }
+
+    .meter-sponsors {
+        --meter-indicator-background-color: var(--background-color-sponsors-emphasis);
+    }
+
+    .meter-success {
+        --meter-indicator-background-color: var(--background-color-success-emphasis);
+    }
+}

@@ -53,6 +53,7 @@ export * from "./list";
 export * from "./mark";
 export * from "./markdown";
 export * from "./marquee";
+export * from "./meter";
 export * from "./nav-list";
 export * from "./number-input";
 export * from "./page-content";
