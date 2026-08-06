@@ -49,5 +49,6 @@ export default {
         /^@lexical\//,
         "recharts",
         /^recharts\//,
+        "react-resizable-panels",
     ],
 };

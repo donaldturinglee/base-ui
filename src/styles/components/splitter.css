@@ -1,0 +1,134 @@
+@layer components {
+    /* The splitter lays its panels out itself, in a row or a column, and fills whatever room it
+       was given, so there is nothing left here to lay out. What the root carries instead are the
+       dials the triggers are drawn from, so that repainting every trigger in a splitter is a matter
+       of setting one of them here rather than reaching for each trigger in turn */
+    .splitter {
+        --splitter-resize-trigger-color: var(--border-color-default);
+        --splitter-resize-trigger-color-hover: var(--border-color-emphasis);
+        --splitter-resize-trigger-color-active: var(--control-checked-background-color-rest);
+        --splitter-resize-trigger-color-disabled: var(--border-color-muted);
+        --splitter-resize-trigger-thickness: var(--border-width-thin);
+        --splitter-resize-trigger-indicator-length: var(--base-size-24);
+        --splitter-resize-trigger-indicator-thickness: var(--base-size-4);
+
+        /* A line drawn in colour says nothing in forced colours, so the triggers are drawn in the
+           system's own colours instead. Changing the dials rather than the trigger leaves every
+           state it can be in still telling one from another */
+        @media (forced-colors: active) {
+            --splitter-resize-trigger-color: CanvasText;
+            --splitter-resize-trigger-color-hover: Highlight;
+            --splitter-resize-trigger-color-active: Highlight;
+            --splitter-resize-trigger-color-disabled: GrayText;
+        }
+    }
+
+    /* The splitter leaves the box it lays a panel out in unclipped, and a content box cannot be
+       drawn narrower than the padding within it, so a panel squeezed shut still draws its words and
+       its scrollbar beside the trigger. Clipping a panel to the room it was given leaves nothing of
+       a shut one to be seen; it is told to clip what it draws rather than what overflows it, so
+       that a panel with nothing to show does not become something that can be scrolled */
+    [data-component="Splitter.Panel"] {
+        contain: paint;
+    }
+
+    /* A panel is a containing block of its own, so that anything standing against one is
+       positioned against the panel rather than against the page */
+    .splitter-panel {
+        position: relative;
+
+        /* The splitter lets a panel scroll whatever will not fit in the room it has been left.
+           The scrolling stays; the bar drawn for it does not, since a panel dragged narrower than
+           what it holds would otherwise be crossed by one for as long as it stayed that narrow.
+           It is taken away twice over, since the browsers that read the first of these are not
+           the ones that read the second */
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    /* The trigger is drawn no thicker than a border, and whatever it holds is centred within it
+       whichever way it runs. What answers to a pointer is wider than that, which the splitter works
+       out for itself, so a reader does not have to land on the line to take hold of it. The
+       thickness is the trigger's own rather than the separator's, so a trigger stands between two
+       panels whether or not it was given a line to draw */
+    .splitter-resize-trigger {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        /* Which way a trigger runs is the splitter's, the other way about: panels side by side are
+           parted by a line standing up, and panels stacked one on another by a line lying down.
+           The splitter says which on the trigger itself, so the rules are written against that
+           rather than against a prop a caller would have to keep in step with the splitter */
+        &[aria-orientation="vertical"] {
+            width: var(--splitter-resize-trigger-thickness);
+
+            & > .splitter-resize-trigger-indicator {
+                width: var(--splitter-resize-trigger-indicator-thickness);
+                height: var(--splitter-resize-trigger-indicator-length);
+            }
+        }
+
+        &[aria-orientation="horizontal"] {
+            height: var(--splitter-resize-trigger-thickness);
+
+            & > .splitter-resize-trigger-indicator {
+                width: var(--splitter-resize-trigger-indicator-length);
+                height: var(--splitter-resize-trigger-indicator-thickness);
+            }
+        }
+
+        /* The splitter says on the trigger whether a pointer is within reach of it and whether it
+           is being dragged, so what it holds answers to both without anything here having to follow
+           the pointer about */
+        &[data-separator="hover"] {
+            --splitter-resize-trigger-color: var(--splitter-resize-trigger-color-hover);
+        }
+
+        &[data-separator="active"] {
+            --splitter-resize-trigger-color: var(--splitter-resize-trigger-color-active);
+        }
+
+        /* A trigger that cannot be dragged is drawn back rather than taken away, since the panels
+           it stands between still need parting */
+        &[data-separator="disabled"] {
+            --splitter-resize-trigger-color: var(--splitter-resize-trigger-color-disabled);
+        }
+
+        /* The ring is drawn outside the line, which is too thin to hold one within it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--base-size-2);
+        }
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+        }
+    }
+
+    /* The line fills the trigger it was put in rather than standing anywhere of its own, so that a
+       trigger given nothing else is drawn as a line and no more, and one given an indicator as well
+       has that indicator sitting on the line rather than beside it */
+    .splitter-resize-trigger-separator {
+        position: absolute;
+        inset: 0;
+        background-color: var(--splitter-resize-trigger-color);
+        transition: background-color var(--motion-transition-hover);
+    }
+
+    /* The indicator says the line is something to take hold of. It is thicker than the line it sits
+       on and stands out either side of it, so the line stays a line everywhere the indicator is
+       not. It is positioned only so that it is drawn over the line rather than under it, the two
+       being laid one on the other */
+    .splitter-resize-trigger-indicator {
+        position: relative;
+        flex-shrink: 0;
+        background-color: var(--splitter-resize-trigger-color);
+        border-radius: var(--border-radius-full);
+        transition: background-color var(--motion-transition-hover);
+    }
+}

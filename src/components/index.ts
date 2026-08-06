@@ -83,6 +83,7 @@ export * from "./skeleton-box";
 export * from "./skeleton-text";
 export * from "./slider";
 export * from "./spinner";
+export * from "./splitter";
 export * from "./stack";
 export * from "./state-label";
 export * from "./statistic-card";
