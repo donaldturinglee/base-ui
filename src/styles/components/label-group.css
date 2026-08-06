@@ -1,0 +1,70 @@
+@layer components {
+    /* A row of labels on one thing. It keeps to a single line and clips whatever runs past the
+       end of it, which is what lets the group work out how many labels it can show: what has
+       been cut off is what is held back.
+
+       The row is contained so that labels coming and going cannot reach back out and change the
+       layout around it. That is safe because the row already clips, and because the panel
+       holding the full set is drawn somewhere else entirely */
+    .label-group {
+        display: flex;
+        overflow: hidden;
+        max-width: 100%;
+        flex-wrap: nowrap;
+        gap: var(--base-size-4);
+        contain: layout;
+        line-height: 1;
+    }
+
+    /* A row holding nothing back has nothing to gain from clipping, so it takes as many lines as
+       it needs */
+    .label-group-wrap {
+        flex-wrap: wrap;
+    }
+
+    /* Drawn as a list, the row gives up the markers and the indent a list comes with, since the
+       labels themselves are what says it is a set */
+    .label-group-list {
+        padding-inline-start: 0;
+        margin-block: 0;
+        list-style-type: none;
+    }
+
+    /* Every label stands at the height of the button standing beside it, so a row that has
+       wrapped does not shift as its second line comes in shorter than its first */
+    .label-group-item,
+    .label-group-toggle {
+        display: flex;
+        min-height: var(--control-small-size);
+        align-items: center;
+    }
+
+    /* Out of sight, out of reach, and moved to the end of the row so that what is left reads as
+       one unbroken run. It keeps its place in the layout rather than being taken out of it,
+       which is what holds the rest of the row still while labels come and go */
+    .label-group-item-hidden {
+        order: 9999;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* The whole set, standing over the page. The close button is held out of the wrapping so it
+       stays in its corner rather than being carried along by the last label */
+    .label-group-overlay {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--base-size-8);
+        padding: var(--overlay-padding-condensed);
+    }
+
+    .label-group-overlay-items {
+        display: flex;
+        max-width: var(--overlay-width-medium);
+        flex-wrap: wrap;
+        gap: var(--base-size-4);
+    }
+
+    .label-group-overlay-close-button {
+        flex-shrink: 0;
+    }
+}

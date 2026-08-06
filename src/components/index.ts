@@ -49,6 +49,7 @@ export * from "./image";
 export * from "./inline-message";
 export * from "./keybinding-hint";
 export * from "./label";
+export * from "./label-group";
 export * from "./link";
 export * from "./link-button";
 export * from "./list";
