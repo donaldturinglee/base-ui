@@ -27,41 +27,45 @@ export default {
 // Ratio Scale
 export const RatioScale: StoryFn<typeof AspectRatio> = () => (
     <Stack gap="normal">
-        {(["1:1", "16:9", "4:3"] as const).map((ratio) => (
-            <Stack key={ratio} gap="condensed">
-                <Text size="small">ratio=&quot;{ratio}&quot;</Text>
+        {[
+            { label: "1 / 1", ratio: 1 / 1 },
+            { label: "16 / 9", ratio: 16 / 9 },
+            { label: "4 / 3", ratio: 4 / 3 },
+        ].map(({ label, ratio }) => (
+            <Stack key={label} gap="condensed">
+                <Text size="small">{`ratio={${label}}`}</Text>
                 <AspectRatio ratio={ratio}>
-                    <Placeholder height="100%" label={ratio} />
+                    <Placeholder height="100%" label={label} />
                 </AspectRatio>
             </Stack>
         ))}
     </Stack>
 );
 
-// Custom Ratio, worked out from the width and height beside it
+// Custom Ratio, since any shape can be asked for rather than only the common ones
 export const CustomRatio: StoryFn<typeof AspectRatio> = () => (
-    <AspectRatio ratio="custom" width={3} height={4}>
-        <Placeholder height="100%" label="3:4" />
+    <AspectRatio ratio={3 / 4}>
+        <Placeholder height="100%" label="3 / 4" />
     </AspectRatio>
 );
 
 // With An Image, cropped to the box rather than sized by hand
 export const WithAnImage: StoryFn<typeof AspectRatio> = () => (
-    <AspectRatio ratio="16:9">
+    <AspectRatio ratio={16 / 9}>
         <img src="https://avatars.githubusercontent.com/u/7143434?v=4" alt="" />
     </AspectRatio>
 );
 
 // Holding Space, where the box keeps its place before anything has loaded
 export const HoldingSpace: StoryFn<typeof AspectRatio> = () => (
-    <AspectRatio ratio="4:3">
+    <AspectRatio ratio={4 / 3}>
         <SkeletonBox height="100%" />
     </AspectRatio>
 );
 
 // Custom Element
 export const CustomElement: StoryFn<typeof AspectRatio> = () => (
-    <AspectRatio as="section" ratio="16:9">
+    <AspectRatio as="section" ratio={16 / 9}>
         <Placeholder height="100%" label="16:9" />
     </AspectRatio>
 );

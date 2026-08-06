@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "@jest/globals";
 import "@testing-library/jest-dom/jest-globals";
 import { AspectRatio } from ".";
-import type { AspectRatioRatio } from "./AspectRatio.types";
 
 const aspectRatio = () => screen.getByTestId("aspect-ratio");
 
@@ -34,41 +33,17 @@ describe("AspectRatio", () => {
 
     it("falls back to a square box", () => {
         render(<AspectRatio data-testid="aspect-ratio" />);
-        expect(aspectRatio()).toHaveAttribute("data-ratio", "1:1");
-        expect(aspectRatio()).toHaveClass("aspect-ratio-1-1");
+        expect(aspectRatio()).toHaveStyle({ "--aspect-ratio": "1" });
     });
 
     it("respects the ratio prop", () => {
-        const ratios = {
-            "1:1": "aspect-ratio-1-1",
-            "16:9": "aspect-ratio-16-9",
-            "4:3": "aspect-ratio-4-3",
-        } as const;
+        const ratios = [16 / 9, 4 / 3, 3 / 4, 2];
 
-        for (const [ratio, expected] of Object.entries(ratios)) {
-            const { unmount } = render(
-                <AspectRatio ratio={ratio as AspectRatioRatio} data-testid="aspect-ratio" />,
-            );
-            expect(aspectRatio()).toHaveAttribute("data-ratio", ratio);
-            expect(aspectRatio()).toHaveClass(expected);
+        for (const ratio of ratios) {
+            const { unmount } = render(<AspectRatio ratio={ratio} data-testid="aspect-ratio" />);
+            expect(aspectRatio()).toHaveStyle({ "--aspect-ratio": String(ratio) });
             unmount();
         }
-    });
-
-    it("works a custom ratio out from the width and height beside it", () => {
-        render(<AspectRatio ratio="custom" width={16} height={10} data-testid="aspect-ratio" />);
-        expect(aspectRatio()).toHaveAttribute("data-ratio", "custom");
-        expect(aspectRatio()).toHaveStyle({ "--aspect-ratio": "16/10" });
-    });
-
-    it("falls back to a square where a custom ratio comes without a width or a height", () => {
-        render(<AspectRatio ratio="custom" data-testid="aspect-ratio" />);
-        expect(aspectRatio()).toHaveStyle({ "--aspect-ratio": "1/1" });
-    });
-
-    it("leaves the custom property to the class where the ratio is a named one", () => {
-        render(<AspectRatio ratio="16:9" width={16} height={10} data-testid="aspect-ratio" />);
-        expect(aspectRatio().style.getPropertyValue("--aspect-ratio")).toBe("");
     });
 
     it("takes its height from the width it is given, and lays whatever is put inside over it", () => {
@@ -77,17 +52,9 @@ describe("AspectRatio", () => {
     });
 
     it("merges a custom style onto the root element", () => {
-        render(
-            <AspectRatio
-                ratio="custom"
-                width={4}
-                height={3}
-                style={{ opacity: 0.5 }}
-                data-testid="aspect-ratio"
-            />,
-        );
+        render(<AspectRatio ratio={2} style={{ opacity: 0.5 }} data-testid="aspect-ratio" />);
         expect(aspectRatio()).toHaveStyle({ opacity: "0.5" });
-        expect(aspectRatio()).toHaveStyle({ "--aspect-ratio": "4/3" });
+        expect(aspectRatio()).toHaveStyle({ "--aspect-ratio": "2" });
     });
 
     it("forwards element specific props to the element passed to the as prop", () => {

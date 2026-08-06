@@ -84,7 +84,7 @@ export const WithAFallback: StoryFn<typeof Image> = () => (
 // In An Aspect Ratio, where the box holds its place on the page before the picture has loaded
 export const InAnAspectRatio: StoryFn<typeof Image> = () => (
     <Stack gap="normal" className={classes.container}>
-        <AspectRatio ratio="16:9">
+        <AspectRatio ratio={16 / 9}>
             <Image src={SOURCE} alt="A hillside under a low sun" />
         </AspectRatio>
         <Text as="p" size="small">

@@ -1,20 +1,11 @@
 import * as React from "react";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames } from "../../utilities/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { AspectRatioProps, AspectRatioRatio } from "./AspectRatio.types";
+import type { AspectRatioProps } from "./AspectRatio.types";
 
-const aspectRatioVariants = cva("aspect-ratio", {
-    variants: {
-        ratio: {
-            "1:1": "aspect-ratio-1-1",
-            "16:9": "aspect-ratio-16-9",
-            "4:3": "aspect-ratio-4-3",
-            // A custom shape comes from the width and height beside it, so there is nothing
-            // for the class to say
-            custom: "",
-        } satisfies Record<AspectRatioRatio, string>,
-    },
-});
+const classes = {
+    root: "aspect-ratio",
+};
 
 function AspectRatio<As extends React.ElementType = "div">(
     props: AspectRatioProps<As>,
@@ -24,11 +15,8 @@ function AspectRatio<As extends React.ElementType = "div">(
     const {
         as: Component = "div",
         className,
-        ratio = "1:1",
-        // A custom ratio that comes without a width or a height of its own is square, the
-        // same shape a box falls back to
-        width = 1,
-        height = 1,
+        // A box that is not told what shape to keep is square
+        ratio = 1,
         style,
         ...rest
     } = props as AspectRatioProps<"div">;
@@ -36,17 +24,16 @@ function AspectRatio<As extends React.ElementType = "div">(
     return (
         <Component
             ref={ref}
-            className={classNames(aspectRatioVariants({ ratio }), className)}
+            className={classNames(classes.root, className)}
             style={
                 {
                     ...style,
-                    // The named ratios set this from their own class, so only a custom one is
-                    // left with anything to say here
-                    "--aspect-ratio": ratio === "custom" ? `${width}/${height}` : undefined,
+                    // The shape is the one thing the class cannot settle on its own, since it
+                    // is the caller who says what it should be
+                    "--aspect-ratio": ratio,
                 } as React.CSSProperties
             }
             data-component="AspectRatio"
-            data-ratio={ratio}
             {...rest}
         />
     );

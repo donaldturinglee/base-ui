@@ -22,7 +22,7 @@ export default {
 
 export const Default: StoryFn<typeof AspectRatio> = () => (
     <AspectRatio>
-        <Placeholder height="100%" label="1:1" />
+        <Placeholder height="100%" label="1 / 1" />
     </AspectRatio>
 );
 
@@ -38,9 +38,7 @@ export const Playground: StoryFn<AspectRatioProps> = (args) => (
 
 Playground.args = {
     as: "div",
-    ratio: "16:9",
-    width: 16,
-    height: 9,
+    ratio: 16 / 9,
 };
 
 Playground.argTypes = {
@@ -53,22 +51,9 @@ Playground.argTypes = {
     },
     ratio: {
         control: {
-            type: "radio",
-        },
-        options: ["1:1", "16:9", "4:3", "custom"],
-        description: "Shape the box keeps",
-    },
-    width: {
-        control: {
             type: "number",
         },
-        description: "Width side of a custom ratio",
-    },
-    height: {
-        control: {
-            type: "number",
-        },
-        description: "Height side of a custom ratio",
+        description: "Shape the box keeps, as a width divided by a height",
     },
     children: {
         table: {
