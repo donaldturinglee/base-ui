@@ -1,4 +1,4 @@
 import "./styles/main.css";
 
 export * from "./components";
-export * from "./theme";
+export * from "./providers";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSyncedState } from "../hooks/useSyncedState";
+import { useSyncedState } from "../../hooks/useSyncedState";
 import { ThemeContext } from "./ThemeContext";
 import { useTheme } from "./useTheme";
 import type { ColorMode, ColorModeWithAuto, ColorScheme, ThemeProviderProps } from "./Theme.types";
