@@ -5,7 +5,7 @@ import {
     PersonRegular,
     ShieldRegular,
 } from "@gamecrafters/base-ui-icons";
-import { NavList } from "../nav-list";
+import { NavigationList } from "../navigation-list";
 import { PageSidebar } from ".";
 import type { PageSidebarProps } from "./PageSidebar.types";
 
@@ -22,32 +22,32 @@ export default {
 } as Meta<typeof PageSidebar>;
 
 const settings = (
-    <NavList aria-label="Settings">
-        <NavList.Item href="#profile" aria-current="page">
-            <NavList.LeadingVisual>
+    <NavigationList aria-label="Settings">
+        <NavigationList.Item href="#profile" aria-current="page">
+            <NavigationList.LeadingVisual>
                 <PersonRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Profile
-        </NavList.Item>
-        <NavList.Item href="#account">
-            <NavList.LeadingVisual>
+        </NavigationList.Item>
+        <NavigationList.Item href="#account">
+            <NavigationList.LeadingVisual>
                 <KeyRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Account
-        </NavList.Item>
-        <NavList.Item href="#notifications">
-            <NavList.LeadingVisual>
+        </NavigationList.Item>
+        <NavigationList.Item href="#notifications">
+            <NavigationList.LeadingVisual>
                 <AlertRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Notifications
-        </NavList.Item>
-        <NavList.Item href="#security">
-            <NavList.LeadingVisual>
+        </NavigationList.Item>
+        <NavigationList.Item href="#security">
+            <NavigationList.LeadingVisual>
                 <ShieldRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Security
-        </NavList.Item>
-    </NavList>
+        </NavigationList.Item>
+    </NavigationList>
 );
 
 export const Default: StoryFn<typeof PageSidebar> = () => (
@@ -57,8 +57,8 @@ export const Default: StoryFn<typeof PageSidebar> = () => (
                 <PageSidebar.Title>Settings</PageSidebar.Title>
             </PageSidebar.Header>
             <PageSidebar.Content>
-                {/* The nav list is a landmark of its own, so the region around it stays a
-                    plain box rather than naming a second one */}
+                {/* The navigation list is a landmark of its own, so the region around it
+                    stays a plain box rather than naming a second one */}
                 <PageSidebar.Navigation>{settings}</PageSidebar.Navigation>
             </PageSidebar.Content>
         </PageSidebar>

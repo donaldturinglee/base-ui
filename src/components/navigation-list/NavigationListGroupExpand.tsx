@@ -4,12 +4,15 @@ import { isValidElementType } from "react-is";
 import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { ActionList } from "../action-list";
-import NavListItem from "./NavListItem";
-import type { NavListGroupExpandItem, NavListGroupExpandProps } from "./NavList.types";
+import NavigationListItem from "./NavigationListItem";
+import type {
+    NavigationListGroupExpandItem,
+    NavigationListGroupExpandProps,
+} from "./NavigationList.types";
 
 // A trailing visual is given either as the component to draw, or as something already
 // built: an element, or plain text such as a count
-const renderTrailingVisual = (visual: NavListGroupExpandItem["trailingVisual"]) => {
+const renderTrailingVisual = (visual: NavigationListGroupExpandItem["trailingVisual"]) => {
     if (typeof visual === "string" || !isValidElementType(visual)) {
         return visual as React.ReactNode;
     }
@@ -21,8 +24,8 @@ const renderTrailingVisual = (visual: NavListGroupExpandItem["trailingVisual"]) 
 
 // Holds back the tail of a long group until it is asked for. The items are described
 // rather than written out, so that the list can decide how many of them to draw
-function NavListGroupExpand(
-    props: NavListGroupExpandProps,
+function NavigationListGroupExpand(
+    props: NavigationListGroupExpandProps,
     ref: React.ForwardedRef<HTMLButtonElement>,
 ) {
     const { label = "Show more", pages = 0, items, renderItem, ...rest } = props;
@@ -70,7 +73,7 @@ function NavListGroupExpand(
                       }
 
                       return (
-                          <NavListItem
+                          <NavigationListItem
                               key={item.id ?? index}
                               data-expand-focus-target={focusTarget}
                               {...itemProps}
@@ -89,7 +92,7 @@ function NavListGroupExpand(
                               {trailingAction ? (
                                   <ActionList.TrailingAction {...trailingAction} />
                               ) : null}
-                          </NavListItem>
+                          </NavigationListItem>
                       );
                   })
                 : null}
@@ -100,7 +103,7 @@ function NavListGroupExpand(
                     as="button"
                     aria-expanded={false}
                     onSelect={() => setPagesShown((page) => page + 1)}
-                    data-component="NavList.GroupExpand"
+                    data-component="NavigationList.GroupExpand"
                     {...rest}
                 >
                     {label}
@@ -113,6 +116,6 @@ function NavListGroupExpand(
     );
 }
 
-NavListGroupExpand.displayName = "NavList.GroupExpand";
+NavigationListGroupExpand.displayName = "NavigationList.GroupExpand";
 
-export default React.forwardRef(NavListGroupExpand);
+export default React.forwardRef(NavigationListGroupExpand);

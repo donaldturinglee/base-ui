@@ -1,20 +1,20 @@
 import * as React from "react";
 import { ActionList } from "../action-list";
-import { NavListHeadingLevelContext } from "./NavListContext";
+import { NavigationListHeadingLevelContext } from "./NavigationListContext";
 import { headingTagForLevel } from "./headingLevel";
-import type { NavListGroupProps } from "./NavList.types";
+import type { NavigationListGroupProps } from "./NavigationList.types";
 
 // Collects related items under a heading of their own, set apart from what comes before by
 // a line
-function NavListGroup(props: NavListGroupProps) {
+function NavigationListGroup(props: NavigationListGroupProps) {
     const { title, children, hideDivider = false, ...rest } = props;
 
-    const headingLevel = React.useContext(NavListHeadingLevelContext);
+    const headingLevel = React.useContext(NavigationListHeadingLevelContext);
 
     return (
         <>
             {hideDivider ? null : <ActionList.Divider />}
-            <ActionList.Group data-component="NavList.Group" {...rest}>
+            <ActionList.Group data-component="NavigationList.Group" {...rest}>
                 {title ? (
                     <ActionList.GroupHeading as={headingTagForLevel(headingLevel)}>
                         {title}
@@ -26,6 +26,6 @@ function NavListGroup(props: NavListGroupProps) {
     );
 }
 
-NavListGroup.displayName = "NavList.Group";
+NavigationListGroup.displayName = "NavigationList.Group";
 
-export default NavListGroup;
+export default NavigationListGroup;

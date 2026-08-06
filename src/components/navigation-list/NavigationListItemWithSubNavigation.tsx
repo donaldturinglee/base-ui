@@ -4,21 +4,23 @@ import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useSlots } from "../../hooks/useSlots";
 import { ActionList } from "../action-list";
-import { NavListItemWithSubNavContext } from "./NavListContext";
-import type { NavListItemWithSubNavContextValue } from "./NavListContext";
-import type { NavListSubNavProps } from "./NavList.types";
+import { NavigationListItemWithSubNavigationContext } from "./NavigationListContext";
+import type { NavigationListItemWithSubNavigationContextValue } from "./NavigationListContext";
+import type { NavigationListSubNavigationProps } from "./NavigationList.types";
 
 const classes = {
     // Turns over as the item opens, so that the arrow always points the way the list will
     // go rather than the way it has been
-    chevron: "nav-list-chevron",
+    chevron: "navigation-list-chevron",
 };
 
-export type NavListItemWithSubNavProps = {
+export type NavigationListItemWithSubNavigationProps = {
     children?: React.ReactNode;
     // The list the item opens. It is held by a ref so that the item can tell whether the
     // page being read stands somewhere within it
-    subNav: React.ReactElement<NavListSubNavProps & { ref?: React.Ref<HTMLUListElement> }>;
+    subNavigation: React.ReactElement<
+        NavigationListSubNavigationProps & { ref?: React.Ref<HTMLUListElement> }
+    >;
     defaultOpen?: boolean;
     className?: string;
 };
@@ -51,14 +53,14 @@ const holdsCurrentItem = (node: React.ReactNode): boolean => {
 
 // An item that opens a list of its own rather than going anywhere. The row is a button, so
 // the list it holds stands after that button rather than inside it
-function NavListItemWithSubNav(props: NavListItemWithSubNavProps) {
-    const { children, subNav, defaultOpen, className } = props;
+function NavigationListItemWithSubNavigation(props: NavigationListItemWithSubNavigationProps) {
+    const { children, subNavigation, defaultOpen, className } = props;
 
     const buttonId = useId();
-    const subNavId = useId();
+    const subNavigationId = useId();
 
-    const subNavRef = React.useRef<HTMLUListElement>(null);
-    const holdsCurrent = React.useMemo(() => holdsCurrentItem(subNav), [subNav]);
+    const subNavigationRef = React.useRef<HTMLUListElement>(null);
+    const holdsCurrent = React.useMemo(() => holdsCurrentItem(subNavigation), [subNavigation]);
 
     const [isOpen, setIsOpen] = React.useState(defaultOpen ?? holdsCurrent);
     const [containsCurrent, setContainsCurrent] = React.useState(holdsCurrent);
@@ -68,34 +70,38 @@ function NavListItemWithSubNav(props: NavListItemWithSubNavProps) {
         // link components that work out for themselves which page they stand for
         const current =
             holdsCurrent ||
-            Boolean(subNavRef.current?.querySelector("[aria-current]:not([aria-current='false'])"));
+            Boolean(
+                subNavigationRef.current?.querySelector(
+                    "[aria-current]:not([aria-current='false'])",
+                ),
+            );
 
         setContainsCurrent(current);
 
         if (current) {
             setIsOpen(true);
         }
-    }, [holdsCurrent, subNav]);
+    }, [holdsCurrent, subNavigation]);
 
-    const contextValue = React.useMemo<NavListItemWithSubNavContextValue>(
-        () => ({ buttonId, subNavId, isOpen }),
-        [buttonId, subNavId, isOpen],
+    const contextValue = React.useMemo<NavigationListItemWithSubNavigationContextValue>(
+        () => ({ buttonId, subNavigationId, isOpen }),
+        [buttonId, subNavigationId, isOpen],
     );
 
     const [slots, childrenWithoutSlots] = useSlots(children, slotsConfig);
 
     return (
-        <NavListItemWithSubNavContext.Provider value={contextValue}>
+        <NavigationListItemWithSubNavigationContext.Provider value={contextValue}>
             <ActionList.Item
                 id={buttonId}
                 // A closed item stands in for whatever it holds, so that a list scrolled
                 // away from the current page still says where the reader is
                 active={!isOpen && containsCurrent}
                 aria-expanded={isOpen}
-                aria-controls={subNavId}
+                aria-controls={subNavigationId}
                 onSelect={() => setIsOpen((open) => !open)}
                 className={className}
-                data-component="NavList.Item"
+                data-component="NavigationList.Item"
             >
                 {childrenWithoutSlots}
                 {/* The chevron stands beside whatever the caller put here rather than in
@@ -105,13 +111,13 @@ function NavListItemWithSubNav(props: NavListItemWithSubNavProps) {
                     <ChevronDownRegular className={classes.chevron} />
                 </ActionList.TrailingVisual>
                 <ActionList.SubItem>
-                    {React.cloneElement(subNav, { ref: subNavRef })}
+                    {React.cloneElement(subNavigation, { ref: subNavigationRef })}
                 </ActionList.SubItem>
             </ActionList.Item>
-        </NavListItemWithSubNavContext.Provider>
+        </NavigationListItemWithSubNavigationContext.Provider>
     );
 }
 
-NavListItemWithSubNav.displayName = "NavList.ItemWithSubNav";
+NavigationListItemWithSubNavigation.displayName = "NavigationList.ItemWithSubNavigation";
 
-export default NavListItemWithSubNav;
+export default NavigationListItemWithSubNavigation;

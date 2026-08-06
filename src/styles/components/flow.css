@@ -1,0 +1,115 @@
+@layer components {
+    /* A diagram of the way something runs. What the steps and the lines between them are drawn in
+       comes through custom properties, as the code block's ground does, so a caller can repaint a
+       flow without having to unpick the classes it came with */
+    .flow {
+        --flow-node-background-color: var(--background-color-default);
+        --flow-node-border-color: var(--border-color-default);
+        --flow-connector-color: var(--border-color-emphasis);
+        --flow-connector-width: var(--border-width-thin);
+
+        position: relative;
+        overflow: auto;
+        max-width: 100%;
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* The canvas is sized to the diagram rather than to the room it is given, so a flow larger
+       than its container is scrolled to rather than squeezed. Every step is laid against it */
+    .flow-canvas {
+        position: relative;
+    }
+
+    /* The steps are a list, and a branch is a list within it, so a reader who cannot see the
+       lines is still told what follows what. None of it is drawn, though: where each step stands
+       is settled by the layout, not by the order the boxes would otherwise fall in */
+    .flow-list,
+    .flow-group,
+    .flow-group-list {
+        display: contents;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Until every step has said what it measures there is nowhere to put any of them, so the flow
+       is held out of sight rather than drawn in a heap at the corner and then scattered */
+    .flow[data-measured="false"] .flow-node {
+        opacity: 0;
+    }
+
+    /* A step stands where the layout put it. The two offsets are written on the element itself,
+       since they are the one thing about it that is worked out rather than named */
+    .flow-node {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        padding-block: var(--base-size-8);
+        padding-inline: var(--base-size-12);
+        background-color: var(--flow-node-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--flow-node-border-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-resting-small);
+        color: var(--foreground-color-default);
+        font: var(--text-body-shorthand-medium);
+        white-space: nowrap;
+    }
+
+    /* A step that cannot be taken is drawn faintly rather than taken away, so the shape of the
+       flow is still the shape of the flow */
+    .flow-node-disabled {
+        background-color: var(--background-color-muted);
+        border-style: dashed;
+        color: var(--foreground-color-muted);
+        box-shadow: none;
+    }
+
+    /* The lines are one sheet laid under the steps rather than a line to each, which is what lets
+       a join run between two boxes without being clipped by everything it passes */
+    .flow-connectors {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .flow-connector {
+        fill: none;
+        stroke: var(--flow-connector-color);
+        stroke-width: var(--flow-connector-width);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* A join touching a step that cannot be taken is faded rather than recoloured, so it stays
+       the same line and reads as the same path, only one that is not open */
+    .flow-connector-disabled {
+        opacity: 0.4;
+        stroke-dasharray: 4 4;
+    }
+
+    /* The arrowhead takes its own paint rather than the line's, since what a marker is drawn in
+       is not inherited from the element pointing at it */
+    .flow-arrowhead path {
+        fill: var(--flow-connector-color);
+    }
+
+    /* In forced colours the sheet and the boxes would otherwise come out the same, so the lines
+       are painted in the window's own text colour and left solid */
+    @media (forced-colors: active) {
+        .flow-connector {
+            stroke: CanvasText;
+        }
+
+        .flow-arrowhead path {
+            fill: CanvasText;
+        }
+    }
+}

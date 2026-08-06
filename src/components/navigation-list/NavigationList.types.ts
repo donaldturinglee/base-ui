@@ -10,34 +10,35 @@ import type {
 import type { ButtonVisual } from "../button";
 
 // Which page of a site the item stands for, in the terms `aria-current` is read in
-export type NavListCurrent = "page" | "step" | "location" | "date" | "time" | "true" | "false";
+export type NavigationListCurrent =
+    "page" | "step" | "location" | "date" | "time" | "true" | "false";
 
-// A nav list is named by a heading of its own, and its groups are headed one level deeper.
-// The page title is the h1, so the list never stands as high as that, and it never runs
-// deeper than an h4
-export type NavListHeadingLevel = "h2" | "h3";
+// A navigation list is named by a heading of its own, and its groups are headed one level
+// deeper. The page title is the h1, so the list never stands as high as that, and it never
+// runs deeper than an h4
+export type NavigationListHeadingLevel = "h2" | "h3";
 
-export type NavListProps = React.ComponentPropsWithoutRef<"nav"> & {
+export type NavigationListProps = React.ComponentPropsWithoutRef<"nav"> & {
     children?: React.ReactNode;
     className?: string;
 };
 
-export type NavListHeadingProps = Omit<React.ComponentPropsWithoutRef<"h2">, "children"> & {
-    as?: NavListHeadingLevel;
+export type NavigationListHeadingProps = Omit<React.ComponentPropsWithoutRef<"h2">, "children"> & {
+    as?: NavigationListHeadingLevel;
     // Names the list for a screen reader without being drawn on the page
     visuallyHidden?: boolean;
     children?: React.ReactNode;
     className?: string;
 };
 
-export type NavListItemProps<As extends React.ElementType = "a"> = PolymorphicProps<
+export type NavigationListItemProps<As extends React.ElementType = "a"> = PolymorphicProps<
     As,
     "a",
     {
         children?: React.ReactNode;
         // Which page the item stands for. The item that stands for the page being read is
         // the one the list shows as current
-        "aria-current"?: NavListCurrent | boolean;
+        "aria-current"?: NavigationListCurrent | boolean;
         // Opens an item's sub-list from the start. Only means anything on an item that has
         // one, since there is otherwise nothing to open
         defaultOpen?: boolean;
@@ -45,14 +46,14 @@ export type NavListItemProps<As extends React.ElementType = "a"> = PolymorphicPr
     }
 >;
 
-export type NavListSubNavProps = React.ComponentPropsWithoutRef<"ul"> & {
+export type NavigationListSubNavigationProps = React.ComponentPropsWithoutRef<"ul"> & {
     children?: React.ReactNode;
     className?: string;
 };
 
-export type NavListGroupProps = React.ComponentPropsWithoutRef<"li"> & {
+export type NavigationListGroupProps = React.ComponentPropsWithoutRef<"li"> & {
     children?: React.ReactNode;
-    // Names the group. Use `NavList.GroupHeading` instead where the heading holds more
+    // Names the group. Use `NavigationList.GroupHeading` instead where the heading holds more
     // than plain text, a link say
     title?: string;
     // Leaves out the line that would otherwise set the group apart from what comes before
@@ -60,21 +61,21 @@ export type NavListGroupProps = React.ComponentPropsWithoutRef<"li"> & {
     className?: string;
 };
 
-export type NavListGroupHeadingProps = ActionListGroupHeadingProps;
+export type NavigationListGroupHeadingProps = ActionListGroupHeadingProps;
 
 // An item of a group that is only shown once the group has been expanded. The list draws
 // these itself, so they are described rather than written out
-export type NavListGroupExpandItem = Omit<NavListItemProps, "children"> & {
+export type NavigationListGroupExpandItem = Omit<NavigationListItemProps, "children"> & {
     text: string;
     leadingVisual?: React.ElementType;
     trailingVisual?: React.ElementType | React.ReactNode;
-    trailingAction?: NavListTrailingActionProps;
+    trailingAction?: NavigationListTrailingActionProps;
     // Marks the item a reader is sent to once more of the group has been shown. The list
     // sets this itself, and a renderer of the caller's own has to pass it on
     "data-expand-focus-target"?: string;
 };
 
-export type NavListGroupExpandProps = Omit<
+export type NavigationListGroupExpandProps = Omit<
     React.ComponentPropsWithoutRef<"li">,
     "children" | "onSelect"
 > & {
@@ -82,20 +83,20 @@ export type NavListGroupExpandProps = Omit<
     label?: string;
     // How many presses it takes to show every item. Left at none, one press shows them all
     pages?: number;
-    items: NavListGroupExpandItem[];
+    items: NavigationListGroupExpandItem[];
     // Draws an item in place of the list's own rendering
-    renderItem?: (item: NavListGroupExpandItem) => React.ReactNode;
+    renderItem?: (item: NavigationListGroupExpandItem) => React.ReactNode;
     className?: string;
 };
 
-export type NavListDescriptionProps = ActionListDescriptionProps;
+export type NavigationListDescriptionProps = ActionListDescriptionProps;
 
-export type NavListLeadingVisualProps = ActionListVisualProps;
+export type NavigationListLeadingVisualProps = ActionListVisualProps;
 
-export type NavListTrailingVisualProps = ActionListVisualProps;
+export type NavigationListTrailingVisualProps = ActionListVisualProps;
 
-export type NavListTrailingActionProps = ActionListTrailingActionProps;
+export type NavigationListTrailingActionProps = ActionListTrailingActionProps;
 
-export type NavListDividerProps = ActionListDividerProps;
+export type NavigationListDividerProps = ActionListDividerProps;
 
-export type NavListVisual = ButtonVisual;
+export type NavigationListVisual = ButtonVisual;

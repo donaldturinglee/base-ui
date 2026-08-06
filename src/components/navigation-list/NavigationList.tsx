@@ -3,24 +3,24 @@ import { useId } from "../../hooks/useId";
 import { useSlots } from "../../hooks/useSlots";
 import { classNames } from "../../utilities/classnames";
 import { ActionList, ActionListContainerContext } from "../action-list";
-import NavListHeading from "./NavListHeading";
-import { NavListHeadingLevelContext } from "./NavListContext";
+import NavigationListHeading from "./NavigationListHeading";
+import { NavigationListHeadingLevelContext } from "./NavigationListContext";
 import { levelForHeadingTag } from "./headingLevel";
-import type { NavListProps } from "./NavList.types";
+import type { NavigationListProps } from "./NavigationList.types";
 
 const slotsConfig = {
-    heading: NavListHeading,
+    heading: NavigationListHeading,
 };
 
 // What the list tells the items standing inside it about where they are
 const containerContextValue = {
-    container: "NavList",
+    container: "NavigationList",
 };
 
 // A list of the places a reader can go from here. It is a landmark of its own, so the parts
 // of a page it stands for can be reached without reading through everything around it
-function NavList(
-    props: NavListProps,
+function NavigationList(
+    props: NavigationListProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -49,19 +49,19 @@ function NavList(
             aria-label={ariaLabel}
             aria-labelledby={labelledBy}
             className={classNames(className)}
-            data-component="NavList"
+            data-component="NavigationList"
             {...rest}
         >
-            <NavListHeadingLevelContext.Provider value={headingLevel}>
+            <NavigationListHeadingLevelContext.Provider value={headingLevel}>
                 {heading ? React.cloneElement(heading, { id: headingId }) : null}
                 <ActionListContainerContext.Provider value={containerContextValue}>
                     <ActionList>{childrenWithoutSlots}</ActionList>
                 </ActionListContainerContext.Provider>
-            </NavListHeadingLevelContext.Provider>
+            </NavigationListHeadingLevelContext.Provider>
         </nav>
     );
 }
 
-NavList.displayName = "NavList";
+NavigationList.displayName = "NavigationList";
 
-export default React.forwardRef(NavList);
+export default React.forwardRef(NavigationList);

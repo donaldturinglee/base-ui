@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, jest } from "@jest/globals";
 import "@testing-library/jest-dom/jest-globals";
 import { BookRegular, PersonRegular } from "@gamecrafters/base-ui-icons";
-import { NavList } from ".";
+import { NavigationList } from ".";
 
 const nav = () => screen.getByRole("navigation");
 
@@ -11,24 +11,24 @@ const link = (name: string) => screen.getByRole("link", { name });
 
 const disclosure = (name: string) => screen.getByRole("button", { name });
 
-describe("NavList", () => {
+describe("NavigationList", () => {
     it("renders a landmark named by the caller", () => {
         render(
-            <NavList aria-label="Settings">
-                <NavList.Item href="/profile">Profile</NavList.Item>
-            </NavList>,
+            <NavigationList aria-label="Settings">
+                <NavigationList.Item href="/profile">Profile</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(nav()).toHaveAccessibleName("Settings");
-        expect(nav()).toHaveAttribute("data-component", "NavList");
+        expect(nav()).toHaveAttribute("data-component", "NavigationList");
     });
 
     it("names the landmark from its own heading where the caller gives no name", () => {
         render(
-            <NavList>
-                <NavList.Heading>Settings</NavList.Heading>
-                <NavList.Item href="/profile">Profile</NavList.Item>
-            </NavList>,
+            <NavigationList>
+                <NavigationList.Heading>Settings</NavigationList.Heading>
+                <NavigationList.Item href="/profile">Profile</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(nav()).toHaveAccessibleName("Settings");
@@ -37,10 +37,10 @@ describe("NavList", () => {
 
     it("leaves a name of the caller's own in place of the heading", () => {
         render(
-            <NavList aria-label="Site">
-                <NavList.Heading>Settings</NavList.Heading>
-                <NavList.Item href="/profile">Profile</NavList.Item>
-            </NavList>,
+            <NavigationList aria-label="Site">
+                <NavigationList.Heading>Settings</NavigationList.Heading>
+                <NavigationList.Item href="/profile">Profile</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(nav()).toHaveAccessibleName("Site");
@@ -48,10 +48,10 @@ describe("NavList", () => {
 
     it("hides the heading from the page while leaving it to be read", () => {
         render(
-            <NavList>
-                <NavList.Heading visuallyHidden>Settings</NavList.Heading>
-                <NavList.Item href="/profile">Profile</NavList.Item>
-            </NavList>,
+            <NavigationList>
+                <NavigationList.Heading visuallyHidden>Settings</NavigationList.Heading>
+                <NavigationList.Item href="/profile">Profile</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(screen.getByRole("heading", { name: "Settings" })).toHaveClass("sr-only");
@@ -59,10 +59,10 @@ describe("NavList", () => {
 
     it("renders its items as links", () => {
         render(
-            <NavList aria-label="Settings">
-                <NavList.Item href="/profile">Profile</NavList.Item>
-                <NavList.Item href="/account">Account</NavList.Item>
-            </NavList>,
+            <NavigationList aria-label="Settings">
+                <NavigationList.Item href="/profile">Profile</NavigationList.Item>
+                <NavigationList.Item href="/account">Account</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(link("Profile")).toHaveAttribute("href", "/profile");
@@ -71,12 +71,12 @@ describe("NavList", () => {
 
     it("shows the item standing for the page being read", () => {
         render(
-            <NavList aria-label="Settings">
-                <NavList.Item href="/profile" aria-current="page">
+            <NavigationList aria-label="Settings">
+                <NavigationList.Item href="/profile" aria-current="page">
                     Profile
-                </NavList.Item>
-                <NavList.Item href="/account">Account</NavList.Item>
-            </NavList>,
+                </NavigationList.Item>
+                <NavigationList.Item href="/account">Account</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(link("Profile")).toHaveAttribute("aria-current", "page");
@@ -86,11 +86,11 @@ describe("NavList", () => {
 
     it("does not show an item that says it is not the current page", () => {
         render(
-            <NavList aria-label="Settings">
-                <NavList.Item href="/profile" aria-current="false">
+            <NavigationList aria-label="Settings">
+                <NavigationList.Item href="/profile" aria-current="false">
                     Profile
-                </NavList.Item>
-            </NavList>,
+                </NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(link("Profile").closest("li")).not.toHaveAttribute("data-active");
@@ -98,16 +98,16 @@ describe("NavList", () => {
 
     it("draws the visuals an item is given", () => {
         render(
-            <NavList aria-label="Settings">
-                <NavList.Item href="/profile">
-                    <NavList.LeadingVisual>
+            <NavigationList aria-label="Settings">
+                <NavigationList.Item href="/profile">
+                    <NavigationList.LeadingVisual>
                         <PersonRegular />
-                    </NavList.LeadingVisual>
+                    </NavigationList.LeadingVisual>
                     Profile
-                    <NavList.TrailingVisual>3</NavList.TrailingVisual>
-                    <NavList.Description>Your public details</NavList.Description>
-                </NavList.Item>
-            </NavList>,
+                    <NavigationList.TrailingVisual>3</NavigationList.TrailingVisual>
+                    <NavigationList.Description>Your public details</NavigationList.Description>
+                </NavigationList.Item>
+            </NavigationList>,
         );
 
         const item = link("Profile 3").closest("li");
@@ -122,11 +122,11 @@ describe("NavList", () => {
         );
 
         render(
-            <NavList aria-label="Settings">
-                <NavList.Item as={Link} to="/profile">
+            <NavigationList aria-label="Settings">
+                <NavigationList.Item as={Link} to="/profile">
                     Profile
-                </NavList.Item>
-            </NavList>,
+                </NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(link("Profile")).toHaveAttribute("href", "/profile");
@@ -135,20 +135,20 @@ describe("NavList", () => {
     describe("sub-lists", () => {
         const renderNested = (props: { defaultOpen?: boolean; current?: boolean } = {}) =>
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Item defaultOpen={props.defaultOpen}>
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Item defaultOpen={props.defaultOpen}>
                         Account
-                        <NavList.SubNav>
-                            <NavList.Item
+                        <NavigationList.SubNavigation>
+                            <NavigationList.Item
                                 href="/email"
                                 aria-current={props.current ? "page" : undefined}
                             >
                                 Email
-                            </NavList.Item>
-                            <NavList.Item href="/password">Password</NavList.Item>
-                        </NavList.SubNav>
-                    </NavList.Item>
-                </NavList>,
+                            </NavigationList.Item>
+                            <NavigationList.Item href="/password">Password</NavigationList.Item>
+                        </NavigationList.SubNavigation>
+                    </NavigationList.Item>
+                </NavigationList>,
             );
 
         it("renders an item holding a list as a button that opens it", () => {
@@ -162,7 +162,7 @@ describe("NavList", () => {
             renderNested({ defaultOpen: true });
 
             const list = screen.getByRole("list", { name: "Account" });
-            expect(list).toHaveAttribute("data-component", "NavList.SubNav");
+            expect(list).toHaveAttribute("data-component", "NavigationList.SubNavigation");
             expect(disclosure("Account")).toHaveAttribute("aria-controls", list.id);
         });
 
@@ -191,15 +191,15 @@ describe("NavList", () => {
 
         it("keeps the chevron beside a trailing visual of the caller's own", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Item>
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Item>
                         Account
-                        <NavList.TrailingVisual>7</NavList.TrailingVisual>
-                        <NavList.SubNav>
-                            <NavList.Item href="/email">Email</NavList.Item>
-                        </NavList.SubNav>
-                    </NavList.Item>
-                </NavList>,
+                        <NavigationList.TrailingVisual>7</NavigationList.TrailingVisual>
+                        <NavigationList.SubNavigation>
+                            <NavigationList.Item href="/email">Email</NavigationList.Item>
+                        </NavigationList.SubNavigation>
+                    </NavigationList.Item>
+                </NavigationList>,
             );
 
             const visual = screen
@@ -212,11 +212,11 @@ describe("NavList", () => {
 
         it("draws nothing for a sub-list written outside an item", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.SubNav>
-                        <NavList.Item href="/email">Email</NavList.Item>
-                    </NavList.SubNav>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.SubNavigation>
+                        <NavigationList.Item href="/email">Email</NavigationList.Item>
+                    </NavigationList.SubNavigation>
+                </NavigationList>,
             );
 
             expect(screen.queryByRole("link", { name: "Email" })).toBeNull();
@@ -226,11 +226,11 @@ describe("NavList", () => {
     describe("groups", () => {
         it("collects items under a heading of their own", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Account">
-                        <NavList.Item href="/email">Email</NavList.Item>
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Account">
+                        <NavigationList.Item href="/email">Email</NavigationList.Item>
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             expect(screen.getByRole("heading", { name: "Account", level: 3 })).toBeInTheDocument();
@@ -239,12 +239,12 @@ describe("NavList", () => {
 
         it("heads a group one level below the list's own heading", () => {
             render(
-                <NavList>
-                    <NavList.Heading as="h3">Settings</NavList.Heading>
-                    <NavList.Group title="Account">
-                        <NavList.Item href="/email">Email</NavList.Item>
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList>
+                    <NavigationList.Heading as="h3">Settings</NavigationList.Heading>
+                    <NavigationList.Group title="Account">
+                        <NavigationList.Item href="/email">Email</NavigationList.Item>
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             expect(screen.getByRole("heading", { name: "Account", level: 4 })).toBeInTheDocument();
@@ -252,11 +252,11 @@ describe("NavList", () => {
 
         it("sets a group apart from what comes before it", () => {
             const { container } = render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Account">
-                        <NavList.Item href="/email">Email</NavList.Item>
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Account">
+                        <NavigationList.Item href="/email">Email</NavigationList.Item>
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             expect(container.querySelector("[data-component='ActionList.Divider']")).toBeTruthy();
@@ -264,11 +264,11 @@ describe("NavList", () => {
 
         it("leaves out the line where the caller asks it to", () => {
             const { container } = render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Account" hideDivider>
-                        <NavList.Item href="/email">Email</NavList.Item>
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Account" hideDivider>
+                        <NavigationList.Item href="/email">Email</NavigationList.Item>
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             expect(container.querySelector("[data-component='ActionList.Divider']")).toBeNull();
@@ -276,18 +276,18 @@ describe("NavList", () => {
 
         it("takes a heading written out in place of the title", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group>
-                        <NavList.GroupHeading>
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group>
+                        <NavigationList.GroupHeading>
                             <a href="/account">Account</a>
-                        </NavList.GroupHeading>
-                        <NavList.Item href="/email">Email</NavList.Item>
-                    </NavList.Group>
-                </NavList>,
+                        </NavigationList.GroupHeading>
+                        <NavigationList.Item href="/email">Email</NavigationList.Item>
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             const heading = screen.getByRole("heading", { name: "Account", level: 3 });
-            expect(heading).toHaveAttribute("data-component", "NavList.GroupHeading");
+            expect(heading).toHaveAttribute("data-component", "NavigationList.GroupHeading");
             // The heading stands above the group's items and names them, rather than
             // being left to stand among them
             expect(screen.getByRole("list", { name: "Account" })).not.toContainElement(heading);
@@ -304,11 +304,11 @@ describe("NavList", () => {
 
         it("holds the items back behind a button", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Books">
-                        <NavList.GroupExpand items={items} />
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Books">
+                        <NavigationList.GroupExpand items={items} />
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             expect(screen.queryByRole("link", { name: "Alpha" })).toBeNull();
@@ -317,11 +317,11 @@ describe("NavList", () => {
 
         it("shows every item at once where no pages were asked for", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Books">
-                        <NavList.GroupExpand items={items} />
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Books">
+                        <NavigationList.GroupExpand items={items} />
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             fireEvent.click(disclosure("Show more"));
@@ -332,11 +332,11 @@ describe("NavList", () => {
 
         it("shows the items a page at a time where pages were asked for", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Books">
-                        <NavList.GroupExpand items={items} pages={2} label="More books" />
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Books">
+                        <NavigationList.GroupExpand items={items} pages={2} label="More books" />
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             fireEvent.click(disclosure("More books"));
@@ -349,11 +349,11 @@ describe("NavList", () => {
 
         it("sends the reader to the first of the items it has just shown", () => {
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Books">
-                        <NavList.GroupExpand items={items} pages={2} />
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Books">
+                        <NavigationList.GroupExpand items={items} pages={2} />
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             fireEvent.click(disclosure("Show more"));
@@ -369,11 +369,11 @@ describe("NavList", () => {
             ));
 
             render(
-                <NavList aria-label="Settings">
-                    <NavList.Group title="Books">
-                        <NavList.GroupExpand items={items} renderItem={renderItem} />
-                    </NavList.Group>
-                </NavList>,
+                <NavigationList aria-label="Settings">
+                    <NavigationList.Group title="Books">
+                        <NavigationList.GroupExpand items={items} renderItem={renderItem} />
+                    </NavigationList.Group>
+                </NavigationList>,
             );
 
             fireEvent.click(disclosure("Show more"));
@@ -384,9 +384,9 @@ describe("NavList", () => {
 
     it("takes a class name of the caller's own", () => {
         render(
-            <NavList aria-label="Settings" className="custom">
-                <NavList.Item href="/profile">Profile</NavList.Item>
-            </NavList>,
+            <NavigationList aria-label="Settings" className="custom">
+                <NavigationList.Item href="/profile">Profile</NavigationList.Item>
+            </NavigationList>,
         );
 
         expect(nav()).toHaveClass("custom");

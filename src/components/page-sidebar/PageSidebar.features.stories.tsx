@@ -11,7 +11,7 @@ import { Avatar } from "../avatar";
 import { Heading } from "../heading";
 import { IconButton } from "../icon-button";
 import { Link } from "../link";
-import { NavList } from "../nav-list";
+import { NavigationList } from "../navigation-list";
 import { PageContent } from "../page-content";
 import { Text } from "../text";
 import { PageSidebar } from ".";
@@ -34,32 +34,32 @@ export default {
 };
 
 const settings = (
-    <NavList aria-label="Settings">
-        <NavList.Item href="#profile" aria-current="page">
-            <NavList.LeadingVisual>
+    <NavigationList aria-label="Settings">
+        <NavigationList.Item href="#profile" aria-current="page">
+            <NavigationList.LeadingVisual>
                 <PersonRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Profile
-        </NavList.Item>
-        <NavList.Item href="#account">
-            <NavList.LeadingVisual>
+        </NavigationList.Item>
+        <NavigationList.Item href="#account">
+            <NavigationList.LeadingVisual>
                 <KeyRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Account
-        </NavList.Item>
-        <NavList.Item href="#notifications">
-            <NavList.LeadingVisual>
+        </NavigationList.Item>
+        <NavigationList.Item href="#notifications">
+            <NavigationList.LeadingVisual>
                 <AlertRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Notifications
-        </NavList.Item>
-        <NavList.Item href="#security">
-            <NavList.LeadingVisual>
+        </NavigationList.Item>
+        <NavigationList.Item href="#security">
+            <NavigationList.LeadingVisual>
                 <ShieldRegular />
-            </NavList.LeadingVisual>
+            </NavigationList.LeadingVisual>
             Security
-        </NavList.Item>
-    </NavList>
+        </NavigationList.Item>
+    </NavigationList>
 );
 
 // Navigation Only, which is all a simple sidebar needs

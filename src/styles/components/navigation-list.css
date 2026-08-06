@@ -1,7 +1,7 @@
 @layer components {
     /* Lined up with the labels of the items below it rather than with the edge of the list,
        since the items are held in from that edge by their own padding */
-    .nav-list-heading {
+    .navigation-list-heading {
         margin-bottom: var(--base-size-8);
         margin-inline-start: calc(
             var(--control-medium-padding-inline-condensed) + var(--base-size-8)
@@ -10,7 +10,7 @@
 
     /* A heading that is a link is still read as a heading, so it is left looking like one
        until it is reached for */
-    .nav-list-group-heading {
+    .navigation-list-group-heading {
         & a {
             color: inherit;
             text-decoration: inherit;
@@ -23,7 +23,7 @@
 
     /* Turns over as the item opens, so that the arrow always points the way the list will go
        rather than the way it has been */
-    .nav-list-chevron {
+    .navigation-list-chevron {
         transition: transform var(--motion-transition-state-change);
 
         [aria-expanded="true"] & {
@@ -37,7 +37,7 @@
 
     /* Stepped in from the item that opens it, so that a glance down the list says which items
        belong to which. The step compounds as the lists nest */
-    .nav-list-sub-nav {
+    .navigation-list-sub-navigation {
         margin: 0;
         margin-top: var(--base-size-2);
         padding: 0;
@@ -46,7 +46,7 @@
     }
 
     /* An item standing under another is drawn a little quieter than the one that opens it */
-    .nav-list-sub-nav-items {
+    .navigation-list-sub-navigation-items {
         & [data-component="ActionList.Item.Label"] {
             font-size: var(--text-body-size-small);
         }

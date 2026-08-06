@@ -3,38 +3,38 @@ import { classNames } from "../../utilities/classnames";
 import { asSlot } from "../../utilities/slot";
 import { ActionList } from "../action-list";
 import { groupHeadingSlot } from "../action-list/ActionListGroupHeading";
-import { NavListHeadingLevelContext } from "./NavListContext";
+import { NavigationListHeadingLevelContext } from "./NavigationListContext";
 import { headingTagForLevel } from "./headingLevel";
 import type { FCWithSlotMarker } from "../../utilities/types/slots";
-import type { NavListGroupHeadingProps } from "./NavList.types";
+import type { NavigationListGroupHeadingProps } from "./NavigationList.types";
 
 const classes = {
-    root: "nav-list-group-heading",
+    root: "navigation-list-group-heading",
 };
 
-// Names a group. This is what `NavList.Group`'s `title` builds, and is written out instead
+// Names a group. This is what `NavigationList.Group`'s `title` builds, and is written out instead
 // wherever the heading holds more than plain text, a link say
-function NavListGroupHeading(props: NavListGroupHeadingProps) {
+function NavigationListGroupHeading(props: NavigationListGroupHeadingProps) {
     const { as, className, ...rest } = props;
 
-    const headingLevel = React.useContext(NavListHeadingLevelContext);
+    const headingLevel = React.useContext(NavigationListHeadingLevelContext);
 
     return (
         <ActionList.GroupHeading
             as={as ?? headingTagForLevel(headingLevel)}
             className={classNames(classes.root, className)}
-            data-component="NavList.GroupHeading"
+            data-component="NavigationList.GroupHeading"
             {...rest}
         />
     );
 }
 
-NavListGroupHeading.displayName = "NavList.GroupHeading";
+NavigationListGroupHeading.displayName = "NavigationList.GroupHeading";
 
 // Marked as the heading an `ActionList.Group` looks for, so that a group still finds this
 // one among its children rather than leaving it to stand with the items
-const GroupHeading: FCWithSlotMarker<NavListGroupHeadingProps> = asSlot(
-    NavListGroupHeading,
+const GroupHeading: FCWithSlotMarker<NavigationListGroupHeadingProps> = asSlot(
+    NavigationListGroupHeading,
     groupHeadingSlot,
 );
 

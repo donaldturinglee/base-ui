@@ -42,6 +42,7 @@
 @import "./empty-state.css";
 @import "./file-upload.css";
 @import "./filtered-action-list.css";
+@import "./flow.css";
 @import "./form-control.css";
 @import "./heading.css";
 @import "./hidden.css";
@@ -57,7 +58,7 @@
 @import "./markdown.css";
 @import "./marquee.css";
 @import "./meter.css";
-@import "./nav-list.css";
+@import "./navigation-list.css";
 @import "./number-input.css";
 @import "./page-content.css";
 @import "./page-footer.css";

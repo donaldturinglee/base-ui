@@ -2,12 +2,12 @@ import * as React from "react";
 import { useSlots } from "../../hooks/useSlots";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { ActionList } from "../action-list";
-import NavListItemWithSubNav from "./NavListItemWithSubNav";
-import NavListSubNav from "./NavListSubNav";
-import type { NavListItemProps } from "./NavList.types";
+import NavigationListItemWithSubNavigation from "./NavigationListItemWithSubNavigation";
+import NavigationListSubNavigation from "./NavigationListSubNavigation";
+import type { NavigationListItemProps } from "./NavigationList.types";
 
 const slotsConfig = {
-    subNav: NavListSubNav,
+    subNavigation: NavigationListSubNavigation,
 };
 
 // Which element the item is drawn as is checked at this component's own boundary, so the
@@ -16,10 +16,10 @@ const slotsConfig = {
 const LinkItem: React.ElementType = ActionList.LinkItem;
 
 // Somewhere to go in the list, or something to open. An item written with a
-// `NavList.SubNav` inside it opens that list instead of going anywhere, since a row cannot
+// `NavigationList.SubNavigation` inside it opens that list instead of going anywhere, since a row cannot
 // both follow a link and open what stands under it
-function NavListItem<As extends React.ElementType = "a">(
-    props: NavListItemProps<As>,
+function NavigationListItem<As extends React.ElementType = "a">(
+    props: NavigationListItemProps<As>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -30,19 +30,19 @@ function NavListItem<As extends React.ElementType = "a">(
         defaultOpen,
         "aria-current": ariaCurrent,
         ...rest
-    } = props as NavListItemProps<React.ElementType>;
+    } = props as NavigationListItemProps<React.ElementType>;
 
     const [slots, childrenWithoutSlots] = useSlots(children, slotsConfig);
 
-    if (slots.subNav) {
+    if (slots.subNavigation) {
         return (
-            <NavListItemWithSubNav
-                subNav={slots.subNav}
+            <NavigationListItemWithSubNavigation
+                subNavigation={slots.subNavigation}
                 defaultOpen={defaultOpen}
                 className={className}
             >
                 {childrenWithoutSlots}
-            </NavListItemWithSubNav>
+            </NavigationListItemWithSubNavigation>
         );
     }
 
@@ -54,7 +54,7 @@ function NavListItem<As extends React.ElementType = "a">(
             // The item standing for the page being read is the one the list shows
             active={Boolean(ariaCurrent) && ariaCurrent !== "false"}
             className={className}
-            data-component="NavList.Item"
+            data-component="NavigationList.Item"
             {...rest}
         >
             {children}
@@ -62,6 +62,6 @@ function NavListItem<As extends React.ElementType = "a">(
     );
 }
 
-NavListItem.displayName = "NavList.Item";
+NavigationListItem.displayName = "NavigationList.Item";
 
-export default fixedForwardRef(NavListItem);
+export default fixedForwardRef(NavigationListItem);

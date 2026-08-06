@@ -1,4 +1,4 @@
-import type { NavListHeadingLevel } from "./NavList.types";
+import type { NavigationListHeadingLevel } from "./NavigationList.types";
 
 // The deepest a heading in the list is allowed to go. The page title is the h1 and the
 // list is named an h2 or an h3, so a group heading never runs past an h4
@@ -8,7 +8,8 @@ const DEEPEST_LEVEL = 4;
 // fall back to where they have always been
 const FALLBACK_GROUP_LEVEL = 3;
 
-export const levelForHeadingTag = (as: NavListHeadingLevel) => Number.parseInt(as.slice(1), 10);
+export const levelForHeadingTag = (as: NavigationListHeadingLevel) =>
+    Number.parseInt(as.slice(1), 10);
 
 // A group heading stands one level below the list's own heading, so that the list reads as
 // a shallow tree rather than as a run of headings all at the same level
