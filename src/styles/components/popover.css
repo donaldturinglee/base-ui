@@ -1,0 +1,281 @@
+@layer components {
+    /* The room a popover stands in. It is laid out against whichever ancestor is positioned, so
+       where it ends up is settled by the caller placing that rather than by anything worked out
+       here — this file draws the surface and the caret, not the machinery that measures an anchor.
+       While it is shut it is taken out of the page altogether rather than only hidden, so nothing
+       inside it can still be tabbed to or read out */
+    .popover {
+        position: absolute;
+        z-index: var(--z-index-popover);
+        display: none;
+    }
+
+    .popover-open {
+        display: block;
+    }
+
+    /* Standing in the flow instead, after whatever it was written after */
+    .popover-relative {
+        position: relative;
+    }
+
+    /* The surface itself, centred in the room the popover was given.
+
+       The caret is two triangles rather than one: a larger one in the border colour, and a smaller
+       one in the surface colour sitting a pixel inside it. What shows past the fill is the hairline
+       the floating shadow already draws around the rest of the surface, carried on around the point
+       so the caret reads as part of the same edge */
+    .popover-content {
+        --popover-caret-size: var(--base-size-8);
+        --popover-caret-fill-size: calc(var(--popover-caret-size) - var(--border-width-thin));
+        /* Stood far enough off that the triangle's base lands on the surface's edge rather than
+           over it, the point being the only part that shows */
+        --popover-caret-offset: calc(-2 * var(--popover-caret-size));
+        --popover-caret-fill-offset: calc(-2 * var(--popover-caret-fill-size));
+        /* How far along an edge a caret named for a corner stands, measured to its point */
+        --popover-caret-inset: var(--base-size-24);
+        /* How far the surface hangs past the popover's edge to meet a caret at a corner */
+        --popover-caret-overhang: calc(var(--popover-caret-size) + var(--border-width-thin));
+
+        position: relative;
+        margin-right: auto;
+        margin-left: auto;
+        padding: var(--overlay-padding-normal);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+
+        /* A triangle drawn out of borders: the box holds nothing, so each border is a wedge, and
+           colouring one of the four leaves a triangle pointing away from that side */
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            display: inline-block;
+            border-style: solid;
+            border-color: transparent;
+        }
+
+        &::before {
+            border-width: var(--popover-caret-size);
+        }
+
+        &::after {
+            border-width: var(--popover-caret-fill-size);
+        }
+    }
+
+    /* Which edge the caret stands on, and so which way it points */
+    .popover-content-caret-top,
+    .popover-content-caret-top-left,
+    .popover-content-caret-top-right {
+        &::before {
+            top: var(--popover-caret-offset);
+            border-bottom-color: var(--border-color-default);
+        }
+
+        &::after {
+            top: var(--popover-caret-fill-offset);
+            border-bottom-color: var(--overlay-background-color);
+        }
+    }
+
+    .popover-content-caret-bottom,
+    .popover-content-caret-bottom-left,
+    .popover-content-caret-bottom-right {
+        &::before {
+            bottom: var(--popover-caret-offset);
+            border-top-color: var(--border-color-default);
+        }
+
+        &::after {
+            bottom: var(--popover-caret-fill-offset);
+            border-top-color: var(--overlay-background-color);
+        }
+    }
+
+    .popover-content-caret-left,
+    .popover-content-caret-left-top,
+    .popover-content-caret-left-bottom {
+        &::before {
+            left: var(--popover-caret-offset);
+            border-right-color: var(--border-color-default);
+        }
+
+        &::after {
+            left: var(--popover-caret-fill-offset);
+            border-right-color: var(--overlay-background-color);
+        }
+    }
+
+    .popover-content-caret-right,
+    .popover-content-caret-right-top,
+    .popover-content-caret-right-bottom {
+        &::before {
+            right: var(--popover-caret-offset);
+            border-left-color: var(--border-color-default);
+        }
+
+        &::after {
+            right: var(--popover-caret-fill-offset);
+            border-left-color: var(--overlay-background-color);
+        }
+    }
+
+    /* Where along that edge it stands. Named for an edge alone, it stands halfway along it, and
+       the negative margin is half the triangle rather than half the surface, which is what pulls
+       its point onto the middle rather than its corner */
+    .popover-content-caret-top,
+    .popover-content-caret-bottom {
+        &::before,
+        &::after {
+            left: 50%;
+        }
+
+        &::before {
+            margin-left: calc(-1 * var(--popover-caret-size));
+        }
+
+        &::after {
+            margin-left: calc(-1 * var(--popover-caret-fill-size));
+        }
+    }
+
+    .popover-content-caret-left,
+    .popover-content-caret-right {
+        &::before,
+        &::after {
+            top: 50%;
+        }
+
+        &::before {
+            margin-top: calc(-1 * var(--popover-caret-size));
+        }
+
+        &::after {
+            margin-top: calc(-1 * var(--popover-caret-fill-size));
+        }
+    }
+
+    /* Named for a corner, the surface gives up its centring and is pinned to that side of the
+       popover, hanging a little past it so the caret stands over whatever the popover was opened
+       from rather than over the middle of the room it was given */
+    .popover-content-caret-top-left,
+    .popover-content-caret-bottom-left {
+        left: calc(-1 * var(--popover-caret-overhang));
+        margin-left: 0;
+
+        &::before {
+            left: calc(var(--popover-caret-inset) - var(--popover-caret-size));
+        }
+
+        &::after {
+            left: calc(var(--popover-caret-inset) - var(--popover-caret-fill-size));
+        }
+    }
+
+    .popover-content-caret-top-right,
+    .popover-content-caret-bottom-right {
+        right: calc(-1 * var(--popover-caret-overhang));
+        margin-right: 0;
+
+        &::before {
+            right: calc(var(--popover-caret-inset) - var(--popover-caret-size));
+        }
+
+        &::after {
+            right: calc(var(--popover-caret-inset) - var(--popover-caret-fill-size));
+        }
+    }
+
+    /* A caret on one of the sides runs up or down that edge instead. The surface keeps its place,
+       since a popover standing beside what opened it is already only as wide as it needs to be */
+    .popover-content-caret-left-top,
+    .popover-content-caret-right-top {
+        &::before {
+            top: calc(var(--popover-caret-inset) - var(--popover-caret-size));
+        }
+
+        &::after {
+            top: calc(var(--popover-caret-inset) - var(--popover-caret-fill-size));
+        }
+    }
+
+    .popover-content-caret-left-bottom,
+    .popover-content-caret-right-bottom {
+        &::before {
+            bottom: calc(var(--popover-caret-inset) - var(--popover-caret-size));
+        }
+
+        &::after {
+            bottom: calc(var(--popover-caret-inset) - var(--popover-caret-fill-size));
+        }
+    }
+
+    .popover-content-width-xsmall {
+        width: var(--overlay-width-xsmall);
+    }
+
+    .popover-content-width-small {
+        width: var(--overlay-width-small);
+    }
+
+    .popover-content-width-medium {
+        width: var(--overlay-width-medium);
+    }
+
+    .popover-content-width-large {
+        width: var(--overlay-width-large);
+    }
+
+    .popover-content-width-xlarge {
+        width: var(--overlay-width-xlarge);
+    }
+
+    .popover-content-width-auto {
+        width: auto;
+    }
+
+    .popover-content-height-small {
+        height: var(--overlay-height-small);
+    }
+
+    .popover-content-height-medium {
+        height: var(--overlay-height-medium);
+    }
+
+    .popover-content-height-large {
+        height: var(--overlay-height-large);
+    }
+
+    .popover-content-height-xlarge {
+        height: var(--overlay-height-xlarge);
+    }
+
+    .popover-content-height-auto {
+        height: auto;
+    }
+
+    .popover-content-height-fit-content {
+        height: fit-content;
+    }
+
+    /* The caret is drawn past the surface's edge, so anything that clips the content clips the
+       caret off with it. That is why the surface overflows by default and only clips where it has
+       been asked to */
+    .popover-content-overflow-auto {
+        overflow: auto;
+    }
+
+    .popover-content-overflow-hidden {
+        overflow: hidden;
+    }
+
+    .popover-content-overflow-scroll {
+        overflow: scroll;
+    }
+
+    .popover-content-overflow-visible {
+        overflow: visible;
+    }
+}

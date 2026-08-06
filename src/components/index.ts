@@ -68,6 +68,7 @@ export * from "./pagination";
 export * from "./password-input";
 export * from "./pin-input";
 export * from "./placeholder";
+export * from "./popover";
 export * from "./portal";
 export * from "./progress-bar";
 export * from "./progress-circle";
