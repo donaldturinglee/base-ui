@@ -1,0 +1,270 @@
+@layer components {
+    /* Names the menu, and the landmark it stands in. Lined up with the labels of the items
+       below it rather than with the edge of the menu, since those items are held in from that
+       edge by their own padding */
+    .navigation-menu-heading {
+        margin-block-end: var(--base-size-8);
+        margin-inline-start: var(--control-medium-padding-inline-normal);
+    }
+
+    /* The row itself. It holds nothing of its own beyond the direction its items run in, so
+       that where the menu stands on a page is left to whatever it was put in */
+    .navigation-menu-list {
+        display: flex;
+        gap: var(--base-size-4);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .navigation-menu-list[data-orientation="vertical"] {
+        flex-direction: column;
+    }
+
+    /* Each item is what a panel standing over the page is laid out against, which is why that
+       panel needs nothing measured: an item already knows where it stands */
+    .navigation-menu-item {
+        position: relative;
+    }
+
+    /* A trigger and a link standing in the row are the same thing to a reader, so they are
+       drawn as one. The ring is inset, so it is not cut off by whatever the menu stands in */
+    .navigation-menu-trigger,
+    .navigation-menu-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--control-medium-gap);
+        padding-block: var(--control-medium-padding-block);
+        padding-inline: var(--control-medium-padding-inline-normal);
+        cursor: pointer;
+        color: var(--foreground-color-default);
+        background-color: transparent;
+        border: 0;
+        border-radius: var(--border-radius-medium);
+        font-family: inherit;
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+        text-align: start;
+        text-decoration: none;
+        transition: background-color var(--motion-transition-hover);
+
+        &:hover {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(var(--focus-outline-offset) * -1);
+        }
+    }
+
+    /* An item whose panel stands open is held in the pressed state for as long as it does, so
+       that a glance at the row says which panel is being read */
+    .navigation-menu-trigger[data-open] {
+        background-color: var(--control-transparent-background-color-selected);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .navigation-menu-trigger:disabled,
+    .navigation-menu-link[aria-disabled="true"] {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    /* The page the reader is already on is the one link in the menu that goes nowhere */
+    .navigation-menu-link-active {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* Turns over as the panel opens, so that the arrow always points the way the menu will go
+       rather than the way it has been */
+    .navigation-menu-chevron {
+        transition: transform var(--motion-transition-state-change);
+
+        [aria-expanded="true"] & {
+            scale: 1 -1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The panel, laid out against the item it was opened from. It runs at least as wide as the
+       item so a panel under a short label does not read as a strip, and no wider than a line
+       of text can be followed back to its start */
+    .navigation-menu-content {
+        position: absolute;
+        z-index: var(--z-index-dropdown);
+        min-width: var(--overlay-width-xsmall);
+        max-width: var(--overlay-width-medium);
+        padding: var(--overlay-padding-condensed);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+    }
+
+    /* Across a row it stands under the item, over whatever the page had there. The offset is
+       the gap the pointer crosses on its way to it, which the closing delay allows for */
+    .navigation-menu-content[data-orientation="horizontal"] {
+        top: 100%;
+        margin-block-start: var(--overlay-offset);
+    }
+
+    /* Down a column it is drawn in the flow instead, stepped in from the item that opened it
+       so that a glance down the menu says which links belong to which item. This is how a
+       navigation list shows the list standing under one of its items, and nothing is lifted
+       off the page to do it: the surface, its shadow and the room it took are all given up */
+    .navigation-menu-content[data-orientation="vertical"] {
+        position: static;
+        min-width: 0;
+        max-width: none;
+        margin-block-start: var(--base-size-2);
+        padding: 0;
+        padding-inline-start: var(--base-size-16);
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* Where along the item the panel lines up, which only a panel standing over the page has
+       to answer: one drawn in the flow is under its item and nowhere else */
+    .navigation-menu-content-align-start {
+        inset-inline-start: 0;
+    }
+
+    .navigation-menu-content-align-center {
+        inset-inline-start: 50%;
+        translate: -50% 0;
+    }
+
+    .navigation-menu-content-align-end {
+        inset-inline-end: 0;
+    }
+
+    /* A panel holding nothing but links is a list of places to go, and reads as one */
+    .navigation-menu-content .navigation-menu-link {
+        display: flex;
+        width: 100%;
+    }
+
+    /* Down a column every item runs the width of the menu, so the chevron stands at the end of
+       its row rather than beside the label, as a trailing visual does in a navigation list */
+    .navigation-menu-list[data-orientation="vertical"] .navigation-menu-trigger,
+    .navigation-menu-list[data-orientation="vertical"] .navigation-menu-link {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* A link standing under the item that opened it is drawn a little quieter than that item */
+    .navigation-menu-content[data-orientation="vertical"] .navigation-menu-link {
+        font-size: var(--text-body-size-small);
+    }
+
+    /* The label of a link, and whatever it says about itself under it. Holding them together
+       is what keeps the description under the label rather than under the visual beside it */
+    .navigation-menu-link-label {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--base-size-2);
+    }
+
+    /* A link saying more about itself stands taller than one that does not, so what it holds
+       is lined up with the label rather than with the middle of the whole row */
+    .navigation-menu-link[data-has-description] {
+        align-items: start;
+    }
+
+    /* Says more about a link than its label does, which is what gives a panel of a few links
+       room to be more than a list of names */
+    .navigation-menu-description {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* The box a leading or trailing visual is drawn in. A visual says the same thing the label
+       does rather than something more, so it is only ever coloured against it */
+    .navigation-menu-visual {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        min-width: var(--base-size-16);
+        height: calc(var(--text-body-line-height-medium) * 1em);
+        color: var(--foreground-color-muted);
+
+        & svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+    }
+
+    /* A trailing visual stands at the end of the row rather than beside the label, so that a
+       count or a mark reads straight down a column of links */
+    .navigation-menu-visual-trailing {
+        margin-inline-start: auto;
+    }
+
+    /* A group is a section of a panel rather than a panel of its own, so it holds nothing but
+       the room its heading and its links take */
+    .navigation-menu-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Lined up with the labels of the links standing under it rather than with the edge of the
+       panel, since those links are held in from that edge by their own padding */
+    .navigation-menu-group-heading {
+        margin: 0;
+        margin-block-end: var(--base-size-4);
+        margin-inline-start: var(--control-medium-padding-inline-normal);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+
+        /* A heading that is a link is still read as a heading, so it is left looking like one
+           until it is reached for */
+        & a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        & a:hover {
+            text-decoration: underline;
+        }
+    }
+
+    /* The line is drawn as a background rather than a border, so it keeps its own height
+       whatever the panel is holding either side of it */
+    .navigation-menu-divider {
+        height: var(--border-width-thin);
+        margin-block: var(--base-size-8);
+        background-color: var(--border-color-muted);
+    }
+
+    /* Stepped in from the link it stands under, so that a glance down the panel says which
+       links belong to which. The step compounds as the lists nest */
+    .navigation-menu-sub-navigation {
+        margin: 0;
+        margin-block-start: var(--base-size-2);
+        padding: 0;
+        padding-inline-start: var(--base-size-16);
+        list-style: none;
+    }
+
+    /* A link standing under another is drawn a little quieter than the one it stands under */
+    .navigation-menu-sub-navigation > .navigation-menu-sub-navigation-item > .navigation-menu-link {
+        font-size: var(--text-body-size-small);
+    }
+}
