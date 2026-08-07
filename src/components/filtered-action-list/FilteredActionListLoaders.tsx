@@ -1,4 +1,4 @@
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { SkeletonBox } from "../skeleton-box";
 import { Spinner } from "../spinner";
 import { Stack } from "../stack";

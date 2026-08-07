@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isResponsiveValue } from "../../hooks/useResponsive";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { AvatarProps, AvatarShape } from "./Avatar.types";
 

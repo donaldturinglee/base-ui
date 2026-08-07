@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Portal } from "../portal";
 import Toast from "./Toast";

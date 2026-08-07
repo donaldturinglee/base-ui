@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { MessageGroupContext } from "./MessageGroupContext";
 import type { MessageGroupProps } from "./Message.types";

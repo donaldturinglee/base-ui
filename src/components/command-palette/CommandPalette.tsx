@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { commandScore } from "./commandScore";
 import { CommandPaletteContext } from "./CommandPaletteContext";

@@ -7,7 +7,7 @@ import {
     WarningRegular,
 } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { IconButton } from "../icon-button";
 import { BannerContext } from "./BannerContext";

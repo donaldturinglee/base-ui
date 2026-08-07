@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DismissCircleRegular, SearchRegular } from "@gamecrafters/base-ui-icons";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { TextInput } from "../text-input";
 import { SelectPanelContext } from "./SelectPanelContext";

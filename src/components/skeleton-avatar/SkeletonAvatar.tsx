@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isResponsiveValue } from "../../hooks/useResponsive";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { DEFAULT_AVATAR_SIZE } from "../avatar/Avatar";
 import type { AvatarShape } from "../avatar/Avatar.types";
 import SkeletonBox from "../skeleton-box/SkeletonBox";

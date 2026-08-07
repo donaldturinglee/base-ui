@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import NavigationMenuDescription from "./NavigationMenuDescription";
 import NavigationMenuLeadingVisual from "./NavigationMenuLeadingVisual";

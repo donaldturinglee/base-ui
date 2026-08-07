@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { PageLayoutContext } from "./PageLayoutContext";
 import PageLayoutFooter from "./PageLayoutFooter";

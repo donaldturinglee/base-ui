@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ResponsiveContainer } from "recharts";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { ChartContext } from "./ChartContext";
 import type { ChartProps } from "./Chart.types";

@@ -1,4 +1,4 @@
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { NavigationMenuVisualContainer } from "./NavigationMenuVisual";
 import type { NavigationMenuVisualProps } from "./NavigationMenu.types";
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CheckmarkRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { ActionListContext } from "./ActionListContext";
 import { ActionListGroupContext } from "./ActionListGroupContext";
 import { ActionListVisualContainer } from "./ActionListVisual";

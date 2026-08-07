@@ -2,7 +2,7 @@ import * as React from "react";
 import { DismissRegular } from "@gamecrafters/base-ui-icons";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { getInteractiveNodes } from "../../utilities/interactive";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { AnchoredOverlay } from "../anchored-overlay";

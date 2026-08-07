@@ -2,7 +2,7 @@ import * as React from "react";
 import { CalendarLtrRegular } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { AnchoredOverlay } from "../anchored-overlay";
 import { Calendar } from "../calendar";

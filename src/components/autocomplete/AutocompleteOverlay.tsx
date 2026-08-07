@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { Portal } from "../portal";
 import { getAnchoredPosition } from "../tooltip/anchoredPosition";
 import { AutocompleteContext } from "./AutocompleteContext";

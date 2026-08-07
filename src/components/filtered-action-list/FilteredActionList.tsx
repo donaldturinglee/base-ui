@@ -3,7 +3,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { ActionList, ActionListContainerContext } from "../action-list";
 import { Checkbox } from "../checkbox";
 import FilteredActionListInput from "./FilteredActionListInput";

@@ -3,7 +3,7 @@ import { useFocusZone } from "../../hooks/useFocusZone";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import ActionListHeading from "./ActionListHeading";
 import { ActionListContainerContext } from "./ActionListContainerContext";

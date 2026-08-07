@@ -3,7 +3,7 @@ import { apply, isSupported } from "@oddbird/popover-polyfill/fn";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getAnchoredPosition } from "./anchoredPosition";
 import { TooltipContext } from "./TooltipContext";

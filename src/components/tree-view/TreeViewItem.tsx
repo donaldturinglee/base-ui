@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChevronDownRegular, ChevronRightRegular } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getAccessibleKeybindingHintString, usePlatform } from "../keybinding-hint";
 import TreeViewActionDialog from "./TreeViewActionDialog";

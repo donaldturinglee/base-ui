@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { useChartContext } from "./ChartContext";
 import { getProp } from "./useChart";
 import type { ChartLegendProps } from "./Chart.types";

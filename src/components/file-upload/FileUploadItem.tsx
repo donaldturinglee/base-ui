@@ -5,7 +5,7 @@ import {
     DocumentRegular,
     ErrorCircleRegular,
 } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { IconButton } from "../icon-button";
 import { ProgressBar } from "../progress-bar";

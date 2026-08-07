@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ChevronDownRegular } from "@gamecrafters/base-ui-icons";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { getInteractiveNodes } from "../../utilities/interactive";
 import { NavigationMenuContext, NavigationMenuItemContext } from "./NavigationMenuContext";
 import type { NavigationMenuTriggerProps } from "./NavigationMenu.types";

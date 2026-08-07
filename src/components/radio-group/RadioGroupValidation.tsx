@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CheckmarkCircleRegular, ErrorCircleRegular } from "@gamecrafters/base-ui-icons";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { RadioGroupContext } from "./RadioGroupContext";
 import type { RadioGroupValidationProps, RadioGroupValidationStatus } from "./RadioGroup.types";

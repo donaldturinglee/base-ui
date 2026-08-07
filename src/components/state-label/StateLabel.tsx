@@ -15,7 +15,7 @@ import {
     BranchRegular,
     WarningRegular,
 } from "@gamecrafters/base-ui-icons";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { StateLabelProps, StateLabelSize, StateLabelStatus } from "./StateLabel.types";
 

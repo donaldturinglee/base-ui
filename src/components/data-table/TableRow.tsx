@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { SUBGRID_CLASSES } from "./tableLayout";
 import type { TableRowProps } from "./DataTable.types";

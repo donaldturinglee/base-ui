@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { ButtonGroupProps } from "./ButtonGroup.types";
 

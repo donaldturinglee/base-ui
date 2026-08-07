@@ -1,4 +1,4 @@
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import SegmentedControlSegment, { renderSegmentVisual } from "./SegmentedControlSegment";
 import type { SegmentedControlIconButtonProps } from "./SegmentedControl.types";
 

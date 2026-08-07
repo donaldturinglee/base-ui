@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronDownRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { AccordionContext } from "./AccordionContext";
 import { AccordionItemContext } from "./AccordionItemContext";

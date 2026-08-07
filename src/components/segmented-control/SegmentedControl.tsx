@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isResponsiveValue } from "../../hooks/useResponsive";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { ActionList } from "../action-list";
 import { ActionMenu } from "../action-menu";

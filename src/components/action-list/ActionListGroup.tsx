@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import ActionListGroupHeading from "./ActionListGroupHeading";
 import { ActionListContext } from "./ActionListContext";
 import { ActionListGroupContext } from "./ActionListGroupContext";

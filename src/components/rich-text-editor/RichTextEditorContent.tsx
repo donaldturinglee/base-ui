@@ -2,7 +2,7 @@ import * as React from "react";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { RichTextEditorContext } from "./RichTextEditorContext";
 import type { RichTextEditorContentProps } from "./RichTextEditor.types";

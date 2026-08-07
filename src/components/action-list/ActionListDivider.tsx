@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import type { ActionListDividerProps } from "./ActionList.types";
 
 const classes = {

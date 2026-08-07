@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { RatingProps, RatingSize } from "./Rating.types";
 

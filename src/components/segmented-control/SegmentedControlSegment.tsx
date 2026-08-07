@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { Tooltip } from "../tooltip";
 import type { ButtonVisual } from "../button";
 import type { SegmentedControlSegmentProps } from "./SegmentedControl.types";

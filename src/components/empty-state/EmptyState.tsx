@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isValidElementType } from "react-is";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { EmptyStateProps, EmptyStateSize, EmptyStateVisual } from "./EmptyState.types";
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { NavigationMenuLinkContext } from "./NavigationMenuContext";
 import type { NavigationMenuDescriptionProps } from "./NavigationMenu.types";
 

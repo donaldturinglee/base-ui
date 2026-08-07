@@ -1,6 +1,6 @@
 import * as React from "react";
 import { isResponsiveValue } from "../../hooks/useResponsive";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { hasInteractiveNodes } from "../../utilities/interactive";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { DEFAULT_AVATAR_SIZE } from "../avatar/Avatar";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ChevronDownRegular, ChevronUpRegular } from "@gamecrafters/base-ui-icons";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { IconButton } from "../icon-button";
 import { TextInput } from "../text-input";

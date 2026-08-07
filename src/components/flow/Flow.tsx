@@ -2,7 +2,7 @@ import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOverflow } from "../../hooks/useOverflow";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import FlowConnectors from "./FlowConnectors";
 import { FlowContext } from "./FlowContext";

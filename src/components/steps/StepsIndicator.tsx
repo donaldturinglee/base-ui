@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CheckmarkRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { useStepsItem } from "./useStepsItem";
 import type { StepsIndicatorProps } from "./Steps.types";

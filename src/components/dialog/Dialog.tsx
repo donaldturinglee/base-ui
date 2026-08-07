@@ -5,7 +5,7 @@ import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useOverflow } from "../../hooks/useOverflow";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { Portal } from "../portal";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOverflow } from "../../hooks/useOverflow";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { ScrollableRegionProps } from "./ScrollableRegion.types";
 

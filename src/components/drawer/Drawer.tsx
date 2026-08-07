@@ -6,7 +6,7 @@ import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useOverflow } from "../../hooks/useOverflow";
 import { useScrollLock } from "../../hooks/useScrollLock";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Portal } from "../portal";
 import { ScrollableRegion } from "../scrollable-region";

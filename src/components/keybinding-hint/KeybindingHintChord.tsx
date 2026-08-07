@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { splitChord } from "./chords";
 import KeybindingHintKey from "./KeybindingHintKey";
 import type {

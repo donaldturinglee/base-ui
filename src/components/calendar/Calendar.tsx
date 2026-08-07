@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ChevronLeftRegular, ChevronRightRegular } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { IconButton } from "../icon-button";
 import CalendarDay from "./CalendarDay";

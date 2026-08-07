@@ -1,6 +1,6 @@
 import * as React from "react";
 import { WarningRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SelectPanelMessageProps, SelectPanelMessageVariant } from "./SelectPanel.types";
 

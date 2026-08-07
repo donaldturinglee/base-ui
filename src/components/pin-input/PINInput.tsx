@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { TextInput } from "../text-input";
 import type { TextInputSize } from "../text-input/TextInput.types";

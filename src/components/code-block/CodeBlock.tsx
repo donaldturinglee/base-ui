@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { CodeBlockContext } from "./CodeBlockContext";
 import { DEFAULT_DARK_THEME, DEFAULT_LANGUAGE, DEFAULT_LIGHT_THEME } from "./highlightCode";

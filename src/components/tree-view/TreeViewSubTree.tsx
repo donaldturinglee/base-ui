@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { SkeletonAvatar } from "../skeleton-avatar";
 import { SkeletonText } from "../skeleton-text";
 import { Spinner } from "../spinner";

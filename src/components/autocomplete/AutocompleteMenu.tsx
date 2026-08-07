@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AddRegular } from "@gamecrafters/base-ui-icons";
 import { isValidElementType } from "react-is";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { ActionList, ActionListContainerContext } from "../action-list";
 import { Spinner } from "../spinner";
 import { AutocompleteContext, AutocompleteDeferredInputContext } from "./AutocompleteContext";

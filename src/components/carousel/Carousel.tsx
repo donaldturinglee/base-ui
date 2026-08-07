@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { CarouselContext, CarouselSlideContext } from "./CarouselContext";
 import CarouselControls from "./CarouselControls";

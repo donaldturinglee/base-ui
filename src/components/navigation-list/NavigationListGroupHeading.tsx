@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { asSlot } from "../../utilities/slot";
 import { ActionList } from "../action-list";
 import { groupHeadingSlot } from "../action-list/ActionListGroupHeading";

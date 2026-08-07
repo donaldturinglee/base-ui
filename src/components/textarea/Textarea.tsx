@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ErrorCircleRegular } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Text } from "../text";
 import { getCharacterCount, SCREEN_READER_DELAY } from "./characterCount";

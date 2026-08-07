@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { HeadingProps, HeadingSize } from "./Heading.types";
 

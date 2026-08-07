@@ -3,7 +3,7 @@ import { isResponsiveValue } from "../../hooks/useResponsive";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOverflow } from "../../hooks/useOverflow";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import DragHandle from "./DragHandle";

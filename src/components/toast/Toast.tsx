@@ -7,7 +7,7 @@ import {
     WarningRegular,
 } from "@gamecrafters/base-ui-icons";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { Button } from "../button";
 import { IconButton } from "../icon-button";
 import { Spinner } from "../spinner";

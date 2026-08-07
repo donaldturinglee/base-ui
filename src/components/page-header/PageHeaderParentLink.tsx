@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ArrowLeftRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Link } from "../link";
 import { getHiddenAttribute, getHiddenClassName, getHiddenViewports } from "./visibility";

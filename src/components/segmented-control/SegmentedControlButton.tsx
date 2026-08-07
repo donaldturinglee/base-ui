@@ -1,4 +1,4 @@
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { CounterLabel } from "../counter-label";
 import SegmentedControlSegment, { renderSegmentVisual } from "./SegmentedControlSegment";
 import type { SegmentedControlButtonProps } from "./SegmentedControl.types";

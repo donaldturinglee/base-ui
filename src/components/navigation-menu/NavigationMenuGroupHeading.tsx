@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { NavigationMenuHeadingLevelContext } from "./NavigationMenuContext";
 import { headingTagForLevel } from "./headingLevel";
 import type { NavigationMenuGroupHeadingProps } from "./NavigationMenu.types";

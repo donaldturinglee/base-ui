@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { CheckboxGroupContext } from "../checkbox-group/CheckboxGroupContext";
 import type { CheckboxProps } from "./Checkbox.types";

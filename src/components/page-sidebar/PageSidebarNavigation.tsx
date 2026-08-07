@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import PageSidebarRegion from "./PageSidebarRegion";
 import type { PageSidebarNavigationProps } from "./PageSidebar.types";

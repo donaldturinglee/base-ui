@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DismissRegular } from "@gamecrafters/base-ui-icons";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { DEFAULT_TOKEN_SIZE } from "./TokenBase";
 import type { TokenRemoveButtonProps, TokenSize } from "./Token.types";
 

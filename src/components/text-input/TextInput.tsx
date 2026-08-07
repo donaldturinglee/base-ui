@@ -3,7 +3,7 @@ import { ErrorCircleRegular } from "@gamecrafters/base-ui-icons";
 import { isValidElementType } from "react-is";
 import { useId } from "../../hooks/useId";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Spinner } from "../spinner";
 import { Text } from "../text";

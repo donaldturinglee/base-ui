@@ -1,4 +1,4 @@
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { Heading } from "../heading";
 import type { NavigationListHeadingProps } from "./NavigationList.types";
 

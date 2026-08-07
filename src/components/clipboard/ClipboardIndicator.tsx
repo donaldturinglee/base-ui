@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CheckmarkRegular, CopyRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { ClipboardContext } from "./ClipboardContext";
 import type { ClipboardIndicatorProps } from "./Clipboard.types";

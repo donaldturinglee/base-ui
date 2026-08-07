@@ -6,7 +6,7 @@ import {
     WarningRegular,
 } from "@gamecrafters/base-ui-icons";
 import { isValidElementType } from "react-is";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type {
     InlineMessageProps,

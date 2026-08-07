@@ -5,7 +5,7 @@ import {
     FilterDismissRegular,
 } from "@gamecrafters/base-ui-icons";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Heading } from "../heading";
 import { IconButton } from "../icon-button";

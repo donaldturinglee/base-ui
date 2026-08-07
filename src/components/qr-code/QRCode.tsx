@@ -6,7 +6,7 @@ import {
     getFinderOuterPath,
     getModulePath,
 } from "../../lib/qr-code/utilities/shapes";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { QRCodeCornerOptions, QRCodeProps } from "./QRCode.types";
 

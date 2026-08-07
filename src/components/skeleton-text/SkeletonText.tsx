@@ -1,4 +1,4 @@
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import SkeletonBox from "../skeleton-box/SkeletonBox";
 import type { SkeletonTextProps, SkeletonTextSize } from "./SkeletonText.types";
 

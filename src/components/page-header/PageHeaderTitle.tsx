@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import PageHeaderRegion from "./PageHeaderRegion";
 import type { PageHeaderTitleProps } from "./PageHeader.types";

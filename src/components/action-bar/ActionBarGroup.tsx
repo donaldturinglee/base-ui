@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { ActionBarItemContext } from "./ActionBarItemContext";
 import { useActionBarItem } from "./useActionBarItem";
 import type { ActionBarGroupProps } from "./ActionBar.types";

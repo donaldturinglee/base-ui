@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ArrowClockwiseRegular } from "@gamecrafters/base-ui-icons";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type { SpinnerProps, SpinnerSize } from "./Spinner.types";
 

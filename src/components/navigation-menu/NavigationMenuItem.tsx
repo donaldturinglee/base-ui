@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { NavigationMenuContext, NavigationMenuItemContext } from "./NavigationMenuContext";
 import type {
     NavigationMenuItemContextValue,

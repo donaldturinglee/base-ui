@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronRightRegular } from "@gamecrafters/base-ui-icons";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { ActionListContainerContext } from "../action-list";
 import { ActionMenuContext } from "./ActionMenuContext";
 import type { ActionMenuAnchorProps } from "./ActionMenu.types";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useScrollLock } from "../../hooks/useScrollLock";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Portal } from "../portal";
 import CommandPalette from "./CommandPalette";

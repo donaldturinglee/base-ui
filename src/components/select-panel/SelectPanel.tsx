@@ -5,7 +5,7 @@ import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { ActionListContainerContext } from "../action-list";

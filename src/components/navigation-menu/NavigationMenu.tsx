@@ -4,7 +4,7 @@ import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import NavigationMenuHeading from "./NavigationMenuHeading";
 import { NavigationMenuContext, NavigationMenuHeadingLevelContext } from "./NavigationMenuContext";
 import { levelForHeadingTag } from "./headingLevel";

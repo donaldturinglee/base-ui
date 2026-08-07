@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { CheckboxCardContext } from "./CheckboxCardContext";
 import type { CheckboxCardLabelProps } from "./CheckboxCard.types";

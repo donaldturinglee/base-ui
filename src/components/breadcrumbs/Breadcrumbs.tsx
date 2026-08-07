@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import BreadcrumbsOverflowMenu from "./BreadcrumbsOverflowMenu";
 import { BreadcrumbsContext } from "./BreadcrumbsContext";
 import type { BreadcrumbsOverflow, BreadcrumbsProps } from "./Breadcrumbs.types";

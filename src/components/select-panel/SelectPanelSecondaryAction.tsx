@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useId } from "../../hooks/useId";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { Button } from "../button";
 import { Checkbox } from "../checkbox";
 import { Link } from "../link";

@@ -5,7 +5,7 @@ import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { getResponsiveAttributes } from "../../utilities/responsive";
 import { IconButton } from "../icon-button";
 import { Portal } from "../portal";

@@ -3,7 +3,7 @@ import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useOnEscapePress } from "../../hooks/useOnEscapePress";
 import { useSlots } from "../../hooks/useSlots";
-import { classNames } from "../../utilities/classnames";
+import { classNames } from "../../lib/classnames";
 import { Portal } from "../portal";
 import { getAnchoredPosition } from "../tooltip/anchoredPosition";
 import { HoverCardContext } from "./HoverCardContext";

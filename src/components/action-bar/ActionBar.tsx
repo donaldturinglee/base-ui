@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MoreHorizontalRegular } from "@gamecrafters/base-ui-icons";
 import { useFocusZone } from "../../hooks/useFocusZone";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { ActionList } from "../action-list";
 import { ActionMenu } from "../action-menu";
 import { IconButton } from "../icon-button";

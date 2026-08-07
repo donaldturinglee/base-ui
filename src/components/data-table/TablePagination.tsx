@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronLeftRegular, ChevronRightRegular } from "@gamecrafters/base-ui-icons";
-import { classNames, cva } from "../../utilities/classnames";
+import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { buildPaginationModel } from "../pagination/paginationModel";
 import type { TablePaginationProps, TablePaginationState } from "./DataTable.types";
