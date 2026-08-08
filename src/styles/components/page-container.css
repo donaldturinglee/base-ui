@@ -1,0 +1,77 @@
+@layer components {
+    /* The regions of the page stand one under the next. The minimum width keeps anything
+       inside that overflows from pushing the page wider than the room it was given */
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+        margin-inline: auto;
+    }
+
+    /* The steps match the ones a page layout is held to, so a page reads the same either way */
+    .page-container-width-full {
+        max-width: 100%;
+    }
+
+    .page-container-width-medium {
+        max-width: 768px;
+    }
+
+    .page-container-width-large {
+        max-width: 1012px;
+    }
+
+    .page-container-width-xlarge {
+        max-width: 1280px;
+    }
+
+    .page-container-padding-none {
+        padding: 0;
+    }
+
+    .page-container-padding-condensed {
+        padding: var(--base-size-8);
+    }
+
+    .page-container-padding-normal {
+        padding: var(--base-size-16);
+    }
+
+    .page-container-padding-spacious {
+        padding: var(--base-size-24);
+    }
+
+    .page-container-gap-none {
+        gap: 0;
+    }
+
+    .page-container-gap-condensed {
+        gap: var(--stack-gap-condensed);
+    }
+
+    .page-container-gap-normal {
+        gap: var(--stack-gap-normal);
+    }
+
+    .page-container-gap-spacious {
+        gap: var(--stack-gap-spacious);
+    }
+
+    /* The dynamic viewport unit holds the page to what is actually showing on a phone, where
+       the browser's own chrome comes and goes as the reader scrolls */
+    .page-container-full-height {
+        min-height: 100dvh;
+    }
+
+    /* A region cannot be pushed wider than the page by anything inside it that overflows */
+    .page-container-region {
+        min-width: 0;
+    }
+
+    /* The region that takes whatever height the page has left over, which is what holds the
+       foot of a full-height page at the bottom */
+    .page-container-region-grow {
+        flex-grow: 1;
+    }
+}
