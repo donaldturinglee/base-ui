@@ -12,6 +12,7 @@ export * from "./avatar-stack";
 export * from "./banner";
 export * from "./blankslate";
 export * from "./blockquote";
+export * from "./box";
 export * from "./breadcrumbs";
 export * from "./bubble";
 export * from "./button";

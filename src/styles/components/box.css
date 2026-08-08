@@ -1,0 +1,170 @@
+@layer components {
+    /* The plain surface of the system, carrying the padding, the fill, the border, the corners
+       and the shadow the library already names, and no layout of its own. The minimum width
+       keeps anything inside that overflows from pushing the box wider than the room it was
+       given */
+    .box {
+        min-width: 0;
+    }
+
+    /* The padding steps are the ones a stack is held to, so the room inside a box and the room
+       between boxes read the same */
+    .box-padding-none {
+        padding: 0;
+    }
+
+    .box-padding-tight {
+        padding: var(--base-size-4);
+    }
+
+    .box-padding-condensed {
+        padding: var(--stack-padding-condensed);
+    }
+
+    .box-padding-cozy {
+        padding: var(--base-size-12);
+    }
+
+    .box-padding-normal {
+        padding: var(--stack-padding-normal);
+    }
+
+    .box-padding-spacious {
+        padding: var(--stack-padding-spacious);
+    }
+
+    /* The block and inline sets come after the whole-box set, so either one overrides the
+       padding on its own axis */
+    .box-padding-block-none {
+        padding-block: 0;
+    }
+
+    .box-padding-block-tight {
+        padding-block: var(--base-size-4);
+    }
+
+    .box-padding-block-condensed {
+        padding-block: var(--stack-padding-condensed);
+    }
+
+    .box-padding-block-cozy {
+        padding-block: var(--base-size-12);
+    }
+
+    .box-padding-block-normal {
+        padding-block: var(--stack-padding-normal);
+    }
+
+    .box-padding-block-spacious {
+        padding-block: var(--stack-padding-spacious);
+    }
+
+    .box-padding-inline-none {
+        padding-inline: 0;
+    }
+
+    .box-padding-inline-tight {
+        padding-inline: var(--base-size-4);
+    }
+
+    .box-padding-inline-condensed {
+        padding-inline: var(--stack-padding-condensed);
+    }
+
+    .box-padding-inline-cozy {
+        padding-inline: var(--base-size-12);
+    }
+
+    .box-padding-inline-normal {
+        padding-inline: var(--stack-padding-normal);
+    }
+
+    .box-padding-inline-spacious {
+        padding-inline: var(--stack-padding-spacious);
+    }
+
+    .box-background-none {
+        background-color: transparent;
+    }
+
+    .box-background-default {
+        background-color: var(--background-color-default);
+    }
+
+    .box-background-muted {
+        background-color: var(--background-color-muted);
+    }
+
+    .box-background-inset {
+        background-color: var(--background-color-inset);
+    }
+
+    /* The one fill dark enough to turn the text standing on it over */
+    .box-background-emphasis {
+        background-color: var(--background-color-emphasis);
+        color: var(--foreground-color-on-emphasis);
+    }
+
+    .box-border-none {
+        border: 0;
+    }
+
+    .box-border-default {
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+    }
+
+    .box-border-muted {
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-muted);
+    }
+
+    .box-radius-none {
+        border-radius: 0;
+    }
+
+    .box-radius-small {
+        border-radius: var(--border-radius-small);
+    }
+
+    .box-radius-medium {
+        border-radius: var(--border-radius-medium);
+    }
+
+    .box-radius-large {
+        border-radius: var(--border-radius-large);
+    }
+
+    .box-radius-full {
+        border-radius: var(--border-radius-full);
+    }
+
+    /* The resting steps, since a box sits on the page rather than floating over it */
+    .box-shadow-none {
+        box-shadow: none;
+    }
+
+    .box-shadow-xsmall {
+        box-shadow: var(--shadow-resting-xsmall);
+    }
+
+    .box-shadow-small {
+        box-shadow: var(--shadow-resting-small);
+    }
+
+    .box-shadow-medium {
+        box-shadow: var(--shadow-resting-medium);
+    }
+
+    .box-overflow-visible {
+        overflow: visible;
+    }
+
+    /* Crops whatever is inside to the corners the box was given, which is what keeps an image
+       from squaring off a rounded box */
+    .box-overflow-hidden {
+        overflow: hidden;
+    }
+}
