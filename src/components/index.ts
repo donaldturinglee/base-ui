@@ -5,6 +5,7 @@ export * from "./action-menu";
 export * from "./alert";
 export * from "./anchored-overlay";
 export * from "./aspect-ratio";
+export * from "./attachment";
 export * from "./autocomplete";
 export * from "./avatar";
 export * from "./avatar-stack";

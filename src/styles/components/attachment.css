@@ -1,0 +1,265 @@
+@layer components {
+    /* One file drawn as a card: a square standing for what it is, the name beside it, and what
+       can be done with it at the far end.
+
+       The room the parts are given is named once here for each size, so a part reads a property
+       rather than being told its measurements over again for every size the attachment comes in */
+    .attachment {
+        position: relative;
+        display: flex;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+        gap: var(--attachment-gap);
+        width: fit-content;
+        max-width: 100%;
+        min-width: 0;
+        background-color: var(--card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--attachment-border-radius);
+        color: var(--foreground-color-default);
+        font-size: var(--attachment-font-size);
+        transition:
+            background-color var(--motion-transition-hover),
+            border-color var(--motion-transition-hover);
+
+        /* What the reader tabs to is the trigger laid over the attachment rather than the
+           attachment itself, so the ring is drawn for the whole card and set inwards to sit
+           inside its own corners */
+        &:focus-within {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(-1 * var(--border-width-thin));
+        }
+    }
+
+    .attachment-size-small {
+        --attachment-gap: var(--base-size-6);
+        --attachment-border-radius: var(--border-radius-small);
+        --attachment-font-size: var(--text-body-size-small);
+        --attachment-content-padding-block: var(--base-size-4);
+        --attachment-content-padding-inline: var(--base-size-6);
+        --attachment-media-padding: var(--base-size-4);
+        --attachment-media-size: var(--base-size-28);
+        --attachment-media-radius: var(--border-radius-small);
+        --attachment-media-icon-size: var(--base-size-12);
+    }
+
+    .attachment-size-medium {
+        --attachment-gap: var(--base-size-8);
+        --attachment-border-radius: var(--border-radius-medium);
+        --attachment-font-size: var(--text-body-size-small);
+        --attachment-content-padding-block: var(--base-size-6);
+        --attachment-content-padding-inline: var(--base-size-8);
+        --attachment-media-padding: var(--base-size-6);
+        --attachment-media-size: var(--base-size-32);
+        --attachment-media-radius: var(--border-radius-medium);
+        --attachment-media-icon-size: var(--base-size-16);
+    }
+
+    .attachment-size-large {
+        --attachment-gap: var(--base-size-8);
+        --attachment-border-radius: var(--border-radius-medium);
+        --attachment-font-size: var(--text-body-size-medium);
+        --attachment-content-padding-block: var(--base-size-8);
+        --attachment-content-padding-inline: var(--base-size-12);
+        --attachment-media-padding: var(--base-size-8);
+        --attachment-media-size: var(--base-size-40);
+        --attachment-media-radius: var(--border-radius-medium);
+        --attachment-media-icon-size: var(--base-size-16);
+    }
+
+    /* A row reads as a file in a list, so it is held to a width a name can be read across */
+    .attachment-horizontal {
+        align-items: center;
+        min-width: var(--base-size-96);
+    }
+
+    /* A column reads as a tile in a gallery, so it is held to a width the media fills. It is
+       widened where there are words below it, since a name needs more room than a thumbnail */
+    .attachment-vertical {
+        flex-direction: column;
+        width: var(--base-size-96);
+    }
+
+    .attachment-vertical:has(> [data-component="Attachment.Content"]) {
+        width: var(--base-size-128);
+    }
+
+    /* The padding belongs to whichever parts are actually there: a bare thumbnail is inset evenly
+       all round, and words are given more room at their ends than above and below them */
+    .attachment:has(> [data-component="Attachment.Media"]) {
+        padding: var(--attachment-media-padding);
+    }
+
+    .attachment:has(> [data-component="Attachment.Content"]) {
+        padding-block: var(--attachment-content-padding-block);
+        padding-inline: var(--attachment-content-padding-inline);
+    }
+
+    /* An attachment that answers to a press lifts under the pointer. Only one carrying a trigger
+       does, since the rest are only there to be read */
+    .attachment:has(> [data-component="Attachment.Trigger"]):hover {
+        background-color: var(--background-color-muted);
+    }
+
+    /* A place kept for a file that has not been chosen yet, drawn as an outline so it reads as
+       somewhere a file goes rather than as a file that is already there */
+    .attachment-state-idle {
+        background-color: transparent;
+        border-style: dashed;
+    }
+
+    .attachment-state-error {
+        border-color: var(--border-color-danger-emphasis);
+    }
+
+    /* The square at the leading edge. It keeps its shape whatever it holds, so an icon, a
+       thumbnail and a spinner all leave the attachment the same height */
+    .attachment-media {
+        position: relative;
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1;
+        width: var(--attachment-media-size);
+        overflow: hidden;
+        background-color: var(--background-color-muted);
+        border-radius: var(--attachment-media-radius);
+        color: var(--foreground-color-default);
+
+        & > svg {
+            width: var(--attachment-media-icon-size);
+            height: var(--attachment-media-icon-size);
+        }
+    }
+
+    /* A thumbnail is the file itself, so it is cropped to the square rather than fitted inside it */
+    .attachment-media-image > img {
+        aspect-ratio: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Until the file has arrived, what is shown of it is only a likeness, so it is held back
+       until it is the file itself. An attachment with no file yet has nothing to hold back */
+    .attachment-state-uploading .attachment-media-image,
+    .attachment-state-processing .attachment-media-image,
+    .attachment-state-error .attachment-media-image {
+        opacity: 0.6;
+    }
+
+    .attachment-state-error .attachment-media {
+        background-color: var(--background-color-danger-muted);
+        color: var(--foreground-color-danger);
+    }
+
+    /* A tile gives its whole width to the media, which is what the tile is mostly for, and marks
+       what it holds at the larger size that width leaves room for */
+    .attachment-vertical .attachment-media {
+        --attachment-media-icon-size: var(--base-size-24);
+
+        width: 100%;
+    }
+
+    /* The words are the one part with no length of their own, so they are what gives when the
+       attachment runs out of room */
+    .attachment-content {
+        flex: auto;
+        max-width: 100%;
+        min-width: 0;
+        line-height: var(--base-text-line-height-tight);
+    }
+
+    /* Under a tile the words carry their own inset, since the media beside them has taken the
+       attachment's padding for itself */
+    .attachment-vertical .attachment-content {
+        padding-inline: var(--base-size-4);
+    }
+
+    .attachment-title {
+        display: block;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .attachment-description {
+        display: block;
+        margin-top: var(--base-size-2);
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+    }
+
+    /* What went wrong is said in the colour errors are said in elsewhere */
+    .attachment-state-error .attachment-description {
+        color: var(--foreground-color-danger);
+    }
+
+    /* The actions stand above the trigger laid over the attachment, so pressing one does what it
+       says rather than what the attachment does */
+    .attachment-actions {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+    }
+
+    /* A tile has no room along its edge for a row of actions, so they are lifted into the corner
+       of the media instead */
+    .attachment-vertical .attachment-actions {
+        position: absolute;
+        top: var(--base-size-8);
+        right: var(--base-size-8);
+        gap: var(--base-size-4);
+    }
+
+    /* Laid over the attachment rather than wrapped around it, so that it takes the whole card as
+       its target without taking the actions in with it. The ring it would draw for itself is left
+       to the attachment, which draws one around the whole card instead */
+    .attachment-trigger {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        border-radius: inherit;
+        outline: none;
+    }
+
+    /* A run of attachments along one line. What will not fit is scrolled rather than wrapped, and
+       each attachment is brought to rest at the leading edge, so a run is read one at a time.
+
+       The bar drawn for the scrolling is taken away, since a run standing only as tall as a single
+       attachment would otherwise be crossed by one. It is taken away twice over, since the
+       browsers that read the first of these are not the ones that read the second */
+    .attachment-group {
+        display: flex;
+        gap: var(--stack-gap-condensed);
+        min-width: 0;
+        padding-block: var(--base-size-4);
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-padding-inline: var(--base-size-4);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        & > [data-component="Attachment"] {
+            flex: none;
+            scroll-snap-align: start;
+        }
+    }
+}
