@@ -1,0 +1,204 @@
+<a id="readme-top"></a>
+
+
+
+<br />
+<div align="center">
+
+<h3 align="center">Base UI</h3>
+
+  <p align="center">
+    An implementation of GameCrafters' Base UI Design System using React.
+  </p>
+
+[![npm][npm-shield]][npm-url]
+[![Contributors][contributors-shield]][contributors-url]
+[![Last Commit][last-commit-shield]][last-commit-url]
+[![MIT License][license-shield]][license-url]
+
+  <p align="center">
+    <a href="https://www.npmjs.com/package/@gamecrafters/base-ui">View Package</a>
+    &middot;
+    <a href="https://github.com/donaldturinglee/base-ui/issues/new?labels=bug">Report Bug</a>
+    &middot;
+    <a href="https://github.com/donaldturinglee/base-ui/issues/new?labels=enhancement">Request Feature</a>
+  </p>
+</div>
+
+
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+
+
+## Getting Started
+
+To use Base UI in an application, install the package and import its stylesheet. To work on the library itself, clone the repository and run Storybook.
+
+### Installation
+
+To use the library in an application:
+
+1. Install the package
+   ```sh
+   npm install @gamecrafters/base-ui
+   ```
+2. Import the stylesheet once, at the root of the application
+   ```js
+   import '@gamecrafters/base-ui/main.css';
+   ```
+
+To work on the library itself:
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/donaldturinglee/base-ui.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Start Storybook, which is where the components are developed and read
+   ```sh
+   npm run storybook
+   ```
+4. Working from a fork, change the git remote url to avoid accidental pushes to the base project
+   ```sh
+   git remote set-url origin https://github.com/your_username/base-ui.git
+   git remote -v # confirm the changes
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Usage
+
+Wrap the application in a `ThemeProvider` so the tokens resolve, then reach for the components:
+
+```jsx
+import { Box, Button, FormControl, Stack, TextInput, ThemeProvider } from '@gamecrafters/base-ui';
+import '@gamecrafters/base-ui/main.css';
+
+const App = () => (
+  <ThemeProvider colorMode="auto">
+    <Box padding="normal" background="muted" border="default" radius="medium">
+      <Stack gap="normal">
+        <FormControl required>
+          <FormControl.Label>Name</FormControl.Label>
+          <TextInput block />
+          <FormControl.Caption>The name people will know you by</FormControl.Caption>
+        </FormControl>
+        <Button variant="primary">Save</Button>
+      </Stack>
+    </Box>
+  </ThemeProvider>
+);
+
+export default App;
+```
+
+`colorMode` takes `day`, `night` or `auto`; `auto` follows the operating system. A nested `ThemeProvider` only has to say what it changes, so a subtree can hold a scheme of its own.
+
+For a right-to-left subtree, wrap it in a `DirectionProvider`:
+
+```jsx
+import { DirectionProvider } from '@gamecrafters/base-ui';
+
+<DirectionProvider direction="rtl">{children}</DirectionProvider>;
+```
+
+The scripts the repository is worked with:
+
+| Script | What it does |
+| --- | --- |
+| `npm run storybook` | Runs Storybook on port 9000 |
+| `npm run storybook:build` | Builds the static Storybook |
+| `npm test` | Runs the Jest suites |
+| `npm run build` | Builds the package with Rollup into `build/` |
+| `npm run lint` | Lints `src` and `tests` with ESLint |
+| `npm run format` | Applies both the ESLint and Prettier fixes |
+| `npm run clean` | Removes the build output |
+
+_Every component has a page in Storybook, with a Playground story for its props and a Features section for what it can do._
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Roadmap
+
+See the [open issues](https://github.com/donaldturinglee/base-ui/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Run `npm run lint` and `npm test`
+4. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+5. Push to the Branch (`git push origin feature/AmazingFeature`)
+6. Open a Pull Request
+
+A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Jest suite and two Storybook files under `src/components/<component-name>`, with its stylesheet under `src/styles/components` and one line added to each of the two barrels.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Top contributors:
+
+<a href="https://github.com/donaldturinglee/base-ui/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=donaldturinglee/base-ui" alt="contrib.rocks image" />
+</a>
+
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Contact
+
+[![LinkedIn](https://go-skill-icons.vercel.app/api/icons?i=linkedin&theme=dark)](https://www.linkedin.com/in/donaldturinglee/) &nbsp;
+[![Discord](https://go-skill-icons.vercel.app/api/icons?i=discord&theme=dark)](https://discord.gg/YsteKRjrSH) &nbsp;
+[![Twitter](https://go-skill-icons.vercel.app/api/icons?i=x&theme=dark)](https://x.com/donaldturinglee) &nbsp;
+[![YouTube](https://go-skill-icons.vercel.app/api/icons?i=youtube&theme=dark)](https://www.youtube.com/channel/UCOHOUOsJjGPBlov7FuwPDbA) &nbsp;
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+[npm-shield]: https://img.shields.io/npm/v/%40gamecrafters%2Fbase-ui.svg?style=for-the-badge
+[npm-url]: https://www.npmjs.com/package/@gamecrafters/base-ui
+[contributors-shield]: https://img.shields.io/github/contributors/donaldturinglee/base-ui.svg?style=for-the-badge
+[contributors-url]: https://github.com/donaldturinglee/base-ui/graphs/contributors
+[last-commit-shield]: https://img.shields.io/github/last-commit/donaldturinglee/base-ui.svg?style=for-the-badge
+[last-commit-url]: https://github.com/donaldturinglee/base-ui/commits/main
+[license-shield]: https://img.shields.io/github/license/donaldturinglee/base-ui.svg?style=for-the-badge
+[license-url]: https://github.com/donaldturinglee/base-ui/blob/main/LICENSE
