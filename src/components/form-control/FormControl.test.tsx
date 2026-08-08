@@ -134,6 +134,21 @@ describe("FormControl", () => {
         expect(validation?.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
     });
 
+    it("stands the validation icon in a box of its own", () => {
+        const { container } = render(
+            <FormControl>
+                <FormControl.Label>Name</FormControl.Label>
+                <TextInput />
+                <FormControl.Validation variant="error">Not valid</FormControl.Validation>
+            </FormControl>,
+        );
+
+        const icon = container.querySelector('[data-component="FormControl.Validation.Icon"]');
+        expect(icon).toHaveClass("form-control-validation-icon");
+        expect(icon).toHaveAttribute("aria-hidden", "true");
+        expect(icon?.querySelector("svg")).not.toBeNull();
+    });
+
     it("disables the input", () => {
         render(
             <FormControl disabled>

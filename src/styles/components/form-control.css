@@ -101,10 +101,15 @@
         --leading-visual-size: var(--base-size-24);
     }
 
+    /* The line height goes with the size the message is set in, rather than being left to the
+       one the page happens to carry. Reading from the top keeps the icon against the first
+       line of a message that runs onto a second */
     .form-control-validation {
         display: flex;
+        align-items: flex-start;
         font-size: var(--text-body-size-small);
         font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
 
         & a {
             text-decoration: underline;
@@ -120,11 +125,18 @@
         color: var(--foreground-color-danger);
     }
 
+    /* The icon is held to the height of a line of the text beside it and stands in the middle
+       of it, so it reads against the first line rather than being nudged into place by hand */
     .form-control-validation-icon {
+        display: grid;
         flex-shrink: 0;
-        width: var(--base-size-12);
-        height: var(--base-size-12);
-        margin-top: var(--base-size-2);
+        place-items: center;
+        min-height: calc(var(--text-body-line-height-small) * var(--text-body-size-small));
         margin-inline-end: var(--base-size-4);
+
+        & > svg {
+            width: var(--base-size-12);
+            height: var(--base-size-12);
+        }
     }
 }

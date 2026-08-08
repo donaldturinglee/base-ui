@@ -40,7 +40,15 @@ function FormControlValidation(
             data-validation-status={variant}
             {...rest}
         >
-            <Icon className={classes.icon} aria-hidden="true" />
+            {/* The icon stands in a box of its own, so it is held to a line of the message
+                beside it rather than to the size the icon happens to come at */}
+            <span
+                className={classes.icon}
+                data-component="FormControl.Validation.Icon"
+                aria-hidden="true"
+            >
+                <Icon />
+            </span>
             {/* The id sits on the message rather than the row, so what describes the input is
                 the wording alone and not the icon beside it */}
             <span id={id ?? validationMessageId}>{children}</span>
