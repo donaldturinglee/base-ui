@@ -1,0 +1,85 @@
+@layer components {
+    /* The point a surface is drawn with to say what it was opened from. It is laid out against
+       whichever ancestor is positioned rather than standing in the flow, and it is stood clear of
+       whichever edge it was named for by the whole of its own box, so only the point shows past
+       that edge. Presses fall through it, since what is under a caret is the surface it belongs to
+       and there is nothing on the caret itself to reach for */
+    .caret {
+        position: absolute;
+        pointer-events: none;
+    }
+
+    /* The fill and the outline fall back to what an overlay is already drawn with, so a caret
+       given nothing carries the surface's own edge on around its point */
+    .caret-triangle {
+        fill: var(--caret-background, var(--overlay-background-color));
+    }
+
+    .caret-border {
+        fill: none;
+        stroke: var(--caret-border-color, var(--border-color-default));
+        stroke-width: var(--caret-border-width, var(--border-width-thin));
+    }
+
+    /* Which edge of the surface it stands against, and so which way it points */
+    .caret-top,
+    .caret-top-left,
+    .caret-top-right {
+        bottom: 100%;
+    }
+
+    .caret-bottom,
+    .caret-bottom-left,
+    .caret-bottom-right {
+        top: 100%;
+    }
+
+    .caret-left,
+    .caret-left-top,
+    .caret-left-bottom {
+        right: 100%;
+    }
+
+    .caret-right,
+    .caret-right-top,
+    .caret-right-bottom {
+        left: 100%;
+    }
+
+    /* Named for an edge alone, it stands halfway along it. The negative margin is half its own box
+       rather than half the surface, which is what pulls its point onto the middle of that edge
+       rather than its corner */
+    .caret-top,
+    .caret-bottom {
+        left: 50%;
+        margin-left: calc(-1 * var(--caret-size));
+    }
+
+    .caret-left,
+    .caret-right {
+        top: 50%;
+        margin-top: calc(-1 * var(--caret-size));
+    }
+
+    /* Named for a corner, it stands its own half-width in from that end of the edge instead, which
+       is near enough the corner to read as belonging to it without the point running past it */
+    .caret-top-left,
+    .caret-bottom-left {
+        left: var(--caret-size);
+    }
+
+    .caret-top-right,
+    .caret-bottom-right {
+        right: var(--caret-size);
+    }
+
+    .caret-left-top,
+    .caret-right-top {
+        top: var(--caret-size);
+    }
+
+    .caret-left-bottom,
+    .caret-right-bottom {
+        bottom: var(--caret-size);
+    }
+}
