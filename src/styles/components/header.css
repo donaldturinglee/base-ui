@@ -1,0 +1,49 @@
+@layer components {
+    /* The row runs across the top of the page and stands above whatever scrolls beneath it.
+       It is held to a single line, and scrolls sideways rather than wrapping once what it
+       holds no longer fits */
+    .header {
+        z-index: var(--z-index-sticky);
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow: auto;
+        padding: var(--base-size-16);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-title-line-height-large);
+        color: var(--header-foreground-color-default);
+        background-color: var(--header-background-color);
+    }
+
+    .header-item {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+        flex-wrap: nowrap;
+        margin-inline-end: var(--base-size-16);
+    }
+
+    /* The one item given the room the rest of the row leaves, which is what pushes
+       everything after it to the far end */
+    .header-item-full {
+        flex: auto;
+    }
+
+    /* The link is drawn in the brighter of the two colours the row is given, and takes the
+       dimmer one on hover, so it reads as the name of the site rather than as one more thing
+       standing in the row */
+    .header-link {
+        display: flex;
+        align-items: center;
+        color: var(--header-foreground-color-logo);
+        font-weight: var(--text-title-weight-large);
+        white-space: nowrap;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--header-foreground-color-default);
+        }
+    }
+}

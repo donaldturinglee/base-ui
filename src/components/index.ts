@@ -42,6 +42,7 @@ export * from "./file-upload";
 export * from "./filtered-action-list";
 export * from "./flow";
 export * from "./form-control";
+export * from "./header";
 export * from "./heading";
 export * from "./hidden";
 export * from "./highlight";
