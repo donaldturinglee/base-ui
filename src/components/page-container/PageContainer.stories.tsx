@@ -1,6 +1,5 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
 import { Heading } from "../heading";
-import { PageContent } from "../page-content";
 import { PageHeader } from "../page-header";
 import { Text } from "../text";
 import { PageContainer } from ".";
@@ -27,16 +26,14 @@ export const Default: StoryFn<typeof PageContainer> = () => (
                 </PageHeader.TitleArea>
             </PageHeader>
         </PageContainer.Region>
-        <PageContainer.Region>
-            <PageContent>
-                <PageContent.Section className={classes.section} aria-label="About webhooks">
-                    <Heading size="small">About webhooks</Heading>
-                    <Text>
-                        Webhooks let external services be notified when certain events happen. When
-                        the event fires, a POST request is sent to each of the URLs given.
-                    </Text>
-                </PageContent.Section>
-            </PageContent>
+        <PageContainer.Region as="main">
+            <section className={classes.section} aria-label="About webhooks">
+                <Heading size="small">About webhooks</Heading>
+                <Text>
+                    Webhooks let external services be notified when certain events happen. When the
+                    event fires, a POST request is sent to each of the URLs given.
+                </Text>
+            </section>
         </PageContainer.Region>
     </PageContainer>
 );
@@ -50,16 +47,14 @@ export const Playground: StoryFn<PageContainerProps> = (args) => (
                 </PageHeader.TitleArea>
             </PageHeader>
         </PageContainer.Region>
-        <PageContainer.Region>
-            <PageContent>
-                <PageContent.Section className={classes.section} aria-label="About webhooks">
-                    <Heading size="small">About webhooks</Heading>
-                    <Text>
-                        Webhooks let external services be notified when certain events happen. When
-                        the event fires, a POST request is sent to each of the URLs given.
-                    </Text>
-                </PageContent.Section>
-            </PageContent>
+        <PageContainer.Region as="main">
+            <section className={classes.section} aria-label="About webhooks">
+                <Heading size="small">About webhooks</Heading>
+                <Text>
+                    Webhooks let external services be notified when certain events happen. When the
+                    event fires, a POST request is sent to each of the URLs given.
+                </Text>
+            </section>
         </PageContainer.Region>
     </PageContainer>
 );

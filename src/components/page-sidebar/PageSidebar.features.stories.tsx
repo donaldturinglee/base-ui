@@ -12,12 +12,12 @@ import { Heading } from "../heading";
 import { IconButton } from "../icon-button";
 import { Link } from "../link";
 import { NavigationList } from "../navigation-list";
-import { PageContent } from "../page-content";
 import { Text } from "../text";
 import { PageSidebar } from ".";
 
 const classes = {
     page: "flex flex-row p-[var(--base-size-16)]",
+    content: "flex w-full min-w-0 flex-col gap-[var(--stack-gap-condensed)]",
     section: "flex flex-col gap-[var(--stack-gap-condensed)]",
     navigation: "flex list-none flex-col gap-[var(--base-size-4)] m-0 p-0",
     account: "flex flex-row items-center gap-[var(--stack-gap-condensed)]",
@@ -103,12 +103,12 @@ export const WithOwnNavigationLandmark: StoryFn<typeof PageSidebar> = () => (
 // the way around it
 export const AtTheEnd: StoryFn<typeof PageSidebar> = () => (
     <div className={classes.page}>
-        <PageContent width="medium" gap="condensed">
-            <PageContent.Section className={classes.section} aria-label="Webhooks">
+        <main className={classes.content}>
+            <section className={classes.section} aria-label="Webhooks">
                 <Heading size="small">Webhooks</Heading>
                 <Text>Webhooks let external services be notified when certain events happen.</Text>
-            </PageContent.Section>
-        </PageContent>
+            </section>
+        </main>
         <PageSidebar aria-label="About" position="end" hasBorder>
             <PageSidebar.Section aria-label="About">
                 <PageSidebar.Title as="h3">About</PageSidebar.Title>
@@ -226,14 +226,14 @@ export const BesideContent: StoryFn<typeof PageSidebar> = () => (
                 <PageSidebar.Navigation>{settings}</PageSidebar.Navigation>
             </PageSidebar.Content>
         </PageSidebar>
-        <PageContent width="large" padding="normal">
-            <PageContent.Section className={classes.section} aria-label="Profile">
+        <main className={classes.content}>
+            <section className={classes.section} aria-label="Profile">
                 <Heading size="small">Profile</Heading>
                 <Text>
                     Your profile is what everyone else sees of you. What is filled in here is shown
                     wherever your name is.
                 </Text>
-            </PageContent.Section>
-        </PageContent>
+            </section>
+        </main>
     </div>
 );
