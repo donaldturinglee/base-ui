@@ -499,7 +499,6 @@
   --foreground-color-black: var(--base-color-neutral-13); /** Pure black text */
   --foreground-color-on-emphasis: var(--base-color-neutral-0); /** Text color for use on emphasis backgrounds */
   --foreground-color-white: var(--base-color-neutral-0); /** Pure white text */
-  --page-header-background-color: var(--background-color-muted);
   --select-menu-border-color: var(--base-color-transparent);
   --selection-background-color: #0969da33; /** Background color for text selection highlights */
   --shadow-inset: inset 0 1px 0 0 #1f23280a; /** Inset shadow for recessed elements */
