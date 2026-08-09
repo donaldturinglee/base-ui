@@ -63,7 +63,6 @@ export * from "./meter";
 export * from "./navigation-list";
 export * from "./navigation-menu";
 export * from "./number-input";
-export * from "./page-footer";
 export * from "./page-header";
 export * from "./page-layout";
 export * from "./page-sidebar";
