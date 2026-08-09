@@ -65,7 +65,6 @@ export * from "./navigation-menu";
 export * from "./number-input";
 export * from "./page-header";
 export * from "./page-layout";
-export * from "./page-sidebar";
 export * from "./pagination";
 export * from "./password-input";
 export * from "./pin-input";
