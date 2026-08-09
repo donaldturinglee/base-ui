@@ -148,6 +148,9 @@ export type UsePaneWidthOptions = {
     constrainToViewport?: boolean;
     onResizeEnd?: (width: number) => void;
     currentWidth?: number;
+    // What the handle announces as it arrives and as the viewport moves. Give the handle the
+    // same one, so a reader hears the width put the same way throughout
+    formatValueText?: (valueNow: number) => string;
 };
 
 export type UsePaneWidthResult = {
@@ -177,5 +180,7 @@ export type DragHandleProps = {
     // What the drag holds still and contains while it runs
     dragTargetRef?: React.RefObject<HTMLElement | null>;
     contentWrapperRef?: React.RefObject<HTMLElement | null>;
+    // How the width is put to a reader, in place of "Pane width 296 pixels"
+    formatValueText?: (valueNow: number) => string;
     className?: string;
 };

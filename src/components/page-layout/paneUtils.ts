@@ -1,3 +1,4 @@
+import { canUseDOM } from "../../utilities/environment";
 import type { CustomWidthOptions, PaneWidth, PaneWidthValue } from "./PageLayout.types";
 
 // How far short of the viewport a pane is held. The wide figure leaves room for the wider
@@ -43,7 +44,7 @@ export const getDefaultPaneWidth = (width: PaneWidthValue) => {
 // Worked out from the viewport alone, rather than read back from the element, so a drag
 // never forces the browser to lay the page out again mid-move
 export const getMaxWidthDiffFromViewport = () => {
-    if (typeof window === "undefined") {
+    if (!canUseDOM) {
         return PANE_MAX_WIDTH_DIFF;
     }
 
@@ -52,13 +53,16 @@ export const getMaxWidthDiffFromViewport = () => {
         : PANE_MAX_WIDTH_DIFF;
 };
 
+// What the handle announces where the caller has not said it another way
 export const formatPaneValueText = (valueNow: number) => `Pane width ${valueNow} pixels`;
 
 // The handle's ARIA values are written straight to the element, so a drag does not ask
-// React to render on every pixel
+// React to render on every pixel. The formatter is passed in so that what a drag announces
+// matches what was rendered, whoever wrote it
 export const updateAriaValues = (
     handle: HTMLElement | null,
     values: { current?: number; min?: number; max?: number },
+    formatValueText: (valueNow: number) => string = formatPaneValueText,
 ) => {
     if (!handle) {
         return;
@@ -74,7 +78,7 @@ export const updateAriaValues = (
 
     if (values.current !== undefined) {
         handle.setAttribute("aria-valuenow", String(values.current));
-        handle.setAttribute("aria-valuetext", formatPaneValueText(values.current));
+        handle.setAttribute("aria-valuetext", formatValueText(values.current));
     }
 };
 

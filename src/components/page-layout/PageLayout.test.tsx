@@ -2,7 +2,7 @@ import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
 import "@testing-library/jest-dom/jest-globals";
-import { PageLayout } from ".";
+import { DragHandle, PageLayout } from ".";
 import {
     ARROW_KEY_STEP,
     defaultPaneWidth,
@@ -453,6 +453,37 @@ describe("PageLayout.Pane resizing", () => {
         fireEvent.keyDown(screen.getByRole("slider"), { key: "Enter" });
         expect(onResizeEnd).not.toHaveBeenCalled();
     });
+
+    it("finishes the drag even where the caller's own handler throws", () => {
+        const onResizeEnd = jest.fn(() => {
+            throw new Error("Nothing the pane can do about this");
+        });
+
+        renderResizable({ onResizeEnd, currentWidth: defaultPaneWidth.small });
+        const handle = screen.getByRole("slider");
+
+        fireEvent.keyDown(handle, { key: "ArrowRight" });
+
+        expect(() => fireEvent.keyUp(handle, { key: "ArrowRight" })).not.toThrow();
+        expect(onResizeEnd).toHaveBeenCalledWith(defaultPaneWidth.small + ARROW_KEY_STEP);
+    });
+});
+
+describe("PageLayout.DragHandle", () => {
+    it("says the width the way it was asked to", () => {
+        render(
+            <DragHandle
+                handleRef={React.createRef<HTMLDivElement>()}
+                onDragStart={() => {}}
+                onDrag={() => {}}
+                onDragEnd={() => {}}
+                aria-valuenow={300}
+                formatValueText={(value) => `${value} pixels across`}
+            />,
+        );
+
+        expect(screen.getByRole("slider")).toHaveAttribute("aria-valuetext", "300 pixels across");
+    });
 });
 
 describe("PageLayout.Sidebar", () => {
@@ -563,6 +594,14 @@ describe("pane width helpers", () => {
         expect(handle).toHaveAttribute("aria-valuemax", "500");
         expect(handle).toHaveAttribute("aria-valuenow", "300");
         expect(handle).toHaveAttribute("aria-valuetext", "Pane width 300 pixels");
+    });
+
+    it("says the width the way it was asked to", () => {
+        const handle = document.createElement("div");
+
+        updateAriaValues(handle, { current: 300 }, (value) => `${value} pixels across`);
+
+        expect(handle).toHaveAttribute("aria-valuetext", "300 pixels across");
     });
 
     it("does nothing without a handle to write to", () => {

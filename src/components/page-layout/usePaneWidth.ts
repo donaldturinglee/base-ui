@@ -26,6 +26,7 @@ export const usePaneWidth = ({
     constrainToViewport = false,
     onResizeEnd,
     currentWidth: controlledWidth,
+    formatValueText,
 }: UsePaneWidthOptions): UsePaneWidthResult => {
     const isCustomWidth = isCustomWidthOptions(width);
     const minPaneWidth = isCustomWidth ? parseInt(width.min, 10) : minWidth;
@@ -35,10 +36,12 @@ export const usePaneWidth = ({
     // The props a drag reads are held in refs, so the handlers stay the same between renders
     const widthStorageKeyRef = React.useRef(widthStorageKey);
     const onResizeEndRef = React.useRef(onResizeEnd);
+    const formatValueTextRef = React.useRef(formatValueText);
 
     useIsomorphicLayoutEffect(() => {
         widthStorageKeyRef.current = widthStorageKey;
         onResizeEndRef.current = onResizeEnd;
+        formatValueTextRef.current = formatValueText;
     });
 
     // Cached rather than read back from the element, since reading would force the browser
@@ -129,7 +132,13 @@ export const usePaneWidth = ({
             });
 
             if (onResizeEndRef.current) {
-                onResizeEndRef.current(rounded);
+                try {
+                    onResizeEndRef.current(rounded);
+                } catch {
+                    // The width is the pane's own business; whatever the caller does with it
+                    // is not worth losing the drag over
+                }
+
                 return;
             }
 
@@ -179,7 +188,11 @@ export const usePaneWidth = ({
                 paneRef.current?.style.setProperty("--pane-width", `${max}px`);
             }
 
-            updateAriaValues(handleRef.current, { max, current: currentWidthRef.current });
+            updateAriaValues(
+                handleRef.current,
+                { max, current: currentWidthRef.current },
+                formatValueTextRef.current,
+            );
 
             // A transition never bails out on an unchanged value, so the guard is here
             // rather than left to React
@@ -202,11 +215,15 @@ export const usePaneWidth = ({
 
         maxPaneWidthRef.current = initialMax;
         paneRef.current?.style.setProperty("--pane-max-width", `${initialMax}px`);
-        updateAriaValues(handleRef.current, {
-            min: minPaneWidth,
-            max: initialMax,
-            current: currentWidthRef.current,
-        });
+        updateAriaValues(
+            handleRef.current,
+            {
+                min: minPaneWidth,
+                max: initialMax,
+                current: currentWidthRef.current,
+            },
+            formatValueTextRef.current,
+        );
 
         React.startTransition(() => {
             setMaxPaneWidth(initialMax);

@@ -36,6 +36,7 @@ function DragHandle(props: DragHandleProps) {
         "aria-valuenow": ariaValueNow,
         dragTargetRef,
         contentWrapperRef,
+        formatValueText = formatPaneValueText,
     } = props;
 
     // The callbacks are held in refs so a fresh one does not have to re-bind the drag
@@ -125,6 +126,17 @@ function DragHandle(props: DragHandleProps) {
         }
     };
 
+    // Losing the pointer is what ends the drag, so this only keeps the release from being
+    // taken for anything else. A pointer let go outside a drag is none of the handle's
+    // business and is left alone
+    const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+        if (!isDragging.current) {
+            return;
+        }
+
+        event.preventDefault();
+    };
+
     // Letting the pointer go is what ends the drag, whether it was released or taken away
     const handleLostPointerCapture = () => {
         if (!isDragging.current) {
@@ -171,13 +183,11 @@ function DragHandle(props: DragHandleProps) {
             aria-valuemin={ariaValueMin}
             aria-valuemax={ariaValueMax}
             aria-valuenow={ariaValueNow}
-            aria-valuetext={
-                ariaValueNow === undefined ? undefined : formatPaneValueText(ariaValueNow)
-            }
+            aria-valuetext={ariaValueNow === undefined ? undefined : formatValueText(ariaValueNow)}
             className={classNames(classes.root, className)}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
-            onPointerUp={(event) => event.preventDefault()}
+            onPointerUp={handlePointerUp}
             onLostPointerCapture={handleLostPointerCapture}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
