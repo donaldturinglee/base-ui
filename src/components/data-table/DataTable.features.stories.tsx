@@ -1,10 +1,19 @@
 import * as React from "react";
 import type { StoryFn } from "@storybook/react-vite";
+import { SearchRegular } from "@gamecrafters/base-ui-icons";
 import { Button } from "../button";
+import { EmptyState } from "../empty-state";
 import { Label } from "../label";
 import { RelativeTime } from "../relative-time";
 import { DataTable, Table, createColumnHelper } from ".";
+import { getGridTemplate } from "./tableLayout";
 import type { Column } from "./DataTable.types";
+
+const classes = {
+    // The message stands across the whole row, in place of the cells a row of data would
+    // carry, and brings the room around itself
+    emptyCell: "col-span-full justify-center p-0",
+};
 
 type Repository = {
     id: number;
@@ -226,6 +235,39 @@ export const WithACellPlaceholder: StoryFn = () => (
                 },
             ]}
         />
+    </Table.Container>
+);
+
+// With An Empty State, standing in place of the rows the table came back without. The
+// headers are laid out by hand, since the message takes the room the data would have had
+export const WithAnEmptyState: StoryFn = () => (
+    <Table.Container>
+        <Table.Title as="h2" id="empty-repositories">
+            Repositories
+        </Table.Title>
+        <Table aria-labelledby="empty-repositories" gridTemplateColumns={getGridTemplate(columns)}>
+            <Table.Head>
+                <Table.Row>
+                    {columns.map((column) => (
+                        <Table.Header key={column.field}>
+                            {typeof column.header === "string" ? column.header : column.header()}
+                        </Table.Header>
+                    ))}
+                </Table.Row>
+            </Table.Head>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell className={classes.emptyCell} colSpan={columns.length}>
+                        <EmptyState
+                            icon={SearchRegular}
+                            title="No repositories found"
+                            description="Try a different search term, or clear your filters"
+                            actions={<Button>Clear filters</Button>}
+                        />
+                    </Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        </Table>
     </Table.Container>
 );
 
