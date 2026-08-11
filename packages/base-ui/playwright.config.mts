@@ -1,15 +1,14 @@
-import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
-
-// The suites sit inside the package whose Storybook they are driven against, so the server is
-// started from the directory above them rather than from a package named across the workspace
-const library = fileURLToPath(new URL("../", import.meta.url));
 
 // The same port `npm run storybook` serves on, so a Storybook already up is the one the suites
 // are run against rather than a second one beside it
 const baseURL = "http://localhost:9000";
 
 export default defineConfig({
+    // The suites sit in a directory of their own rather than beside this file, so they are named
+    // here instead of being picked up from wherever the config was found, which would take the
+    // unit suites under `src` along with them
+    testDir: "e2e",
     // Every suite drives a component of its own, so nothing is waiting on anything else
     fullyParallel: true,
     // A test left focused is a test the rest of the suite is not run beside, which is a
@@ -39,10 +38,11 @@ export default defineConfig({
         },
     ],
     // Storybook is what the components are served from, so it is brought up for the run and
-    // left alone where it is already up
+    // left alone where it is already up. It is started from this file's directory, which is the
+    // package the script it is named by belongs to, rather than from the directory the run was
+    // started from
     webServer: {
         command: "npm run storybook -- --ci --quiet",
-        cwd: library,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 180_000,

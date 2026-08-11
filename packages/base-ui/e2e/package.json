@@ -4,10 +4,10 @@
   "private": true,
   "description": "The end to end suites the components are driven through a browser by.",
   "scripts": {
-    "test:e2e": "playwright test",
-    "lint": "npx eslint \"**/*.ts\" \"**/*.mts\" --config ../../config/eslint/base.js",
+    "test:e2e": "playwright test --config ../playwright.config.mts",
+    "lint": "npx eslint \"**/*.ts\" --config ../../config/eslint/base.js",
     "lint:fix": "npm run lint -- --fix",
-    "prettier": "npx prettier \"**/*.ts\" \"**/*.mts\" --check",
+    "prettier": "npx prettier \"**/*.ts\" --check",
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run lint:fix && npm run prettier:fix"
   },
