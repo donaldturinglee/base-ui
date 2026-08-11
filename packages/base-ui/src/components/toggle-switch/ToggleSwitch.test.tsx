@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { ToggleSwitch, DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY } from ".";
 import type { ToggleSwitchProps } from "./ToggleSwitch.types";
 
@@ -126,7 +126,7 @@ describe("ToggleSwitch", () => {
     });
 
     it("calls onChange with the state the switch is moving to", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderSwitch({ onChange });
 
         fireEvent.click(button());
@@ -137,7 +137,7 @@ describe("ToggleSwitch", () => {
     });
 
     it("calls onClick when the switch is clicked", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         renderSwitch({ onClick });
         fireEvent.click(button());
         expect(onClick).toHaveBeenCalled();
@@ -161,14 +161,14 @@ describe("ToggleSwitch", () => {
     });
 
     it("calls onChange from a switch the caller is holding the state of", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderSwitch({ checked: false, onChange });
         fireEvent.click(button());
         expect(onChange).toHaveBeenCalledWith(true);
     });
 
     it("does not call onChange on arrival or when checked changes elsewhere", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         const { rerender } = renderSwitch({ checked: false, onChange });
         expect(onChange).not.toHaveBeenCalled();
 
@@ -187,7 +187,7 @@ describe("ToggleSwitch", () => {
     });
 
     it("cannot be used while it is disabled", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderSwitch({ disabled: true, onChange });
 
         expect(button()).toHaveAttribute("aria-disabled", "true");
@@ -208,7 +208,7 @@ describe("ToggleSwitch", () => {
     });
 
     it("cannot be used while it is loading", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderSwitch({ loading: true, onChange });
 
         expect(button()).toHaveAttribute("aria-disabled", "true");
@@ -259,11 +259,11 @@ describe("ToggleSwitch", () => {
 
 describe("ToggleSwitch loading label", () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it("says nothing while the switch is not loading", () => {
@@ -277,7 +277,7 @@ describe("ToggleSwitch loading label", () => {
         expect(live).toBeEmptyDOMElement();
 
         act(() => {
-            jest.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY - 1);
+            vi.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY - 1);
         });
         expect(live).toBeEmptyDOMElement();
     });
@@ -286,7 +286,7 @@ describe("ToggleSwitch loading label", () => {
         renderSwitch({ loading: true });
 
         act(() => {
-            jest.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY);
+            vi.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY);
         });
         expect(screen.getByRole("status")).toHaveTextContent("Loading");
     });
@@ -295,7 +295,7 @@ describe("ToggleSwitch loading label", () => {
         renderSwitch({ loading: true, loadingLabelDelay: 0 });
 
         act(() => {
-            jest.advanceTimersByTime(0);
+            vi.advanceTimersByTime(0);
         });
         expect(screen.getByRole("status")).toHaveTextContent("Loading");
     });
@@ -304,7 +304,7 @@ describe("ToggleSwitch loading label", () => {
         renderSwitch({ loading: true, loadingLabelDelay: 0, loadingLabel: "Enabling feature" });
 
         act(() => {
-            jest.advanceTimersByTime(0);
+            vi.advanceTimersByTime(0);
         });
         expect(screen.getByRole("status")).toHaveTextContent("Enabling feature");
     });
@@ -314,7 +314,7 @@ describe("ToggleSwitch loading label", () => {
         expect(button()).not.toHaveAttribute("aria-describedby");
 
         act(() => {
-            jest.advanceTimersByTime(0);
+            vi.advanceTimersByTime(0);
         });
         expect(button().getAttribute("aria-describedby")).toBe(
             screen.getByRole("status").getAttribute("id"),
@@ -329,7 +329,7 @@ describe("ToggleSwitch loading label", () => {
         });
 
         act(() => {
-            jest.advanceTimersByTime(0);
+            vi.advanceTimersByTime(0);
         });
         const describedBy = button().getAttribute("aria-describedby");
         expect(describedBy?.split(" ")).toHaveLength(2);
@@ -340,7 +340,7 @@ describe("ToggleSwitch loading label", () => {
         const { rerender } = renderSwitch({ loading: true, loadingLabelDelay: 0 });
 
         act(() => {
-            jest.advanceTimersByTime(0);
+            vi.advanceTimersByTime(0);
         });
         expect(screen.getByRole("status")).toHaveTextContent("Loading");
 
@@ -362,7 +362,7 @@ describe("ToggleSwitch loading label", () => {
         const { rerender } = renderSwitch({ loading: true });
 
         act(() => {
-            jest.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY / 2);
+            vi.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY / 2);
         });
         rerender(
             <>
@@ -371,7 +371,7 @@ describe("ToggleSwitch loading label", () => {
             </>,
         );
         act(() => {
-            jest.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY);
+            vi.advanceTimersByTime(DEFAULT_TOGGLE_SWITCH_LOADING_LABEL_DELAY);
         });
         expect(screen.getByRole("status")).toBeEmptyDOMElement();
     });

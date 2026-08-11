@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Button } from "../button";
 import { Drawer } from ".";
 import type { DrawerProps } from "./Drawer.types";
@@ -102,7 +102,7 @@ describe("Drawer", () => {
 
     describe("closing", () => {
         it("calls onClose with the close button gesture when the close button is pressed", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             renderDrawer({ onClose });
 
             fireEvent.click(button("Close"));
@@ -112,7 +112,7 @@ describe("Drawer", () => {
         });
 
         it("calls onClose when escape is pressed", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             renderDrawer({ onClose });
 
             fireEvent.keyDown(document, { key: "Escape" });
@@ -121,7 +121,7 @@ describe("Drawer", () => {
         });
 
         it("calls onClose when the backdrop is clicked", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             renderDrawer({ onClose });
 
             fireEvent.mouseDown(backdrop());
@@ -131,7 +131,7 @@ describe("Drawer", () => {
         });
 
         it("stays open where the click only ended on the backdrop", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             renderDrawer({ onClose });
 
             fireEvent.mouseDown(drawer());
@@ -141,8 +141,8 @@ describe("Drawer", () => {
         });
 
         it("closes only the innermost layer when escape is pressed", () => {
-            const onCloseOuter = jest.fn();
-            const onCloseInner = jest.fn();
+            const onCloseOuter = vi.fn();
+            const onCloseInner = vi.fn();
 
             const Fixture = () => {
                 const [isInnerOpen, setIsInnerOpen] = React.useState(false);
@@ -278,7 +278,7 @@ describe("Drawer", () => {
         });
 
         it("leaves escape for whatever is behind it to answer as well", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             renderDrawer({ modal: false, onClose });
 
             // fireEvent hands back false where the event was taken
@@ -289,7 +289,7 @@ describe("Drawer", () => {
         });
 
         it("stays open when the layer it is laid out in is clicked", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             renderDrawer({ modal: false, onClose });
 
             fireEvent.mouseDown(backdrop());
@@ -404,7 +404,7 @@ describe("Drawer", () => {
         });
 
         it("closes from a close button standing in a header of the caller's own", () => {
-            const onClose = jest.fn();
+            const onClose = vi.fn();
             render(
                 <Drawer title="Filters" onClose={onClose}>
                     <Drawer.Header>

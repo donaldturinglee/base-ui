@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { PasswordInput } from ".";
 import type { PasswordInputProps } from "./PasswordInput.types";
 
@@ -109,7 +109,7 @@ describe("PasswordInput", () => {
 
     describe("where the caller keeps hold of the toggle", () => {
         it("shows what it is told to rather than what was pressed", () => {
-            const onVisibilityChange = jest.fn();
+            const onVisibilityChange = vi.fn();
             renderInput({ visible: false, onVisibilityChange });
 
             fireEvent.click(toggle());
@@ -124,7 +124,7 @@ describe("PasswordInput", () => {
         });
 
         it("reports the change either way", () => {
-            const onVisibilityChange = jest.fn();
+            const onVisibilityChange = vi.fn();
             renderInput({ onVisibilityChange });
 
             fireEvent.click(toggle());
@@ -155,7 +155,7 @@ describe("PasswordInput", () => {
     });
 
     it("reports what is typed into it", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderInput({ onChange });
 
         fireEvent.change(field(), { target: { value: "hunter2" } });

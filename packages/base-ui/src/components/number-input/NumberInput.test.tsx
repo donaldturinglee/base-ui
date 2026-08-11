@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { NumberInput } from ".";
 import { clampToRange, stepValue } from "./numberValue";
 import type { NumberInputProps } from "./NumberInput.types";
@@ -65,7 +65,7 @@ describe("NumberInput", () => {
 
     describe("typing into the field", () => {
         it("reports the number that was typed", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ onChange });
 
             fireEvent.change(field(), { target: { value: "7" } });
@@ -74,7 +74,7 @@ describe("NumberInput", () => {
         });
 
         it("reports nothing at all for a field that has been emptied", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ defaultValue: 3, onChange });
 
             fireEvent.change(field(), { target: { value: "" } });
@@ -82,7 +82,7 @@ describe("NumberInput", () => {
         });
 
         it("hands the event over alongside the number", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ onChange });
 
             fireEvent.change(field(), { target: { value: "7" } });
@@ -113,7 +113,7 @@ describe("NumberInput", () => {
         });
 
         it("reports the number it landed on, with no event to report", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ defaultValue: 3, onChange });
 
             fireEvent.click(increment());
@@ -193,7 +193,7 @@ describe("NumberInput", () => {
         });
 
         it("reports where it would step to without moving there itself", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ value: 3, onChange });
 
             fireEvent.click(increment());

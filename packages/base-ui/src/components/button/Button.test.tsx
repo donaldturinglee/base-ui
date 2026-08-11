@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import Button from "./Button";
 
 const Icon = () => <svg data-testid="icon" />;
@@ -156,7 +156,7 @@ describe("Button", () => {
     });
 
     it("does not fire a click while loading", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(
             <Button loading onClick={onClick}>
                 Save
@@ -167,7 +167,7 @@ describe("Button", () => {
     });
 
     it("fires a click when it is not loading", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(
             <Button loading={false} onClick={onClick}>
                 Save

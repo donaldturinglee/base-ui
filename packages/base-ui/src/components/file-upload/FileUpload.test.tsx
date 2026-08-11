@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { FileUpload } from ".";
 import { formatFileSize, isFileAccepted, triageFiles } from "./files";
 
@@ -131,7 +131,7 @@ describe("FileUpload", () => {
 
     describe("choosing files", () => {
         it("hands over what was picked", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             render(<FileUpload data-testid="file-upload" multiple onSelect={onSelect} />);
 
             const files = [makeFile("one.txt"), makeFile("two.txt")];
@@ -142,7 +142,7 @@ describe("FileUpload", () => {
         });
 
         it("hands over what was dropped", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             render(<FileUpload data-testid="file-upload" multiple onSelect={onSelect} />);
 
             const files = [makeFile("one.txt")];
@@ -152,8 +152,8 @@ describe("FileUpload", () => {
         });
 
         it("turns away a file that is not one of the types it takes", () => {
-            const onSelect = jest.fn();
-            const onReject = jest.fn();
+            const onSelect = vi.fn();
+            const onReject = vi.fn();
             render(
                 <FileUpload
                     data-testid="file-upload"
@@ -171,8 +171,8 @@ describe("FileUpload", () => {
         });
 
         it("turns away a file that weighs more than it allows", () => {
-            const onSelect = jest.fn();
-            const onReject = jest.fn();
+            const onSelect = vi.fn();
+            const onReject = vi.fn();
             render(
                 <FileUpload
                     data-testid="file-upload"
@@ -191,8 +191,8 @@ describe("FileUpload", () => {
         });
 
         it("keeps the first file where it only takes one at a time", () => {
-            const onSelect = jest.fn();
-            const onReject = jest.fn();
+            const onSelect = vi.fn();
+            const onReject = vi.fn();
             render(
                 <FileUpload data-testid="file-upload" onSelect={onSelect} onReject={onReject} />,
             );
@@ -206,7 +206,7 @@ describe("FileUpload", () => {
         });
 
         it("says nothing where nothing was taken", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             render(<FileUpload data-testid="file-upload" accept="image/*" onSelect={onSelect} />);
 
             pick([makeFile("notes.txt")]);
@@ -257,7 +257,7 @@ describe("FileUpload", () => {
         });
 
         it("takes nothing that is dropped on it", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             render(<FileUpload data-testid="file-upload" disabled onSelect={onSelect} />);
 
             fireEvent.dragEnter(zone());
@@ -340,7 +340,7 @@ describe("FileUpload.Item", () => {
     });
 
     it("takes the file back out", () => {
-        const onRemove = jest.fn();
+        const onRemove = vi.fn();
         renderItem(<FileUpload.Item name="notes.txt" onRemove={onRemove} />);
 
         fireEvent.click(screen.getByRole("button", { name: "Remove notes.txt" }));

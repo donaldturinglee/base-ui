@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Button } from "../button";
 import { LinkButton } from "../link-button";
 import { ButtonGroup } from ".";
@@ -258,8 +258,8 @@ describe("ButtonGroup as a toolbar", () => {
     });
 
     it("calls the handlers it was given", () => {
-        const onKeyDown = jest.fn();
-        const onFocus = jest.fn();
+        const onKeyDown = vi.fn();
+        const onFocus = vi.fn();
         render(
             <ButtonGroup role="toolbar" onKeyDown={onKeyDown} onFocus={onFocus}>
                 <Button>One</Button>

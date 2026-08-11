@@ -1,0 +1,35 @@
+{
+  "name": "@gamecrafters/config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The configuration the packages of the workspace are checked under.",
+  "scripts": {
+    "lint": "npx eslint vitest",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier vitest --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run lint:fix && npm run prettier:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donaldturinglee/base-ui.git",
+    "directory": "packages/config"
+  },
+  "keywords": [
+    "base-ui",
+    "config",
+    "vitest"
+  ],
+  "author": "donaldturinglee <donaldturinglee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donaldturinglee/base-ui/issues"
+  },
+  "homepage": "https://github.com/donaldturinglee/base-ui#readme",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "jsdom": "^26.1.0",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeAll, afterAll, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeAll, afterAll, afterEach, vi, type Mock } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import dayjs from "dayjs";
 import { DatePicker } from ".";
 import type { CalendarRange } from "../calendar";
@@ -24,23 +24,8 @@ const TODAY = "2026-06-15";
 // Only the clock is held still. Faking the timers themselves as well would leave React and the
 // testing library waiting on ticks that never come
 const CLOCK_ONLY = {
-    doNotFake: [
-        "cancelAnimationFrame",
-        "cancelIdleCallback",
-        "clearImmediate",
-        "clearInterval",
-        "clearTimeout",
-        "hrtime",
-        "nextTick",
-        "performance",
-        "queueMicrotask",
-        "requestAnimationFrame",
-        "requestIdleCallback",
-        "setImmediate",
-        "setInterval",
-        "setTimeout",
-    ],
-} as Parameters<typeof jest.useFakeTimers>[0];
+    toFake: ["Date"],
+} as Parameters<typeof vi.useFakeTimers>[0];
 
 const originalResizeObserver = window.ResizeObserver;
 
@@ -63,8 +48,8 @@ describe("DatePicker", () => {
     // The clock is held still once for the whole suite rather than put up and taken down
     // around every test, since nothing here ever moves it on
     beforeAll(() => {
-        jest.useFakeTimers(CLOCK_ONLY);
-        jest.setSystemTime(new Date(`${TODAY}T12:00:00`));
+        vi.useFakeTimers(CLOCK_ONLY);
+        vi.setSystemTime(new Date(`${TODAY}T12:00:00`));
 
         // jsdom has no ResizeObserver, and the overlay watches its own size so that it stays
         // against the field as it grows
@@ -76,7 +61,7 @@ describe("DatePicker", () => {
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
         window.ResizeObserver = originalResizeObserver;
     });
 
@@ -121,7 +106,7 @@ describe("DatePicker", () => {
 
     describe("typing a date", () => {
         it("takes what was typed once the whole of it reads as a date", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-20" } });
@@ -134,7 +119,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves half a date alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06" } });
@@ -144,7 +129,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves something that is not a date at all alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "next tuesday" } });
@@ -153,7 +138,7 @@ describe("DatePicker", () => {
         });
 
         it("reads what was typed against the form it was asked for", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ format: "DD/MM/YYYY", onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-20" } });
@@ -164,7 +149,7 @@ describe("DatePicker", () => {
         });
 
         it("hands back nothing where the field is emptied", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ defaultValue: "2026-06-20", onChange });
 
             fireEvent.change(field(), { target: { value: "" } });
@@ -183,7 +168,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves a day the caller is holding where it is", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ value: "2026-06-20", onChange });
 
             fireEvent.change(field(), { target: { value: "2026-07-04" } });
@@ -194,7 +179,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves a day outside the range it was given alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ min: "2026-06-10", max: "2026-06-30", onChange });
 
             fireEvent.change(field(), { target: { value: "2026-07-04" } });
@@ -269,7 +254,7 @@ describe("DatePicker", () => {
         });
 
         it("writes the day that was picked into the field and closes", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderPicker({ defaultOpen: true, onChange });
 
             fireEvent.click(day("2026-06-11") as HTMLButtonElement);
@@ -304,7 +289,7 @@ describe("DatePicker", () => {
         });
 
         it("tells the caller what opened and closed it", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             renderPicker({ onOpenChange });
 
             fireEvent.click(calendarButton());
@@ -315,7 +300,7 @@ describe("DatePicker", () => {
         });
 
         it("stays as the caller is holding it", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             renderPicker({ open: false, onOpenChange });
 
             fireEvent.click(calendarButton());
@@ -328,7 +313,7 @@ describe("DatePicker", () => {
     describe("picking a stretch of days", () => {
         // The two ends of the range as the picker hands them back, written the one way so that
         // a whole range can be read at a glance
-        const handedBack = (onChange: jest.Mock, call = 0) => {
+        const handedBack = (onChange: Mock, call = 0) => {
             const range = onChange.mock.calls[call][0] as CalendarRange;
 
             return {
@@ -353,7 +338,7 @@ describe("DatePicker", () => {
         });
 
         it("stands open on the first day being picked and closes on the second", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ defaultOpen: true, onChange });
 
             fireEvent.click(day("2026-06-10") as HTMLButtonElement);
@@ -369,7 +354,7 @@ describe("DatePicker", () => {
         });
 
         it("lets go of the day a stretch was started on when it is pressed again", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ defaultOpen: true, onChange });
 
             fireEvent.click(day("2026-06-10") as HTMLButtonElement);
@@ -394,7 +379,7 @@ describe("DatePicker", () => {
         });
 
         it("takes both ends typed either side of the separator", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-10 - 2026-06-14" } });
@@ -403,7 +388,7 @@ describe("DatePicker", () => {
         });
 
         it("takes one end on its own as a stretch still being picked", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-10" } });
@@ -412,7 +397,7 @@ describe("DatePicker", () => {
         });
 
         it("puts the two ends the right way round where they were typed backwards", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-14 - 2026-06-10" } });
@@ -421,7 +406,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves half a stretch alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-10 - 2026-06" } });
@@ -430,7 +415,7 @@ describe("DatePicker", () => {
         });
 
         it("hands back nothing at either end where the field is emptied", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({
                 defaultValue: { from: "2026-06-10", to: "2026-06-14" },
                 onChange,
@@ -452,7 +437,7 @@ describe("DatePicker", () => {
         });
 
         it("takes a separator of the caller's own", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ rangeSeparator: " to ", onChange });
 
             expect(field()).toHaveAttribute("placeholder", "YYYY-MM-DD to YYYY-MM-DD");
@@ -463,7 +448,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves an end outside the range it was given alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({ min: "2026-06-10", max: "2026-06-30", onChange });
 
             fireEvent.change(field(), { target: { value: "2026-06-10 - 2026-07-04" } });
@@ -472,7 +457,7 @@ describe("DatePicker", () => {
         });
 
         it("leaves a stretch the caller is holding where it is", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangePicker({
                 value: { from: "2026-06-10", to: "2026-06-14" },
                 defaultOpen: true,

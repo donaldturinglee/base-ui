@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { BookRegular, PersonRegular } from "@gamecrafters/base-ui-icons";
 import { NavigationList } from ".";
 
@@ -364,7 +364,7 @@ describe("NavigationList", () => {
         });
 
         it("leaves the items to a renderer of the caller's own", () => {
-            const renderItem = jest.fn((item: { text: string }) => (
+            const renderItem = vi.fn((item: { text: string }) => (
                 <li key={item.text}>{item.text} (custom)</li>
             ));
 

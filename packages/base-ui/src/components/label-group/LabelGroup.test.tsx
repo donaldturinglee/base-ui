@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Label } from "../label";
 import { LabelGroup } from ".";
 import type { LabelGroupProps } from "./LabelGroup.types";

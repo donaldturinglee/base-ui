@@ -163,6 +163,15 @@ storybook-static/
 
 .turbo/
 
+### Playwright ###
+# gitignore template for Playwright, the browser the end to end suites are driven through
+# website: https://playwright.dev/
+
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
 ### base-ui ###
 build/
 stats.html

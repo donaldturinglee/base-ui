@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Image } from ".";
 import type { ImageBorderRadius, ImageFit } from "./Image.types";
 
@@ -145,7 +145,7 @@ describe("Image", () => {
     });
 
     it("still tells the caller that the source failed", () => {
-        const onError = jest.fn();
+        const onError = vi.fn();
         render(<Image src={SOURCE} alt="A photograph" fallbackSrc={FALLBACK} onError={onError} />);
         fireEvent.error(image());
         expect(onError).toHaveBeenCalledTimes(1);

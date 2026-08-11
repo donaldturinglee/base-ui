@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { MoreHorizontalRegular } from "@gamecrafters/base-ui-icons";
 import { ActionList } from "../action-list";
 import { IconButton } from "../icon-button";
@@ -84,7 +84,7 @@ describe("ActionMenu", () => {
     });
 
     it("closes once an item is picked", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(
             <ActionMenu>
                 <ActionMenu.Button>Actions</ActionMenu.Button>
@@ -209,7 +209,7 @@ describe("ActionMenu", () => {
     });
 
     it("still calls the anchor's own handlers", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(
             <ActionMenu>
                 <ActionMenu.Button onClick={onClick}>Actions</ActionMenu.Button>
@@ -228,7 +228,7 @@ describe("ActionMenu", () => {
     });
 
     it("takes the open state from the caller where it is given one", () => {
-        const onOpenChange = jest.fn();
+        const onOpenChange = vi.fn();
         renderMenu({ open: false, onOpenChange });
 
         fireEvent.click(anchor());

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import Radio from "./Radio";
 
 describe("Radio", () => {
@@ -27,7 +27,7 @@ describe("Radio", () => {
     });
 
     it("reports a change", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(<Radio aria-label="Choice" name="choices" value="one" onChange={onChange} />);
 
         fireEvent.click(screen.getByRole("radio"));

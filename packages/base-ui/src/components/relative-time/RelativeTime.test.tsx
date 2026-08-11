@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { RelativeTime, formatRelativeTime } from ".";
 import type { RelativeTimeSettings } from "./RelativeTime.types";
 
@@ -157,12 +157,12 @@ describe("formatRelativeTime", () => {
 
 describe("RelativeTime", () => {
     beforeEach(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(NOW);
+        vi.useFakeTimers();
+        vi.setSystemTime(NOW);
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it("renders a time element by default", () => {
@@ -260,12 +260,12 @@ describe("RelativeTime", () => {
         expect(screen.getByTestId("time")).toHaveTextContent("58 seconds ago");
 
         act(() => {
-            jest.advanceTimersByTime(SECOND);
+            vi.advanceTimersByTime(SECOND);
         });
         expect(screen.getByTestId("time")).toHaveTextContent("59 seconds ago");
 
         act(() => {
-            jest.advanceTimersByTime(SECOND);
+            vi.advanceTimersByTime(SECOND);
         });
         expect(screen.getByTestId("time")).toHaveTextContent("1 minute ago");
     });
@@ -275,7 +275,7 @@ describe("RelativeTime", () => {
         expect(screen.getByTestId("time")).toHaveTextContent("on Jan 7");
 
         act(() => {
-            jest.advanceTimersByTime(DAY);
+            vi.advanceTimersByTime(DAY);
         });
         expect(screen.getByTestId("time")).toHaveTextContent("on Jan 7");
     });

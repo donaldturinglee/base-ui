@@ -77,7 +77,11 @@ To work on the library itself:
    ```sh
    npm run storybook
    ```
-4. Working from a fork, change the git remote url to avoid accidental pushes to the base project
+4. Install the browsers the end to end suites are driven through, which is only needed once
+   ```sh
+   npx playwright install chromium
+   ```
+5. Working from a fork, change the git remote url to avoid accidental pushes to the base project
    ```sh
    git remote set-url origin https://github.com/your_username/base-ui.git
    git remote -v # confirm the changes
@@ -125,13 +129,17 @@ import { DirectionProvider } from '@gamecrafters/base-ui';
 
 The repository is an npm workspace. The library itself lives in `packages/base-ui`, and the root
 holds only what is shared across packages: the ESLint and Prettier configuration, and the Turbo
-pipeline the tasks are run through.
+pipeline the tasks are run through. Configuration that belongs to a tool rather than to the root
+lives in `packages/config`, and the end to end suites stand beside the packages rather than
+inside one, since what they drive is the library as a reader meets it. Neither is published.
 
 ```text
 package.json           the workspace root, private and never published
 turbo.json             the task pipeline, and what each task caches
 eslint.config.mjs      shared by every package
 packages/base-ui/      @gamecrafters/base-ui, the published package
+packages/config/       @gamecrafters/config, the config the packages are checked under
+e2e/                   @gamecrafters/e2e, the suites driven through a browser
 ```
 
 The scripts are run from the root and reach the packages through Turbo, which caches a task
@@ -141,9 +149,10 @@ against its inputs so an unchanged package is not built or tested twice:
 | --- | --- |
 | `npm run storybook` | Runs Storybook on port 9000 |
 | `npm run storybook:build` | Builds the static Storybook |
-| `npm test` | Runs the Jest suites |
-| `npm run build` | Builds the package with Rollup into `packages/base-ui/build/` |
-| `npm run lint` | Lints each package's `src` and `tests` with ESLint |
+| `npm test` | Runs the Vitest suites |
+| `npm run test:e2e` | Runs the Playwright suites against Storybook |
+| `npm run build` | Builds the package with Rolldown into `packages/base-ui/build/` |
+| `npm run lint` | Lints each package's own sources with ESLint |
 | `npm run format` | Applies both the ESLint and Prettier fixes |
 | `npm run clean` | Removes the build output |
 
@@ -173,12 +182,17 @@ Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Run `npm run lint` and `npm test`
+3. Run `npm run lint`, `npm test` and `npm run test:e2e`
 4. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 5. Push to the Branch (`git push origin feature/AmazingFeature`)
 6. Open a Pull Request
 
-A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Jest suite and two Storybook files under `packages/base-ui/src/components/<component-name>`, with its stylesheet under `packages/base-ui/src/styles/components` and one line added to each of the two barrels.
+A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Vitest suite and two Storybook files under `packages/base-ui/src/components/<component-name>`, with its stylesheet under `packages/base-ui/src/styles/components` and one line added to each of the two barrels.
+
+A Vitest suite is where a component is held to what it draws and what it says, and it is what
+every component carries. A Playwright suite under `e2e` is for the behaviour only a browser can
+settle — where focus lands, what the top layer holds, what colour the cascade came out with —
+and is added where a component has some.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

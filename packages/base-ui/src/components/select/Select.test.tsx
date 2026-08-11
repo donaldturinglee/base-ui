@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Select } from ".";
 
 const choices = (
@@ -135,7 +135,7 @@ describe("Select", () => {
     });
 
     it("reports a change when an option is picked", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <Select aria-label="Choice" onChange={onChange}>
                 {choices}

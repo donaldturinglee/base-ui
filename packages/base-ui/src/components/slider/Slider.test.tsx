@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Slider } from ".";
 import type { SliderSize } from "./Slider.types";
 
@@ -78,7 +78,7 @@ describe("Slider", () => {
 
     describe("moving it", () => {
         it("reports the value it has moved to, and the event that moved it", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<Slider aria-label="Volume" onChange={onChange} />);
 
             moveTo(40);
@@ -95,7 +95,7 @@ describe("Slider", () => {
         });
 
         it("leaves a slider the caller is holding the value of where it was", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<Slider aria-label="Volume" value={30} onChange={onChange} />);
 
             moveTo(40);

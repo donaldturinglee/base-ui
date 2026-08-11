@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { TableOfContents, useTableOfContentsActiveId } from ".";
 import type { UseTableOfContentsActiveIdOptions } from "./TableOfContents.types";
 
@@ -202,7 +202,7 @@ describe("TableOfContents.Item", () => {
     });
 
     it("answers a press", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
 
         render(
             <TableOfContents.Item href="#introduction" onClick={onClick}>
@@ -306,7 +306,7 @@ describe("TableOfContents.Group", () => {
     });
 
     it("answers a press on the label rather than on everything under it", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
 
         render(
             <TableOfContents.Group
@@ -326,7 +326,7 @@ describe("TableOfContents.Group", () => {
     });
 
     it("leaves a press off a label that leads nowhere", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
 
         render(
             <TableOfContents.Group label="Getting started" onClick={onClick}>
@@ -424,14 +424,14 @@ describe("useTableOfContentsActiveId", () => {
             disconnect() {}
         } as unknown as typeof IntersectionObserver;
 
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
         act(() => {
-            jest.runOnlyPendingTimers();
+            vi.runOnlyPendingTimers();
         });
-        jest.useRealTimers();
+        vi.useRealTimers();
 
         window.IntersectionObserver = originalIntersectionObserver;
         window.location.hash = "";
@@ -496,7 +496,7 @@ describe("useTableOfContentsActiveId", () => {
         fireEvent.click(link("usage"));
 
         act(() => {
-            jest.runOnlyPendingTimers();
+            vi.runOnlyPendingTimers();
         });
 
         intersect([{ id: "introduction", isIntersecting: true }]);

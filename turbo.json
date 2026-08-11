@@ -2,7 +2,8 @@
     "$schema": "https://turborepo.com/schema.json",
     "globalDependencies": [
         "eslint.config.mjs",
-        ".prettierrc"
+        ".prettierrc",
+        "packages/config/**"
     ],
     "tasks": {
         "build": {
@@ -16,6 +17,11 @@
         "test": {
             "dependsOn": [],
             "outputs": []
+        },
+        "test:e2e": {
+            "dependsOn": [],
+            "outputs": [],
+            "cache": false
         },
         "lint": {
             "dependsOn": [],

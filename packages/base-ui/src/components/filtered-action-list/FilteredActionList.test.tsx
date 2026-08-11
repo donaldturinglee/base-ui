@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen, act } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { PersonRegular } from "@gamecrafters/base-ui-icons";
 import { FilteredActionList } from ".";
 import type {
@@ -113,7 +113,7 @@ describe("FilteredActionList", () => {
     });
 
     it("tells the caller what was typed into the field", () => {
-        const onFilterChange = jest.fn();
+        const onFilterChange = vi.fn();
         renderList({ onFilterChange });
 
         fireEvent.change(field(), { target: { value: "octo" } });
@@ -146,7 +146,7 @@ describe("FilteredActionList", () => {
     });
 
     it("takes the first item when enter is pressed in the field", () => {
-        const onAction = jest.fn();
+        const onAction = vi.fn();
         renderList({ items: peopleItems.map((item) => ({ ...item, onAction })) });
 
         fireEvent.keyDown(field(), { key: "Enter" });
@@ -155,7 +155,7 @@ describe("FilteredActionList", () => {
     });
 
     it("calls back with the item that was picked", () => {
-        const onAction = jest.fn();
+        const onAction = vi.fn();
         renderList({ items: peopleItems.map((item) => ({ ...item, onAction })) });
 
         fireEvent.click(options()[2]);
@@ -280,7 +280,7 @@ describe("FilteredActionList", () => {
     });
 
     it("shows a box that picks every item at once, where the caller asks for one", () => {
-        const onSelectAllChange = jest.fn();
+        const onSelectAllChange = vi.fn();
         renderList({ selectionVariant: "multiple", onSelectAllChange });
 
         const selectAll = screen.getByLabelText("Select all");
@@ -324,15 +324,14 @@ describe("FilteredActionList", () => {
     });
 
     it("hands the caller the element the list is drawn as", () => {
-        const onListContainerRefChanged = jest.fn();
+        const onListContainerRefChanged = vi.fn();
         renderList({ onListContainerRefChanged });
 
         expect(onListContainerRefChanged).toHaveBeenCalledWith(list());
     });
 
     it("hands the caller the ref the field is held by", () => {
-        const onInputRefChanged =
-            jest.fn<(ref: React.RefObject<HTMLInputElement | null>) => void>();
+        const onInputRefChanged = vi.fn<(ref: React.RefObject<HTMLInputElement | null>) => void>();
         renderList({ onInputRefChanged });
 
         expect(onInputRefChanged.mock.calls[0][0].current).toBe(field());
@@ -346,11 +345,11 @@ describe("FilteredActionList", () => {
 
     describe("announcements", () => {
         beforeEach(() => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         // The field holds a spinner of its own, which is read as a status too, so the live
@@ -362,7 +361,7 @@ describe("FilteredActionList", () => {
             renderList();
 
             act(() => {
-                jest.runAllTimers();
+                vi.runAllTimers();
             });
 
             expect(announcement()).toBeEmptyDOMElement();
@@ -380,7 +379,7 @@ describe("FilteredActionList", () => {
             );
 
             act(() => {
-                jest.runAllTimers();
+                vi.runAllTimers();
             });
 
             expect(announcement()).toHaveTextContent("2 items available, 0 selected.");
@@ -400,7 +399,7 @@ describe("FilteredActionList", () => {
             );
 
             act(() => {
-                jest.runAllTimers();
+                vi.runAllTimers();
             });
 
             expect(announcement()).toHaveTextContent("No people found. Try another name.");
@@ -419,7 +418,7 @@ describe("FilteredActionList", () => {
             );
 
             act(() => {
-                jest.runAllTimers();
+                vi.runAllTimers();
             });
 
             expect(announcement()).toBeEmptyDOMElement();

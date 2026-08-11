@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { RadioGroup } from "../radio-group";
 import { RadioCard } from ".";
 import type { RadioCardProps, RadioCardValidationStatus } from "./RadioCard.types";
@@ -80,7 +80,7 @@ describe("RadioCard", () => {
         });
 
         it("reports a change", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCard({ onChange });
 
             fireEvent.click(control());
@@ -249,7 +249,7 @@ describe("RadioCard", () => {
         });
 
         it("reports the card that has just been picked to the group", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
 
             render(
                 <RadioGroup name="plan" onChange={onChange}>

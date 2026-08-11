@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Carousel } from ".";
 import type { CarouselProps } from "./Carousel.types";
 
@@ -97,7 +97,7 @@ describe("Carousel", () => {
         });
 
         it("says which slide it has moved to and what moved it", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCarousel({ onChange });
 
             fireEvent.click(button("Next slide"));
@@ -106,7 +106,7 @@ describe("Carousel", () => {
         });
 
         it("goes straight to a slide from its dot", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCarousel({ onChange });
 
             fireEvent.click(button("Slide 3"));
@@ -151,7 +151,7 @@ describe("Carousel", () => {
         });
 
         it("asks to be moved rather than moving itself", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCarousel({ index: 0, onChange });
 
             fireEvent.click(button("Next slide"));
@@ -235,19 +235,19 @@ describe("Carousel", () => {
 
     describe("moving on by itself", () => {
         beforeEach(() => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         it("moves on once the slide has been held long enough", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCarousel({ autoPlay: true, interval: 1000, loop: true, onChange });
 
             act(() => {
-                jest.advanceTimersByTime(1000);
+                vi.advanceTimersByTime(1000);
             });
 
             expect(onChange).toHaveBeenCalledWith(1, "auto");
@@ -258,7 +258,7 @@ describe("Carousel", () => {
             renderCarousel({ interval: 1000, loop: true });
 
             act(() => {
-                jest.advanceTimersByTime(5000);
+                vi.advanceTimersByTime(5000);
             });
 
             expect(carousel()).toHaveAttribute("data-index", "0");
@@ -268,7 +268,7 @@ describe("Carousel", () => {
             renderCarousel({ autoPlay: true, interval: 1000, defaultIndex: 2 });
 
             act(() => {
-                jest.advanceTimersByTime(3000);
+                vi.advanceTimersByTime(3000);
             });
 
             expect(carousel()).toHaveAttribute("data-index", "2");
@@ -281,7 +281,7 @@ describe("Carousel", () => {
             fireEvent.mouseEnter(carousel());
 
             act(() => {
-                jest.advanceTimersByTime(3000);
+                vi.advanceTimersByTime(3000);
             });
 
             expect(carousel()).toHaveAttribute("data-index", "0");
@@ -289,7 +289,7 @@ describe("Carousel", () => {
             fireEvent.mouseLeave(carousel());
 
             act(() => {
-                jest.advanceTimersByTime(1000);
+                vi.advanceTimersByTime(1000);
             });
 
             expect(carousel()).toHaveAttribute("data-index", "1");
@@ -301,7 +301,7 @@ describe("Carousel", () => {
             fireEvent.focus(button("Next slide"));
 
             act(() => {
-                jest.advanceTimersByTime(3000);
+                vi.advanceTimersByTime(3000);
             });
 
             expect(carousel()).toHaveAttribute("data-index", "0");
@@ -313,7 +313,7 @@ describe("Carousel", () => {
             fireEvent.click(button("Stop automatic slide show"));
 
             act(() => {
-                jest.advanceTimersByTime(3000);
+                vi.advanceTimersByTime(3000);
             });
 
             expect(carousel()).toHaveAttribute("data-index", "0");

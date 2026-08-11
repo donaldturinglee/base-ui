@@ -3,11 +3,13 @@
   "private": true,
   "description": "An implementation of GameCrafters' Base UI Design System using React.",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "e2e"
   ],
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
     "storybook": "npm run storybook --workspace @gamecrafters/base-ui",
     "storybook:build": "turbo run storybook:build",
     "lint": "turbo run lint",
@@ -25,9 +27,10 @@
     "base-ui",
     "react",
     "typescript",
-    "rollup",
+    "rolldown",
     "storybook",
-    "jest"
+    "vitest",
+    "playwright"
   ],
   "author": "donaldturinglee <donaldturinglee@gmail.com>",
   "license": "MIT",
@@ -45,6 +48,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-storybook": "10.4.2",
     "globals": "^14.0.0",
+    "jsdom": "^26.1.0",
     "prettier": "^3.6.2",
     "turbo": "^2.9.18",
     "typescript": "^6.0.3",

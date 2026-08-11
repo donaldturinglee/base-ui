@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { CopyRegular } from "@gamecrafters/base-ui-icons";
 import { ActionList } from ".";
 
@@ -54,7 +54,7 @@ describe("ActionList", () => {
     });
 
     it("calls onSelect when an item is clicked", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(
             <ActionList>
                 <ActionList.Item onSelect={onSelect}>Copy link</ActionList.Item>
@@ -67,7 +67,7 @@ describe("ActionList", () => {
     });
 
     it("calls onSelect when an item that carries the list semantics is pressed", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(
             <ActionList role="menu" aria-label="Actions">
                 <ActionList.Item onSelect={onSelect}>Copy link</ActionList.Item>
@@ -81,7 +81,7 @@ describe("ActionList", () => {
     });
 
     it("leaves a disabled item alone", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(
             <ActionList>
                 <ActionList.Item disabled onSelect={onSelect}>
@@ -100,7 +100,7 @@ describe("ActionList", () => {
     });
 
     it("leaves a loading item alone, and says that it is waiting", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(
             <ActionList>
                 <ActionList.Item loading onSelect={onSelect}>
@@ -116,7 +116,7 @@ describe("ActionList", () => {
     });
 
     it("says why an inactive item cannot be used, and leaves it alone", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         render(
             <ActionList>
                 <ActionList.Item inactiveText="The server is unreachable" onSelect={onSelect}>

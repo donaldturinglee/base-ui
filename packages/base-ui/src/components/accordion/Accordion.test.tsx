@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel } from ".";
 import type { AccordionProps } from "./Accordion.types";
 
@@ -107,7 +107,7 @@ describe("Accordion", () => {
     });
 
     it("calls onChange with everything that is open", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderAccordion({ onChange });
 
         fireEvent.click(header("One"));
@@ -121,7 +121,7 @@ describe("Accordion", () => {
     });
 
     it("adds to what is open when more than one may stand open", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderAccordion({ multiple: true, onChange });
 
         fireEvent.click(header("One"));
@@ -130,7 +130,7 @@ describe("Accordion", () => {
     });
 
     it("does not call onChange on arrival or when value changes elsewhere", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         const { rerender } = renderAccordion({ value: [], onChange });
         expect(onChange).not.toHaveBeenCalled();
 
@@ -146,7 +146,7 @@ describe("Accordion", () => {
     });
 
     it("stops every item being used when the accordion is disabled", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderAccordion({ disabled: true, onChange });
 
         for (const section of sections) {
@@ -405,7 +405,7 @@ describe("Accordion keyboard navigation", () => {
     });
 
     it("calls a key handler it was given", () => {
-        const onKeyDown = jest.fn();
+        const onKeyDown = vi.fn();
         renderAccordion({ onKeyDown });
         header("One").focus();
         fireEvent.keyDown(header("One"), { key: "ArrowDown" });

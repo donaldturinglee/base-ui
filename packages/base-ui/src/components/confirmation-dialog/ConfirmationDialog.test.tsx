@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { ConfirmationDialog, useConfirm } from ".";
 import type { ConfirmationDialogProps } from "./ConfirmationDialog.types";
 
@@ -126,7 +126,7 @@ describe("ConfirmationDialog", () => {
     });
 
     it("calls onClose with the confirm gesture when the confirm button is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.click(button("OK"));
@@ -136,7 +136,7 @@ describe("ConfirmationDialog", () => {
     });
 
     it("calls onClose with the cancel gesture when the cancel button is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.click(button("Cancel"));
@@ -146,7 +146,7 @@ describe("ConfirmationDialog", () => {
     });
 
     it("calls onClose with the close button gesture when the close button is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.click(button("Close"));
@@ -155,7 +155,7 @@ describe("ConfirmationDialog", () => {
     });
 
     it("calls onClose with the escape gesture when escape is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.keyDown(document, { key: "Escape" });
@@ -192,7 +192,7 @@ describe("ConfirmationDialog", () => {
     });
 
     it("ignores a press on a button that is already loading", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose, confirmButtonLoading: true });
 
         fireEvent.click(button("OK"));
@@ -252,7 +252,7 @@ describe("ConfirmationDialog", () => {
         });
 
         it("answers with true when the question is confirmed", async () => {
-            const onAnswer = jest.fn();
+            const onAnswer = vi.fn();
             render(<Confirmer onAnswer={onAnswer} />);
 
             fireEvent.click(button("Ask"));
@@ -263,7 +263,7 @@ describe("ConfirmationDialog", () => {
         });
 
         it("answers with false when the question is turned down", async () => {
-            const onAnswer = jest.fn();
+            const onAnswer = vi.fn();
             render(<Confirmer onAnswer={onAnswer} />);
 
             fireEvent.click(button("Ask"));

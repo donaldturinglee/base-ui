@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { CheckboxGroup } from "../checkbox-group";
 import { CheckboxCard } from ".";
 import type { CheckboxCardProps, CheckboxCardValidationStatus } from "./CheckboxCard.types";
@@ -87,7 +87,7 @@ describe("CheckboxCard", () => {
         });
 
         it("reports a change", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCard({ onChange });
 
             fireEvent.click(control());
@@ -258,7 +258,7 @@ describe("CheckboxCard", () => {
 
     describe("inside a checkbox group", () => {
         it("reports every card that is ticked to the group", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
 
             render(
                 <CheckboxGroup onChange={onChange}>
@@ -280,7 +280,7 @@ describe("CheckboxCard", () => {
         });
 
         it("drops a card from the selection once it has been cleared", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
 
             render(
                 <CheckboxGroup onChange={onChange}>
@@ -298,7 +298,7 @@ describe("CheckboxCard", () => {
         });
 
         it("reports a change to the card as well as to the group", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
 
             render(
                 <CheckboxGroup>

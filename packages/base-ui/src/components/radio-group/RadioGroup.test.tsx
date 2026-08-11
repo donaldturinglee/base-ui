@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Radio } from "../radio";
 import { RadioGroup } from ".";
 
@@ -111,7 +111,7 @@ describe("RadioGroup", () => {
     });
 
     it("reports the value that is now checked", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <RadioGroup name="choices" onChange={onChange}>
                 <RadioGroup.Label>Choices</RadioGroup.Label>
@@ -127,7 +127,7 @@ describe("RadioGroup", () => {
     });
 
     it("reports nothing for the radio the browser clears", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <RadioGroup name="choices" onChange={onChange}>
                 <RadioGroup.Label>Choices</RadioGroup.Label>
@@ -144,7 +144,7 @@ describe("RadioGroup", () => {
     });
 
     it("passes the change event along with the selection", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <RadioGroup name="choices" onChange={onChange}>
                 <RadioGroup.Label>Choices</RadioGroup.Label>
@@ -157,8 +157,8 @@ describe("RadioGroup", () => {
     });
 
     it("still calls a radio's own onChange", () => {
-        const onGroupChange = jest.fn();
-        const onRadioChange = jest.fn();
+        const onGroupChange = vi.fn();
+        const onRadioChange = vi.fn();
         render(
             <RadioGroup name="choices" onChange={onGroupChange}>
                 <RadioGroup.Label>Choices</RadioGroup.Label>

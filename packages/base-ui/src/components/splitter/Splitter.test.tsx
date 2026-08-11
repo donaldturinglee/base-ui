@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeAll, afterAll } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Splitter } from ".";
 import type { SplitterResizeTriggerProps, SplitterProps } from "./Splitter.types";
 

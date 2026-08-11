@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Checkbox } from "../checkbox";
 import { CheckboxGroup } from ".";
 
@@ -88,7 +88,7 @@ describe("CheckboxGroup", () => {
     });
 
     it("reports the values that are checked", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <CheckboxGroup onChange={onChange}>
                 <CheckboxGroup.Label>Choices</CheckboxGroup.Label>
@@ -104,7 +104,7 @@ describe("CheckboxGroup", () => {
     });
 
     it("drops a value again when its box is unchecked", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <CheckboxGroup onChange={onChange}>
                 <CheckboxGroup.Label>Choices</CheckboxGroup.Label>
@@ -119,7 +119,7 @@ describe("CheckboxGroup", () => {
     });
 
     it("starts from the boxes that are already checked", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <CheckboxGroup onChange={onChange}>
                 <CheckboxGroup.Label>Choices</CheckboxGroup.Label>
@@ -133,7 +133,7 @@ describe("CheckboxGroup", () => {
     });
 
     it("finds the boxes however deeply they are wrapped", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <CheckboxGroup onChange={onChange}>
                 <CheckboxGroup.Label>Choices</CheckboxGroup.Label>
@@ -151,7 +151,7 @@ describe("CheckboxGroup", () => {
     });
 
     it("passes the change event along with the selection", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <CheckboxGroup onChange={onChange}>
                 <CheckboxGroup.Label>Choices</CheckboxGroup.Label>
@@ -164,8 +164,8 @@ describe("CheckboxGroup", () => {
     });
 
     it("still calls a checkbox's own onChange", () => {
-        const onGroupChange = jest.fn();
-        const onBoxChange = jest.fn();
+        const onGroupChange = vi.fn();
+        const onBoxChange = vi.fn();
         render(
             <CheckboxGroup onChange={onGroupChange}>
                 <CheckboxGroup.Label>Choices</CheckboxGroup.Label>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { DeleteRegular, EditRegular } from "@gamecrafters/base-ui-icons";
 import { TreeView } from ".";
 
@@ -77,7 +77,7 @@ describe("TreeView", () => {
     });
 
     it("tells the caller when an item is opened", () => {
-        const onExpandedChange = jest.fn();
+        const onExpandedChange = vi.fn();
         renderTree({ id: "src", onExpandedChange });
 
         fireEvent.click(item("src"));
@@ -94,7 +94,7 @@ describe("TreeView", () => {
     });
 
     it("calls back when an item is picked, in place of opening it", () => {
-        const onSelect = jest.fn();
+        const onSelect = vi.fn();
         renderTree({ id: "src", onSelect });
 
         fireEvent.click(item("src"));
@@ -349,8 +349,8 @@ describe("TreeView", () => {
 
     describe("secondary actions", () => {
         const actions = [
-            { label: "Rename", onClick: jest.fn(), icon: EditRegular },
-            { label: "Delete", onClick: jest.fn(), icon: DeleteRegular },
+            { label: "Rename", onClick: vi.fn(), icon: EditRegular },
+            { label: "Delete", onClick: vi.fn(), icon: DeleteRegular },
         ];
 
         it("draws a button for each action, outside the tab order", () => {
@@ -379,7 +379,7 @@ describe("TreeView", () => {
         });
 
         it("does the one action there is, rather than opening a dialog", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
 
             render(
                 <TreeView aria-label="Files">

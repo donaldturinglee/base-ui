@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, createEvent, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { HoverCard } from ".";
 import type { HoverCardProps } from "./HoverCard.types";
 
@@ -26,7 +26,7 @@ const isOpen = () => card() !== null;
 // The wait is what the card is for, so the tests move the clock rather than the pointer
 const wait = (milliseconds: number) =>
     act(() => {
-        jest.advanceTimersByTime(milliseconds);
+        vi.advanceTimersByTime(milliseconds);
     });
 
 const hoverTrigger = () => fireEvent.pointerEnter(trigger());
@@ -49,11 +49,11 @@ describe("HoverCard", () => {
             disconnect() {}
         } as unknown as typeof ResizeObserver;
 
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
         window.ResizeObserver = originalResizeObserver;
     });
 
@@ -226,8 +226,8 @@ describe("HoverCard", () => {
     });
 
     it("keeps the handlers the trigger came with", () => {
-        const onPointerEnter = jest.fn();
-        const onFocus = jest.fn();
+        const onPointerEnter = vi.fn();
+        const onFocus = vi.fn();
 
         render(
             <HoverCard openDelay={100} closeDelay={100}>
@@ -276,7 +276,7 @@ describe("HoverCard", () => {
         });
 
         it("stays shut on hover until the caller says otherwise", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             renderHoverCard({ open: false, onOpenChange });
 
             hoverTrigger();
@@ -287,7 +287,7 @@ describe("HoverCard", () => {
         });
 
         it("reports the card opening and closing either way", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             renderHoverCard({ onOpenChange });
 
             hoverTrigger();

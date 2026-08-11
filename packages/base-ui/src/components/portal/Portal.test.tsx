@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import Portal from "./Portal";
 import { PortalContext } from "./PortalContext";
 import { registerPortalRoot } from "./portalRoot";
@@ -139,7 +139,7 @@ describe("Portal", () => {
     });
 
     it("calls onMount once the portal is added to the DOM", () => {
-        const onMount = jest.fn();
+        const onMount = vi.fn();
         render(<Portal onMount={onMount}>portaled content</Portal>);
         expect(onMount).toHaveBeenCalledTimes(1);
     });
@@ -154,7 +154,7 @@ describe("Portal", () => {
     });
 
     it("throws when the named container has not been registered", () => {
-        const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+        const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
         expect(() => render(<Portal containerName="unregistered">content</Portal>)).toThrow(
             /'unregistered' is not yet registered/,

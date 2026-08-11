@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { ProgressBar } from ".";
 import type { ProgressBarVariant } from "./ProgressBar.types";
 
@@ -164,7 +164,7 @@ describe("ProgressBar", () => {
     });
 
     it("throws when both progress and children are passed", () => {
-        const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+        const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
         expect(() =>
             render(

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { AnchoredOverlay } from ".";
 import type { AnchoredOverlayProps } from "./AnchoredOverlay.types";
 
@@ -93,8 +93,8 @@ describe("AnchoredOverlay", () => {
     });
 
     it("opens when the anchor is clicked", () => {
-        const onOpen = jest.fn();
-        const onClose = jest.fn();
+        const onOpen = vi.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ open: false, onOpen, onClose });
 
         fireEvent.click(anchor());
@@ -105,8 +105,8 @@ describe("AnchoredOverlay", () => {
     });
 
     it("closes when the anchor is clicked again", () => {
-        const onOpen = jest.fn();
-        const onClose = jest.fn();
+        const onOpen = vi.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ onOpen, onClose });
 
         fireEvent.click(anchor());
@@ -117,7 +117,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it.each(["ArrowDown", "ArrowUp", " ", "Enter"])("opens on the %s key", (key) => {
-        const onOpen = jest.fn();
+        const onOpen = vi.fn();
         renderAnchoredOverlay({ open: false, onOpen });
 
         fireEvent.keyDown(anchor(), { key });
@@ -127,7 +127,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("leaves every other key alone", () => {
-        const onOpen = jest.fn();
+        const onOpen = vi.fn();
         renderAnchoredOverlay({ open: false, onOpen });
 
         fireEvent.keyDown(anchor(), { key: "a" });
@@ -136,7 +136,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("closes on Escape", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ onClose });
 
         fireEvent.keyDown(document, { key: "Escape" });
@@ -146,7 +146,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("stays open on Escape while it is closed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ open: false, onClose });
 
         fireEvent.keyDown(document, { key: "Escape" });
@@ -155,7 +155,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("closes when a press lands anywhere else", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ onClose });
 
         fireEvent.mouseDown(document.body);
@@ -165,7 +165,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("leaves a press inside the overlay alone", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ onClose });
 
         fireEvent.mouseDown(screen.getByRole("button", { name: "Focusable child" }));
@@ -174,7 +174,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("leaves a press on the anchor to the anchor", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({ onClose });
 
         fireEvent.mouseDown(anchor());
@@ -212,7 +212,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("reports where it ended up", () => {
-        const onPositionChange = jest.fn();
+        const onPositionChange = vi.fn();
         renderAnchoredOverlay({ onPositionChange });
 
         expect(onPositionChange).toHaveBeenCalledWith({
@@ -321,7 +321,7 @@ describe("AnchoredOverlay", () => {
     });
 
     it("renders a close button for an overlay that fills a narrow screen", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderAnchoredOverlay({
             onClose,
             variant: { regular: "anchored", narrow: "fullscreen" },

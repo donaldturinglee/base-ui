@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { DataTable, Table, createColumnHelper, sortStrategies } from ".";
 import { getGridTemplateFromColumns } from "./tableLayout";
 import type { Column } from "./DataTable.types";
@@ -122,7 +122,7 @@ describe("DataTable", () => {
     });
 
     it("tells rows apart by a key of the caller's own", () => {
-        const getRowId = jest.fn((row: Repo) => `repo-${row.name}`);
+        const getRowId = vi.fn((row: Repo) => `repo-${row.name}`);
         renderTable({ getRowId });
         expect(getRowId).toHaveBeenCalled();
     });
@@ -267,7 +267,7 @@ describe("DataTable sorting", () => {
     });
 
     it("reports the column and the direction it is now sorted in", () => {
-        const onToggleSort = jest.fn();
+        const onToggleSort = vi.fn();
         renderTable({ columns: sortable, onToggleSort });
 
         fireEvent.click(sortButton("Name"));
@@ -311,7 +311,7 @@ describe("DataTable sorting", () => {
     });
 
     it("leaves the rows alone where the caller sorts them itself", () => {
-        const onToggleSort = jest.fn();
+        const onToggleSort = vi.fn();
         renderTable({ columns: sortable, externalSorting: true, onToggleSort });
 
         fireEvent.click(sortButton("Name"));
@@ -520,7 +520,7 @@ describe("Table.Pagination", () => {
     });
 
     it("moves on to the next page", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderPagination({ onChange });
 
         fireEvent.click(screen.getByRole("button", { name: /Next/ }));
@@ -530,7 +530,7 @@ describe("Table.Pagination", () => {
     });
 
     it("moves back to the page before", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderPagination({ onChange, defaultPageIndex: 2 });
 
         fireEvent.click(screen.getByRole("button", { name: /Previous/ }));
@@ -539,7 +539,7 @@ describe("Table.Pagination", () => {
     });
 
     it("goes to a page it is pointed at", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderPagination({ onChange });
 
         fireEvent.click(page(3));
@@ -549,7 +549,7 @@ describe("Table.Pagination", () => {
     });
 
     it("stays put when the page it is on is chosen again", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderPagination({ onChange });
 
         fireEvent.click(page(1));
@@ -595,8 +595,8 @@ describe("Table.ErrorDialog", () => {
     });
 
     it("calls onRetry when the reader asks to try again", () => {
-        const onRetry = jest.fn();
-        const onDismiss = jest.fn();
+        const onRetry = vi.fn();
+        const onDismiss = vi.fn();
         render(
             <Table.ErrorDialog onRetry={onRetry} onDismiss={onDismiss}>
                 Something went wrong
@@ -609,8 +609,8 @@ describe("Table.ErrorDialog", () => {
     });
 
     it("calls onDismiss for anything else that closes it", () => {
-        const onRetry = jest.fn();
-        const onDismiss = jest.fn();
+        const onRetry = vi.fn();
+        const onDismiss = vi.fn();
         render(
             <Table.ErrorDialog onRetry={onRetry} onDismiss={onDismiss}>
                 Something went wrong

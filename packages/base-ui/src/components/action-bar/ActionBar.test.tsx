@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import {
     ArrowSortRegular,
     CopyRegular,
@@ -134,7 +134,7 @@ describe("ActionBar", () => {
     });
 
     it("does the same thing from the menu as the item itself would have done", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(
             <ActionBar aria-label="File actions">
                 <ActionBar.IconButton icon={EditRegular} aria-label="Rename" onClick={onClick} />

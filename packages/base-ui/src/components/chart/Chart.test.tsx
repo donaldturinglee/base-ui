@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeAll, afterAll } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis } from "recharts";
 import { Chart, ChartContext, useChart } from ".";
 import { CHART_OVERFLOW_COLOR, CHART_SERIES_COLORS } from "./chartPalette";

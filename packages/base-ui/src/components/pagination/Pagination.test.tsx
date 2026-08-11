@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Pagination, buildPaginationModel } from ".";
 
 // The rendered sequence, as a reader would work through it
@@ -182,7 +182,7 @@ describe("Pagination", () => {
     });
 
     it("reports the page that was picked", () => {
-        const onPageChange = jest.fn();
+        const onPageChange = vi.fn();
         render(<Pagination pageCount={5} currentPage={1} onPageChange={onPageChange} />);
 
         fireEvent.click(screen.getByRole("link", { name: "Page 3" }));

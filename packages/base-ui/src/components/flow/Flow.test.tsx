@@ -1,8 +1,8 @@
 import * as React from "react";
 import { act } from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Flow, computeEdges, computePositions, connectorPath, entryIds, exitIds } from ".";
 import type { FlowTreeNode } from "./Flow.types";
 

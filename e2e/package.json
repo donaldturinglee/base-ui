@@ -1,0 +1,33 @@
+{
+  "name": "@gamecrafters/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The end to end suites the components are driven through a browser by.",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "lint": "npx eslint \"**/*.ts\" \"**/*.mts\"",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier \"**/*.ts\" \"**/*.mts\" --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run lint:fix && npm run prettier:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donaldturinglee/base-ui.git",
+    "directory": "e2e"
+  },
+  "keywords": [
+    "base-ui",
+    "playwright",
+    "storybook"
+  ],
+  "author": "donaldturinglee <donaldturinglee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donaldturinglee/base-ui/issues"
+  },
+  "homepage": "https://github.com/donaldturinglee/base-ui#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1"
+  }
+}

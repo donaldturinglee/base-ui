@@ -1,8 +1,8 @@
 import * as React from "react";
 import { act } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { CodeBlock } from ".";
 
 type Tokenise = (
@@ -12,10 +12,11 @@ type Tokenise = (
 
 // Reading a grammar over a listing means fetching that grammar and the themes it is coloured
 // under, which is shiki's work rather than the component's. This stands in for it, so what is
-// tested here is what the component does with the runs it is handed
-const mockCodeToTokens = jest.fn<Tokenise>();
+// tested here is what the component does with the runs it is handed. The stand-in is raised
+// with the mock itself, since Vitest lifts the mock above everything the file declares
+const { mockCodeToTokens } = vi.hoisted(() => ({ mockCodeToTokens: vi.fn<Tokenise>() }));
 
-jest.mock("shiki", () => ({
+vi.mock("shiki", () => ({
     codeToTokens: (...args: Parameters<Tokenise>) => mockCodeToTokens(...args),
 }));
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { TopicTag } from ".";
 
 describe("TopicTag", () => {
@@ -11,7 +11,7 @@ describe("TopicTag", () => {
     });
 
     it("renders as the element passed to the as prop", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(
             <TopicTag as="button" onClick={onClick}>
                 react

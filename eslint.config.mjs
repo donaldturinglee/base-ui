@@ -11,7 +11,7 @@ export default tseslint.config(
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        files: ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.ts"],
+        files: ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.ts", "**/*.mts"],
         languageOptions: {
             parser: parser,
             globals: {

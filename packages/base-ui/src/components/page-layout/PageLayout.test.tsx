@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { DragHandle, PageLayout } from ".";
 import {
     ARROW_KEY_STEP,
@@ -392,7 +392,7 @@ describe("PageLayout.Pane resizing", () => {
     });
 
     it("reports the width once the reader lets go", () => {
-        const onResizeEnd = jest.fn();
+        const onResizeEnd = vi.fn();
         renderResizable({ onResizeEnd, currentWidth: defaultPaneWidth.small });
         const handle = screen.getByRole("slider");
 
@@ -447,7 +447,7 @@ describe("PageLayout.Pane resizing", () => {
     });
 
     it("ignores a key that is not an arrow", () => {
-        const onResizeEnd = jest.fn();
+        const onResizeEnd = vi.fn();
         renderResizable({ onResizeEnd, currentWidth: 300 });
 
         fireEvent.keyDown(screen.getByRole("slider"), { key: "Enter" });
@@ -455,7 +455,7 @@ describe("PageLayout.Pane resizing", () => {
     });
 
     it("finishes the drag even where the caller's own handler throws", () => {
-        const onResizeEnd = jest.fn(() => {
+        const onResizeEnd = vi.fn(() => {
             throw new Error("Nothing the pane can do about this");
         });
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Banner } from ".";
 import type { BannerVariant } from "./Banner.types";
 
@@ -228,7 +228,7 @@ describe("Banner dismiss", () => {
     });
 
     it("calls onDismiss when the button is pressed", () => {
-        const onDismiss = jest.fn();
+        const onDismiss = vi.fn();
         render(<Banner title="Info" onDismiss={onDismiss} />);
 
         fireEvent.click(screen.getByRole("button", { name: "Dismiss banner" }));
@@ -276,8 +276,8 @@ describe("Banner actions", () => {
     });
 
     it("reports a press on either action", () => {
-        const onPrimary = jest.fn();
-        const onSecondary = jest.fn();
+        const onPrimary = vi.fn();
+        const onSecondary = vi.fn();
         withActions({
             primaryAction: (
                 <Banner.PrimaryAction onClick={onPrimary}>Turn it on</Banner.PrimaryAction>

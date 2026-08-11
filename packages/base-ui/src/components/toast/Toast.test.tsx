@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Button } from "../button";
 import { Toaster, toast } from ".";
 import { clearToasts } from "./toastStore";
@@ -191,14 +191,14 @@ describe("Toast", () => {
 
     describe("seeing a toast off", () => {
         beforeEach(() => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
-        const settle = () => act(() => jest.advanceTimersByTime(400));
+        const settle = () => act(() => vi.advanceTimersByTime(400));
 
         it("goes away by itself once its time is up", () => {
             renderToaster({ duration: 1000 });
@@ -206,18 +206,18 @@ describe("Toast", () => {
 
             expect(toasts()).toHaveLength(1);
 
-            act(() => jest.advanceTimersByTime(1000));
+            act(() => vi.advanceTimersByTime(1000));
             settle();
 
             expect(toasts()).toHaveLength(0);
         });
 
         it("tells the caller it went away by itself", () => {
-            const onAutoClose = jest.fn();
+            const onAutoClose = vi.fn();
             renderToaster({ duration: 1000 });
             raise(() => toast("Saved", { onAutoClose }));
 
-            act(() => jest.advanceTimersByTime(1000));
+            act(() => vi.advanceTimersByTime(1000));
 
             expect(onAutoClose).toHaveBeenCalledTimes(1);
         });
@@ -226,7 +226,7 @@ describe("Toast", () => {
             renderToaster({ duration: 1000 });
             raise(() => toast("Saved", { duration: 5000 }));
 
-            act(() => jest.advanceTimersByTime(1000));
+            act(() => vi.advanceTimersByTime(1000));
             settle();
 
             expect(toasts()).toHaveLength(1);
@@ -236,7 +236,7 @@ describe("Toast", () => {
             renderToaster();
             raise(() => toast.loading("Working"));
 
-            act(() => jest.advanceTimersByTime(60000));
+            act(() => vi.advanceTimersByTime(60000));
             settle();
 
             expect(toasts()).toHaveLength(1);
@@ -272,7 +272,7 @@ describe("Toast", () => {
         });
 
         it("tells the caller it was seen off by hand", () => {
-            const onDismiss = jest.fn();
+            const onDismiss = vi.fn();
             renderToaster({ closeButton: true });
             raise(() => toast("Saved", { onDismiss }));
 
@@ -286,7 +286,7 @@ describe("Toast", () => {
             raise(() => toast("Saved"));
 
             fireEvent.pointerEnter(list());
-            act(() => jest.advanceTimersByTime(2000));
+            act(() => vi.advanceTimersByTime(2000));
             settle();
 
             expect(toasts()).toHaveLength(1);
@@ -297,10 +297,10 @@ describe("Toast", () => {
             raise(() => toast("Saved"));
 
             fireEvent.pointerEnter(list());
-            act(() => jest.advanceTimersByTime(2000));
+            act(() => vi.advanceTimersByTime(2000));
             fireEvent.pointerLeave(list());
 
-            act(() => jest.advanceTimersByTime(1000));
+            act(() => vi.advanceTimersByTime(1000));
             settle();
 
             expect(toasts()).toHaveLength(0);
@@ -332,7 +332,7 @@ describe("Toast", () => {
 
     describe("buttons of the toast's own", () => {
         it("runs what the action was given and sees the toast off", async () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             renderToaster();
             raise(() => toast("Saved", { action: { label: "Undo", onClick } }));
 

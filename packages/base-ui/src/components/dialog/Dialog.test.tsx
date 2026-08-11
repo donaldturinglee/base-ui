@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Button } from "../button";
 import { Dialog } from ".";
 import type { DialogProps } from "./Dialog.types";
@@ -92,7 +92,7 @@ describe("Dialog", () => {
     });
 
     it("calls onClose with the close button gesture when the close button is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.click(button("Close"));
@@ -102,7 +102,7 @@ describe("Dialog", () => {
     });
 
     it("calls onClose when the backdrop is clicked", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.mouseDown(backdrop());
@@ -112,7 +112,7 @@ describe("Dialog", () => {
     });
 
     it("leaves the dialog open when the click only ended on the backdrop", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.mouseDown(dialog());
@@ -122,7 +122,7 @@ describe("Dialog", () => {
     });
 
     it("calls onClose when escape is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         renderDialog({ onClose });
 
         fireEvent.keyDown(document, { key: "Escape" });
@@ -131,8 +131,8 @@ describe("Dialog", () => {
     });
 
     it("closes only the innermost dialog when escape is pressed", () => {
-        const onCloseOuter = jest.fn();
-        const onCloseInner = jest.fn();
+        const onCloseOuter = vi.fn();
+        const onCloseInner = vi.fn();
 
         const Fixture = () => {
             const [isInnerOpen, setIsInnerOpen] = React.useState(false);

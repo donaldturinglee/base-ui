@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Autocomplete } from ".";
 import type { AutocompleteItem, AutocompleteMenuProps } from "./Autocomplete.types";
 
@@ -425,7 +425,7 @@ describe("Autocomplete", () => {
         });
 
         it("reports the picked option to a caller holding the selection", () => {
-            const onSelectedChange = jest.fn();
+            const onSelectedChange = vi.fn();
             render(<Fixture openOnFocus onSelectedChange={onSelectedChange} />);
             openList();
             fireEvent.click(screen.getByRole("option", { name: "react" }));
@@ -434,7 +434,7 @@ describe("Autocomplete", () => {
         });
 
         it("replaces what was picked where only one option can be", () => {
-            const onSelectedChange = jest.fn();
+            const onSelectedChange = vi.fn();
             render(
                 <Fixture
                     openOnFocus
@@ -479,7 +479,7 @@ describe("Autocomplete", () => {
         });
 
         it("adds to what was already picked", () => {
-            const onSelectedChange = jest.fn();
+            const onSelectedChange = vi.fn();
             render(several({ selectedItemIds: ["css"], onSelectedChange }));
             openList();
             fireEvent.click(screen.getByRole("option", { name: "react" }));
@@ -491,7 +491,7 @@ describe("Autocomplete", () => {
         });
 
         it("drops an option that was already picked", () => {
-            const onSelectedChange = jest.fn();
+            const onSelectedChange = vi.fn();
             render(several({ selectedItemIds: ["react"], onSelectedChange }));
             openList();
             fireEvent.click(screen.getByRole("option", { name: "react" }));
@@ -533,7 +533,7 @@ describe("Autocomplete", () => {
         });
 
         it("hands the new option back when it is picked", () => {
-            const onAdd = jest.fn();
+            const onAdd = vi.fn();
             render(<Fixture openOnFocus addNewItem={addNewItem(onAdd)} />);
             openList();
             fireEvent.click(screen.getByRole("option", { name: 'Add "graphql"' }));
@@ -542,7 +542,7 @@ describe("Autocomplete", () => {
         });
 
         it("leaves the options alone", () => {
-            const onSelectedChange = jest.fn();
+            const onSelectedChange = vi.fn();
             render(
                 <Fixture
                     openOnFocus
@@ -609,7 +609,7 @@ describe("Autocomplete", () => {
         });
 
         it("reports when it opens and when it closes", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             render(<Fixture openOnFocus onOpenChange={onOpenChange} />);
 
             expect(onOpenChange).not.toHaveBeenCalled();
@@ -624,11 +624,11 @@ describe("Autocomplete", () => {
 
     describe("announcements", () => {
         beforeEach(() => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         // The list holds a spinner of its own, which is read as a status too, so the live
@@ -640,7 +640,7 @@ describe("Autocomplete", () => {
             render(<Fixture />);
 
             act(() => {
-                jest.runAllTimers();
+                vi.runAllTimers();
             });
 
             expect(announcement()).toBeEmptyDOMElement();
@@ -651,7 +651,7 @@ describe("Autocomplete", () => {
             openList();
 
             act(() => {
-                jest.runAllTimers();
+                vi.runAllTimers();
             });
 
             expect(announcement()).toHaveTextContent("4 options available.");
@@ -692,8 +692,8 @@ describe("Autocomplete", () => {
     });
 
     it("still calls the handlers the caller passed to the field", () => {
-        const onChange = jest.fn();
-        const onKeyDown = jest.fn();
+        const onChange = vi.fn();
+        const onKeyDown = vi.fn();
         render(
             <Autocomplete id="handlers-topic">
                 <Autocomplete.Input onChange={onChange} onKeyDown={onKeyDown} />

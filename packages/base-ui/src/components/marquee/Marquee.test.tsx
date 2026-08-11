@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Marquee } from ".";
 import { useMarquee } from "./useMarquee";
 import type { MarqueeProps, MarqueeSide, MarqueeSpacing, MarqueeSpeed } from "./Marquee.types";
@@ -17,7 +17,7 @@ const measureAs = (
     rootHeight = rootWidth,
     groupHeight = groupWidth,
 ) => {
-    jest.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (
         this: Element,
     ) {
         const isGroup = this.classList.contains("marquee-group");
@@ -61,7 +61,7 @@ describe("Marquee", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
         window.ResizeObserver = originalResizeObserver;
     });
 
@@ -337,7 +337,7 @@ describe("useMarquee", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
         window.ResizeObserver = originalResizeObserver;
     });
 

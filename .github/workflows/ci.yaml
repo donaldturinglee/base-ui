@@ -71,6 +71,14 @@ jobs:
       - name: Test
         run: npm test
 
+      # The end to end suites are driven through a real browser, which is not on the runner
+      # until it is asked for. Only the one the suites are run under is fetched
+      - name: Install the browser the end to end suites are driven through
+        run: npx playwright install --with-deps chromium
+
+      - name: End to end test
+        run: npm run test:e2e
+
       - name: Build
         run: npm run build
 

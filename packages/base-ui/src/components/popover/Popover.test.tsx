@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createEvent, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Popover } from ".";
 import type { PopoverCaret } from "./Popover.types";
 
@@ -168,7 +168,7 @@ describe("Popover", () => {
 
     describe("dismissing it with Escape", () => {
         it("reports the press while the popover is open", () => {
-            const onEscape = jest.fn();
+            const onEscape = vi.fn();
 
             render(
                 <Popover open>
@@ -182,7 +182,7 @@ describe("Popover", () => {
         });
 
         it("says nothing while the popover is shut, there being nothing on screen to dismiss", () => {
-            const onEscape = jest.fn();
+            const onEscape = vi.fn();
 
             render(
                 <Popover open={false}>
@@ -198,7 +198,7 @@ describe("Popover", () => {
         it("takes the press, so a layer it was opened over does not answer it as well", () => {
             render(
                 <Popover open>
-                    <Popover.Content onEscape={jest.fn()} />
+                    <Popover.Content onEscape={vi.fn()} />
                 </Popover>,
             );
 
@@ -218,7 +218,7 @@ describe("Popover", () => {
 
     describe("dismissing it with a press outside", () => {
         it("reports a press that landed anywhere else", () => {
-            const onClickOutside = jest.fn();
+            const onClickOutside = vi.fn();
 
             render(
                 <Popover open>
@@ -232,7 +232,7 @@ describe("Popover", () => {
         });
 
         it("says nothing about a press that landed on the surface itself", () => {
-            const onClickOutside = jest.fn();
+            const onClickOutside = vi.fn();
 
             render(
                 <Popover open>
@@ -248,7 +248,7 @@ describe("Popover", () => {
         });
 
         it("says nothing about a press on whatever the popover was opened from", () => {
-            const onClickOutside = jest.fn();
+            const onClickOutside = vi.fn();
 
             const Example = () => {
                 const buttonRef = React.useRef<HTMLButtonElement>(null);
@@ -276,7 +276,7 @@ describe("Popover", () => {
         });
 
         it("says nothing while the popover is shut", () => {
-            const onClickOutside = jest.fn();
+            const onClickOutside = vi.fn();
 
             render(
                 <Popover open={false}>
@@ -290,7 +290,7 @@ describe("Popover", () => {
         });
 
         it("leaves an auxiliary button alone, since it is not reaching for anything", () => {
-            const onClickOutside = jest.fn();
+            const onClickOutside = vi.fn();
 
             render(
                 <Popover open>
@@ -304,7 +304,7 @@ describe("Popover", () => {
         });
 
         it("reports a touch that landed anywhere else", () => {
-            const onClickOutside = jest.fn();
+            const onClickOutside = vi.fn();
 
             render(
                 <Popover open>

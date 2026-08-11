@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { SearchRegular } from "@gamecrafters/base-ui-icons";
 import { SCREEN_READER_DELAY } from "../textarea";
 import { TextInput } from ".";
@@ -47,7 +47,7 @@ describe("TextInput", () => {
     });
 
     it("reports a change", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(<TextInput aria-label="Name" onChange={onChange} />);
 
         fireEvent.change(input(), { target: { value: "Ada" } });
@@ -148,8 +148,8 @@ describe("TextInput", () => {
     });
 
     it("still calls a caller's own focus and blur handlers", () => {
-        const onFocus = jest.fn();
-        const onBlur = jest.fn();
+        const onFocus = vi.fn();
+        const onBlur = vi.fn();
         render(<TextInput aria-label="Name" onFocus={onFocus} onBlur={onBlur} />);
 
         fireEvent.focus(input());
@@ -267,7 +267,7 @@ describe("TextInput trailing action", () => {
     });
 
     it("reports a press on the action", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(<TextInput aria-label="Name" trailingAction={clear(onClick)} />);
 
         fireEvent.click(screen.getByRole("button", { name: "Clear the field" }));
@@ -378,11 +378,11 @@ describe("TextInput loading", () => {
 
 describe("TextInput character limit", () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it("shows no counter without a limit", () => {
@@ -468,7 +468,7 @@ describe("TextInput character limit", () => {
         expect(live).toBeEmptyDOMElement();
 
         act(() => {
-            jest.advanceTimersByTime(SCREEN_READER_DELAY);
+            vi.advanceTimersByTime(SCREEN_READER_DELAY);
         });
         expect(live).toBeEmptyDOMElement();
     });
@@ -481,7 +481,7 @@ describe("TextInput character limit", () => {
         expect(live).toBeEmptyDOMElement();
 
         act(() => {
-            jest.advanceTimersByTime(SCREEN_READER_DELAY);
+            vi.advanceTimersByTime(SCREEN_READER_DELAY);
         });
         expect(live).toHaveTextContent("7 characters remaining");
     });

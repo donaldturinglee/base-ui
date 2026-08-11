@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { ActionList } from "../action-list";
 import { FormControl } from "../form-control";
 import { SelectPanel } from ".";
@@ -149,7 +149,7 @@ describe("SelectPanel", () => {
 
     describe("dismissing", () => {
         it("closes and cancels from the close button", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             render(<Fixture defaultOpen onCancel={onCancel} />);
 
             fireEvent.click(screen.getByRole("button", { name: "Close" }));
@@ -159,8 +159,8 @@ describe("SelectPanel", () => {
         });
 
         it("closes and cancels from the Cancel button", () => {
-            const onCancel = jest.fn();
-            const onSubmit = jest.fn();
+            const onCancel = vi.fn();
+            const onSubmit = vi.fn();
             render(<Fixture defaultOpen onCancel={onCancel} onSubmit={onSubmit} />);
 
             fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
@@ -171,8 +171,8 @@ describe("SelectPanel", () => {
         });
 
         it("closes and submits from the Save button", () => {
-            const onCancel = jest.fn();
-            const onSubmit = jest.fn();
+            const onCancel = vi.fn();
+            const onSubmit = vi.fn();
             render(<Fixture defaultOpen onCancel={onCancel} onSubmit={onSubmit} />);
 
             fireEvent.click(screen.getByRole("button", { name: "Save" }));
@@ -183,7 +183,7 @@ describe("SelectPanel", () => {
         });
 
         it("closes and cancels on Escape", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             render(<Fixture defaultOpen onCancel={onCancel} />);
 
             fireEvent.keyDown(document, { key: "Escape" });
@@ -193,7 +193,7 @@ describe("SelectPanel", () => {
         });
 
         it("closes and cancels on a press that lands anywhere else", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             render(<Fixture defaultOpen onCancel={onCancel} />);
 
             fireEvent.click(
@@ -205,7 +205,7 @@ describe("SelectPanel", () => {
         });
 
         it("leaves a panel the caller is holding the state of open", () => {
-            const onCancel = jest.fn();
+            const onCancel = vi.fn();
             render(<Fixture open onCancel={onCancel} />);
 
             fireEvent.click(screen.getByRole("button", { name: "Close" }));
@@ -236,7 +236,7 @@ describe("SelectPanel", () => {
         });
 
         it("picks an item without closing the panel", () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             render(<Fixture defaultOpen onSubmit={onSubmit} />);
 
             fireEvent.click(screen.getAllByRole("option")[1]);
@@ -254,7 +254,7 @@ describe("SelectPanel", () => {
 
     describe("instant selection", () => {
         it("submits and closes as soon as an item is picked", () => {
-            const onSubmit = jest.fn();
+            const onSubmit = vi.fn();
             render(<Fixture defaultOpen selectionVariant="instant" onSubmit={onSubmit} />);
 
             fireEvent.click(screen.getAllByRole("option")[1]);
@@ -278,7 +278,7 @@ describe("SelectPanel", () => {
         });
 
         it("calls back without closing the panel", () => {
-            const onClearSelection = jest.fn();
+            const onClearSelection = vi.fn();
             render(<Fixture defaultOpen onClearSelection={onClearSelection} />);
 
             fireEvent.click(screen.getByRole("button", { name: "Clear selection" }));
@@ -309,7 +309,7 @@ describe("SelectPanel", () => {
         });
 
         it("reports what is typed into it", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<WithSearch onChange={onChange} />);
 
             fireEvent.change(screen.getByRole("textbox", { name: "Search labels" }), {
@@ -320,7 +320,7 @@ describe("SelectPanel", () => {
         });
 
         it("clears the field, and reports that it is empty again", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(<WithSearch onChange={onChange} />);
 
             const input = screen.getByRole("textbox", { name: "Search labels" });

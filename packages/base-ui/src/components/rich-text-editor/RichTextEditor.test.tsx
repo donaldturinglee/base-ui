@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import { RichTextEditor } from ".";
 import type { RichTextEditorProps } from "./RichTextEditor.types";
@@ -234,7 +234,7 @@ describe("RichTextEditor", () => {
 
     describe("reading what has been written", () => {
         it("reports the state the editor has moved to", async () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             let editor: LexicalEditor | null = null;
 
             await renderDefault({

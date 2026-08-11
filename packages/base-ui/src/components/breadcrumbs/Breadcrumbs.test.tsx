@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Breadcrumbs } from ".";
 import type { BreadcrumbsProps } from "./Breadcrumbs.types";
 

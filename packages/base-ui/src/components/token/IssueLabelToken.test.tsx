@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { IssueLabelToken } from ".";
 import { getIssueLabelColors } from "./issueLabelColor";
 
@@ -83,7 +83,7 @@ describe("IssueLabelToken", () => {
     });
 
     it("removes itself when the remove button is pressed", () => {
-        const onRemove = jest.fn();
+        const onRemove = vi.fn();
         render(<IssueLabelToken text="bug" onRemove={onRemove} />);
 
         fireEvent.click(screen.getByRole("button", { name: "Remove token" }));

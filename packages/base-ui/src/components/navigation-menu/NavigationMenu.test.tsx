@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, createEvent, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { NavigationMenu } from ".";
 import type { NavigationMenuProps } from "./NavigationMenu.types";
 
@@ -48,18 +48,18 @@ const isOpen = (name: string) => trigger(name).getAttribute("aria-expanded") ===
 // clock rather than the pointer
 const wait = (milliseconds: number) =>
     act(() => {
-        jest.advanceTimersByTime(milliseconds);
+        vi.advanceTimersByTime(milliseconds);
     });
 
 const focus = (element: HTMLElement) => act(() => element.focus());
 
 describe("NavigationMenu", () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it("renders a landmark named by the label it was given", () => {
@@ -460,7 +460,7 @@ describe("NavigationMenu", () => {
         });
 
         it("stays as it is until the caller says otherwise", () => {
-            const onValueChange = jest.fn();
+            const onValueChange = vi.fn();
             renderMenu({ value: null, onValueChange });
 
             fireEvent.click(trigger("Product"));
@@ -470,7 +470,7 @@ describe("NavigationMenu", () => {
         });
 
         it("reports a panel opening and closing either way", () => {
-            const onValueChange = jest.fn();
+            const onValueChange = vi.fn();
             renderMenu({ onValueChange });
 
             fireEvent.click(trigger("Product"));

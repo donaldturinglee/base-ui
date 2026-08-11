@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Tooltip } from ".";
 import { getAnchoredPosition } from "./anchoredPosition";
 import type { TooltipProps } from "./Tooltip.types";
@@ -166,11 +166,11 @@ describe("Tooltip", () => {
 
 describe("Tooltip opening and closing", () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     // jsdom has no popover API of its own, so the polyfill the tooltip applies is what
@@ -185,7 +185,7 @@ describe("Tooltip opening and closing", () => {
         expect(isOpen()).toBe(false);
 
         act(() => {
-            jest.advanceTimersByTime(50);
+            vi.advanceTimersByTime(50);
         });
         expect(isOpen()).toBe(true);
     });
@@ -196,12 +196,12 @@ describe("Tooltip opening and closing", () => {
         fireEvent.mouseOver(trigger());
 
         act(() => {
-            jest.advanceTimersByTime(400);
+            vi.advanceTimersByTime(400);
         });
         expect(isOpen()).toBe(false);
 
         act(() => {
-            jest.advanceTimersByTime(800);
+            vi.advanceTimersByTime(800);
         });
         expect(isOpen()).toBe(true);
     });
@@ -213,7 +213,7 @@ describe("Tooltip opening and closing", () => {
         fireEvent.mouseLeave(trigger());
 
         act(() => {
-            jest.advanceTimersByTime(400);
+            vi.advanceTimersByTime(400);
         });
         expect(isOpen()).toBe(false);
     });
@@ -223,7 +223,7 @@ describe("Tooltip opening and closing", () => {
 
         fireEvent.mouseOver(trigger());
         act(() => {
-            jest.advanceTimersByTime(50);
+            vi.advanceTimersByTime(50);
         });
         expect(isOpen()).toBe(true);
 
@@ -261,7 +261,7 @@ describe("Tooltip opening and closing", () => {
         fireEvent.touchEnd(trigger());
 
         act(() => {
-            jest.advanceTimersByTime(10);
+            vi.advanceTimersByTime(10);
         });
         expect(isOpen()).toBe(false);
     });
@@ -279,9 +279,9 @@ describe("Tooltip opening and closing", () => {
     });
 
     it("still calls the trigger's own handlers", () => {
-        const onFocus = jest.fn();
-        const onBlur = jest.fn();
-        const onMouseLeave = jest.fn();
+        const onFocus = vi.fn();
+        const onBlur = vi.fn();
+        const onMouseLeave = vi.fn();
 
         render(
             <Tooltip text="Tooltip text">

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Attachment } from ".";
 
 const TestIcon = () => <svg data-testid="test-icon" aria-hidden="true" />;
@@ -195,7 +195,7 @@ describe("Attachment", () => {
         });
 
         it("calls the handler it is given when it is pressed", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             render(
                 <Attachment>
                     <Attachment.Actions>
@@ -245,7 +245,7 @@ describe("Attachment", () => {
         });
 
         it("calls the handler it is given when it is pressed", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             render(
                 <Attachment>
                     <Attachment.Trigger onClick={onClick}>Open</Attachment.Trigger>

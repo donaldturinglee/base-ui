@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import SkeletonText from "./SkeletonText";
 
 describe("SkeletonText", () => {

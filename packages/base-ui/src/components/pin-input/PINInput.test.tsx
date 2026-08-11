@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { PINInput } from ".";
 import type { PINInputProps } from "./PINInput.types";
 
@@ -82,7 +82,7 @@ describe("PINInput", () => {
         });
 
         it("reports the code as it is typed", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ length: 4, onChange });
 
             type(0, "1");
@@ -93,7 +93,7 @@ describe("PINInput", () => {
         });
 
         it("reports the code as finished once every box is filled", () => {
-            const onComplete = jest.fn();
+            const onComplete = vi.fn();
             renderInput({ length: 3, onComplete });
 
             type(0, "1");
@@ -188,7 +188,7 @@ describe("PINInput", () => {
         });
 
         it("does nothing at the first box where there is nothing to take back", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ length: 4, onChange });
 
             fireEvent.keyDown(box(0), { key: "Backspace" });
@@ -258,7 +258,7 @@ describe("PINInput", () => {
         });
 
         it("reports what was typed without taking it itself", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ length: 4, value: "", onChange });
 
             type(0, "1");
@@ -286,7 +286,7 @@ describe("PINInput", () => {
         });
 
         it("takes nothing while it can only be read", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderInput({ length: 3, readOnly: true, defaultValue: "12", onChange });
 
             fireEvent.keyDown(box(1), { key: "Backspace" });

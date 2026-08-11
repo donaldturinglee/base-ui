@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { InfoRegular } from "@gamecrafters/base-ui-icons";
 import { InlineMessage } from ".";
 import type { InlineMessageProps, InlineMessageVariant } from "./InlineMessage.types";

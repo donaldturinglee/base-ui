@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Collapsible } from ".";
 import type { CollapsibleProps } from "./Collapsible.types";
 
@@ -76,7 +76,7 @@ describe("Collapsible", () => {
     });
 
     it("reports whether it is open as it changes", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(collapsible({ onChange }));
 
         fireEvent.click(trigger());
@@ -87,7 +87,7 @@ describe("Collapsible", () => {
     });
 
     it("leaves a disclosure the caller is holding the state of as it was", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(collapsible({ open: false, onChange }));
 
         fireEvent.click(trigger());
@@ -107,7 +107,7 @@ describe("Collapsible", () => {
 
     describe("disabled", () => {
         it("stops the trigger being used", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             render(collapsible({ disabled: true, onChange }));
 
             expect(trigger()).toBeDisabled();
@@ -131,7 +131,7 @@ describe("Collapsible", () => {
 
     describe("the trigger", () => {
         it("still calls a press handler of the caller's own", () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             render(
                 <Collapsible>
                     <Collapsible.Trigger onClick={onClick}>Show more</Collapsible.Trigger>

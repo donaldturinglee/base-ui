@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { PersonRegular } from "@gamecrafters/base-ui-icons";
 import { Token } from ".";
 
@@ -65,7 +65,7 @@ describe("Token", () => {
     });
 
     it("removes itself when the remove button is pressed", () => {
-        const onRemove = jest.fn();
+        const onRemove = vi.fn();
         render(<Token text="monalisa" onRemove={onRemove} />);
 
         fireEvent.click(screen.getByRole("button", { name: "Remove token" }));
@@ -74,7 +74,7 @@ describe("Token", () => {
     });
 
     it.each(["Backspace", "Delete"])("removes itself on the %s key", (key) => {
-        const onRemove = jest.fn();
+        const onRemove = vi.fn();
         render(<Token text="monalisa" onRemove={onRemove} />);
 
         fireEvent.keyDown(token(), { key });
@@ -96,7 +96,7 @@ describe("Token", () => {
     });
 
     it("renders as the button it is asked to be, and does what it is asked on a click", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(<Token as="button" text="monalisa" onClick={onClick} />);
 
         const button = screen.getByRole("button", { name: "monalisa" });
@@ -139,8 +139,8 @@ describe("Token", () => {
     });
 
     it("removes itself without also following what it leads to", () => {
-        const onRemove = jest.fn();
-        const onClick = jest.fn();
+        const onRemove = vi.fn();
+        const onClick = vi.fn();
         render(<Token as="button" text="monalisa" onClick={onClick} onRemove={onRemove} />);
 
         fireEvent.click(removeButton() as HTMLElement);

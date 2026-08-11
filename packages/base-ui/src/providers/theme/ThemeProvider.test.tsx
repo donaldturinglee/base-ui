@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { ThemeProvider, useColorSchemeVar, useTheme } from ".";
 import type { ThemeProviderProps } from "./Theme.types";
 

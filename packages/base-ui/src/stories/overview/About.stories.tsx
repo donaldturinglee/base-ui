@@ -165,7 +165,7 @@ export const WhatItIsBuiltOn: StoryFn = () => (
         <Heading size="medium">What it is built on</Heading>
         <Text as="p">
             The components are TypeScript and React, styled with Tailwind and built into the package
-            with Rollup. React and <Code>react-dom</Code> are peer dependencies, so the components
+            with Rolldown. React and <Code>react-dom</Code> are peer dependencies, so the components
             are drawn by the copy of React the application already has.
         </Text>
         <List>
@@ -181,8 +181,8 @@ export const WhatItIsBuiltOn: StoryFn = () => (
                 <Code>Calendar</Code>
             </List.Item>
             <List.Item>
-                Storybook, Jest and ESLint, none of which are shipped: they are what the library is
-                developed, checked and read under
+                Storybook, Vitest, Playwright and ESLint, none of which are shipped: they are what
+                the library is developed, checked and read under
             </List.Item>
         </List>
         <Text as="p">

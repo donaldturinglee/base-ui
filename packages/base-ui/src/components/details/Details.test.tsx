@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Button } from "../button";
 import { Details } from ".";
 import type { DetailsProps } from "./Details.types";
@@ -64,7 +64,7 @@ describe("Details", () => {
     });
 
     it("reports every change through onChange", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderDetails({ onChange });
 
         toggle(true);
@@ -76,7 +76,7 @@ describe("Details", () => {
     });
 
     it("passes the toggle event on to a caller listening for it", () => {
-        const onToggle = jest.fn();
+        const onToggle = vi.fn();
         renderDetails({ onToggle });
 
         toggle(true);
@@ -84,7 +84,7 @@ describe("Details", () => {
     });
 
     it("holds the element to what the caller asked for, where they are holding the state", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderDetails({ open: false, onChange });
 
         toggle(true);
@@ -107,7 +107,7 @@ describe("Details", () => {
     });
 
     it("reports the outside click through onChange", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderDetails({ closeOnOutsideClick: true, defaultOpen: true, onChange });
 
         fireEvent.click(document.body);

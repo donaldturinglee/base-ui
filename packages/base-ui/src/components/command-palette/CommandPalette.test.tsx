@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { CommandPalette } from ".";
 import { commandScore } from "./commandScore";
 import type { CommandPaletteProps } from "./CommandPalette.types";
@@ -156,7 +156,7 @@ describe("CommandPalette", () => {
         });
 
         it("ranks by a filter of the caller's own where it is given one", () => {
-            const filter = jest.fn((value: string) => (value === "Settings" ? 1 : 0));
+            const filter = vi.fn((value: string) => (value === "Settings" ? 1 : 0));
             renderPalette({ filter });
 
             type("anything");
@@ -248,7 +248,7 @@ describe("CommandPalette", () => {
 
     describe("picking an item", () => {
         it("hands back what was picked when it is pressed", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             renderPalette({ onSelect });
 
             fireEvent.click(screen.getByText("Settings"));
@@ -257,7 +257,7 @@ describe("CommandPalette", () => {
         });
 
         it("hands it back to the item's own handler as well", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
 
             render(
                 <CommandPalette>
@@ -273,7 +273,7 @@ describe("CommandPalette", () => {
         });
 
         it("picks whatever is in hand when enter is pressed", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             renderPalette({ onSelect });
 
             fireEvent.keyDown(field(), { key: "ArrowDown" });
@@ -283,7 +283,7 @@ describe("CommandPalette", () => {
         });
 
         it("leaves an item there is nothing to do with alone", () => {
-            const onSelect = jest.fn();
+            const onSelect = vi.fn();
             renderPalette({ onSelect });
 
             fireEvent.click(screen.getByText("Delete project"));
@@ -302,7 +302,7 @@ describe("CommandPalette", () => {
         });
 
         it("tells the caller as it changes", () => {
-            const onSearchChange = jest.fn();
+            const onSearchChange = vi.fn();
             renderPalette({ onSearchChange });
 
             type("sett");
@@ -311,7 +311,7 @@ describe("CommandPalette", () => {
         });
 
         it("stays as the caller is holding it", () => {
-            const onSearchChange = jest.fn();
+            const onSearchChange = vi.fn();
             renderPalette({ search: "dash", onSearchChange });
 
             type("sett");
@@ -322,7 +322,7 @@ describe("CommandPalette", () => {
     });
 
     describe("brought out over the page", () => {
-        const renderDialog = (open: boolean, onOpenChange = jest.fn()) =>
+        const renderDialog = (open: boolean, onOpenChange = vi.fn()) =>
             render(
                 <CommandPalette.Dialog open={open} onOpenChange={onOpenChange}>
                     <CommandPalette.Input />
@@ -357,7 +357,7 @@ describe("CommandPalette", () => {
         });
 
         it("closes when escape is pressed", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             renderDialog(true, onOpenChange);
 
             fireEvent.keyDown(document, { key: "Escape" });
@@ -366,7 +366,7 @@ describe("CommandPalette", () => {
         });
 
         it("closes when a press lands off the panel", () => {
-            const onOpenChange = jest.fn();
+            const onOpenChange = vi.fn();
             renderDialog(true, onOpenChange);
 
             const backdrop = document.querySelector(

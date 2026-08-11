@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Textarea, getCharacterCount, SCREEN_READER_DELAY } from ".";
 
 const field = () => screen.getByRole("textbox").parentElement;
@@ -71,7 +71,7 @@ describe("Textarea", () => {
     });
 
     it("reports a change", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(<Textarea aria-label="Notes" onChange={onChange} />);
 
         fireEvent.change(screen.getByRole("textbox"), { target: { value: "Hello" } });
@@ -176,11 +176,11 @@ describe("Textarea", () => {
 
 describe("Textarea character limit", () => {
     beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
     });
 
     afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     it("shows no counter without a limit", () => {
@@ -274,7 +274,7 @@ describe("Textarea character limit", () => {
         expect(live).toBeEmptyDOMElement();
 
         act(() => {
-            jest.advanceTimersByTime(SCREEN_READER_DELAY);
+            vi.advanceTimersByTime(SCREEN_READER_DELAY);
         });
         expect(live).toBeEmptyDOMElement();
     });
@@ -287,7 +287,7 @@ describe("Textarea character limit", () => {
         expect(live).toBeEmptyDOMElement();
 
         act(() => {
-            jest.advanceTimersByTime(SCREEN_READER_DELAY);
+            vi.advanceTimersByTime(SCREEN_READER_DELAY);
         });
         expect(live).toHaveTextContent("5 characters remaining");
     });
@@ -299,11 +299,11 @@ describe("Textarea character limit", () => {
 
         fireEvent.change(textarea, { target: { value: "H" } });
         act(() => {
-            jest.advanceTimersByTime(SCREEN_READER_DELAY / 2);
+            vi.advanceTimersByTime(SCREEN_READER_DELAY / 2);
         });
         fireEvent.change(textarea, { target: { value: "Hello" } });
         act(() => {
-            jest.advanceTimersByTime(SCREEN_READER_DELAY);
+            vi.advanceTimersByTime(SCREEN_READER_DELAY);
         });
 
         expect(live).toHaveTextContent("5 characters remaining");

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Tabs } from ".";
 import type { TabsProps } from "./Tabs.types";
 
@@ -96,7 +96,7 @@ describe("Tabs", () => {
     });
 
     it("reports every change through onChange", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderTabs({ onChange });
 
         fireEvent.mouseDown(tab("Tab B"));
@@ -106,7 +106,7 @@ describe("Tabs", () => {
     });
 
     it("takes what is selected from the caller, where they are holding the state", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderTabs({ value: "a", defaultValue: undefined, onChange });
 
         fireEvent.mouseDown(tab("Tab B"));
@@ -270,8 +270,8 @@ describe("Tabs", () => {
     });
 
     it("runs a caller's own handlers alongside its own", () => {
-        const onKeyDown = jest.fn();
-        const onFocus = jest.fn();
+        const onKeyDown = vi.fn();
+        const onFocus = vi.fn();
 
         render(
             <Tabs defaultValue="a">
@@ -343,7 +343,7 @@ describe("Tabs", () => {
     });
 
     it("refuses to stand outside of a Tabs", () => {
-        const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
+        const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
         expect(() => render(<Tabs.Tab value="a">Tab A</Tabs.Tab>)).toThrow(
             /within a `Tabs` component/,

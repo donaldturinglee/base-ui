@@ -21,10 +21,13 @@ git checkout -b feature/amazing-feature`;
 const layout = `package.json           the workspace root, private and never published
 turbo.json             the task pipeline, and what each task caches
 eslint.config.mjs      shared by every package
-packages/base-ui/      @gamecrafters/base-ui, the published package`;
+packages/base-ui/      @gamecrafters/base-ui, the published package
+packages/config/       @gamecrafters/config, the config the packages are checked under
+e2e/                   @gamecrafters/e2e, the suites driven through a browser`;
 
 const checks = `npm run lint
-npm test`;
+npm test
+npm run test:e2e`;
 
 const commit = `git commit -m "feat: add StatusDot component with stories, tests, and styles"
 git push origin feature/amazing-feature`;
@@ -32,7 +35,7 @@ git push origin feature/amazing-feature`;
 const files = `packages/base-ui/src/components/status-dot/
     StatusDot.tsx                    the component
     StatusDot.types.ts               the props, and the unions they are drawn from
-    StatusDot.test.tsx               the Jest suite
+    StatusDot.test.tsx               the Vitest suite
     StatusDot.stories.tsx            Default and Playground
     StatusDot.features.stories.tsx   one story for each thing it can do
     index.ts                         the component and its types, named
@@ -65,9 +68,10 @@ const component = `function StatusDot<As extends React.ElementType = "span">(
 
 const scripts = `npm run storybook        Runs Storybook on port 9000
 npm run storybook:build  Builds the static Storybook
-npm test                 Runs the Jest suites
-npm run build            Builds the package with Rollup into packages/base-ui/build/
-npm run lint             Lints each package's src and tests with ESLint
+npm test                 Runs the Vitest suites
+npm run test:e2e         Runs the Playwright suites against Storybook
+npm run build            Builds the package with Rolldown into packages/base-ui/build/
+npm run lint             Lints each package's own sources with ESLint
 npm run format           Applies both the ESLint and Prettier fixes
 npm run clean            Removes the build output`;
 
@@ -102,9 +106,11 @@ export const Default: StoryFn = () => (
         <Text as="p">
             The repository is an npm workspace. The library is a package inside it rather than the
             repository itself, and the root holds only what every package shares: the ESLint and
-            Prettier configuration, and the Turbo pipeline the scripts are run through. The scripts
-            are still run from the root, and Turbo caches each task against its inputs so an
-            unchanged package is not built or tested twice.
+            Prettier configuration, and the Turbo pipeline the scripts are run through.
+            Configuration that belongs to a tool rather than to the root is a package of its own
+            beside the library, and so are the end to end suites, since what they drive is the
+            library as a reader meets it. The scripts are still run from the root, and Turbo caches
+            each task against its inputs so an unchanged package is not built or tested twice.
         </Text>
         <CodeBlock language="text">
             <CodeBlock.Content>
@@ -223,18 +229,25 @@ export const WhatIsChecked: StoryFn = () => (
     <Stack gap="normal">
         <Heading size="medium">What is checked</Heading>
         <Text as="p">
-            A component is expected to carry a Jest suite, and the suites are held to what a reader
-            of the component would ask of it: that it draws the element it says it draws, that each
-            variant reaches the element, that a ref and a <Code>className</Code> get through, and
-            that a screen reader is told what it needs to be told.
+            A component is expected to carry a Vitest suite, and the suites are held to what a
+            reader of the component would ask of it: that it draws the element it says it draws,
+            that each variant reaches the element, that a ref and a <Code>className</Code> get
+            through, and that a screen reader is told what it needs to be told. Everything a browser
+            has the last word on — where focus lands, what the top layer holds, what colour the
+            cascade came out with — is held to a Playwright suite instead, driven against the
+            component&apos;s own story.
         </Text>
         <List>
             <List.Item>
-                <Code>npm run lint</Code> — ESLint over each package&apos;s <Code>src</Code> and{" "}
-                <Code>tests</Code>
+                <Code>npm run lint</Code> — ESLint over each package&apos;s own sources
             </List.Item>
             <List.Item>
-                <Code>npm test</Code> — the Jest suites, run under the config in <Code>tests</Code>
+                <Code>npm test</Code> — the Vitest suites, run under the config in{" "}
+                <Code>packages/config/vitest</Code>
+            </List.Item>
+            <List.Item>
+                <Code>npm run test:e2e</Code> — the Playwright suites in <Code>e2e</Code>, run
+                against a Storybook brought up for them
             </List.Item>
             <List.Item>
                 <Code>npm run format</Code> — the ESLint and Prettier fixes, applied rather than

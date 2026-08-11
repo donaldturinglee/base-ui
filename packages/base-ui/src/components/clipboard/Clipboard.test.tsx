@@ -1,16 +1,16 @@
 import * as React from "react";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { FormControl } from "../form-control";
 import { Clipboard } from ".";
 import type { ClipboardProps } from "./Clipboard.types";
 
 const VALUE = "https://example.com/base-ui.git";
 
-const writeText = jest.fn<(value: string) => Promise<void>>();
+const writeText = vi.fn<(value: string) => Promise<void>>();
 
-const execCommand = jest.fn<(commandId: string) => boolean>();
+const execCommand = vi.fn<(commandId: string) => boolean>();
 
 // jsdom carries neither the asynchronous clipboard nor the command the older way of copying runs,
 // so both are laid down here and each test says which of them the page is allowed
@@ -116,7 +116,7 @@ describe("Clipboard", () => {
         });
 
         it("reports the text that reached the clipboard", async () => {
-            const onCopy = jest.fn();
+            const onCopy = vi.fn();
             render(clipboard({ onCopy }));
 
             await press();
@@ -168,11 +168,11 @@ describe("Clipboard", () => {
 
     describe("the tick", () => {
         beforeEach(() => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterEach(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         it("is taken away once it has stood long enough", async () => {
@@ -182,7 +182,7 @@ describe("Clipboard", () => {
             expect(root()).toHaveAttribute("data-copied", "true");
 
             act(() => {
-                jest.advanceTimersByTime(1000);
+                vi.advanceTimersByTime(1000);
             });
 
             expect(root()).toHaveAttribute("data-copied", "false");
@@ -194,13 +194,13 @@ describe("Clipboard", () => {
             await press();
 
             act(() => {
-                jest.advanceTimersByTime(600);
+                vi.advanceTimersByTime(600);
             });
 
             await press();
 
             act(() => {
-                jest.advanceTimersByTime(600);
+                vi.advanceTimersByTime(600);
             });
 
             expect(root()).toHaveAttribute("data-copied", "true");
@@ -212,7 +212,7 @@ describe("Clipboard", () => {
             await press();
 
             act(() => {
-                jest.advanceTimersByTime(60000);
+                vi.advanceTimersByTime(60000);
             });
 
             expect(root()).toHaveAttribute("data-copied", "true");
@@ -222,7 +222,7 @@ describe("Clipboard", () => {
     describe("where the clipboard cannot be reached", () => {
         it("falls back to the older way of copying", async () => {
             setClipboard(undefined);
-            const onCopy = jest.fn();
+            const onCopy = vi.fn();
             render(clipboard({ onCopy }));
 
             await press();
@@ -255,7 +255,7 @@ describe("Clipboard", () => {
             writeText.mockRejectedValue(error);
             execCommand.mockReturnValue(false);
 
-            const onCopyError = jest.fn();
+            const onCopyError = vi.fn();
             render(clipboard({ onCopyError }));
 
             await press();
@@ -268,8 +268,8 @@ describe("Clipboard", () => {
             setClipboard(undefined);
             execCommand.mockReturnValue(false);
 
-            const onCopy = jest.fn();
-            const onCopyError = jest.fn();
+            const onCopy = vi.fn();
+            const onCopyError = vi.fn();
             render(clipboard({ onCopy, onCopyError }));
 
             await press();
@@ -281,7 +281,7 @@ describe("Clipboard", () => {
 
     describe("disabled", () => {
         it("stops the trigger being used", async () => {
-            const onCopy = jest.fn();
+            const onCopy = vi.fn();
             render(clipboard({ disabled: true, onCopy }));
 
             expect(trigger()).toBeDisabled();
@@ -332,7 +332,7 @@ describe("Clipboard", () => {
         });
 
         it("still calls a press handler of the caller's own", async () => {
-            const onClick = jest.fn();
+            const onClick = vi.fn();
             render(
                 <Clipboard value={VALUE}>
                     <Clipboard.Trigger onClick={onClick} />

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { act, render, screen } from "@testing-library/react";
-import { describe, it, expect } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Markdown, MARKDOWN_TRANSFORMERS } from ".";
 import type { MarkdownProps } from "./Markdown.types";
 

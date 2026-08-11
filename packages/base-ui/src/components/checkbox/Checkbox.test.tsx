@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import Checkbox from "./Checkbox";
 
 describe("Checkbox", () => {
@@ -30,7 +30,7 @@ describe("Checkbox", () => {
     });
 
     it("reports a change", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(<Checkbox aria-label="Choice" onChange={onChange} />);
 
         fireEvent.click(screen.getByRole("checkbox"));

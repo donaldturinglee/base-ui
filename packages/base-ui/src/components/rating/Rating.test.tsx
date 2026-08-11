@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Rating, DEFAULT_RATING_COUNT } from ".";
 import type { RatingProps, RatingSize } from "./Rating.types";
 
@@ -94,7 +94,7 @@ describe("Rating", () => {
 
     describe("moving it", () => {
         it("reports the star it has moved to", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRating({ onChange });
 
             fireEvent.click(star("4 stars"));
@@ -110,7 +110,7 @@ describe("Rating", () => {
         });
 
         it("leaves a rating the caller is holding the value of where it was", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRating({ value: 2, onChange });
 
             fireEvent.click(star("4 stars"));
@@ -128,7 +128,7 @@ describe("Rating", () => {
         });
 
         it("does not report on arrival or when the value changes elsewhere", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             const { rerender } = renderRating({ value: 2, onChange });
             expect(onChange).not.toHaveBeenCalled();
 
@@ -141,7 +141,7 @@ describe("Rating", () => {
 
     describe("clearing it", () => {
         it("takes the rating back to none when the star it stands at is picked again", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRating({ clearable: true, defaultValue: 3, onChange });
 
             fireEvent.click(star("3 stars"));
@@ -152,7 +152,7 @@ describe("Rating", () => {
         });
 
         it("leaves the rating where it stands when it was not told it could be cleared", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRating({ defaultValue: 3, onChange });
 
             fireEvent.click(star("3 stars"));
@@ -162,7 +162,7 @@ describe("Rating", () => {
         });
 
         it("moves rather than clears when another star is picked", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRating({ clearable: true, defaultValue: 3, onChange });
 
             fireEvent.click(star("5 stars"));
@@ -219,7 +219,7 @@ describe("Rating", () => {
 
     describe("disabled", () => {
         it("stops the stars being picked", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRating({ disabled: true, defaultValue: 2, onChange });
 
             fireEvent.click(star("4 stars"));

@@ -1,8 +1,8 @@
 import * as React from "react";
 import dayjs from "dayjs";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, beforeAll, afterAll, afterEach, jest } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, beforeAll, afterAll, afterEach, vi, type Mock } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { Calendar } from ".";
 import type {
     CalendarBaseProps,
@@ -24,23 +24,8 @@ const TODAY = "2026-06-15";
 // Only the clock is held still. Faking the timers themselves as well would leave React and the
 // testing library waiting on ticks that never come
 const CLOCK_ONLY = {
-    doNotFake: [
-        "cancelAnimationFrame",
-        "cancelIdleCallback",
-        "clearImmediate",
-        "clearInterval",
-        "clearTimeout",
-        "hrtime",
-        "nextTick",
-        "performance",
-        "queueMicrotask",
-        "requestAnimationFrame",
-        "requestIdleCallback",
-        "setImmediate",
-        "setInterval",
-        "setTimeout",
-    ],
-} as Parameters<typeof jest.useFakeTimers>[0];
+    toFake: ["Date"],
+} as Parameters<typeof vi.useFakeTimers>[0];
 
 const renderCalendar = (props: SingleProps = {}) =>
     render(<Calendar defaultMonth={TODAY} {...props} />);
@@ -75,12 +60,12 @@ describe("Calendar", () => {
     // The clock is held still once for the whole suite rather than put up and taken down
     // around every test, since nothing here ever moves it on
     beforeAll(() => {
-        jest.useFakeTimers(CLOCK_ONLY);
-        jest.setSystemTime(new Date(`${TODAY}T12:00:00`));
+        vi.useFakeTimers(CLOCK_ONLY);
+        vi.setSystemTime(new Date(`${TODAY}T12:00:00`));
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
     });
 
     afterEach(() => {
@@ -183,7 +168,7 @@ describe("Calendar", () => {
     describe("picking a stretch of days", () => {
         // The two ends of the range as the calendar hands them back, written the one way so
         // that a whole range can be read at a glance
-        const handedBack = (onChange: jest.Mock, call = 0) => {
+        const handedBack = (onChange: Mock, call = 0) => {
             const range = onChange.mock.calls[call][0] as CalendarRange;
 
             return {
@@ -193,7 +178,7 @@ describe("Calendar", () => {
         };
 
         it("takes two days, the first opening the stretch and the second closing it", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ onChange });
 
             fireEvent.click(day("2026-06-10") as HTMLButtonElement);
@@ -230,7 +215,7 @@ describe("Calendar", () => {
         });
 
         it("puts the two ends the right way round where they were pressed backwards", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ onChange });
 
             fireEvent.click(day("2026-06-14") as HTMLButtonElement);
@@ -242,7 +227,7 @@ describe("Calendar", () => {
         });
 
         it("lets go of the day a stretch was started on when it is pressed again", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ onChange });
 
             fireEvent.click(day("2026-06-10") as HTMLButtonElement);
@@ -253,7 +238,7 @@ describe("Calendar", () => {
         });
 
         it("starts over rather than letting go once the stretch has been closed", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ onChange });
 
             fireEvent.click(day("2026-06-10") as HTMLButtonElement);
@@ -265,7 +250,7 @@ describe("Calendar", () => {
         });
 
         it("starts a new stretch on a third day being pressed", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ onChange });
 
             fireEvent.click(day("2026-06-10") as HTMLButtonElement);
@@ -286,7 +271,7 @@ describe("Calendar", () => {
         });
 
         it("leaves a stretch the caller is holding where it is", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ value: { from: "2026-06-10", to: null }, onChange });
 
             fireEvent.click(day("2026-06-14") as HTMLButtonElement);
@@ -301,7 +286,7 @@ describe("Calendar", () => {
         });
 
         it("leaves a day that cannot be picked alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderRangeCalendar({ min: "2026-06-10", onChange });
 
             fireEvent.click(day("2026-06-09") as HTMLButtonElement);
@@ -361,7 +346,7 @@ describe("Calendar", () => {
 
     describe("picking a day", () => {
         it("hands back the day that was picked", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCalendar({ onChange });
 
             fireEvent.click(day("2026-06-11") as HTMLButtonElement);
@@ -388,7 +373,7 @@ describe("Calendar", () => {
         });
 
         it("leaves a day the caller is holding where it is", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCalendar({ value: "2026-06-20", onChange });
 
             fireEvent.click(day("2026-06-11") as HTMLButtonElement);
@@ -425,7 +410,7 @@ describe("Calendar", () => {
         });
 
         it("tells the caller which month it went to", () => {
-            const onMonthChange = jest.fn();
+            const onMonthChange = vi.fn();
             renderCalendar({ onMonthChange });
 
             fireEvent.click(button("Next month"));
@@ -436,7 +421,7 @@ describe("Calendar", () => {
         });
 
         it("stays on the month the caller is holding for it", () => {
-            const onMonthChange = jest.fn();
+            const onMonthChange = vi.fn();
             renderCalendar({ month: "2026-06-01", onMonthChange });
 
             fireEvent.click(button("Next month"));
@@ -476,7 +461,7 @@ describe("Calendar", () => {
         });
 
         it("leaves a day that cannot be picked alone", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderCalendar({ min: "2026-06-10", onChange });
 
             fireEvent.click(day("2026-06-09") as HTMLButtonElement);

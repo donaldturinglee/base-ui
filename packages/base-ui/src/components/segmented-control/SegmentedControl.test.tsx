@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, it, expect, jest, beforeEach, afterEach } from "@jest/globals";
-import "@testing-library/jest-dom/jest-globals";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
 import { CodeRegular, EyeRegular, PeopleRegular } from "@gamecrafters/base-ui-icons";
 import { SegmentedControl } from ".";
 import type { SegmentedControlProps } from "./SegmentedControl.types";
@@ -116,7 +116,7 @@ describe("SegmentedControl", () => {
     });
 
     it("calls onChange with the index of the segment that was pressed", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         renderControl({ onChange });
 
         fireEvent.click(segment("Blame"));
@@ -134,7 +134,7 @@ describe("SegmentedControl", () => {
     });
 
     it("calls the segment's own onClick as well", () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(
             <SegmentedControl aria-label="File view">
                 <SegmentedControl.Button defaultSelected>Preview</SegmentedControl.Button>
@@ -148,7 +148,7 @@ describe("SegmentedControl", () => {
     });
 
     it("leaves a segment that cannot be picked where it is", () => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         render(
             <SegmentedControl aria-label="File view" onChange={onChange}>
                 <SegmentedControl.Button defaultSelected>Preview</SegmentedControl.Button>
@@ -308,7 +308,7 @@ describe("SegmentedControl", () => {
         });
 
         it("calls onChange with the index of the segment picked from the menu", () => {
-            const onChange = jest.fn();
+            const onChange = vi.fn();
             renderDropdown({ onChange });
 
             fireEvent.click(trigger());
