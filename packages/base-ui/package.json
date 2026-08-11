@@ -22,10 +22,10 @@
   ],
   "scripts": {
     "build": "tsc --emitDeclarationOnly --noEmit false && rolldown -c",
-    "test": "vitest run --config ../config/vitest/vitest.config.mts",
+    "test": "vitest run",
     "storybook": "storybook dev -p 9000",
     "storybook:build": "storybook build",
-    "lint": "npx eslint src",
+    "lint": "npx eslint src --config ../config/eslint/react.js",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
@@ -57,7 +57,8 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@gamecrafters/config": "*",
+    "@gamecrafters/eslint-config": "*",
+    "@gamecrafters/typescript-config": "*",
     "@storybook/addon-a11y": "^10.4.2",
     "@storybook/addon-docs": "^10.4.2",
     "@storybook/addon-themes": "^10.4.2",
@@ -68,6 +69,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-is": "^19.2.0",
     "jiti": "^2.6.1",
+    "jsdom": "^26.1.0",
     "postcss": "^8.5.15",
     "rolldown": "^1.2.3",
     "rollup-plugin-postcss": "^4.0.2",

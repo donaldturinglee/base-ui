@@ -1,0 +1,10 @@
+// What a package that draws components is compiled under: everything every package shares, and
+// on top of it what only a package reaching the browser needs, which is the DOM in its lib and
+// the JSX transform React reads its elements through
+{
+    "extends": "./base.json",
+    "compilerOptions": {
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "jsx": "react-jsx"
+    }
+}

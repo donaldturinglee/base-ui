@@ -1,32 +1,17 @@
 {
+    "extends": "../config/typescript/react.json",
+    // What is left here is what is read against this package rather than against the config it
+    // extends: where the sources are, and where what is built from them goes
     "compilerOptions": {
-        "target": "ES6",
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "lib": [
-            "DOM",
-            "DOM.Iterable",
-            "ESNext"
-        ],
-        "jsx": "react-jsx",
-        "declaration": true,
         "declarationDir": "build",
         "outDir": "build",
-        "rootDir": "src",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "noEmit": true,
+        "rootDir": "src"
     },
-    "include": [
-        "src/**/*",
-    ],
+    "include": ["src/**/*"],
     "exclude": [
         "node_modules",
         "build",
+        "src/tests",
         "**/*.stories.tsx",
         "**/*.test.ts",
         "**/*.test.tsx"

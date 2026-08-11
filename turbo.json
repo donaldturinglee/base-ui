@@ -1,7 +1,6 @@
 {
     "$schema": "https://turborepo.com/schema.json",
     "globalDependencies": [
-        "eslint.config.mjs",
         ".prettierrc",
         "packages/config/**"
     ],

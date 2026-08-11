@@ -20,10 +20,10 @@ git checkout -b feature/amazing-feature`;
 
 const layout = `package.json           the workspace root, private and never published
 turbo.json             the task pipeline, and what each task caches
-eslint.config.mjs      shared by every package
+.prettierrc            shared by every package
 packages/base-ui/      @gamecrafters/base-ui, the published package
-packages/config/       @gamecrafters/config, the config the packages are checked under
-e2e/                   @gamecrafters/e2e, the suites driven through a browser`;
+packages/base-ui/e2e/  @gamecrafters/e2e, the suites driven through a browser
+packages/config/       a package per tool, the config the packages are checked under`;
 
 const checks = `npm run lint
 npm test
@@ -105,12 +105,12 @@ export const Default: StoryFn = () => (
         </CodeBlock>
         <Text as="p">
             The repository is an npm workspace. The library is a package inside it rather than the
-            repository itself, and the root holds only what every package shares: the ESLint and
-            Prettier configuration, and the Turbo pipeline the scripts are run through.
-            Configuration that belongs to a tool rather than to the root is a package of its own
-            beside the library, and so are the end to end suites, since what they drive is the
-            library as a reader meets it. The scripts are still run from the root, and Turbo caches
-            each task against its inputs so an unchanged package is not built or tested twice.
+            repository itself, and the root holds only what every package shares: the Prettier
+            configuration, and the Turbo pipeline the scripts are run through. Configuration that
+            belongs to a tool rather than to the root is a package per tool beside the library, and
+            the end to end suites are a package inside it, since what they are run against is its
+            own Storybook. The scripts are still run from the root, and Turbo caches each task
+            against its inputs so an unchanged package is not built or tested twice.
         </Text>
         <CodeBlock language="text">
             <CodeBlock.Content>
@@ -243,11 +243,11 @@ export const WhatIsChecked: StoryFn = () => (
             </List.Item>
             <List.Item>
                 <Code>npm test</Code> — the Vitest suites, run under the config in{" "}
-                <Code>packages/config/vitest</Code>
+                <Code>packages/base-ui/src/tests</Code>
             </List.Item>
             <List.Item>
-                <Code>npm run test:e2e</Code> — the Playwright suites in <Code>e2e</Code>, run
-                against a Storybook brought up for them
+                <Code>npm run test:e2e</Code> — the Playwright suites in{" "}
+                <Code>packages/base-ui/e2e</Code>, run against a Storybook brought up for them
             </List.Item>
             <List.Item>
                 <Code>npm run format</Code> — the ESLint and Prettier fixes, applied rather than

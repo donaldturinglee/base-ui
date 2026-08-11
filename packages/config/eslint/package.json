@@ -1,25 +1,25 @@
 {
-  "name": "@gamecrafters/e2e",
+  "name": "@gamecrafters/eslint-config",
   "version": "0.0.0",
   "private": true,
-  "description": "The end to end suites the components are driven through a browser by.",
+  "description": "The ESLint configuration the packages of the workspace are linted under.",
+  "type": "module",
   "scripts": {
-    "test:e2e": "playwright test",
-    "lint": "npx eslint \"**/*.ts\" \"**/*.mts\"",
+    "lint": "npx eslint base.js react.js --config ./base.js",
     "lint:fix": "npm run lint -- --fix",
-    "prettier": "npx prettier \"**/*.ts\" \"**/*.mts\" --check",
+    "prettier": "npx prettier base.js react.js --check",
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run lint:fix && npm run prettier:fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/donaldturinglee/base-ui.git",
-    "directory": "e2e"
+    "directory": "packages/config/eslint"
   },
   "keywords": [
     "base-ui",
-    "playwright",
-    "storybook"
+    "config",
+    "eslint"
   ],
   "author": "donaldturinglee <donaldturinglee@gmail.com>",
   "license": "MIT",
@@ -28,6 +28,12 @@
   },
   "homepage": "https://github.com/donaldturinglee/base-ui#readme",
   "devDependencies": {
-    "@playwright/test": "^1.62.1"
+    "@eslint/js": "^9.37.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-storybook": "10.4.2",
+    "globals": "^14.0.0",
+    "typescript-eslint": "^8.46.0"
   }
 }

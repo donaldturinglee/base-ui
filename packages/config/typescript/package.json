@@ -1,0 +1,30 @@
+{
+  "name": "@gamecrafters/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The TypeScript configuration the packages of the workspace are compiled under.",
+  "scripts": {
+    "prettier": "npx prettier base.json react.json --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donaldturinglee/base-ui.git",
+    "directory": "packages/config/typescript"
+  },
+  "keywords": [
+    "base-ui",
+    "config",
+    "typescript"
+  ],
+  "author": "donaldturinglee <donaldturinglee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donaldturinglee/base-ui/issues"
+  },
+  "homepage": "https://github.com/donaldturinglee/base-ui#readme",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

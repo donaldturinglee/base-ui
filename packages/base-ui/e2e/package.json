@@ -1,24 +1,25 @@
 {
-  "name": "@gamecrafters/config",
+  "name": "@gamecrafters/e2e",
   "version": "0.0.0",
   "private": true,
-  "description": "The configuration the packages of the workspace are checked under.",
+  "description": "The end to end suites the components are driven through a browser by.",
   "scripts": {
-    "lint": "npx eslint vitest",
+    "test:e2e": "playwright test",
+    "lint": "npx eslint \"**/*.ts\" \"**/*.mts\" --config ../../config/eslint/base.js",
     "lint:fix": "npm run lint -- --fix",
-    "prettier": "npx prettier vitest --check",
+    "prettier": "npx prettier \"**/*.ts\" \"**/*.mts\" --check",
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run lint:fix && npm run prettier:fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/donaldturinglee/base-ui.git",
-    "directory": "packages/config"
+    "directory": "packages/base-ui/e2e"
   },
   "keywords": [
     "base-ui",
-    "config",
-    "vitest"
+    "playwright",
+    "storybook"
   ],
   "author": "donaldturinglee <donaldturinglee@gmail.com>",
   "license": "MIT",
@@ -27,9 +28,6 @@
   },
   "homepage": "https://github.com/donaldturinglee/base-ui#readme",
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "jsdom": "^26.1.0",
-    "vitest": "^4.1.10"
+    "@playwright/test": "^1.62.1"
   }
 }

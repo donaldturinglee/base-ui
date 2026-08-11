@@ -4,7 +4,8 @@
   "description": "An implementation of GameCrafters' Base UI Design System using React.",
   "workspaces": [
     "packages/*",
-    "e2e"
+    "packages/config/*",
+    "packages/base-ui/e2e"
   ],
   "scripts": {
     "build": "turbo run build",

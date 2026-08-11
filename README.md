@@ -127,21 +127,6 @@ import { DirectionProvider } from '@gamecrafters/base-ui';
 <DirectionProvider direction="rtl">{children}</DirectionProvider>;
 ```
 
-The repository is an npm workspace. The library itself lives in `packages/base-ui`, and the root
-holds only what is shared across packages: the ESLint and Prettier configuration, and the Turbo
-pipeline the tasks are run through. Configuration that belongs to a tool rather than to the root
-lives in `packages/config`, and the end to end suites stand beside the packages rather than
-inside one, since what they drive is the library as a reader meets it. Neither is published.
-
-```text
-package.json           the workspace root, private and never published
-turbo.json             the task pipeline, and what each task caches
-eslint.config.mjs      shared by every package
-packages/base-ui/      @gamecrafters/base-ui, the published package
-packages/config/       @gamecrafters/config, the config the packages are checked under
-e2e/                   @gamecrafters/e2e, the suites driven through a browser
-```
-
 The scripts are run from the root and reach the packages through Turbo, which caches a task
 against its inputs so an unchanged package is not built or tested twice:
 

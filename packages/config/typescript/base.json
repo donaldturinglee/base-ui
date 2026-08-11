@@ -1,0 +1,21 @@
+// What every package is compiled under, whatever it holds. None of these options names a path:
+// TypeScript reads a relative path against the file it was written in, so an outDir or an
+// include set here would be read against this directory rather than against the package
+// extending it. Those are left to the package, and what is kept here is only what holds true
+// wherever it is extended from
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ESNext"],
+        "declaration": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true
+    }
+}

@@ -1,9 +1,9 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
 
-// The suites stand beside the packages rather than inside one, so the package whose Storybook
-// they are driven against is named here for the server to be started from
-const library = fileURLToPath(new URL("../packages/base-ui/", import.meta.url));
+// The suites sit inside the package whose Storybook they are driven against, so the server is
+// started from the directory above them rather than from a package named across the workspace
+const library = fileURLToPath(new URL("../", import.meta.url));
 
 // The same port `npm run storybook` serves on, so a Storybook already up is the one the suites
 // are run against rather than a second one beside it
