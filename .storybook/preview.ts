@@ -22,9 +22,18 @@ const preview: Preview = {
                 date: /Date$/i,
             },
         },
+        // The sidebar reads in the order the library is learnt in: what it is and how to install
+        // it, then what it is drawn from, then the components themselves. Overview is ordered
+        // the same way inside, from getting it running to what it is. Anything not named here
+        // follows in the order Storybook would have put it in on its own
         options: {
             storySort: {
-                order: [],
+                order: [
+                    "Overview",
+                    ["Installation", "Community", "Contributing", "About"],
+                    "Primitives",
+                    "Components",
+                ],
             },
         },
         a11y: {
