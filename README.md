@@ -123,17 +123,32 @@ import { DirectionProvider } from '@gamecrafters/base-ui';
 <DirectionProvider direction="rtl">{children}</DirectionProvider>;
 ```
 
-The scripts the repository is worked with:
+The repository is an npm workspace. The library itself lives in `packages/base-ui`, and the root
+holds only what is shared across packages: the ESLint and Prettier configuration, and the Turbo
+pipeline the tasks are run through.
+
+```text
+package.json           the workspace root, private and never published
+turbo.json             the task pipeline, and what each task caches
+eslint.config.mjs      shared by every package
+packages/base-ui/      @gamecrafters/base-ui, the published package
+```
+
+The scripts are run from the root and reach the packages through Turbo, which caches a task
+against its inputs so an unchanged package is not built or tested twice:
 
 | Script | What it does |
 | --- | --- |
 | `npm run storybook` | Runs Storybook on port 9000 |
 | `npm run storybook:build` | Builds the static Storybook |
 | `npm test` | Runs the Jest suites |
-| `npm run build` | Builds the package with Rollup into `build/` |
-| `npm run lint` | Lints `src` and `tests` with ESLint |
+| `npm run build` | Builds the package with Rollup into `packages/base-ui/build/` |
+| `npm run lint` | Lints each package's `src` and `tests` with ESLint |
 | `npm run format` | Applies both the ESLint and Prettier fixes |
 | `npm run clean` | Removes the build output |
+
+Any one of them can be pointed at a single package instead, with `npm run build --workspace
+@gamecrafters/base-ui`.
 
 _Every component has a page in Storybook, with a Playground story for its props and a Features section for what it can do._
 
@@ -163,7 +178,7 @@ Don't forget to give the project a star! Thanks again!
 5. Push to the Branch (`git push origin feature/AmazingFeature`)
 6. Open a Pull Request
 
-A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Jest suite and two Storybook files under `src/components/<component-name>`, with its stylesheet under `src/styles/components` and one line added to each of the two barrels.
+A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Jest suite and two Storybook files under `packages/base-ui/src/components/<component-name>`, with its stylesheet under `packages/base-ui/src/styles/components` and one line added to each of the two barrels.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

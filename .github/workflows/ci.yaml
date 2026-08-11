@@ -48,15 +48,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # The version that is published is the one in package.json, so the tag the release was
-      # cut from is held against it first. The tag is read through the environment rather than
-      # written into the script, so nothing in a tag name can run here
+      # The version that is published is the one in the package's own package.json, so the tag
+      # the release was cut from is held against it first. The tag is read through the
+      # environment rather than written into the script, so nothing in a tag name can run here
       - name: Check the version against the tag it was released from
         if: github.event_name == 'release'
         env:
           TAG: ${{ github.event.release.tag_name }}
         run: |
-          version="$(node -p "require('./package.json').version")"
+          version="$(node -p "require('./packages/base-ui/package.json').version")"
           if [ "${TAG#v}" != "$version" ]; then
             echo "::error::Release tag ${TAG} does not match the package version ${version}"
             exit 1
@@ -66,20 +66,22 @@ jobs:
         run: npm run lint
 
       # `npm run prettier` is left out on purpose: it currently fails on the generated
-      # stylesheets under src/styles, so running it here would stop every publish. Put it back
-      # once those files are formatted
+      # stylesheets under packages/base-ui/src/styles, so running it here would stop every
+      # publish. Put it back once those files are formatted
       - name: Test
         run: npm test
 
       - name: Build
         run: npm run build
 
+      # The root of the repository is a private workspace root and is never published, so the
+      # package that goes to npm is named rather than left to the working directory
       - name: Publish
         if: ${{ github.event_name == 'release' || !inputs.dry-run }}
-        run: npm publish --provenance --access public
+        run: npm publish --workspace @gamecrafters/base-ui --provenance --access public
 
       # A dry run does everything a publish does but the upload, so the workflow can be tried
       # out before a release depends on it
       - name: List what a publish would send
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
-        run: npm publish --dry-run
+        run: npm publish --workspace @gamecrafters/base-ui --dry-run

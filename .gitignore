@@ -157,6 +157,12 @@ sketch
 
 storybook-static/
 
+### Turborepo ###
+# gitignore template for Turborepo, the task runner the workspaces are built through
+# website: https://turborepo.com/
+
+.turbo/
+
 ### base-ui ###
 build/
 stats.html

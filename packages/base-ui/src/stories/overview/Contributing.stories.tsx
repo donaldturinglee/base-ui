@@ -18,13 +18,18 @@ cd base-ui
 npm install
 git checkout -b feature/amazing-feature`;
 
+const layout = `package.json           the workspace root, private and never published
+turbo.json             the task pipeline, and what each task caches
+eslint.config.mjs      shared by every package
+packages/base-ui/      @gamecrafters/base-ui, the published package`;
+
 const checks = `npm run lint
 npm test`;
 
 const commit = `git commit -m "feat: add StatusDot component with stories, tests, and styles"
 git push origin feature/amazing-feature`;
 
-const files = `src/components/status-dot/
+const files = `packages/base-ui/src/components/status-dot/
     StatusDot.tsx                    the component
     StatusDot.types.ts               the props, and the unions they are drawn from
     StatusDot.test.tsx               the Jest suite
@@ -32,7 +37,7 @@ const files = `src/components/status-dot/
     StatusDot.features.stories.tsx   one story for each thing it can do
     index.ts                         the component and its types, named
 
-src/styles/components/status-dot.css`;
+packages/base-ui/src/styles/components/status-dot.css`;
 
 const barrel = 'export * from "./status-dot";';
 
@@ -61,8 +66,8 @@ const component = `function StatusDot<As extends React.ElementType = "span">(
 const scripts = `npm run storybook        Runs Storybook on port 9000
 npm run storybook:build  Builds the static Storybook
 npm test                 Runs the Jest suites
-npm run build            Builds the package with Rollup into build/
-npm run lint             Lints src and tests with ESLint
+npm run build            Builds the package with Rollup into packages/base-ui/build/
+npm run lint             Lints each package's src and tests with ESLint
 npm run format           Applies both the ESLint and Prettier fixes
 npm run clean            Removes the build output`;
 
@@ -92,6 +97,18 @@ export const Default: StoryFn = () => (
         <CodeBlock language="shellscript">
             <CodeBlock.Content>
                 <CodeBlock.Code>{fork}</CodeBlock.Code>
+            </CodeBlock.Content>
+        </CodeBlock>
+        <Text as="p">
+            The repository is an npm workspace. The library is a package inside it rather than the
+            repository itself, and the root holds only what every package shares: the ESLint and
+            Prettier configuration, and the Turbo pipeline the scripts are run through. The scripts
+            are still run from the root, and Turbo caches each task against its inputs so an
+            unchanged package is not built or tested twice.
+        </Text>
+        <CodeBlock language="text">
+            <CodeBlock.Content>
+                <CodeBlock.Code>{layout}</CodeBlock.Code>
             </CodeBlock.Content>
         </CodeBlock>
         <Text as="p">
@@ -139,7 +156,7 @@ export const AddingAComponent: StoryFn = () => (
         </Text>
         <CodeBlock language="typescript">
             <CodeBlock.Header>
-                <CodeBlock.Title>src/components/index.ts</CodeBlock.Title>
+                <CodeBlock.Title>packages/base-ui/src/components/index.ts</CodeBlock.Title>
             </CodeBlock.Header>
             <CodeBlock.Content>
                 <CodeBlock.Code>{barrel}</CodeBlock.Code>
@@ -147,7 +164,7 @@ export const AddingAComponent: StoryFn = () => (
         </CodeBlock>
         <CodeBlock language="css">
             <CodeBlock.Header>
-                <CodeBlock.Title>src/styles/components/main.css</CodeBlock.Title>
+                <CodeBlock.Title>packages/base-ui/src/styles/components/main.css</CodeBlock.Title>
             </CodeBlock.Header>
             <CodeBlock.Content>
                 <CodeBlock.Code>{stylesheet}</CodeBlock.Code>
@@ -213,7 +230,8 @@ export const WhatIsChecked: StoryFn = () => (
         </Text>
         <List>
             <List.Item>
-                <Code>npm run lint</Code> — ESLint over <Code>src</Code> and <Code>tests</Code>
+                <Code>npm run lint</Code> — ESLint over each package&apos;s <Code>src</Code> and{" "}
+                <Code>tests</Code>
             </List.Item>
             <List.Item>
                 <Code>npm test</Code> — the Jest suites, run under the config in <Code>tests</Code>
@@ -226,8 +244,9 @@ export const WhatIsChecked: StoryFn = () => (
         <Text as="p">
             Lint and tests are run again on the way to npm, and so is the build. Prettier is left
             out of that workflow on purpose: it currently fails on the generated stylesheets under{" "}
-            <Code>src/styles</Code>, and a check that is known to fail would stop every publish
-            rather than catch anything. It goes back in once those files are formatted.
+            <Code>packages/base-ui/src/styles</Code>, and a check that is known to fail would stop
+            every publish rather than catch anything. It goes back in once those files are
+            formatted.
         </Text>
         <CodeBlock language="text">
             <CodeBlock.Content>
@@ -245,7 +264,7 @@ export const Releasing: StoryFn = () => (
         <Text as="p">
             A merged change is not published by being merged. What sends the package to npm is a
             published GitHub release, so a release is cut once the version in{" "}
-            <Code>package.json</Code> has been raised to what is going out.
+            <Code>packages/base-ui/package.json</Code> has been raised to what is going out.
         </Text>
         <Text as="p">
             The tag the release is cut from is held against that version before anything is

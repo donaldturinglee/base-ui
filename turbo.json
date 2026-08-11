@@ -1,0 +1,29 @@
+{
+    "$schema": "https://turborepo.com/schema.json",
+    "globalDependencies": [
+        "eslint.config.mjs",
+        ".prettierrc"
+    ],
+    "tasks": {
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": ["build/**", "stats.html"]
+        },
+        "storybook:build": {
+            "dependsOn": ["^build"],
+            "outputs": ["storybook-static/**"]
+        },
+        "test": {
+            "dependsOn": [],
+            "outputs": []
+        },
+        "lint": {
+            "dependsOn": [],
+            "outputs": []
+        },
+        "prettier": {
+            "dependsOn": [],
+            "outputs": []
+        }
+    }
+}
