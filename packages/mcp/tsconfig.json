@@ -1,0 +1,21 @@
+{
+    "extends": "../config/typescript/base.json",
+    // What is left here is what is read against this package rather than against the config it
+    // extends: where the sources are, and what the compiler is pointed at once it has them
+    "compilerOptions": {
+        "rootDir": "src",
+        // The library is compiled down to what a browser of any age reads, but nothing here
+        // reaches one: the server is run by the node the client started it with, and is
+        // written against what that node has rather than against what it once had
+        "target": "ES2022",
+        // Nothing imports the package as a library, so there is nothing to declare a type for.
+        // The compiler is only ever run over the sources to check them, and the bundle beside
+        // them is Rolldown's
+        "declaration": false,
+        // The server is run by node rather than drawn in a browser, so what it reaches for is
+        // the runtime's own: the filesystem, the process it was started as, and its streams
+        "types": ["node"]
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "build", "**/*.test.ts"]
+}

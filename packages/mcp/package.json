@@ -1,0 +1,54 @@
+{
+  "name": "@gamecrafters/base-ui-mcp",
+  "version": "0.0.1",
+  "description": "The Model Context Protocol server the Base UI Design System is read through.",
+  "type": "module",
+  "bin": {
+    "base-ui-mcp": "build/main.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && rolldown -c && node build/generate.js",
+    "start": "node build/main.js",
+    "test": "vitest run",
+    "lint": "npx eslint src --config ../config/eslint/base.js",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier src --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run lint:fix && npm run prettier:fix",
+    "clean": "rm -rf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donaldturinglee/base-ui.git",
+    "directory": "packages/mcp"
+  },
+  "keywords": [
+    "base-ui",
+    "mcp",
+    "model-context-protocol",
+    "react",
+    "typescript"
+  ],
+  "author": "donaldturinglee <donaldturinglee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donaldturinglee/base-ui/issues"
+  },
+  "homepage": "https://github.com/donaldturinglee/base-ui#readme",
+  "devDependencies": {
+    "@gamecrafters/base-ui": "*",
+    "@gamecrafters/eslint-config": "*",
+    "@gamecrafters/typescript-config": "*",
+    "@types/node": "^26.2.0",
+    "rolldown": "^1.2.3",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.4.3"
+  }
+}

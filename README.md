@@ -146,6 +146,35 @@ Any one of them can be pointed at a single package instead, with `npm run build 
 
 _Every component has a page in Storybook, with a Playground story for its props and a Features section for what it can do._
 
+### The MCP server
+
+The workspace also holds `@gamecrafters/base-ui-mcp`, a Model Context Protocol server that lets a
+coding agent ask the design system what it holds rather than guess at it. Everything it answers is
+read out of the library's own sources at the end of a build, so it says what the components were
+written as rather than what was once written about them.
+
+```json
+{
+  "mcpServers": {
+    "base-ui": {
+      "command": "npx",
+      "args": ["-y", "@gamecrafters/base-ui-mcp"]
+    }
+  }
+}
+```
+
+| Tool | What it answers |
+| --- | --- |
+| `get_setup_guide` | What an application does once, before any component is written into it |
+| `list_components` | Every component and provider the package exports |
+| `get_component` | Every prop one of them takes, with what it is for and the values it takes |
+| `get_component_examples` | The same component as it is already written, taken from its stories |
+| `list_tokens` | The design tokens to reach for in place of a literal colour or measurement |
+
+Working on the server itself, `npm run build --workspace @gamecrafters/base-ui-mcp` writes it and
+its registry to `packages/mcp/build/`, which a client can be pointed straight at with `node`.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 

@@ -1,561 +1,668 @@
 /* The design tokens the dark scheme is drawn from. Every one of them answers a token of
    the same name in light.css, so a component only ever names the token */
 [data-theme="dark"] {
-  --ansi-cyan: #39c5cf; /** ANSI cyan for terminal text */
-  --ansi-cyan-bright: #56d4dd; /** ANSI bright cyan for highlighted terminal text */
-  --base-color-black: #010409;
-  --base-color-blue-0: #cae8ff;
-  --base-color-blue-1: #a5d6ff;
-  --base-color-blue-2: #79c0ff;
-  --base-color-blue-3: #58a6ff;
-  --base-color-blue-4: #388bfd;
-  --base-color-blue-5: #1f6feb;
-  --base-color-blue-6: #1158c7;
-  --base-color-blue-7: #0d419d;
-  --base-color-blue-8: #0c2d6b;
-  --base-color-blue-9: #051d4d;
-  --base-color-coral-0: #ffddd2;
-  --base-color-coral-1: #ffc2b2;
-  --base-color-coral-2: #ffa28b;
-  --base-color-coral-3: #f78166;
-  --base-color-coral-4: #ea6045;
-  --base-color-coral-5: #cf462d;
-  --base-color-coral-6: #ac3220;
-  --base-color-coral-7: #872012;
-  --base-color-coral-8: #640d04;
-  --base-color-coral-9: #460701;
-  --base-color-green-0: #aff5b4;
-  --base-color-green-1: #7ee787;
-  --base-color-green-2: #56d364;
-  --base-color-green-3: #3fb950;
-  --base-color-green-4: #2ea043;
-  --base-color-green-5: #238636;
-  --base-color-green-6: #196c2e;
-  --base-color-green-7: #0f5323;
-  --base-color-green-8: #033a16;
-  --base-color-green-9: #04260f;
-  --base-color-neutral-1: #0d1117;
-  --base-color-neutral-10: #b7bdc8;
-  --base-color-neutral-11: #d1d7e0;
-  --base-color-neutral-12: #f0f6fc;
-  --base-color-neutral-2: #151b23;
-  --base-color-neutral-3: #212830;
-  --base-color-neutral-4: #262c36;
-  --base-color-neutral-5: #2a313c;
-  --base-color-neutral-6: #2f3742;
-  --base-color-neutral-7: #3d444d;
-  --base-color-neutral-8: #656c76;
-  --base-color-neutral-9: #9198a1;
-  --base-color-orange-0: #ffdfb6;
-  --base-color-orange-1: #ffc680;
-  --base-color-orange-2: #ffa657;
-  --base-color-orange-3: #f0883e;
-  --base-color-orange-4: #db6d28;
-  --base-color-orange-5: #bd561d;
-  --base-color-orange-6: #9b4215;
-  --base-color-orange-7: #762d0a;
-  --base-color-orange-8: #5a1e02;
-  --base-color-orange-9: #3d1300;
-  --base-color-pink-0: #ffdaec;
-  --base-color-pink-1: #ffbedd;
-  --base-color-pink-2: #ff9bce;
-  --base-color-pink-3: #f778ba;
-  --base-color-pink-4: #db61a2;
-  --base-color-pink-5: #bf4b8a;
-  --base-color-pink-6: #9e3670;
-  --base-color-pink-7: #7d2457;
-  --base-color-pink-8: #5e103e;
-  --base-color-pink-9: #42062a;
-  --base-color-purple-0: #eddeff;
-  --base-color-purple-1: #e2c5ff;
-  --base-color-purple-2: #d2a8ff;
-  --base-color-purple-3: #be8fff;
-  --base-color-purple-4: #ab7df8;
-  --base-color-purple-5: #8957e5;
-  --base-color-purple-6: #6e40c9;
-  --base-color-purple-7: #553098;
-  --base-color-purple-8: #3c1e70;
-  --base-color-purple-9: #271052;
-  --base-color-red-0: #ffdcd7;
-  --base-color-red-1: #ffc1ba;
-  --base-color-red-2: #ffa198;
-  --base-color-red-3: #ff7b72;
-  --base-color-red-4: #f85149;
-  --base-color-red-5: #da3633;
-  --base-color-red-6: #b62324;
-  --base-color-red-7: #8e1519;
-  --base-color-red-8: #67060c;
-  --base-color-red-9: #490202;
-  --base-color-transparent: #00000000;
-  --base-color-yellow-0: #f8e3a1;
-  --base-color-yellow-1: #f2cc60;
-  --base-color-yellow-2: #e3b341;
-  --base-color-yellow-3: #d29922;
-  --base-color-yellow-4: #bb8009;
-  --base-color-yellow-5: #9e6a03;
-  --base-color-yellow-6: #845306;
-  --base-color-yellow-7: #693e00;
-  --base-color-yellow-8: #4b2900;
-  --base-color-yellow-9: #341a00;
-  --base-display-color-auburn-0: #271817;
-  --base-display-color-auburn-1: #3a2422;
-  --base-display-color-auburn-2: #543331;
-  --base-display-color-auburn-3: #6d4340;
-  --base-display-color-auburn-4: #87534f;
-  --base-display-color-auburn-5: #a86f6b;
-  --base-display-color-auburn-6: #bf9592;
-  --base-display-color-auburn-7: #c6a19f;
-  --base-display-color-auburn-8: #d4b7b5;
-  --base-display-color-auburn-9: #dfcac8;
-  --base-display-color-blue-0: #001a47;
-  --base-display-color-blue-1: #002766;
-  --base-display-color-blue-2: #00378a;
-  --base-display-color-blue-3: #0046a8;
-  --base-display-color-blue-4: #005bd1;
-  --base-display-color-blue-5: #0576ff;
-  --base-display-color-blue-6: #4da0ff;
-  --base-display-color-blue-7: #61adff;
-  --base-display-color-blue-8: #85c2ff;
-  --base-display-color-blue-9: #a3d3ff;
-  --base-display-color-brown-0: #241c14;
-  --base-display-color-brown-1: #342a1d;
-  --base-display-color-brown-2: #483a28;
-  --base-display-color-brown-3: #5d4a32;
-  --base-display-color-brown-4: #755e3e;
-  --base-display-color-brown-5: #94774c;
-  --base-display-color-brown-6: #b69a6d;
-  --base-display-color-brown-7: #bfa77d;
-  --base-display-color-brown-8: #cdbb98;
-  --base-display-color-brown-9: #dbceb3;
-  --base-display-color-coral-0: #351008;
-  --base-display-color-coral-1: #51180b;
-  --base-display-color-coral-2: #72220d;
-  --base-display-color-coral-3: #902a0e;
-  --base-display-color-coral-4: #b3350f;
-  --base-display-color-coral-5: #e1430e;
-  --base-display-color-coral-6: #f7794b;
-  --base-display-color-coral-7: #fa8c61;
-  --base-display-color-coral-8: #fdaa86;
-  --base-display-color-coral-9: #ffc0a3;
-  --base-display-color-cyan-0: #001f29;
-  --base-display-color-cyan-1: #002e3d;
-  --base-display-color-cyan-2: #014156;
-  --base-display-color-cyan-3: #02536f;
-  --base-display-color-cyan-4: #036a8c;
-  --base-display-color-cyan-5: #0587b3;
-  --base-display-color-cyan-6: #07ace4;
-  --base-display-color-cyan-7: #09b7f1;
-  --base-display-color-cyan-8: #45cbf7;
-  --base-display-color-cyan-9: #80dbf9;
-  --base-display-color-gray-0: #1c1c1c;
-  --base-display-color-gray-1: #2a2b2d;
-  --base-display-color-gray-2: #393d41;
-  --base-display-color-gray-3: #474e57;
-  --base-display-color-gray-4: #576270;
-  --base-display-color-gray-5: #6e7f96;
-  --base-display-color-gray-6: #92a1b5;
-  --base-display-color-gray-7: #9babbf;
-  --base-display-color-gray-8: #b3c0d1;
-  --base-display-color-gray-9: #c4cfde;
-  --base-display-color-green-0: #122117;
-  --base-display-color-green-1: #182f1f;
-  --base-display-color-green-2: #214529;
-  --base-display-color-green-3: #285830;
-  --base-display-color-green-4: #2f6f37;
-  --base-display-color-green-5: #388f3f;
-  --base-display-color-green-6: #41b445;
-  --base-display-color-green-7: #46c144;
-  --base-display-color-green-8: #75d36f;
-  --base-display-color-green-9: #99e090;
-  --base-display-color-indigo-0: #1b183f;
-  --base-display-color-indigo-1: #25215f;
-  --base-display-color-indigo-2: #312c90;
-  --base-display-color-indigo-3: #3935c0;
-  --base-display-color-indigo-4: #514ed4;
-  --base-display-color-indigo-5: #7070e1;
-  --base-display-color-indigo-6: #9899ec;
-  --base-display-color-indigo-7: #a2a5f1;
-  --base-display-color-indigo-8: #b7baf6;
-  --base-display-color-indigo-9: #c8cbf9;
-  --base-display-color-lemon-0: #291d00;
-  --base-display-color-lemon-1: #372901;
-  --base-display-color-lemon-2: #4f3c02;
-  --base-display-color-lemon-3: #614c05;
-  --base-display-color-lemon-4: #786008;
-  --base-display-color-lemon-5: #977b0c;
-  --base-display-color-lemon-6: #ba9b12;
-  --base-display-color-lemon-7: #c4a717;
-  --base-display-color-lemon-8: #d7bc1d;
-  --base-display-color-lemon-9: #e3d04f;
-  --base-display-color-lime-0: #141f0f;
-  --base-display-color-lime-1: #1f3116;
-  --base-display-color-lime-2: #2c441d;
-  --base-display-color-lime-3: #375421;
-  --base-display-color-lime-4: #496c28;
-  --base-display-color-lime-5: #5f892f;
-  --base-display-color-lime-6: #7dae37;
-  --base-display-color-lime-7: #89ba36;
-  --base-display-color-lime-8: #9fcc3e;
-  --base-display-color-lime-9: #bcda67;
-  --base-display-color-olive-0: #171e0b;
-  --base-display-color-olive-1: #252d10;
-  --base-display-color-olive-2: #374115;
-  --base-display-color-olive-3: #485219;
-  --base-display-color-olive-4: #5e681d;
-  --base-display-color-olive-5: #7a8321;
-  --base-display-color-olive-6: #a2a626;
-  --base-display-color-olive-7: #b2af24;
-  --base-display-color-olive-8: #cbc025;
-  --base-display-color-olive-9: #e2d04b;
-  --base-display-color-orange-0: #311708;
-  --base-display-color-orange-1: #43200a;
-  --base-display-color-orange-2: #632f0d;
-  --base-display-color-orange-3: #7b3c0e;
-  --base-display-color-orange-4: #984b10;
-  --base-display-color-orange-5: #c46212;
-  --base-display-color-orange-6: #ed8326;
-  --base-display-color-orange-7: #f1933b;
-  --base-display-color-orange-8: #f6b06a;
-  --base-display-color-orange-9: #fac68f;
-  --base-display-color-pine-0: #082119;
-  --base-display-color-pine-1: #0b3224;
-  --base-display-color-pine-2: #0e4430;
-  --base-display-color-pine-3: #115a3e;
-  --base-display-color-pine-4: #14714c;
-  --base-display-color-pine-5: #18915e;
-  --base-display-color-pine-6: #1bb673;
-  --base-display-color-pine-7: #1ac176;
-  --base-display-color-pine-8: #1bda81;
-  --base-display-color-pine-9: #3eea97;
-  --base-display-color-pink-0: #2d1524;
-  --base-display-color-pink-1: #451c35;
-  --base-display-color-pink-2: #65244a;
-  --base-display-color-pink-3: #842a5d;
-  --base-display-color-pink-4: #ac2f74;
-  --base-display-color-pink-5: #d34591;
-  --base-display-color-pink-6: #e57bb2;
-  --base-display-color-pink-7: #ec8dbd;
-  --base-display-color-pink-8: #f4a9cd;
-  --base-display-color-pink-9: #f9bed9;
-  --base-display-color-plum-0: #2a0e3f;
-  --base-display-color-plum-1: #40125e;
-  --base-display-color-plum-2: #5c1688;
-  --base-display-color-plum-3: #7517ab;
-  --base-display-color-plum-4: #9518d8;
-  --base-display-color-plum-5: #b643ef;
-  --base-display-color-plum-6: #d07ef7;
-  --base-display-color-plum-7: #d889fa;
-  --base-display-color-plum-8: #e4a5fd;
-  --base-display-color-plum-9: #edbdff;
-  --base-display-color-purple-0: #211047;
-  --base-display-color-purple-1: #31146b;
-  --base-display-color-purple-2: #481a9e;
-  --base-display-color-purple-3: #5b1cca;
-  --base-display-color-purple-4: #7730e8;
-  --base-display-color-purple-5: #975bf1;
-  --base-display-color-purple-6: #b687f7;
-  --base-display-color-purple-7: #c398fb;
-  --base-display-color-purple-8: #d2affd;
-  --base-display-color-purple-9: #e1c7ff;
-  --base-display-color-red-0: #3c0614;
-  --base-display-color-red-1: #58091a;
-  --base-display-color-red-2: #790c20;
-  --base-display-color-red-3: #990f24;
-  --base-display-color-red-4: #c31328;
-  --base-display-color-red-5: #eb3342;
-  --base-display-color-red-6: #f27d83;
-  --base-display-color-red-7: #f48b8d;
-  --base-display-color-red-8: #f7adab;
-  --base-display-color-red-9: #f9c1be;
-  --base-display-color-teal-0: #041f25;
-  --base-display-color-teal-1: #073036;
-  --base-display-color-teal-2: #0a464d;
-  --base-display-color-teal-3: #0c555a;
-  --base-display-color-teal-4: #106c70;
-  --base-display-color-teal-5: #158a8a;
-  --base-display-color-teal-6: #1cb0ab;
-  --base-display-color-teal-7: #1fbdb2;
-  --base-display-color-teal-8: #24d6c4;
-  --base-display-color-teal-9: #5fe3d1;
-  --base-display-color-yellow-0: #2e1a00;
-  --base-display-color-yellow-1: #3d2401;
-  --base-display-color-yellow-2: #5a3702;
-  --base-display-color-yellow-3: #6d4403;
-  --base-display-color-yellow-4: #895906;
-  --base-display-color-yellow-5: #aa7109;
-  --base-display-color-yellow-6: #d3910d;
-  --base-display-color-yellow-7: #df9e11;
-  --base-display-color-yellow-8: #edb431;
-  --base-display-color-yellow-9: #f0ca6a;
-  --button-danger-foreground-color-rest: #fa5e55;
-  --button-primary-background-color-active: #2e9a40;
-  --button-primary-background-color-disabled: #105823;
-  --button-primary-background-color-hover: #29903b;
-  --button-primary-border-color-disabled: #105823;
-  --control-checked-background-color-active: #3685f3;
-  --control-checked-background-color-hover: #2a7aef;
-  --foreground-color-accent: #4493f8; /** Accent text for links and interactive elements */
-  --reaction-button-selected-background-color-hover: #3a8cfd5c;
-  --ansi-black: var(--base-color-neutral-6); /** ANSI black for terminal text and backgrounds */
-  --ansi-black-bright: var(--base-color-neutral-8); /** ANSI bright black (dark gray) for dimmed terminal text */
-  --ansi-blue: var(--base-color-blue-3); /** ANSI blue for informational terminal text */
-  --ansi-blue-bright: var(--base-color-blue-2); /** ANSI bright blue for highlighted info in terminal */
-  --ansi-gray: var(--base-color-neutral-8); /** ANSI gray for secondary terminal text */
-  --ansi-green: var(--base-color-green-3); /** ANSI green for success indicators in terminal */
-  --ansi-green-bright: var(--base-color-green-2); /** ANSI bright green for highlighted success in terminal */
-  --ansi-magenta: var(--base-color-purple-3); /** ANSI magenta for special terminal text */
-  --ansi-magenta-bright: var(--base-color-purple-2); /** ANSI bright magenta for highlighted special text */
-  --ansi-red: var(--base-color-red-3); /** ANSI red for errors and alerts in terminal output */
-  --ansi-red-bright: var(--base-color-red-2); /** ANSI bright red for highlighted errors in terminal */
-  --ansi-white: var(--base-color-neutral-12); /** ANSI white for terminal text */
-  --ansi-yellow: var(--base-color-yellow-3); /** ANSI yellow for warnings in terminal output */
-  --ansi-yellow-bright: var(--base-color-yellow-2); /** ANSI bright yellow for highlighted warnings in terminal */
-  --avatar-shadow: 0 0 0 2px #0d1117;
-  --base-color-inset: var(--base-color-black);
-  --base-color-neutral-0: var(--base-color-black);
-  --base-color-neutral-13: var(--base-color-white);
-  --background-color-accent-muted: #388bfd1a; /** Subtle accent background for informational or selected elements */
-  --background-color-attention-muted: #bb800926; /** Subtle attention background for warnings and caution states */
-  --background-color-danger-muted: #f851491a; /** Muted danger background for error states and destructive action contexts */
-  --background-color-default: var(--base-color-neutral-1); /** Default background color for pages and main content areas */
-  --background-color-disabled: var(--base-color-neutral-3); /** Background for disabled interactive elements */
-  --background-color-done-muted: #ab7df826; /** Subtle background for completed/done state indicators */
-  --background-color-emphasis: var(--base-color-neutral-7); /** High-emphasis dark background for strong visual contrast */
-  --background-color-muted: var(--base-color-neutral-2); /** Muted background for secondary content areas and subtle grouping */
-  --background-color-neutral-emphasis: var(--base-color-neutral-8); /** Strong neutral background for prominent neutral elements */
-  --background-color-neutral-muted: #656c7633; /** Subtle neutral background for tags, labels, and secondary UI elements */
-  --background-color-severe-muted: #db6d281a; /** Subtle severe background for high-priority warnings */
-  --background-color-sponsors-muted: #db61a21a; /** Subtle background for GitHub Sponsors content */
-  --background-color-success-emphasis: var(--base-color-green-5); /** Strong success background for prominent positive actions */
-  --background-color-success-muted: #2ea04326; /** Subtle success background for positive feedback and completed states */
-  --border-color-accent-muted: #388bfd66; /** Subtle accent border for selected or focused elements */
-  --border-color-attention-muted: #bb800966; /** Subtle attention border for warnings and caution states */
-  --border-color-danger-muted: #f8514966; /** Subtle danger border for errors and destructive contexts */
-  --border-color-default: var(--base-color-neutral-7); /** Default border color for most UI elements */
-  --border-color-disabled: #656c761a; /** Border color for disabled interactive elements */
-  --border-color-done-muted: #ab7df866; /** Subtle border for completed/done state indicators */
-  --border-color-severe-muted: #db6d2866; /** Subtle severe border for high-priority warnings */
-  --border-color-sponsors-muted: #db61a266; /** Subtle border for GitHub Sponsors content */
-  --border-color-success-muted: #2ea04366; /** Subtle success border for positive feedback elements */
-  --button-danger-background-color-hover: var(--base-color-red-6);
-  --button-danger-shadow-selected: 0 0 0 0 #00000000;
-  --button-default-shadow-resting: 0 0 0 0 #00000000;
-  --button-inactive-background-color: var(--base-color-neutral-4);
-  --button-outline-background-color-active: var(--base-color-blue-7);
-  --button-outline-background-color-rest: var(--base-color-neutral-12);
-  --button-outline-foreground-color-disabled: #4493f880;
-  --button-outline-foreground-color-hover: var(--base-color-blue-3);
-  --button-outline-foreground-color-rest: var(--base-color-blue-4);
-  --button-outline-shadow-selected: 0 0 0 0 #00000000;
-  --button-primary-shadow-selected: 0 0 0 0 #00000000;
-  --button-counter-danger-background-color-rest: #49020233;
-  --button-counter-default-background-color-rest: var(--base-color-neutral-6);
-  --button-counter-outline-background-color-hover: #051d4d33;
-  --button-counter-outline-background-color-rest: #051d4d33;
-  --button-counter-outline-foreground-color-disabled: #4493f880;
-  --button-counter-outline-foreground-color-hover: var(--base-color-blue-3);
-  --button-counter-outline-foreground-color-rest: var(--base-color-blue-4);
-  --button-counter-primary-background-color-rest: #04260f33;
-  --button-keybinding-hint-danger-background-color-active: #01040966;
-  --button-keybinding-hint-danger-background-color-hover: #01040933;
-  --button-keybinding-hint-danger-border-color-hover: #0104091a;
-  --button-keybinding-hint-default-background-color-rest: var(--base-color-neutral-5);
-  --button-keybinding-hint-inactive-background-color: var(--base-color-neutral-5);
-  --code-mirror-syntax-foreground-color-comment: var(--base-color-neutral-8);
-  --code-mirror-syntax-foreground-color-constant: var(--base-color-blue-2);
-  --code-mirror-syntax-foreground-color-entity: var(--base-color-purple-2);
-  --code-mirror-syntax-foreground-color-keyword: var(--base-color-red-3);
-  --code-mirror-syntax-foreground-color-storage: var(--base-color-red-3);
-  --code-mirror-syntax-foreground-color-string: var(--base-color-blue-1);
-  --code-mirror-syntax-foreground-color-support: var(--base-color-blue-2);
-  --code-mirror-syntax-foreground-color-variable: var(--base-color-orange-2);
-  --contribution-default-background-color-1: var(--base-color-green-8);
-  --contribution-default-background-color-2: var(--base-color-green-6);
-  --contribution-default-background-color-4: var(--base-color-green-2);
-  --contribution-default-border-color-0: #0104090d;
-  --contribution-halloween-background-color-1: var(--base-display-color-orange-9);
-  --contribution-halloween-background-color-2: var(--base-display-color-orange-5);
-  --contribution-halloween-background-color-3: var(--base-display-color-orange-4);
-  --contribution-halloween-background-color-4: var(--base-display-color-lemon-9);
-  --contribution-winter-background-color-1: var(--base-color-blue-8);
-  --contribution-winter-background-color-2: var(--base-color-blue-6);
-  --contribution-winter-background-color-3: var(--base-color-blue-3);
-  --contribution-winter-background-color-4: var(--base-color-blue-0);
-  --control-background-color-active: var(--base-color-neutral-5);
-  --control-background-color-hover: var(--base-color-neutral-4);
-  --control-background-color-rest: var(--base-color-neutral-3);
-  --control-border-color-selected: var(--base-color-neutral-12);
-  --control-danger-foreground-color-hover: var(--base-color-red-3);
-  --control-transparent-background-color-active: #656c7640;
-  --control-transparent-background-color-hover: #656c7633;
-  --control-transparent-background-color-selected: #656c7633;
-  --control-knob-background-color-rest: var(--base-color-neutral-4);
-  --control-track-background-color-active: var(--base-color-neutral-6);
-  --control-track-background-color-hover: var(--base-color-neutral-5);
-  --diff-blob-addition-num-background-color: #3fb9504d;
-  --diff-blob-addition-word-background-color: #2ea04366;
-  --diff-blob-deletion-num-background-color: #f851494d;
-  --diff-blob-deletion-word-background-color: #f8514966;
-  --diff-blob-hunk-num-background-color-rest: var(--base-color-blue-8);
-  --display-auburn-background-color-emphasis: var(--base-display-color-auburn-4);
-  --display-blue-background-color-emphasis: var(--base-display-color-blue-4);
-  --display-brown-background-color-emphasis: var(--base-display-color-brown-4);
-  --display-coral-background-color-emphasis: var(--base-display-color-red-4);
-  --display-coral-background-color-muted: var(--base-display-color-red-0);
-  --display-coral-border-color-emphasis: var(--base-display-color-red-5);
-  --display-coral-border-color-muted: var(--base-display-color-red-1);
-  --display-coral-foreground-color: var(--base-display-color-red-6);
-  --display-cyan-background-color-emphasis: var(--base-display-color-cyan-4);
-  --display-gray-background-color-emphasis: var(--base-display-color-gray-4);
-  --display-green-background-color-emphasis: var(--base-display-color-green-4);
-  --display-indigo-background-color-emphasis: var(--base-display-color-indigo-4);
-  --display-lemon-background-color-emphasis: var(--base-display-color-lemon-4);
-  --display-lime-background-color-emphasis: var(--base-display-color-lime-4);
-  --display-olive-background-color-emphasis: var(--base-display-color-olive-4);
-  --display-orange-background-color-emphasis: var(--base-display-color-orange-4);
-  --display-pine-background-color-emphasis: var(--base-display-color-pine-4);
-  --display-pink-background-color-emphasis: var(--base-display-color-pink-4);
-  --display-plum-background-color-emphasis: var(--base-display-color-plum-4);
-  --display-purple-background-color-emphasis: var(--base-display-color-purple-4);
-  --display-red-background-color-emphasis: var(--base-display-color-red-4);
-  --display-teal-background-color-emphasis: var(--base-display-color-teal-4);
-  --display-yellow-background-color-emphasis: var(--base-display-color-yellow-4);
-  --foreground-color-attention: var(--base-color-yellow-3); /** Attention text for warnings and caution states */
-  --foreground-color-danger: var(--base-color-red-4); /** Danger text for errors and destructive actions */
-  --foreground-color-default: var(--base-color-neutral-12); /** Default text color for primary content and headings */
-  --foreground-color-done: var(--base-color-purple-4); /** Text color for completed/done state indicators */
-  --foreground-color-severe: var(--base-color-orange-4); /** Severe text for high-priority warnings */
-  --foreground-color-sponsors: var(--base-color-pink-4); /** Text color for GitHub Sponsors content */
-  --foreground-color-success: var(--base-color-green-3); /** Success text for positive feedback and completed states */
-  --header-background-color: #151b23f2;
-  --header-foreground-color-logo: var(--base-color-neutral-12);
-  --header-search-background-color: var(--base-color-neutral-1);
-  --header-search-border-color: var(--base-color-neutral-5);
-  --highlight-neutral-background-color: #d2992266;
-  --menu-background-color-active: var(--base-color-neutral-2);
-  --overlay-backdrop-background-color: #21283066;
-  --prettylights-syntax-bracket-highlighter-unmatched: var(--base-color-red-4); /** Syntax highlighting color for unmatched brackets */
-  --prettylights-syntax-carriage-return-background: var(--base-color-red-6); /** Background color for carriage return characters in diffs */
-  --prettylights-syntax-carriage-return-text: var(--base-color-neutral-12); /** Text color for carriage return characters in diffs */
-  --prettylights-syntax-constant: var(--base-color-blue-2); /** Syntax highlighting color for constants and literal values */
-  --prettylights-syntax-constant-other-reference-link: var(--base-color-blue-1); /** Syntax highlighting color for reference links and URLs in code */
-  --prettylights-syntax-entity: var(--base-color-purple-2); /** Syntax highlighting color for class names, type definitions, and declarations */
-  --prettylights-syntax-entity-tag: var(--base-color-green-1); /** Syntax highlighting color for HTML/XML tags */
-  --prettylights-syntax-keyword: var(--base-color-red-3); /** Syntax highlighting color for language keywords (if, else, return) */
-  --prettylights-syntax-markup-bold: var(--base-color-neutral-12); /** Syntax highlighting color for bold text in markdown */
-  --prettylights-syntax-markup-changed-background: var(--base-color-orange-8); /** Background color for changed lines in diff views */
-  --prettylights-syntax-markup-changed-text: var(--base-color-orange-0); /** Text color for changed lines in diff views */
-  --prettylights-syntax-markup-deleted-background: var(--base-color-red-8); /** Background color for deleted lines in diff views */
-  --prettylights-syntax-markup-deleted-text: var(--base-color-red-0); /** Text color for deleted lines in diff views */
-  --prettylights-syntax-markup-heading: var(--base-color-blue-5); /** Syntax highlighting color for headings in markdown */
-  --prettylights-syntax-markup-ignored-text: var(--base-color-neutral-12); /** Text color for ignored content in diffs */
-  --prettylights-syntax-markup-inserted-background: var(--base-color-green-8); /** Background color for inserted lines in diff views */
-  --prettylights-syntax-markup-inserted-text: var(--base-color-green-0); /** Text color for inserted lines in diff views */
-  --prettylights-syntax-markup-italic: var(--base-color-neutral-12); /** Syntax highlighting color for italic text in markdown */
-  --prettylights-syntax-markup-list: var(--base-color-yellow-1); /** Syntax highlighting color for list markers in markdown */
-  --prettylights-syntax-meta-diff-range: var(--base-color-purple-2); /** Syntax highlighting color for diff range information (@@ lines) */
-  --prettylights-syntax-storage-modifier-import: var(--base-color-neutral-12); /** Syntax highlighting color for import and require statements */
-  --prettylights-syntax-string: var(--base-color-blue-1); /** Syntax highlighting color for string literals */
-  --prettylights-syntax-string-regexp: var(--base-color-green-1); /** Syntax highlighting color for regular expression literals */
-  --prettylights-syntax-sublime-linter-gutter-mark: var(--base-color-neutral-7); /** Color for linter gutter marks in code editors */
-  --prettylights-syntax-variable: var(--base-color-orange-2); /** Syntax highlighting color for variables and parameters */
-  --reaction-button-selected-background-color-rest: #388bfd33;
-  --reaction-button-selected-foreground-color-hover: var(--base-color-blue-2);
-  --select-menu-background-color-active: var(--base-color-blue-8);
-  --side-nav-background-color-selected: var(--base-color-neutral-3);
-  --skeleton-loader-background-color: #656c7633;
-  --timeline-badge-background-color: var(--base-color-neutral-3);
-  --ansi-white-bright: var(--base-color-neutral-13); /** ANSI bright white for emphasized terminal text */
-  --avatar-background-color: #ffffff1a;
-  --background-color-black: var(--base-color-neutral-0); /** Pure black background */
-  --background-color-inset: var(--base-color-neutral-0); /** Inset background for recessed content areas like wells or sunken panels */
-  --background-color-inverse: var(--base-color-neutral-13); /** Inverse background that flips between light and dark modes */
-  --background-color-white: var(--base-color-neutral-13); /** Pure white background */
-  --border-color-muted: #3d444db3; /** Subtle border for secondary elements and light separators */
-  --border-color-neutral-emphasis: var(--border-color-emphasis); /** Strong neutral semantic border */
-  --border-color-translucent: #ffffff26; /** Semi-transparent border for overlays and layered elements. Border-specific token — no bgColor-translucent counterpart exists by design. */
-  --button-danger-background-color-active: var(--background-color-danger-emphasis);
-  --button-danger-foreground-color-active: var(--base-color-neutral-13);
-  --button-danger-foreground-color-disabled: #f8514980;
-  --button-danger-foreground-color-hover: var(--base-color-neutral-13);
-  --button-danger-icon-color-hover: var(--base-color-neutral-13);
-  --button-outline-background-color-hover: var(--control-background-color-hover);
-  --button-outline-foreground-color-active: var(--base-color-neutral-13);
-  --button-primary-foreground-color-disabled: #ffffff66;
-  --button-counter-danger-background-color-disabled: #da36330d;
-  --button-counter-danger-foreground-color-disabled: #f8514980;
-  --button-counter-danger-foreground-color-hover: var(--base-color-neutral-13);
-  --button-counter-danger-foreground-color-rest: var(--foreground-color-danger);
-  --button-counter-outline-background-color-disabled: #1f6feb0d;
-  --button-keybinding-hint-primary-background-color-disabled: #04260f1a;
-  --button-keybinding-hint-primary-border-color-rest: #04260f1a;
-  --card-background-color: var(--background-color-muted);
-  --control-checked-foreground-color-disabled: var(--base-color-inset);
-  --control-danger-background-color-active: #f8514966;
-  --control-foreground-color-rest: var(--foreground-color-default);
-  --control-knob-background-color-checked: var(--base-color-neutral-13);
-  --control-track-background-color-rest: var(--base-color-neutral-0);
-  --control-track-foreground-color-rest: var(--foreground-color-muted);
-  --foreground-color-black: var(--base-color-neutral-0); /** Pure black text */
-  --foreground-color-on-emphasis: var(--base-color-neutral-13); /** Text color for use on emphasis backgrounds */
-  --foreground-color-white: var(--base-color-neutral-13); /** Pure white text */
-  --select-menu-border-color: var(--border-color-default);
-  --selection-background-color: #1f6febb3; /** Background color for text selection highlights */
-  --shadow-inset: inset 0 1px 0 0 #0104093d; /** Inset shadow for recessed elements */
-  --shadow-resting-medium: 0 1px 1px 0 #01040966, 0 3px 6px 0 #010409cc; /** Medium resting shadow for cards and elevated surfaces */
-  --shadow-resting-small: 0 1px 1px 0 #01040999, 0 1px 3px 0 #01040999; /** Small resting shadow for buttons and interactive elements */
-  --shadow-resting-xsmall: 0 1px 1px 0 #010409cc; /** Extra small resting shadow for minimal elevation */
-  --tree-view-item-leading-visual-icon-color-rest: var(--foreground-color-muted);
-  --button-primary-icon-color-rest: var(--foreground-color-white);
-  --dashboard-background-color: var(--background-color-inset);
-  --overlay-border-color: var(--border-color-muted);
-  --button-default-border-color-active: var(--button-default-border-color-rest);
-  --shadow-floating-large: 0 0 0 1px #3d444d, 0 24px 48px 0 #010409; /** Large floating shadow for modals and dialogs */
-  --shadow-floating-medium: 0 0 0 1px #3d444d, 0 8px 16px -4px #01040966, 0 4px 32px -4px #01040966, 0 24px 48px -12px #01040966, 0 48px 96px -24px #01040966; /** Medium floating shadow for popovers and action menus */
-  --shadow-floating-small: 0 0 0 1px #3d444d, 0 6px 12px -3px #01040966, 0 6px 18px 0 #01040966; /** Small floating shadow for dropdowns, tooltips, and small overlays */
-  --shadow-floating-xlarge: 0 0 0 1px #3d444d, 0 32px 64px 0 #010409; /** Extra large floating shadow for full-screen overlays and sheets */
-  --underline-nav-border-color-hover: var(--border-color-neutral-muted);
-  --button-outline-border-color-hover: var(--button-default-border-color-hover);
-  /* Colour class names: Tailwind builds text-*, bg-*, border-* and outline-* from this namespace */
-  --color-background-accent-muted: var(--background-color-accent-muted);
-  --color-background-attention-muted: var(--background-color-attention-muted);
-  --color-background-black: var(--background-color-black);
-  --color-background-danger-muted: var(--background-color-danger-muted);
-  --color-background-default: var(--background-color-default);
-  --color-background-disabled: var(--background-color-disabled);
-  --color-background-done-muted: var(--background-color-done-muted);
-  --color-background-emphasis: var(--background-color-emphasis);
-  --color-background-inset: var(--background-color-inset);
-  --color-background-inverse: var(--background-color-inverse);
-  --color-background-muted: var(--background-color-muted);
-  --color-background-neutral-emphasis: var(--background-color-neutral-emphasis);
-  --color-background-neutral-muted: var(--background-color-neutral-muted);
-  --color-background-severe-muted: var(--background-color-severe-muted);
-  --color-background-sponsors-muted: var(--background-color-sponsors-muted);
-  --color-background-success-emphasis: var(--background-color-success-emphasis);
-  --color-background-success-muted: var(--background-color-success-muted);
-  --color-background-white: var(--background-color-white);
-  --color-border-accent-muted: var(--border-color-accent-muted);
-  --color-border-attention-muted: var(--border-color-attention-muted);
-  --color-border-danger-muted: var(--border-color-danger-muted);
-  --color-border-default: var(--border-color-default);
-  --color-border-disabled: var(--border-color-disabled);
-  --color-border-done-muted: var(--border-color-done-muted);
-  --color-border-muted: var(--border-color-muted);
-  --color-border-neutral-emphasis: var(--border-color-neutral-emphasis);
-  --color-border-severe-muted: var(--border-color-severe-muted);
-  --color-border-sponsors-muted: var(--border-color-sponsors-muted);
-  --color-border-success-muted: var(--border-color-success-muted);
-  --color-border-translucent: var(--border-color-translucent);
-  --color-foreground-accent: var(--foreground-color-accent);
-  --color-foreground-attention: var(--foreground-color-attention);
-  --color-foreground-black: var(--foreground-color-black);
-  --color-foreground-danger: var(--foreground-color-danger);
-  --color-foreground-default: var(--foreground-color-default);
-  --color-foreground-done: var(--foreground-color-done);
-  --color-foreground-on-emphasis: var(--foreground-color-on-emphasis);
-  --color-foreground-severe: var(--foreground-color-severe);
-  --color-foreground-sponsors: var(--foreground-color-sponsors);
-  --color-foreground-success: var(--foreground-color-success);
-  --color-foreground-white: var(--foreground-color-white);
+    --ansi-cyan: #39c5cf; /** ANSI cyan for terminal text */
+    --ansi-cyan-bright: #56d4dd; /** ANSI bright cyan for highlighted terminal text */
+    --base-color-black: #010409;
+    --base-color-blue-0: #cae8ff;
+    --base-color-blue-1: #a5d6ff;
+    --base-color-blue-2: #79c0ff;
+    --base-color-blue-3: #58a6ff;
+    --base-color-blue-4: #388bfd;
+    --base-color-blue-5: #1f6feb;
+    --base-color-blue-6: #1158c7;
+    --base-color-blue-7: #0d419d;
+    --base-color-blue-8: #0c2d6b;
+    --base-color-blue-9: #051d4d;
+    --base-color-coral-0: #ffddd2;
+    --base-color-coral-1: #ffc2b2;
+    --base-color-coral-2: #ffa28b;
+    --base-color-coral-3: #f78166;
+    --base-color-coral-4: #ea6045;
+    --base-color-coral-5: #cf462d;
+    --base-color-coral-6: #ac3220;
+    --base-color-coral-7: #872012;
+    --base-color-coral-8: #640d04;
+    --base-color-coral-9: #460701;
+    --base-color-green-0: #aff5b4;
+    --base-color-green-1: #7ee787;
+    --base-color-green-2: #56d364;
+    --base-color-green-3: #3fb950;
+    --base-color-green-4: #2ea043;
+    --base-color-green-5: #238636;
+    --base-color-green-6: #196c2e;
+    --base-color-green-7: #0f5323;
+    --base-color-green-8: #033a16;
+    --base-color-green-9: #04260f;
+    --base-color-neutral-1: #0d1117;
+    --base-color-neutral-10: #b7bdc8;
+    --base-color-neutral-11: #d1d7e0;
+    --base-color-neutral-12: #f0f6fc;
+    --base-color-neutral-2: #151b23;
+    --base-color-neutral-3: #212830;
+    --base-color-neutral-4: #262c36;
+    --base-color-neutral-5: #2a313c;
+    --base-color-neutral-6: #2f3742;
+    --base-color-neutral-7: #3d444d;
+    --base-color-neutral-8: #656c76;
+    --base-color-neutral-9: #9198a1;
+    --base-color-orange-0: #ffdfb6;
+    --base-color-orange-1: #ffc680;
+    --base-color-orange-2: #ffa657;
+    --base-color-orange-3: #f0883e;
+    --base-color-orange-4: #db6d28;
+    --base-color-orange-5: #bd561d;
+    --base-color-orange-6: #9b4215;
+    --base-color-orange-7: #762d0a;
+    --base-color-orange-8: #5a1e02;
+    --base-color-orange-9: #3d1300;
+    --base-color-pink-0: #ffdaec;
+    --base-color-pink-1: #ffbedd;
+    --base-color-pink-2: #ff9bce;
+    --base-color-pink-3: #f778ba;
+    --base-color-pink-4: #db61a2;
+    --base-color-pink-5: #bf4b8a;
+    --base-color-pink-6: #9e3670;
+    --base-color-pink-7: #7d2457;
+    --base-color-pink-8: #5e103e;
+    --base-color-pink-9: #42062a;
+    --base-color-purple-0: #eddeff;
+    --base-color-purple-1: #e2c5ff;
+    --base-color-purple-2: #d2a8ff;
+    --base-color-purple-3: #be8fff;
+    --base-color-purple-4: #ab7df8;
+    --base-color-purple-5: #8957e5;
+    --base-color-purple-6: #6e40c9;
+    --base-color-purple-7: #553098;
+    --base-color-purple-8: #3c1e70;
+    --base-color-purple-9: #271052;
+    --base-color-red-0: #ffdcd7;
+    --base-color-red-1: #ffc1ba;
+    --base-color-red-2: #ffa198;
+    --base-color-red-3: #ff7b72;
+    --base-color-red-4: #f85149;
+    --base-color-red-5: #da3633;
+    --base-color-red-6: #b62324;
+    --base-color-red-7: #8e1519;
+    --base-color-red-8: #67060c;
+    --base-color-red-9: #490202;
+    --base-color-transparent: #00000000;
+    --base-color-yellow-0: #f8e3a1;
+    --base-color-yellow-1: #f2cc60;
+    --base-color-yellow-2: #e3b341;
+    --base-color-yellow-3: #d29922;
+    --base-color-yellow-4: #bb8009;
+    --base-color-yellow-5: #9e6a03;
+    --base-color-yellow-6: #845306;
+    --base-color-yellow-7: #693e00;
+    --base-color-yellow-8: #4b2900;
+    --base-color-yellow-9: #341a00;
+    --base-display-color-auburn-0: #271817;
+    --base-display-color-auburn-1: #3a2422;
+    --base-display-color-auburn-2: #543331;
+    --base-display-color-auburn-3: #6d4340;
+    --base-display-color-auburn-4: #87534f;
+    --base-display-color-auburn-5: #a86f6b;
+    --base-display-color-auburn-6: #bf9592;
+    --base-display-color-auburn-7: #c6a19f;
+    --base-display-color-auburn-8: #d4b7b5;
+    --base-display-color-auburn-9: #dfcac8;
+    --base-display-color-blue-0: #001a47;
+    --base-display-color-blue-1: #002766;
+    --base-display-color-blue-2: #00378a;
+    --base-display-color-blue-3: #0046a8;
+    --base-display-color-blue-4: #005bd1;
+    --base-display-color-blue-5: #0576ff;
+    --base-display-color-blue-6: #4da0ff;
+    --base-display-color-blue-7: #61adff;
+    --base-display-color-blue-8: #85c2ff;
+    --base-display-color-blue-9: #a3d3ff;
+    --base-display-color-brown-0: #241c14;
+    --base-display-color-brown-1: #342a1d;
+    --base-display-color-brown-2: #483a28;
+    --base-display-color-brown-3: #5d4a32;
+    --base-display-color-brown-4: #755e3e;
+    --base-display-color-brown-5: #94774c;
+    --base-display-color-brown-6: #b69a6d;
+    --base-display-color-brown-7: #bfa77d;
+    --base-display-color-brown-8: #cdbb98;
+    --base-display-color-brown-9: #dbceb3;
+    --base-display-color-coral-0: #351008;
+    --base-display-color-coral-1: #51180b;
+    --base-display-color-coral-2: #72220d;
+    --base-display-color-coral-3: #902a0e;
+    --base-display-color-coral-4: #b3350f;
+    --base-display-color-coral-5: #e1430e;
+    --base-display-color-coral-6: #f7794b;
+    --base-display-color-coral-7: #fa8c61;
+    --base-display-color-coral-8: #fdaa86;
+    --base-display-color-coral-9: #ffc0a3;
+    --base-display-color-cyan-0: #001f29;
+    --base-display-color-cyan-1: #002e3d;
+    --base-display-color-cyan-2: #014156;
+    --base-display-color-cyan-3: #02536f;
+    --base-display-color-cyan-4: #036a8c;
+    --base-display-color-cyan-5: #0587b3;
+    --base-display-color-cyan-6: #07ace4;
+    --base-display-color-cyan-7: #09b7f1;
+    --base-display-color-cyan-8: #45cbf7;
+    --base-display-color-cyan-9: #80dbf9;
+    --base-display-color-gray-0: #1c1c1c;
+    --base-display-color-gray-1: #2a2b2d;
+    --base-display-color-gray-2: #393d41;
+    --base-display-color-gray-3: #474e57;
+    --base-display-color-gray-4: #576270;
+    --base-display-color-gray-5: #6e7f96;
+    --base-display-color-gray-6: #92a1b5;
+    --base-display-color-gray-7: #9babbf;
+    --base-display-color-gray-8: #b3c0d1;
+    --base-display-color-gray-9: #c4cfde;
+    --base-display-color-green-0: #122117;
+    --base-display-color-green-1: #182f1f;
+    --base-display-color-green-2: #214529;
+    --base-display-color-green-3: #285830;
+    --base-display-color-green-4: #2f6f37;
+    --base-display-color-green-5: #388f3f;
+    --base-display-color-green-6: #41b445;
+    --base-display-color-green-7: #46c144;
+    --base-display-color-green-8: #75d36f;
+    --base-display-color-green-9: #99e090;
+    --base-display-color-indigo-0: #1b183f;
+    --base-display-color-indigo-1: #25215f;
+    --base-display-color-indigo-2: #312c90;
+    --base-display-color-indigo-3: #3935c0;
+    --base-display-color-indigo-4: #514ed4;
+    --base-display-color-indigo-5: #7070e1;
+    --base-display-color-indigo-6: #9899ec;
+    --base-display-color-indigo-7: #a2a5f1;
+    --base-display-color-indigo-8: #b7baf6;
+    --base-display-color-indigo-9: #c8cbf9;
+    --base-display-color-lemon-0: #291d00;
+    --base-display-color-lemon-1: #372901;
+    --base-display-color-lemon-2: #4f3c02;
+    --base-display-color-lemon-3: #614c05;
+    --base-display-color-lemon-4: #786008;
+    --base-display-color-lemon-5: #977b0c;
+    --base-display-color-lemon-6: #ba9b12;
+    --base-display-color-lemon-7: #c4a717;
+    --base-display-color-lemon-8: #d7bc1d;
+    --base-display-color-lemon-9: #e3d04f;
+    --base-display-color-lime-0: #141f0f;
+    --base-display-color-lime-1: #1f3116;
+    --base-display-color-lime-2: #2c441d;
+    --base-display-color-lime-3: #375421;
+    --base-display-color-lime-4: #496c28;
+    --base-display-color-lime-5: #5f892f;
+    --base-display-color-lime-6: #7dae37;
+    --base-display-color-lime-7: #89ba36;
+    --base-display-color-lime-8: #9fcc3e;
+    --base-display-color-lime-9: #bcda67;
+    --base-display-color-olive-0: #171e0b;
+    --base-display-color-olive-1: #252d10;
+    --base-display-color-olive-2: #374115;
+    --base-display-color-olive-3: #485219;
+    --base-display-color-olive-4: #5e681d;
+    --base-display-color-olive-5: #7a8321;
+    --base-display-color-olive-6: #a2a626;
+    --base-display-color-olive-7: #b2af24;
+    --base-display-color-olive-8: #cbc025;
+    --base-display-color-olive-9: #e2d04b;
+    --base-display-color-orange-0: #311708;
+    --base-display-color-orange-1: #43200a;
+    --base-display-color-orange-2: #632f0d;
+    --base-display-color-orange-3: #7b3c0e;
+    --base-display-color-orange-4: #984b10;
+    --base-display-color-orange-5: #c46212;
+    --base-display-color-orange-6: #ed8326;
+    --base-display-color-orange-7: #f1933b;
+    --base-display-color-orange-8: #f6b06a;
+    --base-display-color-orange-9: #fac68f;
+    --base-display-color-pine-0: #082119;
+    --base-display-color-pine-1: #0b3224;
+    --base-display-color-pine-2: #0e4430;
+    --base-display-color-pine-3: #115a3e;
+    --base-display-color-pine-4: #14714c;
+    --base-display-color-pine-5: #18915e;
+    --base-display-color-pine-6: #1bb673;
+    --base-display-color-pine-7: #1ac176;
+    --base-display-color-pine-8: #1bda81;
+    --base-display-color-pine-9: #3eea97;
+    --base-display-color-pink-0: #2d1524;
+    --base-display-color-pink-1: #451c35;
+    --base-display-color-pink-2: #65244a;
+    --base-display-color-pink-3: #842a5d;
+    --base-display-color-pink-4: #ac2f74;
+    --base-display-color-pink-5: #d34591;
+    --base-display-color-pink-6: #e57bb2;
+    --base-display-color-pink-7: #ec8dbd;
+    --base-display-color-pink-8: #f4a9cd;
+    --base-display-color-pink-9: #f9bed9;
+    --base-display-color-plum-0: #2a0e3f;
+    --base-display-color-plum-1: #40125e;
+    --base-display-color-plum-2: #5c1688;
+    --base-display-color-plum-3: #7517ab;
+    --base-display-color-plum-4: #9518d8;
+    --base-display-color-plum-5: #b643ef;
+    --base-display-color-plum-6: #d07ef7;
+    --base-display-color-plum-7: #d889fa;
+    --base-display-color-plum-8: #e4a5fd;
+    --base-display-color-plum-9: #edbdff;
+    --base-display-color-purple-0: #211047;
+    --base-display-color-purple-1: #31146b;
+    --base-display-color-purple-2: #481a9e;
+    --base-display-color-purple-3: #5b1cca;
+    --base-display-color-purple-4: #7730e8;
+    --base-display-color-purple-5: #975bf1;
+    --base-display-color-purple-6: #b687f7;
+    --base-display-color-purple-7: #c398fb;
+    --base-display-color-purple-8: #d2affd;
+    --base-display-color-purple-9: #e1c7ff;
+    --base-display-color-red-0: #3c0614;
+    --base-display-color-red-1: #58091a;
+    --base-display-color-red-2: #790c20;
+    --base-display-color-red-3: #990f24;
+    --base-display-color-red-4: #c31328;
+    --base-display-color-red-5: #eb3342;
+    --base-display-color-red-6: #f27d83;
+    --base-display-color-red-7: #f48b8d;
+    --base-display-color-red-8: #f7adab;
+    --base-display-color-red-9: #f9c1be;
+    --base-display-color-teal-0: #041f25;
+    --base-display-color-teal-1: #073036;
+    --base-display-color-teal-2: #0a464d;
+    --base-display-color-teal-3: #0c555a;
+    --base-display-color-teal-4: #106c70;
+    --base-display-color-teal-5: #158a8a;
+    --base-display-color-teal-6: #1cb0ab;
+    --base-display-color-teal-7: #1fbdb2;
+    --base-display-color-teal-8: #24d6c4;
+    --base-display-color-teal-9: #5fe3d1;
+    --base-display-color-yellow-0: #2e1a00;
+    --base-display-color-yellow-1: #3d2401;
+    --base-display-color-yellow-2: #5a3702;
+    --base-display-color-yellow-3: #6d4403;
+    --base-display-color-yellow-4: #895906;
+    --base-display-color-yellow-5: #aa7109;
+    --base-display-color-yellow-6: #d3910d;
+    --base-display-color-yellow-7: #df9e11;
+    --base-display-color-yellow-8: #edb431;
+    --base-display-color-yellow-9: #f0ca6a;
+    --button-danger-foreground-color-rest: #fa5e55;
+    --button-primary-background-color-active: #2e9a40;
+    --button-primary-background-color-disabled: #105823;
+    --button-primary-background-color-hover: #29903b;
+    --button-primary-border-color-disabled: #105823;
+    --control-checked-background-color-active: #3685f3;
+    --control-checked-background-color-hover: #2a7aef;
+    --foreground-color-accent: #4493f8; /** Accent text for links and interactive elements */
+    --reaction-button-selected-background-color-hover: #3a8cfd5c;
+    --ansi-black: var(--base-color-neutral-6); /** ANSI black for terminal text and backgrounds */
+    --ansi-black-bright: var(
+        --base-color-neutral-8
+    ); /** ANSI bright black (dark gray) for dimmed terminal text */
+    --ansi-blue: var(--base-color-blue-3); /** ANSI blue for informational terminal text */
+    --ansi-blue-bright: var(
+        --base-color-blue-2
+    ); /** ANSI bright blue for highlighted info in terminal */
+    --ansi-gray: var(--base-color-neutral-8); /** ANSI gray for secondary terminal text */
+    --ansi-green: var(--base-color-green-3); /** ANSI green for success indicators in terminal */
+    --ansi-green-bright: var(
+        --base-color-green-2
+    ); /** ANSI bright green for highlighted success in terminal */
+    --ansi-magenta: var(--base-color-purple-3); /** ANSI magenta for special terminal text */
+    --ansi-magenta-bright: var(
+        --base-color-purple-2
+    ); /** ANSI bright magenta for highlighted special text */
+    --ansi-red: var(--base-color-red-3); /** ANSI red for errors and alerts in terminal output */
+    --ansi-red-bright: var(
+        --base-color-red-2
+    ); /** ANSI bright red for highlighted errors in terminal */
+    --ansi-white: var(--base-color-neutral-12); /** ANSI white for terminal text */
+    --ansi-yellow: var(--base-color-yellow-3); /** ANSI yellow for warnings in terminal output */
+    --ansi-yellow-bright: var(
+        --base-color-yellow-2
+    ); /** ANSI bright yellow for highlighted warnings in terminal */
+    --avatar-shadow: 0 0 0 2px #0d1117;
+    --base-color-inset: var(--base-color-black);
+    --base-color-neutral-0: var(--base-color-black);
+    --base-color-neutral-13: var(--base-color-white);
+    --background-color-accent-muted: #388bfd1a; /** Subtle accent background for informational or selected elements */
+    --background-color-attention-muted: #bb800926; /** Subtle attention background for warnings and caution states */
+    --background-color-danger-muted: #f851491a; /** Muted danger background for error states and destructive action contexts */
+    --background-color-default: var(
+        --base-color-neutral-1
+    ); /** Default background color for pages and main content areas */
+    --background-color-disabled: var(
+        --base-color-neutral-3
+    ); /** Background for disabled interactive elements */
+    --background-color-done-muted: #ab7df826; /** Subtle background for completed/done state indicators */
+    --background-color-emphasis: var(
+        --base-color-neutral-7
+    ); /** High-emphasis dark background for strong visual contrast */
+    --background-color-muted: var(
+        --base-color-neutral-2
+    ); /** Muted background for secondary content areas and subtle grouping */
+    --background-color-neutral-emphasis: var(
+        --base-color-neutral-8
+    ); /** Strong neutral background for prominent neutral elements */
+    --background-color-neutral-muted: #656c7633; /** Subtle neutral background for tags, labels, and secondary UI elements */
+    --background-color-severe-muted: #db6d281a; /** Subtle severe background for high-priority warnings */
+    --background-color-sponsors-muted: #db61a21a; /** Subtle background for GitHub Sponsors content */
+    --background-color-success-emphasis: var(
+        --base-color-green-5
+    ); /** Strong success background for prominent positive actions */
+    --background-color-success-muted: #2ea04326; /** Subtle success background for positive feedback and completed states */
+    --border-color-accent-muted: #388bfd66; /** Subtle accent border for selected or focused elements */
+    --border-color-attention-muted: #bb800966; /** Subtle attention border for warnings and caution states */
+    --border-color-danger-muted: #f8514966; /** Subtle danger border for errors and destructive contexts */
+    --border-color-default: var(
+        --base-color-neutral-7
+    ); /** Default border color for most UI elements */
+    --border-color-disabled: #656c761a; /** Border color for disabled interactive elements */
+    --border-color-done-muted: #ab7df866; /** Subtle border for completed/done state indicators */
+    --border-color-severe-muted: #db6d2866; /** Subtle severe border for high-priority warnings */
+    --border-color-sponsors-muted: #db61a266; /** Subtle border for GitHub Sponsors content */
+    --border-color-success-muted: #2ea04366; /** Subtle success border for positive feedback elements */
+    --button-danger-background-color-hover: var(--base-color-red-6);
+    --button-danger-shadow-selected: 0 0 0 0 #00000000;
+    --button-default-shadow-resting: 0 0 0 0 #00000000;
+    --button-inactive-background-color: var(--base-color-neutral-4);
+    --button-outline-background-color-active: var(--base-color-blue-7);
+    --button-outline-background-color-rest: var(--base-color-neutral-12);
+    --button-outline-foreground-color-disabled: #4493f880;
+    --button-outline-foreground-color-hover: var(--base-color-blue-3);
+    --button-outline-foreground-color-rest: var(--base-color-blue-4);
+    --button-outline-shadow-selected: 0 0 0 0 #00000000;
+    --button-primary-shadow-selected: 0 0 0 0 #00000000;
+    --button-counter-danger-background-color-rest: #49020233;
+    --button-counter-default-background-color-rest: var(--base-color-neutral-6);
+    --button-counter-outline-background-color-hover: #051d4d33;
+    --button-counter-outline-background-color-rest: #051d4d33;
+    --button-counter-outline-foreground-color-disabled: #4493f880;
+    --button-counter-outline-foreground-color-hover: var(--base-color-blue-3);
+    --button-counter-outline-foreground-color-rest: var(--base-color-blue-4);
+    --button-counter-primary-background-color-rest: #04260f33;
+    --button-keybinding-hint-danger-background-color-active: #01040966;
+    --button-keybinding-hint-danger-background-color-hover: #01040933;
+    --button-keybinding-hint-danger-border-color-hover: #0104091a;
+    --button-keybinding-hint-default-background-color-rest: var(--base-color-neutral-5);
+    --button-keybinding-hint-inactive-background-color: var(--base-color-neutral-5);
+    --code-mirror-syntax-foreground-color-comment: var(--base-color-neutral-8);
+    --code-mirror-syntax-foreground-color-constant: var(--base-color-blue-2);
+    --code-mirror-syntax-foreground-color-entity: var(--base-color-purple-2);
+    --code-mirror-syntax-foreground-color-keyword: var(--base-color-red-3);
+    --code-mirror-syntax-foreground-color-storage: var(--base-color-red-3);
+    --code-mirror-syntax-foreground-color-string: var(--base-color-blue-1);
+    --code-mirror-syntax-foreground-color-support: var(--base-color-blue-2);
+    --code-mirror-syntax-foreground-color-variable: var(--base-color-orange-2);
+    --contribution-default-background-color-1: var(--base-color-green-8);
+    --contribution-default-background-color-2: var(--base-color-green-6);
+    --contribution-default-background-color-4: var(--base-color-green-2);
+    --contribution-default-border-color-0: #0104090d;
+    --contribution-halloween-background-color-1: var(--base-display-color-orange-9);
+    --contribution-halloween-background-color-2: var(--base-display-color-orange-5);
+    --contribution-halloween-background-color-3: var(--base-display-color-orange-4);
+    --contribution-halloween-background-color-4: var(--base-display-color-lemon-9);
+    --contribution-winter-background-color-1: var(--base-color-blue-8);
+    --contribution-winter-background-color-2: var(--base-color-blue-6);
+    --contribution-winter-background-color-3: var(--base-color-blue-3);
+    --contribution-winter-background-color-4: var(--base-color-blue-0);
+    --control-background-color-active: var(--base-color-neutral-5);
+    --control-background-color-hover: var(--base-color-neutral-4);
+    --control-background-color-rest: var(--base-color-neutral-3);
+    --control-border-color-selected: var(--base-color-neutral-12);
+    --control-danger-foreground-color-hover: var(--base-color-red-3);
+    --control-transparent-background-color-active: #656c7640;
+    --control-transparent-background-color-hover: #656c7633;
+    --control-transparent-background-color-selected: #656c7633;
+    --control-knob-background-color-rest: var(--base-color-neutral-4);
+    --control-track-background-color-active: var(--base-color-neutral-6);
+    --control-track-background-color-hover: var(--base-color-neutral-5);
+    --diff-blob-addition-num-background-color: #3fb9504d;
+    --diff-blob-addition-word-background-color: #2ea04366;
+    --diff-blob-deletion-num-background-color: #f851494d;
+    --diff-blob-deletion-word-background-color: #f8514966;
+    --diff-blob-hunk-num-background-color-rest: var(--base-color-blue-8);
+    --display-auburn-background-color-emphasis: var(--base-display-color-auburn-4);
+    --display-blue-background-color-emphasis: var(--base-display-color-blue-4);
+    --display-brown-background-color-emphasis: var(--base-display-color-brown-4);
+    --display-coral-background-color-emphasis: var(--base-display-color-red-4);
+    --display-coral-background-color-muted: var(--base-display-color-red-0);
+    --display-coral-border-color-emphasis: var(--base-display-color-red-5);
+    --display-coral-border-color-muted: var(--base-display-color-red-1);
+    --display-coral-foreground-color: var(--base-display-color-red-6);
+    --display-cyan-background-color-emphasis: var(--base-display-color-cyan-4);
+    --display-gray-background-color-emphasis: var(--base-display-color-gray-4);
+    --display-green-background-color-emphasis: var(--base-display-color-green-4);
+    --display-indigo-background-color-emphasis: var(--base-display-color-indigo-4);
+    --display-lemon-background-color-emphasis: var(--base-display-color-lemon-4);
+    --display-lime-background-color-emphasis: var(--base-display-color-lime-4);
+    --display-olive-background-color-emphasis: var(--base-display-color-olive-4);
+    --display-orange-background-color-emphasis: var(--base-display-color-orange-4);
+    --display-pine-background-color-emphasis: var(--base-display-color-pine-4);
+    --display-pink-background-color-emphasis: var(--base-display-color-pink-4);
+    --display-plum-background-color-emphasis: var(--base-display-color-plum-4);
+    --display-purple-background-color-emphasis: var(--base-display-color-purple-4);
+    --display-red-background-color-emphasis: var(--base-display-color-red-4);
+    --display-teal-background-color-emphasis: var(--base-display-color-teal-4);
+    --display-yellow-background-color-emphasis: var(--base-display-color-yellow-4);
+    --foreground-color-attention: var(
+        --base-color-yellow-3
+    ); /** Attention text for warnings and caution states */
+    --foreground-color-danger: var(
+        --base-color-red-4
+    ); /** Danger text for errors and destructive actions */
+    --foreground-color-default: var(
+        --base-color-neutral-12
+    ); /** Default text color for primary content and headings */
+    --foreground-color-done: var(
+        --base-color-purple-4
+    ); /** Text color for completed/done state indicators */
+    --foreground-color-severe: var(
+        --base-color-orange-4
+    ); /** Severe text for high-priority warnings */
+    --foreground-color-sponsors: var(
+        --base-color-pink-4
+    ); /** Text color for GitHub Sponsors content */
+    --foreground-color-success: var(
+        --base-color-green-3
+    ); /** Success text for positive feedback and completed states */
+    --header-background-color: #151b23f2;
+    --header-foreground-color-logo: var(--base-color-neutral-12);
+    --header-search-background-color: var(--base-color-neutral-1);
+    --header-search-border-color: var(--base-color-neutral-5);
+    --highlight-neutral-background-color: #d2992266;
+    --menu-background-color-active: var(--base-color-neutral-2);
+    --overlay-backdrop-background-color: #21283066;
+    --prettylights-syntax-bracket-highlighter-unmatched: var(
+        --base-color-red-4
+    ); /** Syntax highlighting color for unmatched brackets */
+    --prettylights-syntax-carriage-return-background: var(
+        --base-color-red-6
+    ); /** Background color for carriage return characters in diffs */
+    --prettylights-syntax-carriage-return-text: var(
+        --base-color-neutral-12
+    ); /** Text color for carriage return characters in diffs */
+    --prettylights-syntax-constant: var(
+        --base-color-blue-2
+    ); /** Syntax highlighting color for constants and literal values */
+    --prettylights-syntax-constant-other-reference-link: var(
+        --base-color-blue-1
+    ); /** Syntax highlighting color for reference links and URLs in code */
+    --prettylights-syntax-entity: var(
+        --base-color-purple-2
+    ); /** Syntax highlighting color for class names, type definitions, and declarations */
+    --prettylights-syntax-entity-tag: var(
+        --base-color-green-1
+    ); /** Syntax highlighting color for HTML/XML tags */
+    --prettylights-syntax-keyword: var(
+        --base-color-red-3
+    ); /** Syntax highlighting color for language keywords (if, else, return) */
+    --prettylights-syntax-markup-bold: var(
+        --base-color-neutral-12
+    ); /** Syntax highlighting color for bold text in markdown */
+    --prettylights-syntax-markup-changed-background: var(
+        --base-color-orange-8
+    ); /** Background color for changed lines in diff views */
+    --prettylights-syntax-markup-changed-text: var(
+        --base-color-orange-0
+    ); /** Text color for changed lines in diff views */
+    --prettylights-syntax-markup-deleted-background: var(
+        --base-color-red-8
+    ); /** Background color for deleted lines in diff views */
+    --prettylights-syntax-markup-deleted-text: var(
+        --base-color-red-0
+    ); /** Text color for deleted lines in diff views */
+    --prettylights-syntax-markup-heading: var(
+        --base-color-blue-5
+    ); /** Syntax highlighting color for headings in markdown */
+    --prettylights-syntax-markup-ignored-text: var(
+        --base-color-neutral-12
+    ); /** Text color for ignored content in diffs */
+    --prettylights-syntax-markup-inserted-background: var(
+        --base-color-green-8
+    ); /** Background color for inserted lines in diff views */
+    --prettylights-syntax-markup-inserted-text: var(
+        --base-color-green-0
+    ); /** Text color for inserted lines in diff views */
+    --prettylights-syntax-markup-italic: var(
+        --base-color-neutral-12
+    ); /** Syntax highlighting color for italic text in markdown */
+    --prettylights-syntax-markup-list: var(
+        --base-color-yellow-1
+    ); /** Syntax highlighting color for list markers in markdown */
+    --prettylights-syntax-meta-diff-range: var(
+        --base-color-purple-2
+    ); /** Syntax highlighting color for diff range information (@@ lines) */
+    --prettylights-syntax-storage-modifier-import: var(
+        --base-color-neutral-12
+    ); /** Syntax highlighting color for import and require statements */
+    --prettylights-syntax-string: var(
+        --base-color-blue-1
+    ); /** Syntax highlighting color for string literals */
+    --prettylights-syntax-string-regexp: var(
+        --base-color-green-1
+    ); /** Syntax highlighting color for regular expression literals */
+    --prettylights-syntax-sublime-linter-gutter-mark: var(
+        --base-color-neutral-7
+    ); /** Color for linter gutter marks in code editors */
+    --prettylights-syntax-variable: var(
+        --base-color-orange-2
+    ); /** Syntax highlighting color for variables and parameters */
+    --reaction-button-selected-background-color-rest: #388bfd33;
+    --reaction-button-selected-foreground-color-hover: var(--base-color-blue-2);
+    --select-menu-background-color-active: var(--base-color-blue-8);
+    --side-nav-background-color-selected: var(--base-color-neutral-3);
+    --skeleton-loader-background-color: #656c7633;
+    --timeline-badge-background-color: var(--base-color-neutral-3);
+    --ansi-white-bright: var(
+        --base-color-neutral-13
+    ); /** ANSI bright white for emphasized terminal text */
+    --avatar-background-color: #ffffff1a;
+    --background-color-black: var(--base-color-neutral-0); /** Pure black background */
+    --background-color-inset: var(
+        --base-color-neutral-0
+    ); /** Inset background for recessed content areas like wells or sunken panels */
+    --background-color-inverse: var(
+        --base-color-neutral-13
+    ); /** Inverse background that flips between light and dark modes */
+    --background-color-white: var(--base-color-neutral-13); /** Pure white background */
+    --border-color-muted: #3d444db3; /** Subtle border for secondary elements and light separators */
+    --border-color-neutral-emphasis: var(
+        --border-color-emphasis
+    ); /** Strong neutral semantic border */
+    --border-color-translucent: #ffffff26; /** Semi-transparent border for overlays and layered elements. Border-specific token — no bgColor-translucent counterpart exists by design. */
+    --button-danger-background-color-active: var(--background-color-danger-emphasis);
+    --button-danger-foreground-color-active: var(--base-color-neutral-13);
+    --button-danger-foreground-color-disabled: #f8514980;
+    --button-danger-foreground-color-hover: var(--base-color-neutral-13);
+    --button-danger-icon-color-hover: var(--base-color-neutral-13);
+    --button-outline-background-color-hover: var(--control-background-color-hover);
+    --button-outline-foreground-color-active: var(--base-color-neutral-13);
+    --button-primary-foreground-color-disabled: #ffffff66;
+    --button-counter-danger-background-color-disabled: #da36330d;
+    --button-counter-danger-foreground-color-disabled: #f8514980;
+    --button-counter-danger-foreground-color-hover: var(--base-color-neutral-13);
+    --button-counter-danger-foreground-color-rest: var(--foreground-color-danger);
+    --button-counter-outline-background-color-disabled: #1f6feb0d;
+    --button-keybinding-hint-primary-background-color-disabled: #04260f1a;
+    --button-keybinding-hint-primary-border-color-rest: #04260f1a;
+    --card-background-color: var(--background-color-muted);
+    --control-checked-foreground-color-disabled: var(--base-color-inset);
+    --control-danger-background-color-active: #f8514966;
+    --control-foreground-color-rest: var(--foreground-color-default);
+    --control-knob-background-color-checked: var(--base-color-neutral-13);
+    --control-track-background-color-rest: var(--base-color-neutral-0);
+    --control-track-foreground-color-rest: var(--foreground-color-muted);
+    --foreground-color-black: var(--base-color-neutral-0); /** Pure black text */
+    --foreground-color-on-emphasis: var(
+        --base-color-neutral-13
+    ); /** Text color for use on emphasis backgrounds */
+    --foreground-color-white: var(--base-color-neutral-13); /** Pure white text */
+    --select-menu-border-color: var(--border-color-default);
+    --selection-background-color: #1f6febb3; /** Background color for text selection highlights */
+    --shadow-inset: inset 0 1px 0 0 #0104093d; /** Inset shadow for recessed elements */
+    --shadow-resting-medium:
+        0 1px 1px 0 #01040966, 0 3px 6px 0 #010409cc; /** Medium resting shadow for cards and elevated surfaces */
+    --shadow-resting-small:
+        0 1px 1px 0 #01040999, 0 1px 3px 0 #01040999; /** Small resting shadow for buttons and interactive elements */
+    --shadow-resting-xsmall: 0 1px 1px 0 #010409cc; /** Extra small resting shadow for minimal elevation */
+    --tree-view-item-leading-visual-icon-color-rest: var(--foreground-color-muted);
+    --button-primary-icon-color-rest: var(--foreground-color-white);
+    --dashboard-background-color: var(--background-color-inset);
+    --overlay-border-color: var(--border-color-muted);
+    --button-default-border-color-active: var(--button-default-border-color-rest);
+    --shadow-floating-large:
+        0 0 0 1px #3d444d, 0 24px 48px 0 #010409; /** Large floating shadow for modals and dialogs */
+    --shadow-floating-medium:
+        0 0 0 1px #3d444d, 0 8px 16px -4px #01040966, 0 4px 32px -4px #01040966,
+        0 24px 48px -12px #01040966, 0 48px 96px -24px #01040966; /** Medium floating shadow for popovers and action menus */
+    --shadow-floating-small:
+        0 0 0 1px #3d444d, 0 6px 12px -3px #01040966, 0 6px 18px 0 #01040966; /** Small floating shadow for dropdowns, tooltips, and small overlays */
+    --shadow-floating-xlarge:
+        0 0 0 1px #3d444d, 0 32px 64px 0 #010409; /** Extra large floating shadow for full-screen overlays and sheets */
+    --underline-nav-border-color-hover: var(--border-color-neutral-muted);
+    --button-outline-border-color-hover: var(--button-default-border-color-hover);
+    /* Colour class names: Tailwind builds text-*, bg-*, border-* and outline-* from this namespace */
+    --color-background-accent-muted: var(--background-color-accent-muted);
+    --color-background-attention-muted: var(--background-color-attention-muted);
+    --color-background-black: var(--background-color-black);
+    --color-background-danger-muted: var(--background-color-danger-muted);
+    --color-background-default: var(--background-color-default);
+    --color-background-disabled: var(--background-color-disabled);
+    --color-background-done-muted: var(--background-color-done-muted);
+    --color-background-emphasis: var(--background-color-emphasis);
+    --color-background-inset: var(--background-color-inset);
+    --color-background-inverse: var(--background-color-inverse);
+    --color-background-muted: var(--background-color-muted);
+    --color-background-neutral-emphasis: var(--background-color-neutral-emphasis);
+    --color-background-neutral-muted: var(--background-color-neutral-muted);
+    --color-background-severe-muted: var(--background-color-severe-muted);
+    --color-background-sponsors-muted: var(--background-color-sponsors-muted);
+    --color-background-success-emphasis: var(--background-color-success-emphasis);
+    --color-background-success-muted: var(--background-color-success-muted);
+    --color-background-white: var(--background-color-white);
+    --color-border-accent-muted: var(--border-color-accent-muted);
+    --color-border-attention-muted: var(--border-color-attention-muted);
+    --color-border-danger-muted: var(--border-color-danger-muted);
+    --color-border-default: var(--border-color-default);
+    --color-border-disabled: var(--border-color-disabled);
+    --color-border-done-muted: var(--border-color-done-muted);
+    --color-border-muted: var(--border-color-muted);
+    --color-border-neutral-emphasis: var(--border-color-neutral-emphasis);
+    --color-border-severe-muted: var(--border-color-severe-muted);
+    --color-border-sponsors-muted: var(--border-color-sponsors-muted);
+    --color-border-success-muted: var(--border-color-success-muted);
+    --color-border-translucent: var(--border-color-translucent);
+    --color-foreground-accent: var(--foreground-color-accent);
+    --color-foreground-attention: var(--foreground-color-attention);
+    --color-foreground-black: var(--foreground-color-black);
+    --color-foreground-danger: var(--foreground-color-danger);
+    --color-foreground-default: var(--foreground-color-default);
+    --color-foreground-done: var(--foreground-color-done);
+    --color-foreground-on-emphasis: var(--foreground-color-on-emphasis);
+    --color-foreground-severe: var(--foreground-color-severe);
+    --color-foreground-sponsors: var(--foreground-color-sponsors);
+    --color-foreground-success: var(--foreground-color-success);
+    --color-foreground-white: var(--foreground-color-white);
 }

@@ -1,240 +1,287 @@
 @theme static {
-  /* Motion base: duration and easing primitives */
-  --base-duration-0: 0ms;
-  --base-duration-100: 100ms;
-  --base-duration-1000: 1000ms;
-  --base-duration-200: 200ms;
-  --base-duration-300: 300ms;
-  --base-duration-400: 400ms;
-  --base-duration-50: 50ms;
-  --base-duration-500: 500ms;
-  --base-duration-600: 600ms;
-  --base-duration-700: 700ms;
-  --base-duration-800: 800ms;
-  --base-duration-900: 900ms;
-  --base-easing-ease: cubic-bezier(0.25, 0.1, 0.25, 1); /** CSS default easing. Use for hover state changes and micro-interactions. */
-  --base-easing-ease-in: cubic-bezier(0.7, 0.1, 0.75, 0.9); /** Accelerating motion. Use for elements exiting the viewport (moving off-screen). */
-  --base-easing-ease-in-out: cubic-bezier(0.6, 0, 0.2, 1); /** Smooth acceleration and deceleration. Use for elements moving or morphing within the viewport. */
-  --base-easing-ease-out: cubic-bezier(0.3, 0.8, 0.6, 1); /** Decelerating motion. Use for elements entering the viewport or appearing on screen. */
-  --base-easing-linear: cubic-bezier(0, 0, 1, 1); /** Constant motion with no acceleration. Use for continuous animations like progress bars or loaders. */
+    /* Motion base: duration and easing primitives */
+    --base-duration-0: 0ms;
+    --base-duration-100: 100ms;
+    --base-duration-1000: 1000ms;
+    --base-duration-200: 200ms;
+    --base-duration-300: 300ms;
+    --base-duration-400: 400ms;
+    --base-duration-50: 50ms;
+    --base-duration-500: 500ms;
+    --base-duration-600: 600ms;
+    --base-duration-700: 700ms;
+    --base-duration-800: 800ms;
+    --base-duration-900: 900ms;
+    --base-easing-ease: cubic-bezier(
+        0.25,
+        0.1,
+        0.25,
+        1
+    ); /** CSS default easing. Use for hover state changes and micro-interactions. */
+    --base-easing-ease-in: cubic-bezier(
+        0.7,
+        0.1,
+        0.75,
+        0.9
+    ); /** Accelerating motion. Use for elements exiting the viewport (moving off-screen). */
+    --base-easing-ease-in-out: cubic-bezier(
+        0.6,
+        0,
+        0.2,
+        1
+    ); /** Smooth acceleration and deceleration. Use for elements moving or morphing within the viewport. */
+    --base-easing-ease-out: cubic-bezier(
+        0.3,
+        0.8,
+        0.6,
+        1
+    ); /** Decelerating motion. Use for elements entering the viewport or appearing on screen. */
+    --base-easing-linear: cubic-bezier(
+        0,
+        0,
+        1,
+        1
+    ); /** Constant motion with no acceleration. Use for continuous animations like progress bars or loaders. */
 
-  /* Base size scale */
-  --base-size-112: 7rem;
-  --base-size-12: 0.75rem;
-  --base-size-128: 8rem;
-  --base-size-16: 1rem;
-  --base-size-2: 0.125rem;
-  --base-size-20: 1.25rem;
-  --base-size-24: 1.5rem;
-  --base-size-28: 1.75rem;
-  --base-size-32: 2rem;
-  --base-size-36: 2.25rem;
-  --base-size-4: 0.25rem;
-  --base-size-40: 2.5rem;
-  --base-size-44: 2.75rem;
-  --base-size-48: 3rem;
-  --base-size-6: 0.375rem;
-  --base-size-64: 4rem;
-  --base-size-8: 0.5rem;
-  --base-size-80: 5rem;
-  --base-size-96: 6rem;
-  --base-size-negative-12: -0.75rem;
-  --base-size-negative-16: -1rem;
-  --base-size-negative-2: -0.125rem;
-  --base-size-negative-20: -1.25rem;
-  --base-size-negative-24: -1.5rem;
-  --base-size-negative-28: -1.75rem;
-  --base-size-negative-32: -2rem;
-  --base-size-negative-36: -2.25rem;
-  --base-size-negative-4: -0.25rem;
-  --base-size-negative-40: -2.5rem;
-  --base-size-negative-44: -2.75rem;
-  --base-size-negative-48: -3rem;
-  --base-size-negative-6: -0.375rem;
-  --base-size-negative-8: -0.5rem;
+    /* Base size scale */
+    --base-size-112: 7rem;
+    --base-size-12: 0.75rem;
+    --base-size-128: 8rem;
+    --base-size-16: 1rem;
+    --base-size-2: 0.125rem;
+    --base-size-20: 1.25rem;
+    --base-size-24: 1.5rem;
+    --base-size-28: 1.75rem;
+    --base-size-32: 2rem;
+    --base-size-36: 2.25rem;
+    --base-size-4: 0.25rem;
+    --base-size-40: 2.5rem;
+    --base-size-44: 2.75rem;
+    --base-size-48: 3rem;
+    --base-size-6: 0.375rem;
+    --base-size-64: 4rem;
+    --base-size-8: 0.5rem;
+    --base-size-80: 5rem;
+    --base-size-96: 6rem;
+    --base-size-negative-12: -0.75rem;
+    --base-size-negative-16: -1rem;
+    --base-size-negative-2: -0.125rem;
+    --base-size-negative-20: -1.25rem;
+    --base-size-negative-24: -1.5rem;
+    --base-size-negative-28: -1.75rem;
+    --base-size-negative-32: -2rem;
+    --base-size-negative-36: -2.25rem;
+    --base-size-negative-4: -0.25rem;
+    --base-size-negative-40: -2.5rem;
+    --base-size-negative-44: -2.75rem;
+    --base-size-negative-48: -3rem;
+    --base-size-negative-6: -0.375rem;
+    --base-size-negative-8: -0.5rem;
 
-  /* Base z-index scale */
-  --base-z-index-0: 0;
-  --base-z-index-100: 100;
-  --base-z-index-200: 200;
-  --base-z-index-300: 300;
-  --base-z-index-400: 400;
-  --base-z-index-500: 500;
-  --base-z-index-600: 600;
+    /* Base z-index scale */
+    --base-z-index-0: 0;
+    --base-z-index-100: 100;
+    --base-z-index-200: 200;
+    --base-z-index-300: 300;
+    --base-z-index-400: 400;
+    --base-z-index-500: 500;
+    --base-z-index-600: 600;
 
-  /* Motion: semantic durations, easings and transitions */
-  --motion-duration-long: var(--base-duration-500); /** Longer duration for complex multi-step animations or large-scale layout shifts. Use sparingly. */
-  --motion-duration-medium: var(--base-duration-300); /** Standard duration for elements entering or exiting the viewport, such as modals and dropdowns. */
-  --motion-duration-micro: var(--base-duration-100); /** Fast micro-interactions like hover, focus ring, and color shifts. */
-  --motion-duration-short: var(--base-duration-200); /** Quick transitions for state changes like expand/collapse, toggles, and visibility changes. */
-  --motion-easing-enter: var(--base-easing-ease-out); /** Decelerating easing for elements entering the viewport or appearing on screen. */
-  --motion-easing-exit: var(--base-easing-ease-in); /** Accelerating easing for elements exiting the viewport or leaving the screen. */
-  --motion-easing-hover: var(--base-easing-ease); /** Easing for hover state changes and micro-interactions. */
-  --motion-easing-linear: var(--base-easing-linear); /** Constant motion with no acceleration. Use for continuous animations like progress bars or loaders. */
-  --motion-easing-move: var(--base-easing-ease-in-out); /** Smooth easing for elements moving or morphing within the viewport. */
-  --motion-transition-enter: var(--motion-duration-medium) var(--motion-easing-enter); /** Transition for elements entering the viewport, such as modals, dropdowns, and tooltips. */
-  --motion-transition-exit: var(--motion-duration-short) var(--motion-easing-exit); /** Transition for elements exiting the viewport, such as closing modals and dismissing dropdowns. */
-  --motion-transition-hover: var(--motion-duration-micro) var(--motion-easing-hover); /** Transition for hover state changes on interactive elements like buttons and links. */
-  --motion-transition-state-change: var(--motion-duration-short) var(--motion-easing-move); /** Transition for state changes like toggles, expand/collapse, and visibility changes. */
+    /* Motion: semantic durations, easings and transitions */
+    --motion-duration-long: var(
+        --base-duration-500
+    ); /** Longer duration for complex multi-step animations or large-scale layout shifts. Use sparingly. */
+    --motion-duration-medium: var(
+        --base-duration-300
+    ); /** Standard duration for elements entering or exiting the viewport, such as modals and dropdowns. */
+    --motion-duration-micro: var(
+        --base-duration-100
+    ); /** Fast micro-interactions like hover, focus ring, and color shifts. */
+    --motion-duration-short: var(
+        --base-duration-200
+    ); /** Quick transitions for state changes like expand/collapse, toggles, and visibility changes. */
+    --motion-easing-enter: var(
+        --base-easing-ease-out
+    ); /** Decelerating easing for elements entering the viewport or appearing on screen. */
+    --motion-easing-exit: var(
+        --base-easing-ease-in
+    ); /** Accelerating easing for elements exiting the viewport or leaving the screen. */
+    --motion-easing-hover: var(
+        --base-easing-ease
+    ); /** Easing for hover state changes and micro-interactions. */
+    --motion-easing-linear: var(
+        --base-easing-linear
+    ); /** Constant motion with no acceleration. Use for continuous animations like progress bars or loaders. */
+    --motion-easing-move: var(
+        --base-easing-ease-in-out
+    ); /** Smooth easing for elements moving or morphing within the viewport. */
+    --motion-transition-enter: var(--motion-duration-medium) var(--motion-easing-enter); /** Transition for elements entering the viewport, such as modals, dropdowns, and tooltips. */
+    --motion-transition-exit: var(--motion-duration-short) var(--motion-easing-exit); /** Transition for elements exiting the viewport, such as closing modals and dismissing dropdowns. */
+    --motion-transition-hover: var(--motion-duration-micro) var(--motion-easing-hover); /** Transition for hover state changes on interactive elements like buttons and links. */
+    --motion-transition-state-change: var(--motion-duration-short) var(--motion-easing-move); /** Transition for state changes like toggles, expand/collapse, and visibility changes. */
 
-  /* Motion: class names for the semantic easings, which Tailwind builds from this namespace */
-  --ease-enter: var(--motion-easing-enter);
-  --ease-exit: var(--motion-easing-exit);
-  --ease-hover: var(--motion-easing-hover);
-  --ease-linear: var(--motion-easing-linear);
-  --ease-move: var(--motion-easing-move);
+    /* Motion: class names for the semantic easings, which Tailwind builds from this namespace */
+    --ease-enter: var(--motion-easing-enter);
+    --ease-exit: var(--motion-easing-exit);
+    --ease-hover: var(--motion-easing-hover);
+    --ease-linear: var(--motion-easing-linear);
+    --ease-move: var(--motion-easing-move);
 
-  /* Borders, focus outline and box shadows */
-  --border-width-thick: 0.125rem; /** Scale token: 2px border width for emphasis or focus states. */
-  --border-width-thicker: 0.25rem; /** Scale token: 4px border width for strong emphasis. */
-  --border-width-thin: 0.0625rem; /** Scale token: 1px border width. Use when selecting an explicit size from the border-width scale. */
-  --focus-outline-offset: -0.125rem; /** Focus outline offset (-2px). Negative value creates an inset outline for keyboard focus indicators, ensuring the focus ring stays within the element bounds */
-  --focus-outline-width: 0.125rem; /** Focus outline width (2px). Standard width for keyboard focus indicators to meet WCAG 2.4.7 accessibility requirements */
-  --border-width-default: var(--border-width-thin); /** Semantic token: preferred default border width for standard component borders. Use this in normal component code unless a specific scale value is required. */
-  --box-shadow-thick: inset 0 0 0 var(--border-width-thick); /** Thick shadow (2px) used instead of a border for emphasis without layout shift */
-  --box-shadow-thicker: inset 0 0 0 var(--border-width-thicker); /** Thickest shadow (4px) used for high emphasis borders without layout shift. Use sparingly for maximum visual impact */
-  --box-shadow-thin: inset 0 0 0 var(--border-width-thin); /** Thin shadow used instead of a border to prevent layout shift */
+    /* Borders, focus outline and box shadows */
+    --border-width-thick: 0.125rem; /** Scale token: 2px border width for emphasis or focus states. */
+    --border-width-thicker: 0.25rem; /** Scale token: 4px border width for strong emphasis. */
+    --border-width-thin: 0.0625rem; /** Scale token: 1px border width. Use when selecting an explicit size from the border-width scale. */
+    --focus-outline-offset: -0.125rem; /** Focus outline offset (-2px). Negative value creates an inset outline for keyboard focus indicators, ensuring the focus ring stays within the element bounds */
+    --focus-outline-width: 0.125rem; /** Focus outline width (2px). Standard width for keyboard focus indicators to meet WCAG 2.4.7 accessibility requirements */
+    --border-width-default: var(
+        --border-width-thin
+    ); /** Semantic token: preferred default border width for standard component borders. Use this in normal component code unless a specific scale value is required. */
+    --box-shadow-thick: inset 0 0 0 var(--border-width-thick); /** Thick shadow (2px) used instead of a border for emphasis without layout shift */
+    --box-shadow-thicker: inset 0 0 0 var(--border-width-thicker); /** Thickest shadow (4px) used for high emphasis borders without layout shift. Use sparingly for maximum visual impact */
+    --box-shadow-thin: inset 0 0 0 var(--border-width-thin); /** Thin shadow used instead of a border to prevent layout shift */
 
-  /* Breakpoints */
-  --breakpoint-large: 63.25rem;
-  --breakpoint-medium: 48rem;
-  --breakpoint-small: 34rem;
-  --breakpoint-xlarge: 80rem;
-  --breakpoint-xsmall: 20rem;
-  --breakpoint-xxlarge: 87.5rem;
+    /* Breakpoints */
+    --breakpoint-large: 63.25rem;
+    --breakpoint-medium: 48rem;
+    --breakpoint-small: 34rem;
+    --breakpoint-xlarge: 80rem;
+    --breakpoint-xsmall: 20rem;
+    --breakpoint-xxlarge: 87.5rem;
 
-  /* Border radius */
-  --border-radius-full: 624.9375rem; /** Shape token for fully rounded or pill-shaped elements. */
-  --border-radius-large: 0.75rem; /** Scale token: 12px radius for larger surfaces or softer container treatments. */
-  --border-radius-medium: 0.375rem; /** Scale token: 6px radius in the border-radius scale. Use when selecting a specific radius intentionally. */
-  --border-radius-small: 0.1875rem; /** Scale token: 3px radius for compact UI elements or small component variants. */
-  --border-radius-default: var(--border-radius-medium); /** Semantic token: preferred default border radius for standard UI components. Use this in normal component code unless a specific radius is intentionally required. */
+    /* Border radius */
+    --border-radius-full: 624.9375rem; /** Shape token for fully rounded or pill-shaped elements. */
+    --border-radius-large: 0.75rem; /** Scale token: 12px radius for larger surfaces or softer container treatments. */
+    --border-radius-medium: 0.375rem; /** Scale token: 6px radius in the border-radius scale. Use when selecting a specific radius intentionally. */
+    --border-radius-small: 0.1875rem; /** Scale token: 3px radius for compact UI elements or small component variants. */
+    --border-radius-default: var(
+        --border-radius-medium
+    ); /** Semantic token: preferred default border radius for standard UI components. Use this in normal component code unless a specific radius is intentionally required. */
 
-  /* Controls, overlays, spinners and stacks */
-  --control-large-padding-block: 0.625rem;
-  --control-medium-padding-block: 0.375rem;
-  --control-xlarge-padding-block: 0.875rem;
-  --control-xsmall-padding-block: 0.125rem;
-  --overlay-height-large: 27rem;
-  --overlay-height-medium: 20rem;
-  --overlay-height-small: 16rem;
-  --overlay-height-xlarge: 37.5rem;
-  --overlay-offset: 0.25rem;
-  --overlay-width-large: 40rem;
-  --overlay-width-medium: 30rem;
-  --overlay-width-small: 20rem;
-  --overlay-width-xlarge: 60rem;
-  --overlay-width-xsmall: 12rem;
-  --spinner-stroke-width-default: 0.125rem;
-  --control-large-gap: 0.5rem;
-  --control-large-padding-inline-condensed: 0.5rem;
-  --control-large-padding-inline-normal: 0.75rem;
-  --control-large-padding-inline-spacious: 1rem;
-  --control-large-size: 2.5rem;
-  --control-medium-gap: 0.5rem;
-  --control-medium-padding-inline-condensed: 0.5rem;
-  --control-medium-padding-inline-normal: 0.75rem;
-  --control-medium-padding-inline-spacious: 1rem;
-  --control-medium-size: 2rem;
-  --control-min-target-coarse: 2.75rem;
-  --control-min-target-fine: 1rem;
-  --control-small-gap: 0.25rem;
-  --control-small-padding-block: 0.25rem;
-  --control-small-padding-inline-condensed: 0.5rem;
-  --control-small-padding-inline-normal: 0.75rem;
-  --control-small-padding-inline-spacious: 1rem;
-  --control-small-size: 1.75rem;
-  --control-xlarge-gap: 0.5rem;
-  --control-xlarge-padding-inline-condensed: 0.5rem;
-  --control-xlarge-padding-inline-normal: 0.75rem;
-  --control-xlarge-padding-inline-spacious: 1rem;
-  --control-xlarge-size: 3rem;
-  --control-xsmall-gap: 0.25rem;
-  --control-xsmall-padding-inline-condensed: 0.25rem;
-  --control-xsmall-padding-inline-normal: 0.5rem;
-  --control-xsmall-padding-inline-spacious: 0.75rem;
-  --control-xsmall-size: 1.5rem;
-  --control-stack-large-gap-auto: 0.5rem;
-  --control-stack-large-gap-condensed: 0.5rem;
-  --control-stack-large-gap-spacious: 0.75rem;
-  --control-stack-medium-gap-auto: 0.5rem;
-  --control-stack-medium-gap-condensed: 0.5rem;
-  --control-stack-medium-gap-spacious: 0.75rem;
-  --control-stack-small-gap-auto: 0.5rem;
-  --control-stack-small-gap-condensed: 0.5rem;
-  --control-stack-small-gap-spacious: 1rem;
-  --overlay-border-radius: 0.375rem;
-  --overlay-padding-condensed: 0.5rem;
-  --overlay-padding-normal: 1rem;
-  --overlay-padding-block-condensed: 0.25rem;
-  --overlay-padding-block-normal: 0.75rem;
-  --spinner-size-large: 4rem;
-  --spinner-size-medium: 2rem;
-  --spinner-size-small: 1rem;
-  --stack-gap-condensed: 0.5rem;
-  --stack-gap-normal: 1rem;
-  --stack-gap-spacious: 1.5rem;
-  --stack-padding-condensed: 0.5rem;
-  --stack-padding-normal: 1rem;
-  --stack-padding-spacious: 1.5rem;
+    /* Controls, overlays, spinners and stacks */
+    --control-large-padding-block: 0.625rem;
+    --control-medium-padding-block: 0.375rem;
+    --control-xlarge-padding-block: 0.875rem;
+    --control-xsmall-padding-block: 0.125rem;
+    --overlay-height-large: 27rem;
+    --overlay-height-medium: 20rem;
+    --overlay-height-small: 16rem;
+    --overlay-height-xlarge: 37.5rem;
+    --overlay-offset: 0.25rem;
+    --overlay-width-large: 40rem;
+    --overlay-width-medium: 30rem;
+    --overlay-width-small: 20rem;
+    --overlay-width-xlarge: 60rem;
+    --overlay-width-xsmall: 12rem;
+    --spinner-stroke-width-default: 0.125rem;
+    --control-large-gap: 0.5rem;
+    --control-large-padding-inline-condensed: 0.5rem;
+    --control-large-padding-inline-normal: 0.75rem;
+    --control-large-padding-inline-spacious: 1rem;
+    --control-large-size: 2.5rem;
+    --control-medium-gap: 0.5rem;
+    --control-medium-padding-inline-condensed: 0.5rem;
+    --control-medium-padding-inline-normal: 0.75rem;
+    --control-medium-padding-inline-spacious: 1rem;
+    --control-medium-size: 2rem;
+    --control-min-target-coarse: 2.75rem;
+    --control-min-target-fine: 1rem;
+    --control-small-gap: 0.25rem;
+    --control-small-padding-block: 0.25rem;
+    --control-small-padding-inline-condensed: 0.5rem;
+    --control-small-padding-inline-normal: 0.75rem;
+    --control-small-padding-inline-spacious: 1rem;
+    --control-small-size: 1.75rem;
+    --control-xlarge-gap: 0.5rem;
+    --control-xlarge-padding-inline-condensed: 0.5rem;
+    --control-xlarge-padding-inline-normal: 0.75rem;
+    --control-xlarge-padding-inline-spacious: 1rem;
+    --control-xlarge-size: 3rem;
+    --control-xsmall-gap: 0.25rem;
+    --control-xsmall-padding-inline-condensed: 0.25rem;
+    --control-xsmall-padding-inline-normal: 0.5rem;
+    --control-xsmall-padding-inline-spacious: 0.75rem;
+    --control-xsmall-size: 1.5rem;
+    --control-stack-large-gap-auto: 0.5rem;
+    --control-stack-large-gap-condensed: 0.5rem;
+    --control-stack-large-gap-spacious: 0.75rem;
+    --control-stack-medium-gap-auto: 0.5rem;
+    --control-stack-medium-gap-condensed: 0.5rem;
+    --control-stack-medium-gap-spacious: 0.75rem;
+    --control-stack-small-gap-auto: 0.5rem;
+    --control-stack-small-gap-condensed: 0.5rem;
+    --control-stack-small-gap-spacious: 1rem;
+    --overlay-border-radius: 0.375rem;
+    --overlay-padding-condensed: 0.5rem;
+    --overlay-padding-normal: 1rem;
+    --overlay-padding-block-condensed: 0.25rem;
+    --overlay-padding-block-normal: 0.75rem;
+    --spinner-size-large: 4rem;
+    --spinner-size-medium: 2rem;
+    --spinner-size-small: 1rem;
+    --stack-gap-condensed: 0.5rem;
+    --stack-gap-normal: 1rem;
+    --stack-gap-spacious: 1.5rem;
+    --stack-padding-condensed: 0.5rem;
+    --stack-padding-normal: 1rem;
+    --stack-padding-spacious: 1.5rem;
 
-  /* Semantic z-index: class names are the z-* utilities Tailwind builds from this namespace */
-  --z-index-behind: -1; /** Place element behind base content. Use for decorative backgrounds or canvas elements. */
-  --z-index-default: 0; /** Default stacking order. No elevation above surrounding content. */
-  --z-index-dropdown: 200; /** Dropdown menus and select panels that appear above page content. */
-  --z-index-modal: 400; /** Modal dialogs and full-screen overlays. */
-  --z-index-overlay: 300; /** Overlay backdrops, side panels, and drawers. */
-  --z-index-popover: 500; /** Tooltips and popovers that appear above all normal UI. */
-  --z-index-skip-link: 600; /** Accessibility skip links. Must always be the topmost layer. */
-  --z-index-sticky: 100; /** Sticky elements that remain visible while scrolling. */
+    /* Semantic z-index: class names are the z-* utilities Tailwind builds from this namespace */
+    --z-index-behind: -1; /** Place element behind base content. Use for decorative backgrounds or canvas elements. */
+    --z-index-default: 0; /** Default stacking order. No elevation above surrounding content. */
+    --z-index-dropdown: 200; /** Dropdown menus and select panels that appear above page content. */
+    --z-index-modal: 400; /** Modal dialogs and full-screen overlays. */
+    --z-index-overlay: 300; /** Overlay backdrops, side panels, and drawers. */
+    --z-index-popover: 500; /** Tooltips and popovers that appear above all normal UI. */
+    --z-index-skip-link: 600; /** Accessibility skip links. Must always be the topmost layer. */
+    --z-index-sticky: 100; /** Sticky elements that remain visible while scrolling. */
 
-  /* Spacing */
-  --space-lg: 1rem; /** Spacious spacing for major layout divisions and visual separation between content blocks. */
-  --space-md: 0.75rem; /** Relaxed spacing for breathing room and comfortable internal container space. */
-  --space-sm: 0.5rem; /** Default spacing for most UI elements. Comfortable visual density for standard component layouts. */
-  --space-xl: 1.5rem; /** Expansive spacing for large sections and top-level structure separation. */
-  --space-xs: 0.25rem; /** Compact spacing for small badges, tight internal spacing, and minimal breathing room. */
-  --space-xxs: 0.125rem; /** Ultra-compact spacing for form field separators and tight visual divisions. */
+    /* Spacing */
+    --space-lg: 1rem; /** Spacious spacing for major layout divisions and visual separation between content blocks. */
+    --space-md: 0.75rem; /** Relaxed spacing for breathing room and comfortable internal container space. */
+    --space-sm: 0.5rem; /** Default spacing for most UI elements. Comfortable visual density for standard component layouts. */
+    --space-xl: 1.5rem; /** Expansive spacing for large sections and top-level structure separation. */
+    --space-xs: 0.25rem; /** Compact spacing for small badges, tight internal spacing, and minimal breathing room. */
+    --space-xxs: 0.125rem; /** Ultra-compact spacing for form field separators and tight visual divisions. */
 }
 
 /* Control sizing overrides by pointer type (media queries cannot live inside @theme) */
 @media (pointer: coarse) {
-  :root {
-    --control-min-target-auto: 2.75rem; /** Minimum touch target size for coarse pointer devices (touch screens) */
-    --control-stack-large-gap-auto: 0.75rem; /** Gap between stacked controls in large density layouts for touch devices */
-    --control-stack-medium-gap-auto: 0.75rem; /** Gap between stacked controls in medium density layouts for touch devices */
-    --control-stack-small-gap-auto: 1rem; /** Gap between stacked controls in small density layouts for touch devices */
-  }
+    :root {
+        --control-min-target-auto: 2.75rem; /** Minimum touch target size for coarse pointer devices (touch screens) */
+        --control-stack-large-gap-auto: 0.75rem; /** Gap between stacked controls in large density layouts for touch devices */
+        --control-stack-medium-gap-auto: 0.75rem; /** Gap between stacked controls in medium density layouts for touch devices */
+        --control-stack-small-gap-auto: 1rem; /** Gap between stacked controls in small density layouts for touch devices */
+    }
 }
 
 @media (pointer: fine) {
-  :root {
-    --control-min-target-auto: 1rem; /** Minimum target size for fine pointer devices (mouse) */
-    --control-stack-large-gap-auto: 0.5rem; /** Gap between stacked controls in large density layouts for mouse interfaces */
-    --control-stack-medium-gap-auto: 0.5rem; /** Gap between stacked controls in medium density layouts for mouse interfaces */
-    --control-stack-small-gap-auto: 0.5rem; /** Gap between stacked controls in small density layouts for mouse interfaces */
-  }
+    :root {
+        --control-min-target-auto: 1rem; /** Minimum target size for fine pointer devices (mouse) */
+        --control-stack-large-gap-auto: 0.5rem; /** Gap between stacked controls in large density layouts for mouse interfaces */
+        --control-stack-medium-gap-auto: 0.5rem; /** Gap between stacked controls in medium density layouts for mouse interfaces */
+        --control-stack-small-gap-auto: 0.5rem; /** Gap between stacked controls in small density layouts for mouse interfaces */
+    }
 }
 
 /* Motion: class names for the semantic durations, which have no Tailwind namespace to build
    from. Each sets --tw-duration alongside the property, the way the built-in duration-*
    utilities do, so animate-* utilities read the same duration as a transition does */
 @utility duration-micro {
-  --tw-duration: var(--motion-duration-micro);
-  transition-duration: var(--motion-duration-micro);
+    --tw-duration: var(--motion-duration-micro);
+    transition-duration: var(--motion-duration-micro);
 }
 
 @utility duration-short {
-  --tw-duration: var(--motion-duration-short);
-  transition-duration: var(--motion-duration-short);
+    --tw-duration: var(--motion-duration-short);
+    transition-duration: var(--motion-duration-short);
 }
 
 @utility duration-medium {
-  --tw-duration: var(--motion-duration-medium);
-  transition-duration: var(--motion-duration-medium);
+    --tw-duration: var(--motion-duration-medium);
+    transition-duration: var(--motion-duration-medium);
 }
 
 @utility duration-long {
-  --tw-duration: var(--motion-duration-long);
-  transition-duration: var(--motion-duration-long);
+    --tw-duration: var(--motion-duration-long);
+    transition-duration: var(--motion-duration-long);
 }
