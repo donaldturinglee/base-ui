@@ -57,6 +57,7 @@ export * from "./label-group";
 export * from "./link";
 export * from "./link-button";
 export * from "./list";
+export * from "./map";
 export * from "./mark";
 export * from "./markdown";
 export * from "./marquee";

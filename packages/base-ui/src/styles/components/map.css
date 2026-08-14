@@ -1,0 +1,370 @@
+@layer components {
+    /* Ground drawn from tiles, standing in a box of its own.
+
+       The height is the one measurement a map cannot work out for itself: it is drawn to
+       whatever room it is given, and given none it would be drawn to nothing at all. What it
+       falls back to is tall enough to read a street off and short enough to stand in a column
+       beside other content. The width is left to whatever the map was put in, the way anything
+       else on the page finds one.
+
+       OpenLayers brings no stylesheet of its own here, so everything the map draws is dressed
+       below rather than imported and then argued with. All of it is written under this class so
+       that a map drawn by something else on the same page is left as it was */
+    .map {
+        --map-width: auto;
+        --map-height: 24rem;
+        --map-control-gap: var(--base-size-8);
+        --map-control-size: var(--base-size-32);
+
+        position: relative;
+        width: var(--map-width);
+        height: var(--map-height);
+        /* A map given a width wider than the room it has is brought down to fit rather than
+           running past the edge of what it stands in */
+        max-width: 100%;
+        overflow: hidden;
+        /* What is seen wherever a tile has not arrived yet, so the box reads as ground waiting
+           rather than as a hole cut in the page */
+        background-color: var(--background-color-muted);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+
+        /* The map takes focus so that it can be panned from the keyboard, so it has to show that
+           it has it. The ring is drawn inside the edge, since the box is clipped to it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* Filling the screen leaves the map standing on whatever the page was drawn against, so it
+       is given a ground of its own and gives back the shape it was cut to */
+    .map:fullscreen {
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-color-default);
+        border-radius: 0;
+    }
+
+    /* Where the map itself draws. OpenLayers measures the element it was handed and draws to
+       that, so it has to be the whole of the box rather than shrink to what it holds */
+    .map-surface {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* The drawing is a canvas the map sizes itself, so it is kept from everything the page says
+       about pictures: a canvas held to the width of its column would be drawn at one size and
+       measured at another */
+    .map .ol-viewport canvas {
+        all: unset;
+        overflow: hidden;
+    }
+
+    .map .ol-unselectable {
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* A control the browser cannot honour, such as filling the screen where the page is not
+       allowed to, is not drawn at all rather than drawn and then found to do nothing */
+    .map .ol-unsupported {
+        display: none;
+    }
+
+    /* Every control stands over the map rather than in it. OpenLayers places each one itself
+       unless it has been handed somewhere to go, so what is set here is where the ones it
+       places stand */
+    .map .ol-control {
+        position: absolute;
+    }
+
+    /* The buttons a map is worked by are drawn the way the rest of the library draws a small
+       button, since a reader has no reason to learn a second kind here. They stand on a surface
+       of their own rather than on the ground, which is the only way a mark on the map underneath
+       cannot be mistaken for one of them */
+    .map .ol-control button {
+        display: grid;
+        place-items: center;
+        width: var(--map-control-size);
+        height: var(--map-control-size);
+        padding: 0;
+        color: var(--foreground-color-default);
+        background-color: var(--overlay-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-resting-small);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--control-background-color-hover);
+        }
+
+        &:active {
+            background-color: var(--control-background-color-active);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* The zoom keeps the corner it is looked for in, with the two buttons drawn as one pair so
+       that the line between them reads as a join rather than as a gap */
+    .map .ol-zoom {
+        top: var(--map-control-gap);
+        left: var(--map-control-gap);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .map .ol-zoom .ol-zoom-in {
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
+    }
+
+    .map .ol-zoom .ol-zoom-out {
+        /* The pair share one line between them rather than standing each on its own */
+        margin-top: calc(-1 * var(--border-width-thin));
+        border-start-start-radius: 0;
+        border-start-end-radius: 0;
+    }
+
+    /* Under the zoom, in the same corner. It is only drawn while the map is turned, so the room
+       it keeps stands empty on a map that has not been */
+    .map .ol-rotate {
+        top: calc(var(--map-control-size) * 2 + var(--map-control-gap) * 2);
+        left: var(--map-control-gap);
+    }
+
+    .map .ol-rotate.ol-hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .map .ol-compass {
+        display: block;
+        will-change: transform;
+    }
+
+    /* The row the controls a reader presses are drawn into, standing clear of the corner the
+       zoom keeps. It is only as wide as what it holds, and lets a pointer through wherever it
+       holds nothing, so the ground behind it can still be dragged */
+    .map-toolbar {
+        position: absolute;
+        top: var(--map-control-gap);
+        right: var(--map-control-gap);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: var(--map-control-gap);
+        pointer-events: none;
+
+        & > * {
+            pointer-events: auto;
+        }
+    }
+
+    /* A control handed to the row is placed by the row rather than placing itself, and stands as
+       the ground whatever it opens onto is measured from */
+    .map-toolbar .ol-control {
+        position: relative;
+    }
+
+    /* What a control opens onto stands beside it rather than pushing the row along, so the
+       buttons stay where they were pressed. It opens leftwards, away from the edge the row is
+       against: under the button is where the next button in the row is, and the map is the only
+       side with room to open into */
+    .map .layers-control-layers,
+    .map .draw-control-shapes {
+        position: absolute;
+        top: 0;
+        right: calc(100% + var(--map-control-gap));
+        padding: var(--stack-padding-condensed);
+        background-color: var(--overlay-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--overlay-border-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+    }
+
+    .map .draw-control-shapes {
+        display: flex;
+        gap: var(--map-control-gap);
+    }
+
+    .map .layers-control-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        white-space: nowrap;
+    }
+
+    /* The layers of a group are listed under it, stepped in so that the tree reads as a tree */
+    .map .layers-control-list .layers-control-list {
+        padding-inline-start: var(--base-size-16);
+    }
+
+    .map .layers-control-label {
+        display: flex;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The search opens leftwards, away from the edge it stands against, so the field has the
+       width of the map to grow into rather than the margin outside it */
+    .map .search-control form {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: var(--map-control-gap);
+    }
+
+    .map .search-control-input {
+        width: 12rem;
+        max-width: 50vw;
+        height: var(--map-control-size);
+        padding-inline: var(--control-medium-padding-inline-condensed);
+        color: var(--foreground-color-default);
+        background-color: var(--overlay-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-resting-small);
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* What a length on the screen stands for on the ground. It is read rather than pressed, so
+       it keeps the foot of the map and is drawn quietly. It is placed here rather than by the
+       rule above, since OpenLayers does not count the scale line among the controls a reader
+       can reach for */
+    .map .ol-scale-line {
+        position: absolute;
+        bottom: var(--map-control-gap);
+        left: var(--map-control-gap);
+        padding: var(--base-size-2) var(--base-size-4);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-small);
+        font-size: var(--text-caption-size);
+        line-height: var(--text-caption-line-height);
+    }
+
+    /* The bar is drawn as three sides of a box, open at the top, so that what it measures is
+       read off the ground rather than off the label above it */
+    .map .ol-scale-line-inner {
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--foreground-color-muted);
+        border-top: none;
+        margin: var(--border-width-thin);
+        text-align: center;
+        will-change: contents, width;
+    }
+
+    /* Who the ground was drawn by, which is a condition of drawing it at all. It keeps the
+       corner furthest from the controls and is written quietly, since it is read once rather
+       than looked at */
+    .map .ol-attribution {
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-flow: row-reverse;
+        align-items: center;
+        max-width: 100%;
+        padding-inline: var(--base-size-4);
+        color: var(--foreground-color-muted);
+        background-color: var(--overlay-background-color);
+        border-start-start-radius: var(--border-radius-medium);
+        font-size: var(--text-caption-size);
+        line-height: var(--text-caption-line-height);
+    }
+
+    .map .ol-attribution ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .map .ol-attribution li {
+        display: inline;
+    }
+
+    .map .ol-attribution a {
+        color: inherit;
+    }
+
+    /* A map whose ground names itself, as OpenStreetMap's does, cannot have that folded away, so
+       the button that would fold it is not drawn */
+    .map .ol-attribution.ol-collapsed ul,
+    .map .ol-attribution.ol-uncollapsible button {
+        display: none;
+    }
+
+    /* A popup held over the ground rather than over the page, so it travels with whatever it is
+       naming as the map is dragged about. It stands above and a little to the left of the point
+       it was opened on, which is where a hand pointing at that point is not */
+    .map .ol-popup {
+        position: absolute;
+        bottom: var(--base-size-12);
+        left: calc(-1 * var(--base-size-48));
+        min-width: 16rem;
+        max-width: 20rem;
+        padding: var(--stack-padding-condensed);
+        padding-inline-end: var(--base-size-32);
+        background-color: var(--overlay-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--overlay-border-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+    }
+
+    /* Shutting the popup sits inside it rather than beside it, since there is nothing outside it
+       to sit against */
+    .map .ol-popup-closer {
+        position: absolute;
+        top: var(--base-size-4);
+        right: var(--base-size-4);
+        display: grid;
+        place-items: center;
+        width: var(--base-size-24);
+        height: var(--base-size-24);
+        padding: 0;
+        color: var(--foreground-color-muted);
+        background-color: transparent;
+        border: none;
+        border-radius: var(--border-radius-small);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--foreground-color-default);
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+    }
+
+    /* An address read off the ground runs long and has nowhere to be broken, so it is let wrap
+       rather than pushing the popup wider than the map it stands on */
+    .map .ol-popup-content {
+        overflow-wrap: break-word;
+    }
+}
