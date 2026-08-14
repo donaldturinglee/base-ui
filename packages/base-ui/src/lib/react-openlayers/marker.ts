@@ -15,7 +15,10 @@ import type { Coordinate } from "ol/coordinate";
 const MARKER_LAYER_KEY = "markerLayer";
 const MARKER_LAYER_Z_INDEX = 1;
 
-export const DEFAULT_MARKER_COLOR = "red";
+// What a pin is painted where it is not told otherwise. It is written as a value rather than
+// taken from a stylesheet because the pin is drawn into a picture rather than into the document,
+// and so is out of reach of anything that repaints the rest of the map
+export const DEFAULT_MARKER_COLOR = "#257ECA";
 
 // The pin is drawn forty pixels tall in a box fifteen units across, which is what the path below
 // was drawn against
