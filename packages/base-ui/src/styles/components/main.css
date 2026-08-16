@@ -46,8 +46,10 @@
 @import "./empty-state.css";
 @import "./file-upload.css";
 @import "./filtered-action-list.css";
+@import "./floating-panel.css";
 @import "./flow.css";
 @import "./form-control.css";
+@import "./frame.css";
 @import "./header.css";
 @import "./heading.css";
 @import "./hidden.css";

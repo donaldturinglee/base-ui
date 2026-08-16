@@ -1,0 +1,15 @@
+@layer components {
+    /* Browsers draw a frame with a border of their own, which says nothing about what it holds and
+       belongs to the caller to put back if they want one. A frame is laid out as a block so that
+       it does not sit on a text baseline, which would leave a gap beneath it that no rule here
+       could account for.
+
+       How large it is stays the caller's: a document of its own has no say in the size of the
+       element holding it. What the frame measures of its own contents is put on the element as
+       --frame-content-width and --frame-content-height, so a frame that should fit what it holds
+       can be sized from those */
+    .frame {
+        display: block;
+        border: none;
+    }
+}

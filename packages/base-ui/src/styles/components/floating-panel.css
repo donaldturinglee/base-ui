@@ -1,0 +1,243 @@
+@layer components {
+    /* Where the panel stands is carried in these rather than written straight onto the element, so
+       that a stage which fills the room the panel was given can be laid out from here instead of
+       having to be measured and worked out again in the component */
+    .floating-panel-positioner {
+        --floating-panel-x: 0px;
+        --floating-panel-y: 0px;
+        --floating-panel-width: auto;
+        --floating-panel-height: auto;
+
+        position: fixed;
+        top: var(--floating-panel-y);
+        left: var(--floating-panel-x);
+        width: var(--floating-panel-width);
+        height: var(--floating-panel-height);
+        /* Above the page it floats over, alongside the drawers and side panels, and below the
+           dialogs that are answered before anything else can happen */
+        z-index: var(--z-index-overlay);
+
+        /* A panel measured against an ancestor rather than the viewport is laid out against that
+           ancestor, which is the very thing it was measured against */
+        &[data-strategy="absolute"] {
+            position: absolute;
+        }
+
+        /* Minimizing draws the panel as its header alone. The height is dropped rather than set to
+           the header's, so a header of any size still fits exactly */
+        &[data-stage="minimized"] {
+            height: auto;
+        }
+
+        /* Maximizing fills the room the panel was given, which for a fixed panel is the viewport
+           and for one laid out against an ancestor is that ancestor */
+        &[data-stage="maximized"] {
+            inset: 0;
+            width: auto;
+            height: auto;
+        }
+
+        /* Nothing is transitioned while a gesture is under way: a panel following a pointer would
+           lag behind it, and one whose edge is being dragged would keep resizing after the pointer
+           had stopped */
+        &:not([data-dragging]):not([data-resizing]) {
+            transition:
+                top var(--motion-transition-hover),
+                left var(--motion-transition-hover),
+                width var(--motion-transition-hover),
+                height var(--motion-transition-hover);
+
+            /* Written against the same selector as the transition it takes away. A media query
+               adds no weight of its own, so the plain class would lose to the one above it */
+            @media (prefers-reduced-motion: reduce) {
+                transition: none;
+            }
+        }
+    }
+
+    /* Deliberately not positioned. The resize triggers stand inside it but are laid out against
+       the positioner, and a box only clips what it is the containing block of, so leaving this
+       one static is what keeps the corner triggers from being cut away by the rounding below */
+    .floating-panel-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: var(--overlay-background-color);
+        border: var(--border-width-thin) solid var(--border-color-default);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+
+        &:focus {
+            outline: none;
+        }
+
+        /* The panel is what the arrow keys move, so it says where the focus is when it is the
+           panel itself rather than something within it that is holding it */
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(var(--focus-outline-width) * -1);
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    /* The header is what the panel is usually dragged by, so it says as much with the pointer it
+       shows. A panel that cannot be dragged, or one at a stage that is laid out from the room it
+       was given rather than from a rect, shows the ordinary pointer instead */
+    .floating-panel-drag-trigger {
+        /* Stops a drag on a touch screen being read as a scroll of the page behind the panel */
+        touch-action: none;
+        user-select: none;
+
+        &[data-draggable] {
+            cursor: grab;
+        }
+
+        &[data-dragging] {
+            cursor: grabbing;
+        }
+    }
+
+    .floating-panel-header {
+        display: flex;
+        gap: var(--base-size-8);
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--base-size-8) var(--base-size-12);
+        border-bottom: var(--border-width-thin) solid var(--border-color-muted);
+    }
+
+    /* A minimized panel is its header and nothing else, so there is no body below for the line to
+       part it from */
+    [data-stage="minimized"] .floating-panel-header {
+        border-bottom: none;
+    }
+
+    .floating-panel-title {
+        /* A title too long for the header is cut short rather than pushing the buttons out of it.
+           A flex item will not shrink below the words it holds until it is told it may, which is
+           what the nought here says, and the title is what gives way because it is the part that
+           can still be read once it is shortened */
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-medium);
+        color: var(--foreground-color-default);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .floating-panel-control {
+        display: flex;
+        flex-shrink: 0;
+        gap: var(--base-size-4);
+        align-items: center;
+    }
+
+    .floating-panel-body {
+        flex: 1;
+        min-height: 0;
+        padding: var(--base-size-12);
+        overflow: auto;
+        color: var(--foreground-color-default);
+    }
+
+    /* The triggers are drawn no wider than a border but answer to a pointer further out than that,
+       so a reader does not have to land on the edge itself to take hold of it. They are laid over
+       the panel's own edges rather than beside them, so none of them takes room from the body */
+    .floating-panel-resize-trigger {
+        --floating-panel-resize-trigger-reach: var(--base-size-8);
+
+        position: absolute;
+        touch-action: none;
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--base-size-2);
+        }
+
+        &[aria-disabled="true"] {
+            display: none;
+        }
+
+        /* Each edge runs the length of the side it sits on, stopping short of the corners so that a
+           corner trigger is what answers there and can move both edges at once */
+        &[data-axis="n"],
+        &[data-axis="s"] {
+            right: var(--floating-panel-resize-trigger-reach);
+            left: var(--floating-panel-resize-trigger-reach);
+            height: var(--floating-panel-resize-trigger-reach);
+            cursor: ns-resize;
+        }
+
+        &[data-axis="e"],
+        &[data-axis="w"] {
+            top: var(--floating-panel-resize-trigger-reach);
+            bottom: var(--floating-panel-resize-trigger-reach);
+            width: var(--floating-panel-resize-trigger-reach);
+            cursor: ew-resize;
+        }
+
+        /* A corner is a square of the same reach, laid over the two edges that meet there */
+        &[data-axis="ne"],
+        &[data-axis="nw"],
+        &[data-axis="se"],
+        &[data-axis="sw"] {
+            width: var(--floating-panel-resize-trigger-reach);
+            height: var(--floating-panel-resize-trigger-reach);
+        }
+
+        &[data-axis="n"] {
+            top: 0;
+        }
+
+        &[data-axis="s"] {
+            bottom: 0;
+        }
+
+        &[data-axis="e"] {
+            right: 0;
+        }
+
+        &[data-axis="w"] {
+            left: 0;
+        }
+
+        &[data-axis="nw"] {
+            top: 0;
+            left: 0;
+            cursor: nwse-resize;
+        }
+
+        &[data-axis="se"] {
+            right: 0;
+            bottom: 0;
+            cursor: nwse-resize;
+        }
+
+        &[data-axis="ne"] {
+            top: 0;
+            right: 0;
+            cursor: nesw-resize;
+        }
+
+        &[data-axis="sw"] {
+            bottom: 0;
+            left: 0;
+            cursor: nesw-resize;
+        }
+    }
+
+    /* A stage laid out from the room the panel was given is not one an edge can be dragged from,
+       so the triggers are taken away rather than left to be dragged to no effect */
+    [data-stage="minimized"] .floating-panel-resize-trigger,
+    [data-stage="maximized"] .floating-panel-resize-trigger {
+        display: none;
+    }
+}
