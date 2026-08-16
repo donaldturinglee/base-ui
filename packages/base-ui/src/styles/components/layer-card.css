@@ -1,0 +1,64 @@
+@layer components {
+    /* Given content rather than layers, the card is one surface and nothing more. It holds no
+       padding of its own: what is put on it settles how much room it wants around it */
+    .layer-card {
+        overflow: hidden;
+        background-color: var(--card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-resting-small);
+    }
+
+    /* Given layers, the card stops being the surface and becomes the recessed one they stack on.
+       It is drawn back rather than raised, and its edge is the quieter of the two, so that the
+       layer in front is what reads as the card */
+    .layer-card-layered {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow: hidden;
+        background-color: var(--background-color-inset);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-muted);
+        border-radius: var(--border-radius-large);
+    }
+
+    /* The layer behind. Its own padding is what the strip above and below is cut from: the block
+       margins pull it back into the room the layer in front takes, so a band as deep as the words
+       it holds is drawn as a strip either side of them instead. The card clips what that pulls
+       past its top edge */
+    .layer-card-secondary {
+        display: flex;
+        gap: var(--stack-gap-condensed);
+        align-items: center;
+        margin-block: calc(-1 * var(--base-size-8));
+        padding: var(--stack-padding-normal);
+        /* The same ground the card behind is drawn on, named again rather than left to show
+           through, so that a layer standing on its own is still drawn as the layer it is */
+        background-color: var(--background-color-inset);
+        color: var(--foreground-color-muted);
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    /* The layer in front: the card proper, raised onto the one behind it. It is positioned so that
+       anything standing against it is placed within it rather than against the page, and carries
+       neither colour nor underline of its own so that rendering it as a link still reads as a card */
+    .layer-card-primary {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--stack-gap-condensed);
+        overflow: hidden;
+        padding: var(--stack-padding-normal);
+        color: inherit;
+        text-decoration: none;
+        background-color: var(--card-background-color);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--border-color-default);
+        border-radius: var(--border-radius-large);
+    }
+}

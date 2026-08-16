@@ -58,6 +58,7 @@ export * from "./inline-message";
 export * from "./keybinding-hint";
 export * from "./label";
 export * from "./label-group";
+export * from "./layer-card";
 export * from "./link";
 export * from "./link-button";
 export * from "./list";
