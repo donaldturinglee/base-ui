@@ -2,37 +2,41 @@ import * as React from "react";
 import { ChevronUpDownRegular } from "@gamecrafters/base-ui-icons";
 import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { SelectProps, SelectSize, SelectValidationStatus } from "./Select.types";
+import type {
+    NativeSelectProps,
+    NativeSelectSize,
+    NativeSelectValidationStatus,
+} from "./NativeSelect.types";
 
 const classes = {
-    select: "select-control",
-    indicator: "select-indicator",
+    select: "native-select-control",
+    indicator: "native-select-indicator",
 };
 
-const selectFieldVariants = cva("select", {
+const nativeSelectFieldVariants = cva("native-select", {
     variants: {
         size: {
-            small: "select-small",
-            medium: "select-medium",
-            large: "select-large",
-        } satisfies Record<SelectSize, string>,
+            small: "native-select-small",
+            medium: "native-select-medium",
+            large: "native-select-large",
+        } satisfies Record<NativeSelectSize, string>,
         block: {
-            true: "select-block",
+            true: "native-select-block",
             false: "",
         },
         disabled: {
-            true: "select-disabled",
+            true: "native-select-disabled",
             false: "",
         },
         validation: {
-            error: "select-error",
-            success: "select-success",
-        } satisfies Record<SelectValidationStatus, string>,
+            error: "native-select-error",
+            success: "native-select-success",
+        } satisfies Record<NativeSelectValidationStatus, string>,
     },
 });
 
-function Select(
-    props: SelectProps,
+function NativeSelect(
+    props: NativeSelectProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -55,7 +59,7 @@ function Select(
     return (
         <span
             className={classNames(
-                selectFieldVariants({
+                nativeSelectFieldVariants({
                     size,
                     block,
                     disabled,
@@ -63,7 +67,7 @@ function Select(
                 }),
                 className,
             )}
-            data-component="Select"
+            data-component="NativeSelect"
             data-size={size}
             data-block={block}
             data-disabled={disabled}
@@ -88,7 +92,7 @@ function Select(
                         value=""
                         disabled={required}
                         hidden={required}
-                        data-component="Select.Option"
+                        data-component="NativeSelect.Option"
                     >
                         {placeholder}
                     </option>
@@ -100,6 +104,6 @@ function Select(
     );
 }
 
-Select.displayName = "Select";
+NativeSelect.displayName = "NativeSelect";
 
-export default fixedForwardRef(Select);
+export default fixedForwardRef(NativeSelect);

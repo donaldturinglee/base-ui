@@ -69,6 +69,7 @@
 @import "./marquee.css";
 @import "./message.css";
 @import "./meter.css";
+@import "./native-select.css";
 @import "./navigation-list.css";
 @import "./navigation-menu.css";
 @import "./number-input.css";
@@ -89,7 +90,6 @@
 @import "./rich-text-editor.css";
 @import "./scrollable-region.css";
 @import "./segmented-control.css";
-@import "./select.css";
 @import "./select-panel.css";
 @import "./separator.css";
 @import "./skeleton-avatar.css";

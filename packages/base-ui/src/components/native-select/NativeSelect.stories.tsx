@@ -1,29 +1,29 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
 import { Stack } from "../stack";
 import { Text } from "../text";
-import { Select } from ".";
-import type { SelectProps } from "./Select.types";
+import { NativeSelect } from ".";
+import type { NativeSelectProps } from "./NativeSelect.types";
 
 const choices = (
     <>
-        <Select.Option value="one">Choice one</Select.Option>
-        <Select.Option value="two">Choice two</Select.Option>
-        <Select.Option value="three">Choice three</Select.Option>
-        <Select.Option value="four">Choice four</Select.Option>
+        <NativeSelect.Option value="one">Choice one</NativeSelect.Option>
+        <NativeSelect.Option value="two">Choice two</NativeSelect.Option>
+        <NativeSelect.Option value="three">Choice three</NativeSelect.Option>
+        <NativeSelect.Option value="four">Choice four</NativeSelect.Option>
     </>
 );
 
 export default {
-    title: "Components/Select",
-    component: Select,
-} as Meta<typeof Select>;
+    title: "Components/NativeSelect",
+    component: NativeSelect,
+} as Meta<typeof NativeSelect>;
 
-export const Default: StoryFn<typeof Select> = () => (
+export const Default: StoryFn<typeof NativeSelect> = () => (
     <Stack gap="condensed" align="start">
         <Text as="label" htmlFor="default-choice">
             Choice
         </Text>
-        <Select id="default-choice">{choices}</Select>
+        <NativeSelect id="default-choice">{choices}</NativeSelect>
     </Stack>
 );
 
@@ -31,14 +31,14 @@ Default.parameters = {
     layout: "centered",
 };
 
-export const Playground: StoryFn<SelectProps> = (args) => (
+export const Playground: StoryFn<NativeSelectProps> = (args) => (
     <Stack gap="condensed" align="start">
         <Text as="label" htmlFor="playground-choice">
             Choice
         </Text>
-        <Select {...args} id="playground-choice">
+        <NativeSelect {...args} id="playground-choice">
             {choices}
-        </Select>
+        </NativeSelect>
     </Stack>
 );
 

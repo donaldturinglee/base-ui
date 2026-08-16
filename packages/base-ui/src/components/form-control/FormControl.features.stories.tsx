@@ -3,9 +3,9 @@ import type { StoryFn } from "@storybook/react-vite";
 import { GlobeRegular } from "@gamecrafters/base-ui-icons";
 import { Checkbox } from "../checkbox";
 import { CheckboxGroup } from "../checkbox-group";
+import { NativeSelect } from "../native-select";
 import { Radio } from "../radio";
 import { RadioGroup } from "../radio-group";
-import { Select } from "../select";
 import { Text } from "../text";
 import { TextInput } from "../text-input";
 import { Textarea } from "../textarea";
@@ -31,12 +31,12 @@ export const WithComplexInputs: StoryFn<typeof FormControl> = () => (
             <TextInput />
         </FormControl>
         <FormControl>
-            <FormControl.Label>Select</FormControl.Label>
-            <Select>
-                <Select.Option value="figma">Figma</Select.Option>
-                <Select.Option value="css">Base CSS</Select.Option>
-                <Select.Option value="react">Base React components</Select.Option>
-            </Select>
+            <FormControl.Label>Native select</FormControl.Label>
+            <NativeSelect>
+                <NativeSelect.Option value="figma">Figma</NativeSelect.Option>
+                <NativeSelect.Option value="css">Base CSS</NativeSelect.Option>
+                <NativeSelect.Option value="react">Base React components</NativeSelect.Option>
+            </NativeSelect>
         </FormControl>
         <FormControl>
             <FormControl.Label>Textarea</FormControl.Label>
@@ -165,11 +165,11 @@ export const DisabledInputs: StoryFn<typeof FormControl> = () => (
             <TextInput />
         </FormControl>
         <FormControl disabled>
-            <FormControl.Label>Disabled select</FormControl.Label>
-            <Select>
-                <Select.Option value="figma">Figma</Select.Option>
-                <Select.Option value="css">Base CSS</Select.Option>
-            </Select>
+            <FormControl.Label>Disabled native select</FormControl.Label>
+            <NativeSelect>
+                <NativeSelect.Option value="figma">Figma</NativeSelect.Option>
+                <NativeSelect.Option value="css">Base CSS</NativeSelect.Option>
+            </NativeSelect>
         </FormControl>
     </div>
 );

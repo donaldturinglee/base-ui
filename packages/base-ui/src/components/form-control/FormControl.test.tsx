@@ -4,8 +4,8 @@ import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { Checkbox } from "../checkbox";
 import { CheckboxGroup } from "../checkbox-group";
+import { NativeSelect } from "../native-select";
 import { Radio } from "../radio";
-import { Select } from "../select";
 import { TextInput } from "../text-input";
 import { Textarea } from "../textarea";
 import { FormControl } from ".";
@@ -247,9 +247,9 @@ describe("FormControl", () => {
             <>
                 <FormControl id="pick">
                     <FormControl.Label>Pick one</FormControl.Label>
-                    <Select>
-                        <Select.Option value="one">One</Select.Option>
-                    </Select>
+                    <NativeSelect>
+                        <NativeSelect.Option value="one">One</NativeSelect.Option>
+                    </NativeSelect>
                 </FormControl>
                 <FormControl id="say">
                     <FormControl.Label>Say something</FormControl.Label>
