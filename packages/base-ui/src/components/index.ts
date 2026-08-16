@@ -43,6 +43,8 @@ export * from "./file-upload";
 export * from "./filtered-action-list";
 export * from "./flow";
 export * from "./form-control";
+export * from "./format-byte";
+export * from "./format-number";
 export * from "./header";
 export * from "./heading";
 export * from "./hidden";
