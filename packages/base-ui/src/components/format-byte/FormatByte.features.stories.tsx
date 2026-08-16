@@ -66,7 +66,7 @@ export const Precision: StoryFn<typeof FormatByte> = () => (
 export const WithLocaleProvider: StoryFn<typeof FormatByte> = () => (
     <Stack gap="condensed">
         {locales.map((locale) => (
-            <LocaleProvider key={locale} locale={locale} contextOnly>
+            <LocaleProvider key={locale} locale={locale}>
                 <Text>
                     {locale}: <FormatByte value={1500} format={{ unitDisplay: "long" }} />
                 </Text>

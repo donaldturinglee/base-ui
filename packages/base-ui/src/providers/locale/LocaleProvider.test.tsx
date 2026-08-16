@@ -199,29 +199,6 @@ describe("LocaleProvider", () => {
         });
     });
 
-    describe("contextOnly", () => {
-        it("leaves the wrapper out", () => {
-            render(
-                <LocaleProvider contextOnly>
-                    <span>Hello</span>
-                </LocaleProvider>,
-            );
-
-            expect(root()).toBeNull();
-            expect(screen.getByText("Hello")).toBeInTheDocument();
-        });
-
-        it("still hands the locale to whatever asks for it", () => {
-            render(
-                <LocaleProvider contextOnly locale="ar-EG">
-                    <Locale />
-                </LocaleProvider>,
-            );
-
-            expect(screen.getByTestId("locale")).toHaveTextContent("ar-EG-rtl");
-        });
-    });
-
     describe("the reading direction", () => {
         const Direction = () => {
             const direction = useDirection();
@@ -232,16 +209,6 @@ describe("LocaleProvider", () => {
         it("reaches whatever was already reading it off the direction context", () => {
             render(
                 <LocaleProvider locale="ar-EG">
-                    <Direction />
-                </LocaleProvider>,
-            );
-
-            expect(screen.getByTestId("direction")).toHaveTextContent("rtl-true");
-        });
-
-        it("is handed down even where the wrapper is left out", () => {
-            render(
-                <LocaleProvider contextOnly locale="he-IL">
                     <Direction />
                 </LocaleProvider>,
             );

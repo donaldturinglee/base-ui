@@ -65,18 +65,6 @@ export const Nested: StoryFn<typeof LocaleProvider> = () => (
     </LocaleProvider>
 );
 
-// Context Only
-export const ContextOnly: StoryFn<typeof LocaleProvider> = () => (
-    <LocaleProvider locale="ar-EG" className={classes.panel}>
-        The wrapper here carries the `lang` and `dir` attributes
-        {/* Nothing is wrapped, so the attributes above still stand and only the value a
-            component reads changes */}
-        <LocaleProvider contextOnly locale="de-DE">
-            <ActiveLocale />
-        </LocaleProvider>
-    </LocaleProvider>
-);
-
 // Controlled, where the locale is the caller's to hold and change
 export const Controlled: StoryFn<typeof LocaleProvider> = () => {
     const locales = ["en-US", "de-DE", "ja-JP", "ar-EG"];

@@ -28,7 +28,7 @@ const useBrowserLocale = () =>
 // the page is read under and as a tag a formatter can be built from. The reading direction the
 // tag implies is handed down with it, so that a subtree in Arabic turns around without being
 // asked to twice
-function LocaleProvider({ children, className, contextOnly, ...props }: LocaleProviderProps) {
+function LocaleProvider({ children, className, ...props }: LocaleProviderProps) {
     // What the caller leaves out comes from a LocaleProvider further up, so a nested provider
     // only has to say what it changes
     const { locale: inheritedLocale } = useLocaleContext();
@@ -46,27 +46,22 @@ function LocaleProvider({ children, className, contextOnly, ...props }: LocalePr
     // DirectionProvider inside this one
     const directionContext = React.useMemo(() => ({ direction }), [direction]);
 
-    const content = contextOnly ? (
-        children
-    ) : (
-        <div
-            className={className}
-            data-component="LocaleProvider"
-            // What tells a screen reader which voice to read the subtree in, and what the
-            // `:lang()` selectors and the browser's own hyphenation are written against
-            lang={locale}
-            // Logical properties and the `:dir()` selectors in `styles` read the direction off the
-            // document rather than off context, so this attribute is what turns the subtree around
-            dir={direction}
-        >
-            {children}
-        </div>
-    );
-
     return (
         <LocaleContext.Provider value={context}>
             <DirectionContext.Provider value={directionContext}>
-                {content}
+                <div
+                    className={className}
+                    data-component="LocaleProvider"
+                    // What tells a screen reader which voice to read the subtree in, and what the
+                    // `:lang()` selectors and the browser's own hyphenation are written against
+                    lang={locale}
+                    // Logical properties and the `:dir()` selectors in `styles` read the direction
+                    // off the document rather than off context, so this attribute is what turns
+                    // the subtree around
+                    dir={direction}
+                >
+                    {children}
+                </div>
             </DirectionContext.Provider>
         </LocaleContext.Provider>
     );

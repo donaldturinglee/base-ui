@@ -6,9 +6,6 @@ export type LocaleProviderProps = {
     // Which locale the subtree is read in, as a BCP 47 tag such as "en-GB" or "ar-EG".
     // The one tag that does not name a locale is "auto", which follows the browser instead
     locale?: string;
-    // Hands the locale to descendants without wrapping them in a `[lang]` element. The language
-    // and the reading direction then come from whichever ancestor carries those attributes
-    contextOnly?: boolean;
     className?: string;
     children?: React.ReactNode;
 };

@@ -63,7 +63,7 @@ export const FractionDigits: StoryFn<typeof FormatNumber> = () => (
 export const WithLocaleProvider: StoryFn<typeof FormatNumber> = () => (
     <Stack gap="condensed">
         {locales.map((locale) => (
-            <LocaleProvider key={locale} locale={locale} contextOnly>
+            <LocaleProvider key={locale} locale={locale}>
                 <Text>
                     {locale}: <FormatNumber value={1234567.891} />
                 </Text>
@@ -74,7 +74,7 @@ export const WithLocaleProvider: StoryFn<typeof FormatNumber> = () => (
 
 // With A Locale Of Its Own, for the odd reading that has to be written in another
 export const WithLocaleOfItsOwn: StoryFn<typeof FormatNumber> = () => (
-    <LocaleProvider locale="de-DE" contextOnly>
+    <LocaleProvider locale="de-DE">
         <Stack gap="condensed">
             <Text>
                 Read under de-DE: <FormatNumber value={1234.5} />

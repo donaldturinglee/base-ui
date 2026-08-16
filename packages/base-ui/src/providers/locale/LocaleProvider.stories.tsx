@@ -41,7 +41,6 @@ export const Playground: StoryFn<LocaleProviderProps> = (args) => (
 
 Playground.args = {
     locale: "en-US",
-    contextOnly: false,
 };
 
 Playground.argTypes = {
@@ -51,12 +50,6 @@ Playground.argTypes = {
         },
         options: ["auto", "en-US", "en-GB", "de-DE", "fr-FR", "sv-SE", "ja-JP", "ar-EG", "he-IL"],
         description: "Which locale the subtree is read in, where auto follows the browser",
-    },
-    contextOnly: {
-        control: {
-            type: "boolean",
-        },
-        description: "Hands the locale to descendants without wrapping them in an element",
     },
     children: {
         table: {
