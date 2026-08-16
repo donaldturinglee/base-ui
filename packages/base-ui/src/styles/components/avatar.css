@@ -36,4 +36,52 @@
             height: var(--avatar-size-wide, var(--avatar-size-regular));
         }
     }
+
+    /* Handed parts rather than being a picture itself, the avatar is the ground they are laid on.
+       Each of them fills it, so whichever is shown is shown in the same place. The `overflow` the
+       avatar already carries is what rounds them off with it */
+    .avatar-composed {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .avatar-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* The picture is kept in the tree while it is still on its way, since one that is not there is
+       never fetched, and only kept out of sight until it has arrived */
+    .avatar-image:not([data-status="loaded"]) {
+        display: none;
+    }
+
+    /* The letters are set from the size of the avatar rather than from the page around it, so they
+       keep their proportion at every size */
+    .avatar-fallback {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--background-color-muted);
+        color: var(--foreground-color-muted);
+        font-size: calc(var(--avatar-size-regular) * 0.4);
+        font-weight: var(--base-text-weight-medium);
+        user-select: none;
+    }
+
+    /* The viewport ranges are exclusive, so an unset narrow or wide size keeps the regular one.
+       The widths match --breakpoint-medium and --breakpoint-xxlarge in variables.css */
+    .avatar-responsive .avatar-fallback {
+        @media (width < 48rem) {
+            font-size: calc(var(--avatar-size-narrow, var(--avatar-size-regular)) * 0.4);
+        }
+
+        @media (width >= 87.5rem) {
+            font-size: calc(var(--avatar-size-wide, var(--avatar-size-regular)) * 0.4);
+        }
+    }
 }

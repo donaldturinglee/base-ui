@@ -1,8 +1,11 @@
 import * as React from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import Avatar from "./Avatar";
+import { Avatar } from ".";
+
+const part = (name: string) =>
+    document.querySelector(`[data-component='Avatar.${name}']`) as HTMLElement;
 
 describe("Avatar", () => {
     it("renders an image element by default", () => {
@@ -126,5 +129,308 @@ describe("Avatar", () => {
     it("merges a custom className onto the root element", () => {
         render(<Avatar className="custom" src="primer.png" data-testid="avatar" />);
         expect(screen.getByTestId("avatar")).toHaveClass("custom");
+    });
+
+    describe("given parts", () => {
+        const composed = (
+            <Avatar size={40} data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+                <Avatar.Fallback name="Mona Octocat" />
+            </Avatar>
+        );
+
+        it("becomes the ground the parts are laid on", () => {
+            render(composed);
+            const avatar = screen.getByTestId("avatar");
+
+            expect(avatar.tagName).toBe("SPAN");
+            expect(avatar).toHaveClass("avatar", "avatar-composed", "avatar-circle");
+        });
+
+        it("keeps the size it was given", () => {
+            render(composed);
+            expect(screen.getByTestId("avatar")).toHaveStyle({ "--avatar-size-regular": "40px" });
+        });
+
+        // The picture within is what carries them, so the ground it sits on does not repeat them
+        it("leaves the image attributes to the picture inside it", () => {
+            render(composed);
+            const avatar = screen.getByTestId("avatar");
+
+            expect(avatar).not.toHaveAttribute("alt");
+            expect(avatar).not.toHaveAttribute("width");
+            expect(avatar).not.toHaveAttribute("height");
+        });
+
+        it("renders as the element passed to the as prop", () => {
+            render(
+                <Avatar as="div" data-testid="avatar">
+                    <Avatar.Fallback name="Mona Octocat" />
+                </Avatar>,
+            );
+
+            expect(screen.getByTestId("avatar").tagName).toBe("DIV");
+        });
+
+        it("takes a part of either kind as enough to compose", () => {
+            const { rerender } = render(
+                <Avatar data-testid="avatar">
+                    <Avatar.Image src="primer.png" alt="mona" />
+                </Avatar>,
+            );
+            expect(screen.getByTestId("avatar")).toHaveClass("avatar-composed");
+
+            rerender(
+                <Avatar data-testid="avatar">
+                    <Avatar.Fallback name="Mona Octocat" />
+                </Avatar>,
+            );
+            expect(screen.getByTestId("avatar")).toHaveClass("avatar-composed");
+        });
+
+        // Parts built from a list arrive wrapped in a fragment, which is not itself a part
+        it("looks through a fragment for the parts inside it", () => {
+            render(
+                <Avatar data-testid="avatar">
+                    <>
+                        <Avatar.Image src="primer.png" alt="mona" />
+                        <Avatar.Fallback name="Mona Octocat" />
+                    </>
+                </Avatar>,
+            );
+
+            expect(screen.getByTestId("avatar")).toHaveClass("avatar-composed");
+        });
+
+        it("is still a picture of its own where the children only look like parts", () => {
+            render(
+                <Avatar as="span" data-testid="avatar">
+                    <span>MO</span>
+                </Avatar>,
+            );
+
+            expect(screen.getByTestId("avatar")).not.toHaveClass("avatar-composed");
+        });
+    });
+
+    describe("the picture", () => {
+        const composed = (
+            <Avatar data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+                <Avatar.Fallback name="Mona Octocat" />
+            </Avatar>
+        );
+
+        it("stays in the tree while it is still on its way", () => {
+            render(composed);
+
+            expect(part("Image")).toBeInTheDocument();
+            expect(part("Image")).toHaveAttribute("data-status", "loading");
+        });
+
+        it("says it has arrived once it has loaded", () => {
+            render(composed);
+            fireEvent.load(part("Image"));
+
+            expect(part("Image")).toHaveAttribute("data-status", "loaded");
+            expect(screen.getByTestId("avatar")).toHaveAttribute("data-status", "loaded");
+        });
+
+        it("says so when it fails", () => {
+            render(composed);
+            fireEvent.error(part("Image"));
+
+            expect(part("Image")).toHaveAttribute("data-status", "error");
+            expect(screen.getByTestId("avatar")).toHaveAttribute("data-status", "error");
+        });
+
+        it("waits on nothing where it was handed no source", () => {
+            render(
+                <Avatar>
+                    <Avatar.Image alt="mona" />
+                </Avatar>,
+            );
+
+            expect(part("Image")).toHaveAttribute("data-status", "idle");
+        });
+
+        it("renders a decorative image when no alt text is provided", () => {
+            render(
+                <Avatar>
+                    <Avatar.Image src="primer.png" />
+                </Avatar>,
+            );
+
+            expect(part("Image")).toHaveAttribute("alt", "");
+        });
+
+        it("calls the load and error handlers it was given", () => {
+            const onLoad = vi.fn();
+            const onError = vi.fn();
+
+            const { rerender } = render(
+                <Avatar>
+                    <Avatar.Image src="primer.png" alt="mona" onLoad={onLoad} />
+                </Avatar>,
+            );
+            fireEvent.load(part("Image"));
+            expect(onLoad).toHaveBeenCalledTimes(1);
+
+            rerender(
+                <Avatar>
+                    <Avatar.Image src="primer.png" alt="mona" onError={onError} />
+                </Avatar>,
+            );
+            fireEvent.error(part("Image"));
+            expect(onError).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("the fallback", () => {
+        const composed = (
+            <Avatar>
+                <Avatar.Image src="primer.png" alt="mona" />
+                <Avatar.Fallback name="Mona Octocat" />
+            </Avatar>
+        );
+
+        it("stands in while the picture is still on its way", () => {
+            render(composed);
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+
+        it("gives way once the picture has arrived", () => {
+            render(composed);
+            fireEvent.load(part("Image"));
+
+            expect(part("Fallback")).not.toBeInTheDocument();
+        });
+
+        it("stays where the picture failed", () => {
+            render(composed);
+            fireEvent.error(part("Image"));
+
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+
+        it("stands where there was never a picture at all", () => {
+            render(
+                <Avatar>
+                    <Avatar.Fallback name="Mona Octocat" />
+                </Avatar>,
+            );
+
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+    });
+
+    describe("the fallback name", () => {
+        it("works the initials out from the name", () => {
+            render(<Avatar.Fallback name="Mona Octocat" />);
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+
+        it("passes over the words between the first and the last", () => {
+            render(<Avatar.Fallback name="Mona Lisa Octocat" />);
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+
+        it("leaves a name of one word with the one letter it has", () => {
+            render(<Avatar.Fallback name="Hubot" />);
+            expect(part("Fallback")).toHaveTextContent("H");
+        });
+
+        it("reads the initials as capitals whatever case the name was written in", () => {
+            render(<Avatar.Fallback name="mona octocat" />);
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+
+        it("passes over the space around the words and between them", () => {
+            render(<Avatar.Fallback name="  Mona   Lisa   Octocat  " />);
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+
+        it("draws nothing for a name of nothing but space", () => {
+            render(<Avatar.Fallback name="   " />);
+            expect(part("Fallback").textContent).toBe("");
+        });
+
+        // Cutting a character written outside the basic plane by index would leave half a letter
+        it("keeps a letter written outside the basic plane whole", () => {
+            render(<Avatar.Fallback name="𝒜da Lovelace" />);
+            expect(part("Fallback")).toHaveTextContent("𝒜L");
+        });
+
+        it("is named for a screen reader rather than spelled out a letter at a time", () => {
+            render(<Avatar.Fallback name="Mona Lisa Octocat" />);
+
+            expect(part("Fallback")).toHaveAttribute("role", "img");
+            expect(part("Fallback")).toHaveAttribute("aria-label", "Mona Lisa Octocat");
+        });
+
+        // The name is the whole of what the fallback holds, so there is nothing beside the letters
+        // it was worked down to
+        it("draws the initials and nothing else", () => {
+            render(<Avatar.Fallback name="Mona Lisa Octocat" />);
+            expect(part("Fallback").textContent).toBe("MO");
+        });
+
+        it("does not leak the name prop onto the element", () => {
+            render(<Avatar.Fallback name="Mona Lisa Octocat" />);
+            expect(part("Fallback")).not.toHaveAttribute("name");
+        });
+
+        it("stands for whoever the avatar is of while the picture is on its way", () => {
+            render(
+                <Avatar>
+                    <Avatar.Image src="primer.png" alt="Mona Lisa Octocat" />
+                    <Avatar.Fallback name="Mona Lisa Octocat" />
+                </Avatar>,
+            );
+
+            expect(part("Fallback")).toHaveTextContent("MO");
+        });
+    });
+
+    describe("the parts", () => {
+        it("pass the rest of their props down", () => {
+            render(
+                <Avatar>
+                    <Avatar.Image className="picture" src="primer.png" alt="mona" loading="lazy" />
+                    <Avatar.Fallback className="initials" aria-label="mona" name="Mona Octocat" />
+                </Avatar>,
+            );
+
+            expect(part("Image")).toHaveClass("avatar-image", "picture");
+            expect(part("Image")).toHaveAttribute("loading", "lazy");
+            expect(part("Fallback")).toHaveClass("avatar-fallback", "initials");
+            expect(part("Fallback")).toHaveAttribute("aria-label", "mona");
+        });
+
+        it("forward refs to the elements they rendered", () => {
+            const image = React.createRef<HTMLImageElement>();
+            const fallback = React.createRef<HTMLSpanElement>();
+
+            render(
+                <Avatar>
+                    <Avatar.Image ref={image} src="primer.png" alt="mona" />
+                    <Avatar.Fallback ref={fallback} name="Mona Octocat" />
+                </Avatar>,
+            );
+
+            expect(image.current).toBe(part("Image"));
+            expect(fallback.current).toBe(part("Fallback"));
+        });
+
+        it("can be rendered on their own, outside an avatar", () => {
+            const { rerender } = render(<Avatar.Fallback name="Mona Octocat" />);
+            expect(part("Fallback")).toHaveClass("avatar-fallback");
+
+            rerender(<Avatar.Image src="primer.png" alt="mona" />);
+            expect(part("Image")).toHaveClass("avatar-image");
+
+            fireEvent.load(part("Image"));
+            expect(part("Image")).toHaveAttribute("data-status", "loaded");
+        });
     });
 });
