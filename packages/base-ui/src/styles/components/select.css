@@ -1,10 +1,13 @@
 @layer components {
     /* The field carries the styling, the way it does for the native control, so that the two
-       stand at the same size beside one another in a form. The indicator's size and inset live
-       here so the control below can reserve exactly the room it takes up */
+       stand at the same size beside one another in a form. The room down each side, the
+       indicator's size and the gap kept in front of it live here so the control below can
+       reserve exactly what it takes up. The indicator stands off the end by the same room the
+       value stands off the start, so the field is padded evenly whichever side is read */
     .select {
+        --select-padding-inline: var(--base-size-12);
         --select-indicator-size: var(--base-size-16);
-        --select-indicator-inset: var(--base-size-4);
+        --select-indicator-gap: var(--control-medium-gap);
 
         position: relative;
         display: inline-flex;
@@ -33,6 +36,9 @@
     }
 
     .select-small {
+        --select-padding-inline: var(--base-size-8);
+        --select-indicator-gap: var(--control-small-gap);
+
         min-height: var(--control-small-size);
         padding-block: var(--control-small-padding-block);
         font-size: var(--text-body-size-small);
@@ -40,12 +46,21 @@
     }
 
     .select-medium {
+        --select-padding-inline: var(--base-size-12);
+        --select-indicator-gap: var(--control-medium-gap);
+
         min-height: var(--control-medium-size);
         font-size: var(--text-body-size-medium);
         line-height: var(--base-size-20);
     }
 
+    /* The largest field is the one that carries a larger indicator too, so the arrow keeps its
+       weight against the room around it */
     .select-large {
+        --select-padding-inline: var(--base-size-16);
+        --select-indicator-size: var(--base-size-20);
+        --select-indicator-gap: var(--control-large-gap);
+
         min-height: var(--control-large-size);
         padding-block: var(--control-large-padding-block);
         font-size: var(--text-body-size-medium);
@@ -64,6 +79,11 @@
         box-shadow: none;
         color: var(--foreground-color-disabled);
 
+        /* Said again rather than inherited, since the indicator holds a colour of its own */
+        & .select-indicator {
+            color: var(--foreground-color-disabled);
+        }
+
         @media (forced-colors: active) {
             & svg {
                 fill: GrayText;
@@ -74,6 +94,10 @@
     /* Last, so a field that is both disabled and invalid still reads as invalid */
     .select-error {
         border-color: var(--border-color-danger-emphasis);
+
+        & .select-indicator {
+            color: var(--foreground-color-danger);
+        }
 
         &:focus-within {
             border-color: var(--control-border-color-danger);
@@ -86,19 +110,24 @@
     }
 
     /* The 1px margins keep the field's inset focus outline from being covered. The end padding
-       clears the indicator, so a long choice never runs underneath it */
+       clears the indicator and the gap in front of it, so a long choice never runs underneath
+       it. Dragging across the field selects the choice as text rather than reading as a press,
+       so the text is left alone */
     .select-control {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         width: 100%;
         margin-block: 1px;
         margin-left: 1px;
-        padding-left: var(--base-size-12);
+        padding-left: var(--select-padding-inline);
         padding-right: calc(
-            var(--select-indicator-inset) + var(--select-indicator-size) + var(--base-size-4)
+            var(--select-padding-inline) + var(--select-indicator-size) +
+                var(--select-indicator-gap)
         );
-        text-align: left;
+        text-align: start;
         cursor: pointer;
+        user-select: none;
         appearance: none;
         background-color: transparent;
         border: 0;
@@ -115,8 +144,11 @@
     }
 
     /* A choice longer than the field is cut off rather than allowed to widen it, which is what
-       the native control does with an option it has no room for */
+       the native control does with an option it has no room for. It is the value that gives
+       way, so it has to be allowed to fall below what it reads as */
     .select-value {
+        flex: 1;
+        min-width: 0;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -126,14 +158,17 @@
         color: var(--control-foreground-color-placeholder);
     }
 
+    /* Drawn back from the choice it stands beside, so what the field is holding is what is read
+       first and the arrow is read as the way to change it */
     .select-indicator {
         position: absolute;
         top: 50%;
-        right: var(--select-indicator-inset);
+        right: var(--select-padding-inline);
         width: var(--select-indicator-size);
         height: var(--select-indicator-size);
         translate: 0 -50%;
         pointer-events: none;
+        color: var(--control-icon-color-rest);
     }
 
     /* The list is laid out against the viewport, because that is what the field it stands
@@ -141,14 +176,18 @@
        straight onto the element. It is drawn at least as wide as the field, the way the
        browser's own list is, and scrolls rather than growing past what the page has room for */
     .select-list {
+        --select-row-padding-inline: var(--base-size-8);
+        --select-group-gap: var(--base-size-6);
+
         position: fixed;
         top: var(--select-list-top);
         left: var(--select-list-left);
+        display: flex;
+        flex-direction: column;
         overflow-y: auto;
         min-width: var(--select-list-field-width);
         max-width: calc(100dvw - var(--base-size-32));
         max-height: var(--overlay-height-medium);
-        padding: var(--base-size-8);
         background-color: var(--overlay-background-color);
         border-radius: var(--border-radius-large);
         box-shadow: var(--shadow-floating-small);
@@ -164,25 +203,65 @@
         }
     }
 
+    /* The list is drawn to the size of the field it was opened from: the room it keeps around
+       its rows, the room down the side of a row, and the room its groups stand off one another
+       all follow the field rather than being the same whatever was opened. The room down the
+       side is said once here rather than by each kind of row, so a group's name begins where
+       the options underneath it do */
+    .select-list-small {
+        --select-row-padding-inline: var(--base-size-6);
+        --select-group-gap: var(--base-size-4);
+
+        padding: var(--base-size-4);
+    }
+
+    .select-list-medium {
+        --select-row-padding-inline: var(--base-size-8);
+        --select-group-gap: var(--base-size-6);
+
+        padding: var(--base-size-4);
+    }
+
+    .select-list-large {
+        --select-row-padding-inline: var(--base-size-12);
+        --select-group-gap: var(--base-size-8);
+
+        padding: var(--base-size-6);
+    }
+
+    /* Every group but the first stands off the run above it, so the list reads as sections
+       rather than as one unbroken column */
     .select-optgroup {
         display: block;
+        margin-top: var(--select-group-gap);
+
+        &:first-child {
+            margin-top: 0;
+        }
     }
 
     .select-optgroup-label {
         padding-block: var(--base-size-6);
-        padding-inline: var(--base-size-8);
+        padding-inline: var(--select-row-padding-inline);
         color: var(--foreground-color-muted);
         font-size: var(--text-body-size-small);
         font-weight: var(--base-text-weight-semibold);
         line-height: var(--text-body-line-height-small);
     }
 
+    /* An option is a choice being read rather than somewhere to go, so the pointer is left as
+       it is over the list, the way it is over the native control's own. Dragging across the
+       rows picks rather than selecting them as text, so the text is left alone */
     .select-option {
+        position: relative;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: var(--base-size-8);
-        padding-inline: var(--control-medium-padding-inline-condensed);
-        cursor: pointer;
+        padding-inline: var(--select-row-padding-inline);
+        text-align: start;
+        cursor: default;
+        user-select: none;
         border-radius: var(--border-radius-medium);
         transition: background-color var(--motion-transition-hover);
     }
@@ -225,6 +304,8 @@
         }
     }
 
+    /* The mark stands at the end of the row, where the field's own indicator stands, rather
+       than in front of the label, so the labels down the list all begin at the same place */
     .select-option-checkmark {
         flex-shrink: 0;
         width: var(--base-size-16);
@@ -234,6 +315,7 @@
     /* The label is what gives way when the list is narrower than the option, so the mark
        beside it keeps its room */
     .select-option-label {
+        flex: 1;
         min-width: 0;
     }
 }

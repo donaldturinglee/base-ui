@@ -7,8 +7,8 @@ import { SelectOptGroupContext } from "./SelectOptGroupContext";
 import type { SelectOptionProps, SelectSize } from "./Select.types";
 
 const classes = {
-    // The mark keeps its place whether or not the option is picked, so the labels down the
-    // list stay lined up with one another
+    // The mark keeps its place whether or not the option is picked, so the ends of the rows
+    // stay lined up with one another
     unmarked: "invisible",
     checkmark: "select-option-checkmark",
     label: "select-option-label",
@@ -115,11 +115,11 @@ function SelectOption(
             data-disabled={disabled || undefined}
             {...rest}
         >
+            <span className={classes.label}>{children}</span>
             <CheckmarkRegular
                 className={classNames(classes.checkmark, !selected && classes.unmarked)}
                 aria-hidden="true"
             />
-            <span className={classes.label}>{children}</span>
         </div>
     );
 }

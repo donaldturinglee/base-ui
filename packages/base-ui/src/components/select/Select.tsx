@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronUpDownRegular } from "@gamecrafters/base-ui-icons";
+import { ChevronDownRegular } from "@gamecrafters/base-ui-icons";
 import { useId } from "../../hooks/useId";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { useMergedRefs } from "../../hooks/useMergedRefs";
@@ -58,6 +58,13 @@ const selectListVariants = cva(
     ],
     {
         variants: {
+            // The list is drawn to the size of the field it was opened from, so the two read as
+            // the one control rather than as a surface of its own standing under a field
+            size: {
+                small: "select-list-small",
+                medium: "select-list-medium",
+                large: "select-list-large",
+            } satisfies Record<SelectSize, string>,
             // Held back until it has been placed, so it is never seen where it does not belong
             unplaced: {
                 true: "invisible",
@@ -588,7 +595,7 @@ function Select(
                 <span className={classNames(classes.value, !selectedOption && classes.placeholder)}>
                     {selectedOption ? selectedOption.label : placeholder}
                 </span>
-                <ChevronUpDownRegular className={classes.indicator} aria-hidden="true" />
+                <ChevronDownRegular className={classes.indicator} aria-hidden="true" />
             </button>
 
             {/* The button carries nothing a form would read, so what is picked is submitted
@@ -606,7 +613,7 @@ function Select(
                         // Focus never comes here, but the list is still stepped over rather
                         // than added to the page's own order
                         tabIndex={-1}
-                        className={classNames(selectListVariants({ unplaced: !position }))}
+                        className={classNames(selectListVariants({ size, unplaced: !position }))}
                         style={
                             {
                                 "--select-list-top": `${position?.top ?? 0}px`,
