@@ -3,9 +3,14 @@ import { isResponsiveValue } from "../../hooks/useResponsive";
 import { classNames } from "../../lib/classnames";
 import { hasInteractiveNodes } from "../../utilities/interactive";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import { DEFAULT_AVATAR_SIZE } from "../avatar/Avatar";
+import Avatar, { DEFAULT_AVATAR_SIZE } from "../avatar/Avatar";
 import type { AvatarShape, AvatarSize } from "../avatar/Avatar.types";
-import type { AvatarStackAlign, AvatarStackProps, AvatarStackVariant } from "./AvatarStack.types";
+import type {
+    AvatarStackAlign,
+    AvatarStackChild,
+    AvatarStackProps,
+    AvatarStackVariant,
+} from "./AvatarStack.types";
 
 const ranges = ["narrow", "regular", "wide"] as const;
 
@@ -86,17 +91,36 @@ const resolveSize = (size: AvatarSize | undefined): Record<Range, number> => {
     return { narrow: size.narrow ?? regular, regular, wide: size.wide ?? regular };
 };
 
-// Without a size of its own the stack takes the smallest size its avatars ask for, so no
-// avatar is ever cropped
-const getChildSize = (children: React.ReactNode) => {
-    const collected: Record<Range, number[]> = { narrow: [], regular: [], wide: [] };
+const isAvatar = (child: React.ReactNode): child is AvatarStackChild =>
+    React.isValidElement(child) && child.type === Avatar;
 
-    for (const child of React.Children.toArray(children)) {
-        if (!React.isValidElement<{ size?: AvatarSize }>(child)) {
-            continue;
+// A fragment is not one of the run but a way of writing several of it at once, and
+// `React.Children` hands it back whole rather than opening it up
+const isFragment = (
+    child: React.ReactNode,
+): child is React.ReactElement<{ children?: React.ReactNode }> =>
+    React.isValidElement(child) && child.type === React.Fragment;
+
+// The run the stack was written with. Only an avatar is dealt a place in it, since an avatar is
+// what carries the size the run is cut to and the class the edge between two of them is drawn on.
+// Anything else is left out rather than laid down half dressed, and is not counted either, so the
+// track is never widened for something that was never shown
+const collectAvatars = (children: React.ReactNode): AvatarStackChild[] =>
+    React.Children.toArray(children).flatMap((child) => {
+        if (isFragment(child)) {
+            return collectAvatars(child.props.children);
         }
 
-        const size = resolveSize(child.props.size);
+        return isAvatar(child) ? [child] : [];
+    });
+
+// Without a size of its own the stack takes the smallest size its avatars ask for, so no
+// avatar is ever cropped
+const getChildSize = (avatars: AvatarStackChild[]) => {
+    const collected: Record<Range, number[]> = { narrow: [], regular: [], wide: [] };
+
+    for (const avatar of avatars) {
+        const size = resolveSize(avatar.props.size);
 
         for (const range of ranges) {
             collected[range].push(size[range]);
@@ -152,7 +176,8 @@ function AvatarStack<As extends React.ElementType = "span">(
         };
     }, []);
 
-    const count = React.Children.count(children);
+    const avatars = collectAvatars(children);
+    const count = avatars.length;
     const widthKey: AvatarStackWidth | undefined =
         count > 3 ? "more" : count === 3 ? "three" : count === 2 ? "two" : undefined;
     const isResponsive = !size || isResponsiveValue(size);
@@ -169,18 +194,14 @@ function AvatarStack<As extends React.ElementType = "span">(
     } else if (size) {
         sizeVariables["--avatar-stack-size"] = `${size}px`;
     } else {
-        const childSize = getChildSize(children);
+        const childSize = getChildSize(avatars);
         for (const range of ranges) {
             sizeVariables[`--avatar-stack-size-${range}`] = `${childSize[range]}px`;
         }
     }
 
-    const items = React.Children.map(children, (child, index) => {
-        if (!React.isValidElement<{ className?: string }>(child)) {
-            return child;
-        }
-
-        return React.cloneElement(child, {
+    const items = avatars.map((avatar, index) =>
+        React.cloneElement(avatar, {
             className: classNames(
                 classes.item.root,
                 index === 0 ? classes.item.first : classes.item.overlapped,
@@ -194,10 +215,10 @@ function AvatarStack<As extends React.ElementType = "span">(
                 index > 4 && classes.item.overflow,
                 expandable && classes.item.expanded,
                 expandable && index === 0 && classes.item.expandedFirst,
-                child.props.className,
+                avatar.props.className,
             ),
-        });
-    });
+        }),
+    );
 
     return (
         <Component

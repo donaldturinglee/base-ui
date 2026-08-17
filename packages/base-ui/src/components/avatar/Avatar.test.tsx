@@ -8,54 +8,65 @@ const part = (name: string) =>
     document.querySelector(`[data-component='Avatar.${name}']`) as HTMLElement;
 
 describe("Avatar", () => {
-    it("renders an image element by default", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
-        expect(screen.getByTestId("avatar").tagName).toBe("IMG");
-    });
+    const composed = (
+        <Avatar data-testid="avatar">
+            <Avatar.Image src="primer.png" alt="mona" />
+            <Avatar.Fallback name="Mona Octocat" />
+        </Avatar>
+    );
 
-    it("renders as the element passed to the as prop", () => {
-        render(<Avatar as="span" data-testid="avatar" />);
+    it("renders a span element by default", () => {
+        render(composed);
         expect(screen.getByTestId("avatar").tagName).toBe("SPAN");
     });
 
-    it("passes the src down to the image element", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
-        expect(screen.getByTestId("avatar")).toHaveAttribute("src", "primer.png");
+    it("renders as the element passed to the as prop", () => {
+        render(
+            <Avatar as="div" data-testid="avatar">
+                <Avatar.Fallback name="Mona Octocat" />
+            </Avatar>,
+        );
+        expect(screen.getByTestId("avatar").tagName).toBe("DIV");
     });
 
-    it("renders a decorative image when no alt text is provided", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
-        expect(screen.getByTestId("avatar")).toHaveAttribute("alt", "");
+    it("is the ground the parts are laid on", () => {
+        render(composed);
+
+        expect(screen.getByTestId("avatar")).toHaveClass("avatar", "avatar-circle");
+        expect(part("Image")).toBeInTheDocument();
+        expect(part("Fallback")).toBeInTheDocument();
     });
 
-    it("passes the alt text down to the image element", () => {
-        render(<Avatar src="primer.png" alt="mona" data-testid="avatar" />);
-        expect(screen.getByTestId("avatar")).toHaveAttribute("alt", "mona");
+    // The picture within is what carries them, so the ground it sits on does not repeat them
+    it("leaves the image attributes to the picture inside it", () => {
+        render(composed);
+        const avatar = screen.getByTestId("avatar");
+
+        expect(avatar).not.toHaveAttribute("src");
+        expect(avatar).not.toHaveAttribute("alt");
+        expect(avatar).not.toHaveAttribute("width");
+        expect(avatar).not.toHaveAttribute("height");
     });
 
     it("renders a small avatar by default", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
-        const avatar = screen.getByTestId("avatar");
-        expect(avatar).toHaveAttribute("width", "20");
-        expect(avatar).toHaveAttribute("height", "20");
-        expect(avatar).toHaveStyle({ "--avatar-size-regular": "20px" });
+        render(composed);
+        expect(screen.getByTestId("avatar")).toHaveStyle({ "--avatar-size-regular": "20px" });
     });
 
     it("respects the size prop", () => {
-        render(<Avatar size={40} src="primer.png" data-testid="avatar" />);
-        const avatar = screen.getByTestId("avatar");
-        expect(avatar).toHaveAttribute("width", "40");
-        expect(avatar).toHaveAttribute("height", "40");
-        expect(avatar).toHaveStyle({ "--avatar-size-regular": "40px" });
+        render(
+            <Avatar size={40} data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
+        expect(screen.getByTestId("avatar")).toHaveStyle({ "--avatar-size-regular": "40px" });
     });
 
     it("applies a custom property per range for a responsive size", () => {
         render(
-            <Avatar
-                size={{ narrow: 16, regular: 24, wide: 32 }}
-                src="primer.png"
-                data-testid="avatar"
-            />,
+            <Avatar size={{ narrow: 16, regular: 24, wide: 32 }} data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
         );
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveAttribute("data-responsive", "true");
@@ -64,29 +75,30 @@ describe("Avatar", () => {
         expect(avatar).toHaveStyle({ "--avatar-size-wide": "32px" });
     });
 
-    it("drops the intrinsic dimensions for a responsive size", () => {
-        render(<Avatar size={{ narrow: 16 }} src="primer.png" data-testid="avatar" />);
-        const avatar = screen.getByTestId("avatar");
-        expect(avatar).not.toHaveAttribute("width");
-        expect(avatar).not.toHaveAttribute("height");
-    });
-
     it("falls back to the default size when a responsive value leaves out a range", () => {
-        render(<Avatar size={{ narrow: 16 }} src="primer.png" data-testid="avatar" />);
+        render(
+            <Avatar size={{ narrow: 16 }} data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveStyle({ "--avatar-size-regular": "20px" });
         expect(avatar.style.getPropertyValue("--avatar-size-wide")).toBe("");
     });
 
     it("rounds the avatar into a circle by default", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
+        render(composed);
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveAttribute("data-shape", "circle");
         expect(avatar).toHaveClass("avatar-circle");
     });
 
     it("scales the corner radius with the avatar for the square shape", () => {
-        render(<Avatar shape="square" src="primer.png" data-testid="avatar" />);
+        render(
+            <Avatar shape="square" data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveAttribute("data-shape", "square");
         expect(avatar).toHaveClass("avatar-square");
@@ -94,132 +106,80 @@ describe("Avatar", () => {
     });
 
     it("does not leak the shape prop onto the element", () => {
-        render(<Avatar shape="square" src="primer.png" data-testid="avatar" />);
+        render(
+            <Avatar shape="square" data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
         expect(screen.getByTestId("avatar")).not.toHaveAttribute("shape");
     });
 
     it("leaves the responsive attribute unset by default", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
+        render(composed);
         expect(screen.getByTestId("avatar")).not.toHaveAttribute("data-responsive");
     });
 
     it("merges a custom style onto the root element", () => {
-        render(<Avatar src="primer.png" style={{ opacity: 0.5 }} data-testid="avatar" />);
+        render(
+            <Avatar style={{ opacity: 0.5 }} data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
         const avatar = screen.getByTestId("avatar");
         expect(avatar).toHaveStyle({ opacity: "0.5" });
         expect(avatar).toHaveStyle({ "--avatar-size-regular": "20px" });
     });
 
     it("forwards element specific props to the element passed to the as prop", () => {
-        render(<Avatar src="primer.png" loading="lazy" data-testid="avatar" />);
-        expect(screen.getByTestId("avatar")).toHaveAttribute("loading", "lazy");
+        render(
+            <Avatar as="a" href="#mona" data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
+        expect(screen.getByTestId("avatar")).toHaveAttribute("href", "#mona");
     });
 
     it("tags the root element with a data-component attribute", () => {
-        render(<Avatar src="primer.png" data-testid="avatar" />);
+        render(composed);
         expect(screen.getByTestId("avatar")).toHaveAttribute("data-component", "Avatar");
     });
 
     it("forwards a ref to the root element", () => {
-        const ref = React.createRef<HTMLImageElement>();
-        render(<Avatar ref={ref} src="primer.png" data-testid="avatar" />);
-        expect(ref.current).toBeInstanceOf(HTMLImageElement);
+        const ref = React.createRef<HTMLSpanElement>();
+        render(
+            <Avatar ref={ref}>
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
+        expect(ref.current).toBeInstanceOf(HTMLSpanElement);
     });
 
     it("merges a custom className onto the root element", () => {
-        render(<Avatar className="custom" src="primer.png" data-testid="avatar" />);
+        render(
+            <Avatar className="custom" data-testid="avatar">
+                <Avatar.Image src="primer.png" alt="mona" />
+            </Avatar>,
+        );
         expect(screen.getByTestId("avatar")).toHaveClass("custom");
     });
 
-    describe("given parts", () => {
-        const composed = (
-            <Avatar size={40} data-testid="avatar">
-                <Avatar.Image src="primer.png" alt="mona" />
-                <Avatar.Fallback name="Mona Octocat" />
-            </Avatar>
+    it("holds whatever it is handed, parts or not", () => {
+        render(
+            <Avatar data-testid="avatar">
+                <span>MO</span>
+            </Avatar>,
         );
 
-        it("becomes the ground the parts are laid on", () => {
-            render(composed);
-            const avatar = screen.getByTestId("avatar");
-
-            expect(avatar.tagName).toBe("SPAN");
-            expect(avatar).toHaveClass("avatar", "avatar-composed", "avatar-circle");
-        });
-
-        it("keeps the size it was given", () => {
-            render(composed);
-            expect(screen.getByTestId("avatar")).toHaveStyle({ "--avatar-size-regular": "40px" });
-        });
-
-        // The picture within is what carries them, so the ground it sits on does not repeat them
-        it("leaves the image attributes to the picture inside it", () => {
-            render(composed);
-            const avatar = screen.getByTestId("avatar");
-
-            expect(avatar).not.toHaveAttribute("alt");
-            expect(avatar).not.toHaveAttribute("width");
-            expect(avatar).not.toHaveAttribute("height");
-        });
-
-        it("renders as the element passed to the as prop", () => {
-            render(
-                <Avatar as="div" data-testid="avatar">
-                    <Avatar.Fallback name="Mona Octocat" />
-                </Avatar>,
-            );
-
-            expect(screen.getByTestId("avatar").tagName).toBe("DIV");
-        });
-
-        it("takes a part of either kind as enough to compose", () => {
-            const { rerender } = render(
-                <Avatar data-testid="avatar">
-                    <Avatar.Image src="primer.png" alt="mona" />
-                </Avatar>,
-            );
-            expect(screen.getByTestId("avatar")).toHaveClass("avatar-composed");
-
-            rerender(
-                <Avatar data-testid="avatar">
-                    <Avatar.Fallback name="Mona Octocat" />
-                </Avatar>,
-            );
-            expect(screen.getByTestId("avatar")).toHaveClass("avatar-composed");
-        });
-
-        // Parts built from a list arrive wrapped in a fragment, which is not itself a part
-        it("looks through a fragment for the parts inside it", () => {
-            render(
-                <Avatar data-testid="avatar">
-                    <>
-                        <Avatar.Image src="primer.png" alt="mona" />
-                        <Avatar.Fallback name="Mona Octocat" />
-                    </>
-                </Avatar>,
-            );
-
-            expect(screen.getByTestId("avatar")).toHaveClass("avatar-composed");
-        });
-
-        it("is still a picture of its own where the children only look like parts", () => {
-            render(
-                <Avatar as="span" data-testid="avatar">
-                    <span>MO</span>
-                </Avatar>,
-            );
-
-            expect(screen.getByTestId("avatar")).not.toHaveClass("avatar-composed");
-        });
+        expect(screen.getByTestId("avatar")).toHaveTextContent("MO");
     });
 
     describe("the picture", () => {
-        const composed = (
-            <Avatar data-testid="avatar">
-                <Avatar.Image src="primer.png" alt="mona" />
-                <Avatar.Fallback name="Mona Octocat" />
-            </Avatar>
-        );
+        it("carries the source and the alt text the avatar no longer does", () => {
+            render(composed);
+
+            expect(part("Image")).toHaveAttribute("src", "primer.png");
+            expect(part("Image")).toHaveAttribute("alt", "mona");
+        });
 
         it("stays in the tree while it is still on its way", () => {
             render(composed);
@@ -287,13 +247,6 @@ describe("Avatar", () => {
     });
 
     describe("the fallback", () => {
-        const composed = (
-            <Avatar>
-                <Avatar.Image src="primer.png" alt="mona" />
-                <Avatar.Fallback name="Mona Octocat" />
-            </Avatar>
-        );
-
         it("stands in while the picture is still on its way", () => {
             render(composed);
             expect(part("Fallback")).toHaveTextContent("MO");

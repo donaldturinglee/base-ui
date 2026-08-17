@@ -11,9 +11,11 @@ export type AvatarShape = "circle" | "square";
 // nothing yet to show
 export type AvatarLoadingStatus = "idle" | "loading" | "loaded" | "error";
 
-export type AvatarProps<As extends React.ElementType = "img"> = PolymorphicProps<
+// The avatar is the ground its parts are laid on rather than a picture of its own, so it is drawn
+// as a span and carries nothing an image would
+export type AvatarProps<As extends React.ElementType = "span"> = PolymorphicProps<
     As,
-    "img",
+    "span",
     {
         size?: AvatarSize;
         shape?: AvatarShape;
@@ -21,8 +23,8 @@ export type AvatarProps<As extends React.ElementType = "img"> = PolymorphicProps
     }
 >;
 
-// The picture is the avatar itself rather than something laid inside it, so it is an image and
-// nothing else
+// The picture is an image and nothing else, laid inside the avatar rather than wrapped in ground
+// of its own
 export type AvatarImageProps = React.ComponentPropsWithoutRef<"img"> & {
     className?: string;
 };

@@ -87,12 +87,7 @@ Playground.argTypes = {
         options: ["circle", "square"],
         description: "Rounds the corners instead of rendering a circle",
     },
-    alt: {
-        table: {
-            disable: true,
-        },
-    },
-    src: {
+    children: {
         table: {
             disable: true,
         },

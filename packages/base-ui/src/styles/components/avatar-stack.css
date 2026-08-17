@@ -165,17 +165,17 @@
         font-size: calc(var(--avatar-stack-size) * 0.4);
     }
 
-    /* Square avatars cannot be masked into each other, so a hairline separates them. An avatar
-       handed parts is drawn as a span rather than as a picture, so both are named here */
-    .avatar-stack-item-edge-circle:is(img, .avatar) {
+    /* Square avatars cannot be masked into each other, so a hairline separates them. The avatar is
+       named alongside the slot, so that whatever else a stack is handed is left the edge it had */
+    .avatar-stack-item-edge-circle.avatar {
         box-shadow: 0 0 0 var(--avatar-stack-border-width) transparent;
     }
 
-    .avatar-stack-item-edge-square:is(img, .avatar) {
+    .avatar-stack-item-edge-square.avatar {
         box-shadow: 1px 0 var(--avatar-border-color);
     }
 
-    .avatar-stack-item-edge-align-right:is(img, .avatar) {
+    .avatar-stack-item-edge-align-right.avatar {
         box-shadow: -1px 0 var(--avatar-border-color);
     }
 

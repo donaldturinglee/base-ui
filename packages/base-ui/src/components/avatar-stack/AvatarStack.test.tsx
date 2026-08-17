@@ -9,15 +9,8 @@ const maskClass = "avatar-stack-item-mask";
 
 const avatars = (count: number) =>
     Array.from({ length: count }, (_, index) => (
-        <img key={index} src={`avatar-${index}.png`} alt="" data-testid={`avatar-${index}`} />
-    ));
-
-// Avatars handed parts rather than a picture, which are drawn as spans rather than as images
-const composedAvatars = (count: number) =>
-    Array.from({ length: count }, (_, index) => (
         <Avatar key={index} data-testid={`avatar-${index}`}>
             <Avatar.Image src={`avatar-${index}.png`} alt="" />
-            <Avatar.Fallback name="Mona Octocat" />
         </Avatar>
     ));
 
@@ -159,8 +152,12 @@ describe("AvatarStack", () => {
     it("leaves focus to the children when they are already interactive", () => {
         render(
             <AvatarStack data-testid="stack">
-                <button type="button">Contributor</button>
-                <button type="button">Contributor</button>
+                <Avatar as="button" type="button">
+                    <Avatar.Image src="a.png" alt="" />
+                </Avatar>
+                <Avatar as="button" type="button">
+                    <Avatar.Image src="b.png" alt="" />
+                </Avatar>
             </AvatarStack>,
         );
         const body = screen
@@ -298,32 +295,53 @@ describe("AvatarStack", () => {
         });
     });
 
-    it("lays its item classes onto an avatar handed parts", () => {
-        render(<AvatarStack data-testid="stack">{composedAvatars(2)}</AvatarStack>);
+    // The avatar is the ground the stack lays a slot on, so the picture inside it is left alone
+    it("lays its item classes onto the avatar rather than the picture inside it", () => {
+        render(<AvatarStack data-testid="stack">{avatars(2)}</AvatarStack>);
         const second = screen.getByTestId("avatar-1");
+        const picture = second.querySelector('[data-component="Avatar.Image"]');
+
         expect(second.tagName).toBe("SPAN");
-        expect(second).toHaveClass("avatar-stack-item");
-        expect(second).toHaveClass("avatar-stack-item-circle");
-        expect(second).toHaveClass("avatar-stack-item-overlapped");
-        expect(second).toHaveClass(maskClass);
+        expect(second).toHaveClass("avatar", "avatar-stack-item", maskClass);
+        expect(picture).toBeInstanceOf(HTMLElement);
+        expect(picture).not.toHaveClass("avatar-stack-item");
     });
 
-    it("takes the smallest size from the avatars handed parts", () => {
+    // A bare picture carries neither the size the run is cut to nor the class its edge is drawn
+    // on, so it is left out rather than laid down half dressed
+    it("leaves out anything that is not an avatar", () => {
         render(
             <AvatarStack data-testid="stack">
-                <Avatar size={48}>
+                <Avatar data-testid="avatar-0">
                     <Avatar.Image src="a.png" alt="" />
-                    <Avatar.Fallback name="Mona Octocat" />
                 </Avatar>
-                <Avatar size={32}>
-                    <Avatar.Image src="b.png" alt="" />
-                    <Avatar.Fallback name="Hubot" />
-                </Avatar>
+                <img src="b.png" alt="" data-testid="picture" />
             </AvatarStack>,
         );
-        expect(screen.getByTestId("stack")).toHaveStyle({
-            "--avatar-stack-size-regular": "32px",
-        });
+        expect(screen.getByTestId("avatar-0")).toBeInTheDocument();
+        expect(screen.queryByTestId("picture")).not.toBeInTheDocument();
+    });
+
+    it("does not widen the track for what it left out", () => {
+        render(
+            <AvatarStack data-testid="stack">
+                <Avatar data-testid="avatar-0">
+                    <Avatar.Image src="a.png" alt="" />
+                </Avatar>
+                <img src="b.png" alt="" />
+                <img src="c.png" alt="" />
+            </AvatarStack>,
+        );
+        const stack = screen.getByTestId("stack");
+        expect(stack).toHaveAttribute("data-avatar-count", "1");
+        expect(stack).not.toHaveClass("avatar-stack-cascade-three");
+    });
+
+    // Avatars built from a list arrive wrapped in a fragment, which is not itself one of the run
+    it("looks through a fragment for the avatars inside it", () => {
+        render(<AvatarStack data-testid="stack">{<>{avatars(2)}</>}</AvatarStack>);
+        expect(screen.getByTestId("stack")).toHaveAttribute("data-avatar-count", "2");
+        expect(screen.getByTestId("avatar-1")).toHaveClass("avatar-stack-item", maskClass);
     });
 
     it("keeps the fallback of an avatar whose picture has not arrived", () => {
@@ -343,7 +361,9 @@ describe("AvatarStack", () => {
     it("keeps a custom className on a child", () => {
         render(
             <AvatarStack data-testid="stack">
-                <img src="a.png" alt="" className="custom" data-testid="avatar-0" />
+                <Avatar className="custom" data-testid="avatar-0">
+                    <Avatar.Image src="a.png" alt="" />
+                </Avatar>
             </AvatarStack>,
         );
         expect(screen.getByTestId("avatar-0")).toHaveClass("custom");

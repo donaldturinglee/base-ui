@@ -1,8 +1,12 @@
 @layer components {
-    /* `overflow: hidden` keeps the page layout intact in Firefox should the image fail to load */
+    /* The avatar is the ground its parts are laid on. Each of them fills it, so whichever is shown
+       is shown in the same place, and `overflow: hidden` is what rounds them off with it as well
+       as what keeps the page layout intact in Firefox should the picture fail to load */
     .avatar {
-        display: inline-block;
+        display: inline-flex;
         overflow: hidden;
+        align-items: center;
+        justify-content: center;
         vertical-align: middle;
         line-height: 1;
         width: var(--avatar-size-regular);
@@ -35,15 +39,6 @@
             width: var(--avatar-size-wide, var(--avatar-size-regular));
             height: var(--avatar-size-wide, var(--avatar-size-regular));
         }
-    }
-
-    /* Handed parts rather than being a picture itself, the avatar is the ground they are laid on.
-       Each of them fills it, so whichever is shown is shown in the same place. The `overflow` the
-       avatar already carries is what rounds them off with it */
-    .avatar-composed {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
     }
 
     .avatar-image {
