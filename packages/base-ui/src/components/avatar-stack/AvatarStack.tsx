@@ -5,7 +5,7 @@ import { hasInteractiveNodes } from "../../utilities/interactive";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { DEFAULT_AVATAR_SIZE } from "../avatar/Avatar";
 import type { AvatarShape, AvatarSize } from "../avatar/Avatar.types";
-import type { AvatarStackProps, AvatarStackVariant } from "./AvatarStack.types";
+import type { AvatarStackAlign, AvatarStackProps, AvatarStackVariant } from "./AvatarStack.types";
 
 const ranges = ["narrow", "regular", "wide"] as const;
 
@@ -16,8 +16,10 @@ type AvatarStackWidth = "two" | "three" | "more";
 const classes = {
     root: "avatar-stack",
     responsive: "avatar-stack-responsive",
-    alignLeft: "avatar-stack-align-left",
-    alignRight: "avatar-stack-align-right",
+    align: {
+        left: "avatar-stack-align-left",
+        right: "avatar-stack-align-right",
+    } satisfies Record<AvatarStackAlign, string>,
     variant: {
         cascade: "avatar-stack-cascade",
         stack: "avatar-stack-stack",
@@ -69,6 +71,21 @@ const classes = {
     },
 };
 
+// A size read the way an avatar reads its own: the regular range stands in wherever a range was
+// left out, rather than the default doing so, since an avatar handed only a regular size keeps
+// that size at every width and a stack that read it otherwise would crop it
+const resolveSize = (size: AvatarSize | undefined): Record<Range, number> => {
+    if (!isResponsiveValue(size)) {
+        const fixed = size ?? DEFAULT_AVATAR_SIZE;
+
+        return { narrow: fixed, regular: fixed, wide: fixed };
+    }
+
+    const regular: number = size.regular ?? DEFAULT_AVATAR_SIZE;
+
+    return { narrow: size.narrow ?? regular, regular, wide: size.wide ?? regular };
+};
+
 // Without a size of its own the stack takes the smallest size its avatars ask for, so no
 // avatar is ever cropped
 const getChildSize = (children: React.ReactNode) => {
@@ -79,14 +96,10 @@ const getChildSize = (children: React.ReactNode) => {
             continue;
         }
 
-        const size = child.props.size;
+        const size = resolveSize(child.props.size);
 
         for (const range of ranges) {
-            collected[range].push(
-                isResponsiveValue(size)
-                    ? (size[range] ?? DEFAULT_AVATAR_SIZE)
-                    : (size ?? DEFAULT_AVATAR_SIZE),
-            );
+            collected[range].push(size[range]);
         }
     }
 
@@ -110,7 +123,7 @@ function AvatarStack<As extends React.ElementType = "span">(
         variant = "cascade",
         shape = "circle",
         size,
-        alignRight,
+        align = "left",
         disableExpand,
         style,
         ...rest
@@ -148,9 +161,10 @@ function AvatarStack<As extends React.ElementType = "span">(
     const sizeVariables: Record<string, string> = {};
 
     if (isResponsiveValue(size)) {
+        const responsiveSize = resolveSize(size);
+
         for (const range of ranges) {
-            sizeVariables[`--avatar-stack-size-${range}`] =
-                `${size[range] ?? DEFAULT_AVATAR_SIZE}px`;
+            sizeVariables[`--avatar-stack-size-${range}`] = `${responsiveSize[range]}px`;
         }
     } else if (size) {
         sizeVariables["--avatar-stack-size"] = `${size}px`;
@@ -171,7 +185,7 @@ function AvatarStack<As extends React.ElementType = "span">(
                 classes.item.root,
                 index === 0 ? classes.item.first : classes.item.overlapped,
                 classes.item.shape[shape],
-                alignRight && shape === "square"
+                align === "right" && shape === "square"
                     ? classes.item.edgeAlignRight
                     : classes.item.edge[shape],
                 index > 0 && shape === "circle" && classes.item.mask,
@@ -192,7 +206,7 @@ function AvatarStack<As extends React.ElementType = "span">(
                 classes.root,
                 classes.variant[variant],
                 widthKey && classes.width[variant][widthKey],
-                alignRight ? classes.alignRight : classes.alignLeft,
+                classes.align[align],
                 isResponsive && classes.responsive,
                 className,
             )}
@@ -201,7 +215,7 @@ function AvatarStack<As extends React.ElementType = "span">(
             data-variant={variant}
             data-shape={shape}
             data-avatar-count={count > 3 ? "3+" : count}
-            data-align-right={alignRight}
+            data-align={align}
             data-responsive={isResponsive || undefined}
             {...rest}
         >

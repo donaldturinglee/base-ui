@@ -58,7 +58,7 @@ Playground.args = {
     size: DEFAULT_AVATAR_SIZE,
     variant: "cascade",
     shape: "circle",
-    alignRight: false,
+    align: "left",
     disableExpand: false,
 };
 
@@ -104,11 +104,12 @@ Playground.argTypes = {
         },
         description: "Size in pixels from the xxlarge breakpoint up",
     },
-    alignRight: {
+    align: {
         control: {
-            type: "boolean",
+            type: "radio",
         },
-        description: "Stacks the avatars from the right instead of the left",
+        options: ["left", "right"],
+        description: "Deals the avatars from the left or from the right",
     },
     disableExpand: {
         control: {

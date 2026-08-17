@@ -12,6 +12,15 @@ const avatars = (count: number) =>
         <img key={index} src={`avatar-${index}.png`} alt="" data-testid={`avatar-${index}`} />
     ));
 
+// Avatars handed parts rather than a picture, which are drawn as spans rather than as images
+const composedAvatars = (count: number) =>
+    Array.from({ length: count }, (_, index) => (
+        <Avatar key={index} data-testid={`avatar-${index}`}>
+            <Avatar.Image src={`avatar-${index}.png`} alt="" />
+            <Avatar.Fallback name="Mona Octocat" />
+        </Avatar>
+    ));
+
 describe("AvatarStack", () => {
     it("renders a span element by default", () => {
         render(<AvatarStack data-testid="stack">{avatars(2)}</AvatarStack>);
@@ -175,15 +184,43 @@ describe("AvatarStack", () => {
         expect(body).not.toHaveClass("avatar-stack-body-expandable");
     });
 
+    it("deals the avatars from the left by default", () => {
+        render(<AvatarStack data-testid="stack">{avatars(2)}</AvatarStack>);
+        const stack = screen.getByTestId("stack");
+        expect(stack).toHaveAttribute("data-align", "left");
+        expect(stack).toHaveClass("avatar-stack-align-left");
+    });
+
     it("runs the stack right to left when aligned right", () => {
         render(
-            <AvatarStack alignRight data-testid="stack">
+            <AvatarStack align="right" data-testid="stack">
                 {avatars(2)}
             </AvatarStack>,
         );
         const stack = screen.getByTestId("stack");
-        expect(stack).toHaveAttribute("data-align-right", "true");
+        expect(stack).toHaveAttribute("data-align", "right");
         expect(stack).toHaveClass("avatar-stack-align-right");
+        expect(stack).not.toHaveClass("avatar-stack-align-left");
+    });
+
+    it("moves the hairline between square avatars to the far edge when aligned right", () => {
+        render(
+            <AvatarStack align="right" shape="square" data-testid="stack">
+                {avatars(2)}
+            </AvatarStack>,
+        );
+        const second = screen.getByTestId("avatar-1");
+        expect(second).toHaveClass("avatar-stack-item-edge-align-right");
+        expect(second).not.toHaveClass("avatar-stack-item-edge-square");
+    });
+
+    it("keeps the align prop off the element", () => {
+        render(
+            <AvatarStack align="right" data-testid="stack">
+                {avatars(2)}
+            </AvatarStack>,
+        );
+        expect(screen.getByTestId("stack")).not.toHaveAttribute("align");
     });
 
     it("sizes itself from a fixed size prop", () => {
@@ -210,6 +247,31 @@ describe("AvatarStack", () => {
         expect(stack).toHaveStyle({ "--avatar-stack-size-wide": "32px" });
     });
 
+    it("keeps the regular size for the viewport ranges a responsive size leaves out", () => {
+        render(
+            <AvatarStack size={{ regular: 40 }} data-testid="stack">
+                {avatars(2)}
+            </AvatarStack>,
+        );
+        const stack = screen.getByTestId("stack");
+        expect(stack).toHaveStyle({ "--avatar-stack-size-narrow": "40px" });
+        expect(stack).toHaveStyle({ "--avatar-stack-size-regular": "40px" });
+        expect(stack).toHaveStyle({ "--avatar-stack-size-wide": "40px" });
+    });
+
+    it("reads an avatar's responsive size the way the avatar reads it", () => {
+        render(
+            <AvatarStack data-testid="stack">
+                <Avatar src="a.png" size={{ regular: 40 }} />
+                <Avatar src="b.png" size={{ regular: 40, wide: 64 }} />
+            </AvatarStack>,
+        );
+        const stack = screen.getByTestId("stack");
+        expect(stack).toHaveStyle({ "--avatar-stack-size-narrow": "40px" });
+        expect(stack).toHaveStyle({ "--avatar-stack-size-regular": "40px" });
+        expect(stack).toHaveStyle({ "--avatar-stack-size-wide": "40px" });
+    });
+
     it("takes the smallest avatar size when it has no size of its own", () => {
         render(
             <AvatarStack data-testid="stack">
@@ -226,6 +288,48 @@ describe("AvatarStack", () => {
         expect(screen.getByTestId("stack")).toHaveStyle({
             "--avatar-stack-size-regular": "20px",
         });
+    });
+
+    it("lays its item classes onto an avatar handed parts", () => {
+        render(<AvatarStack data-testid="stack">{composedAvatars(2)}</AvatarStack>);
+        const second = screen.getByTestId("avatar-1");
+        expect(second.tagName).toBe("SPAN");
+        expect(second).toHaveClass("avatar-stack-item");
+        expect(second).toHaveClass("avatar-stack-item-circle");
+        expect(second).toHaveClass("avatar-stack-item-overlapped");
+        expect(second).toHaveClass(maskClass);
+    });
+
+    it("takes the smallest size from the avatars handed parts", () => {
+        render(
+            <AvatarStack data-testid="stack">
+                <Avatar size={48}>
+                    <Avatar.Image src="a.png" alt="" />
+                    <Avatar.Fallback name="Mona Octocat" />
+                </Avatar>
+                <Avatar size={32}>
+                    <Avatar.Image src="b.png" alt="" />
+                    <Avatar.Fallback name="Hubot" />
+                </Avatar>
+            </AvatarStack>,
+        );
+        expect(screen.getByTestId("stack")).toHaveStyle({
+            "--avatar-stack-size-regular": "32px",
+        });
+    });
+
+    it("keeps the fallback of an avatar whose picture has not arrived", () => {
+        render(
+            <AvatarStack>
+                <Avatar>
+                    <Avatar.Image src="a.png" alt="" />
+                    <Avatar.Fallback name="Mona Lisa Octocat" />
+                </Avatar>
+            </AvatarStack>,
+        );
+        const fallback = screen.getByLabelText("Mona Lisa Octocat");
+        expect(fallback).toHaveClass("avatar-fallback");
+        expect(fallback).toHaveTextContent("MO");
     });
 
     it("keeps a custom className on a child", () => {

@@ -159,16 +159,23 @@
         );
     }
 
-    /* Square avatars cannot be masked into each other, so a hairline separates them */
-    .avatar-stack-item-edge-circle:is(img) {
+    /* An avatar writes the size it was given inline, which the stack cannot reach past, so the
+       letters of a fallback are set from the stack the item was resized to instead */
+    .avatar-stack-item .avatar-fallback {
+        font-size: calc(var(--avatar-stack-size) * 0.4);
+    }
+
+    /* Square avatars cannot be masked into each other, so a hairline separates them. An avatar
+       handed parts is drawn as a span rather than as a picture, so both are named here */
+    .avatar-stack-item-edge-circle:is(img, .avatar) {
         box-shadow: 0 0 0 var(--avatar-stack-border-width) transparent;
     }
 
-    .avatar-stack-item-edge-square:is(img) {
+    .avatar-stack-item-edge-square:is(img, .avatar) {
         box-shadow: 1px 0 var(--avatar-border-color);
     }
 
-    .avatar-stack-item-edge-align-right:is(img) {
+    .avatar-stack-item-edge-align-right:is(img, .avatar) {
         box-shadow: -1px 0 var(--avatar-border-color);
     }
 

@@ -13,6 +13,21 @@ const contributors = sources.map((src, index) => (
     <Avatar key={src} src={src} alt={`Contributor ${index + 1}`} />
 ));
 
+// A contributor with no picture to be shown, whose initials stand where it would have been
+const people = [
+    { name: "Mona Lisa Octocat", src: sources[0] },
+    { name: "Hubot", src: undefined },
+    { name: "Octo Cat", src: sources[2] },
+    { name: "Robot Octocat", src: undefined },
+];
+
+const contributorsWithFallback = people.map((person) => (
+    <Avatar key={person.name}>
+        <Avatar.Image src={person.src} alt={person.name} />
+        <Avatar.Fallback name={person.name} />
+    </Avatar>
+));
+
 export default {
     title: "Components/AvatarStack/Features",
     parameters: {
@@ -22,12 +37,12 @@ export default {
 
 // Align Left
 export const AlignLeft: StoryFn<typeof AvatarStack> = () => (
-    <AvatarStack>{contributors}</AvatarStack>
+    <AvatarStack align="left">{contributors}</AvatarStack>
 );
 
 // Align Right
 export const AlignRight: StoryFn<typeof AvatarStack> = () => (
-    <AvatarStack alignRight>{contributors}</AvatarStack>
+    <AvatarStack align="right">{contributors}</AvatarStack>
 );
 
 // Stack Variant
@@ -83,4 +98,16 @@ export const WithOverflow: StoryFn<typeof AvatarStack> = () => (
             <Avatar key={index} src={src} alt={`Contributor ${index + 1}`} />
         ))}
     </AvatarStack>
+);
+
+// With Fallbacks, where the initials of whoever an avatar is of stand in for the picture it has
+// none of, so a stack is never a hole in the page
+export const WithFallbacks: StoryFn<typeof AvatarStack> = () => (
+    <AvatarStack>{contributorsWithFallback}</AvatarStack>
+);
+
+// With Fallbacks At A Custom Size, where the letters are set from the stack rather than from the
+// size each avatar was given, so they keep their proportion at every one
+export const WithFallbacksAtCustomSize: StoryFn<typeof AvatarStack> = () => (
+    <AvatarStack size={48}>{contributorsWithFallback}</AvatarStack>
 );
