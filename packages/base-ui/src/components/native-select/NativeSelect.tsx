@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronUpDownRegular } from "@gamecrafters/base-ui-icons";
+import { ChevronDownRegular } from "@gamecrafters/base-ui-icons";
 import { classNames, cva } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import type {
@@ -99,7 +99,7 @@ function NativeSelect(
                 ) : null}
                 {children}
             </select>
-            <ChevronUpDownRegular className={classes.indicator} aria-hidden="true" />
+            <ChevronDownRegular className={classes.indicator} aria-hidden="true" />
         </span>
     );
 }
