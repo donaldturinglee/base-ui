@@ -90,6 +90,7 @@
 @import "./rich-text-editor.css";
 @import "./scrollable-region.css";
 @import "./segmented-control.css";
+@import "./select.css";
 @import "./select-panel.css";
 @import "./separator.css";
 @import "./skeleton-avatar.css";

@@ -9,6 +9,7 @@ import { CheckboxGroupContext } from "../checkbox-group/CheckboxGroupContext";
 import NativeSelect from "../native-select/NativeSelect";
 import Radio from "../radio/Radio";
 import { RadioGroupContext } from "../radio-group/RadioGroupContext";
+import Select from "../select/Select";
 import Textarea from "../textarea/Textarea";
 import TextInput from "../text-input/TextInput";
 import FormControlCaption from "./FormControlCaption";
@@ -35,7 +36,14 @@ const classes = {
 
 // The inputs a field knows how to wire up. Anything else given to it is left to stand as it
 // was written, and is wired up by the caller
-const inputComponents: React.ElementType[] = [Checkbox, NativeSelect, Radio, Textarea, TextInput];
+const inputComponents: React.ElementType[] = [
+    Checkbox,
+    NativeSelect,
+    Radio,
+    Select,
+    Textarea,
+    TextInput,
+];
 
 // An input is found by identity, or by the slot mark of one, so that a wrapper standing in
 // for an input is still wired up as one

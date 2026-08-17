@@ -90,6 +90,7 @@ export * from "./relative-time";
 export * from "./rich-text-editor";
 export * from "./scrollable-region";
 export * from "./segmented-control";
+export * from "./select";
 export * from "./select-panel";
 export * from "./separator";
 export * from "./skeleton-avatar";

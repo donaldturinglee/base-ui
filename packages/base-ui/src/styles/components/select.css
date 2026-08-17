@@ -1,0 +1,239 @@
+@layer components {
+    /* The field carries the styling, the way it does for the native control, so that the two
+       stand at the same size beside one another in a form. The indicator's size and inset live
+       here so the control below can reserve exactly the room it takes up */
+    .select {
+        --select-indicator-size: var(--base-size-16);
+        --select-indicator-inset: var(--base-size-4);
+
+        position: relative;
+        display: inline-flex;
+        align-items: stretch;
+        overflow: hidden;
+        vertical-align: middle;
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-inset);
+        color: var(--foreground-color-default);
+
+        &:focus-within {
+            border-color: var(--border-color-accent-emphasis);
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: -1px;
+        }
+
+        @media (forced-colors: active) {
+            & svg {
+                fill: FieldText;
+            }
+        }
+    }
+
+    .select-small {
+        min-height: var(--control-small-size);
+        padding-block: var(--control-small-padding-block);
+        font-size: var(--text-body-size-small);
+        line-height: var(--base-size-20);
+    }
+
+    .select-medium {
+        min-height: var(--control-medium-size);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+    }
+
+    .select-large {
+        min-height: var(--control-large-size);
+        padding-block: var(--control-large-padding-block);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--base-size-20);
+    }
+
+    .select-block {
+        display: flex;
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .select-disabled {
+        background-color: var(--control-background-color-disabled);
+        border-color: var(--control-border-color-disabled);
+        box-shadow: none;
+        color: var(--foreground-color-disabled);
+
+        @media (forced-colors: active) {
+            & svg {
+                fill: GrayText;
+            }
+        }
+    }
+
+    /* Last, so a field that is both disabled and invalid still reads as invalid */
+    .select-error {
+        border-color: var(--border-color-danger-emphasis);
+
+        &:focus-within {
+            border-color: var(--control-border-color-danger);
+            outline-color: var(--control-border-color-danger);
+        }
+    }
+
+    .select-success {
+        border-color: var(--background-color-success-emphasis);
+    }
+
+    /* The 1px margins keep the field's inset focus outline from being covered. The end padding
+       clears the indicator, so a long choice never runs underneath it */
+    .select-control {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-block: 1px;
+        margin-left: 1px;
+        padding-left: var(--base-size-12);
+        padding-right: calc(
+            var(--select-indicator-inset) + var(--select-indicator-size) + var(--base-size-4)
+        );
+        text-align: left;
+        cursor: pointer;
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-radius: inherit;
+        outline: none;
+        color: currentcolor;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    /* A choice longer than the field is cut off rather than allowed to widen it, which is what
+       the native control does with an option it has no room for */
+    .select-value {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .select-placeholder {
+        color: var(--control-foreground-color-placeholder);
+    }
+
+    .select-indicator {
+        position: absolute;
+        top: 50%;
+        right: var(--select-indicator-inset);
+        width: var(--select-indicator-size);
+        height: var(--select-indicator-size);
+        translate: 0 -50%;
+        pointer-events: none;
+    }
+
+    /* The list is laid out against the viewport, because that is what the field it stands
+       against is measured against. Where it ends up is carried in variables rather than written
+       straight onto the element. It is drawn at least as wide as the field, the way the
+       browser's own list is, and scrolls rather than growing past what the page has room for */
+    .select-list {
+        position: fixed;
+        top: var(--select-list-top);
+        left: var(--select-list-left);
+        overflow-y: auto;
+        min-width: var(--select-list-field-width);
+        max-width: calc(100dvw - var(--base-size-32));
+        max-height: var(--overlay-height-medium);
+        padding: var(--base-size-8);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        color: var(--foreground-color-default);
+        transition: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    .select-optgroup {
+        display: block;
+    }
+
+    .select-optgroup-label {
+        padding-block: var(--base-size-6);
+        padding-inline: var(--base-size-8);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .select-option {
+        display: flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        padding-inline: var(--control-medium-padding-inline-condensed);
+        cursor: pointer;
+        border-radius: var(--border-radius-medium);
+        transition: background-color var(--motion-transition-hover);
+    }
+
+    .select-option-small {
+        padding-block: var(--control-small-padding-block);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .select-option-medium {
+        padding-block: var(--control-medium-padding-block);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .select-option-large {
+        padding-block: var(--control-large-padding-block);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* Whichever option the field is pointing at is the one drawn as highlighted, whether the
+       keys or the pointer left it there, so the list only ever draws the one highlight */
+    .select-option-active {
+        background-color: var(--control-transparent-background-color-hover);
+    }
+
+    .select-option-selected {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* Last, so an option that is both picked and switched off still reads as switched off */
+    .select-option-disabled {
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+
+        @media (forced-colors: active) {
+            color: GrayText;
+        }
+    }
+
+    .select-option-checkmark {
+        flex-shrink: 0;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+    }
+
+    /* The label is what gives way when the list is narrower than the option, so the mark
+       beside it keeps its room */
+    .select-option-label {
+        min-width: 0;
+    }
+}

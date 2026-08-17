@@ -6,6 +6,7 @@ import { Checkbox } from "../checkbox";
 import { CheckboxGroup } from "../checkbox-group";
 import { NativeSelect } from "../native-select";
 import { Radio } from "../radio";
+import { Select } from "../select";
 import { TextInput } from "../text-input";
 import { Textarea } from "../textarea";
 import { FormControl } from ".";
@@ -260,6 +261,22 @@ describe("FormControl", () => {
 
         expect(screen.getByLabelText("Pick one")).toHaveAttribute("id", "pick");
         expect(screen.getByLabelText("Say something")).toHaveAttribute("id", "say");
+    });
+
+    it("wires up a select drawn from a list of its own the same way", () => {
+        render(
+            <FormControl id="choose">
+                <FormControl.Label>Choose one</FormControl.Label>
+                <Select>
+                    <Select.Option value="one">One</Select.Option>
+                </Select>
+            </FormControl>,
+        );
+
+        const control = screen.getByRole("combobox");
+        expect(control.tagName).toBe("BUTTON");
+        expect(control).toHaveAttribute("id", "choose");
+        expect(screen.getByText("Choose one")).toHaveAttribute("for", "choose");
     });
 
     it("lets the input keep whatever the caller set on it", () => {
