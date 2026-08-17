@@ -52,7 +52,9 @@ export const WithManyItems: StoryFn<typeof Header> = () => (
             <Header.Item key={index}>Item</Header.Item>
         ))}
         <Header.Item className={classes.lastItem}>
-            <Avatar shape="square" alt="mona" src={source} />
+            <Avatar shape="square">
+                <Avatar.Image src={source} alt="mona" />
+            </Avatar>
         </Header.Item>
     </Header>
 );

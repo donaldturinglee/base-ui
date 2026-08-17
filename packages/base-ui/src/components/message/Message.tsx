@@ -18,7 +18,9 @@ const messageVariants = cva("message", {
 //
 //     <Message>
 //         <Message.Avatar>
-//             <Avatar src={source} size={32} />
+//             <Avatar size={32}>
+//                 <Avatar.Image src={source} />
+//             </Avatar>
 //         </Message.Avatar>
 //         <Message.Content>
 //             <Message.Header>Ada</Message.Header>

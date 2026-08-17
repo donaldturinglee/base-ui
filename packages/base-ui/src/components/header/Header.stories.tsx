@@ -27,7 +27,9 @@ export const Default: StoryFn<typeof Header> = () => (
         </Header.Item>
         <Header.Item full>Menu</Header.Item>
         <Header.Item className={classes.lastItem}>
-            <Avatar shape="square" alt="mona" src={source} />
+            <Avatar shape="square">
+                <Avatar.Image src={source} alt="mona" />
+            </Avatar>
         </Header.Item>
     </Header>
 );
@@ -42,7 +44,9 @@ export const Playground: StoryFn<HeaderProps> = (args) => (
         </Header.Item>
         <Header.Item full>Menu</Header.Item>
         <Header.Item className={classes.lastItem}>
-            <Avatar shape="square" alt="mona" src={source} />
+            <Avatar shape="square">
+                <Avatar.Image src={source} alt="mona" />
+            </Avatar>
         </Header.Item>
     </Header>
 );

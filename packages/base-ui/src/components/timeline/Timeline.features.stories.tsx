@@ -185,7 +185,9 @@ export const WithAnAvatar: StoryFn<typeof Timeline> = () => (
         <Timeline>
             <Timeline.Item>
                 <Timeline.Avatar>
-                    <Avatar src="https://avatars.githubusercontent.com/u/92997159?v=4" size={40} />
+                    <Avatar size={40}>
+                        <Avatar.Image src="https://avatars.githubusercontent.com/u/92997159?v=4" />
+                    </Avatar>
                 </Timeline.Avatar>
                 <Timeline.Badge variant="success">
                     <CheckmarkCircleRegular aria-hidden="true" />

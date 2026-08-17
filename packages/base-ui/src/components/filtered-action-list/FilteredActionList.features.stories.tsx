@@ -287,7 +287,9 @@ export const CustomItemRendering: StoryFn<typeof FilteredActionList> = () => {
             renderItem={(item) => (
                 <ActionList.Item key={item.id} role="option" onSelect={() => {}}>
                     <ActionList.LeadingVisual>
-                        <Avatar src="https://avatars.githubusercontent.com/u/7143434?v=4" />
+                        <Avatar>
+                            <Avatar.Image src="https://avatars.githubusercontent.com/u/7143434?v=4" />
+                        </Avatar>
                     </ActionList.LeadingVisual>
                     {item.text}
                     <ActionList.Description>@{item.text?.split(" ")[0]}</ActionList.Description>

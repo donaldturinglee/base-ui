@@ -10,7 +10,9 @@ const sources = [
 ];
 
 const contributors = sources.map((src, index) => (
-    <Avatar key={src} src={src} alt={`Contributor ${index + 1}`} />
+    <Avatar key={src}>
+        <Avatar.Image src={src} alt={`Contributor ${index + 1}`} />
+    </Avatar>
 ));
 
 // A contributor with no picture to be shown, whose initials stand where it would have been
@@ -74,12 +76,9 @@ export const CustomSizeOnParentResponsive: StoryFn<typeof AvatarStack> = () => (
 export const CustomSizeOnChildren: StoryFn<typeof AvatarStack> = () => (
     <AvatarStack>
         {sources.map((src, index) => (
-            <Avatar
-                key={src}
-                src={src}
-                size={[20, 32, 48, 64][index]}
-                alt={`Contributor ${index + 1}`}
-            />
+            <Avatar key={src} size={[20, 32, 48, 64][index]}>
+                <Avatar.Image src={src} alt={`Contributor ${index + 1}`} />
+            </Avatar>
         ))}
     </AvatarStack>
 );
@@ -87,7 +86,9 @@ export const CustomSizeOnChildren: StoryFn<typeof AvatarStack> = () => (
 // Single Avatar
 export const WithSingleAvatar: StoryFn<typeof AvatarStack> = () => (
     <AvatarStack>
-        <Avatar src={sources[0]} alt="Contributor 1" />
+        <Avatar>
+            <Avatar.Image src={sources[0]} alt="Contributor 1" />
+        </Avatar>
     </AvatarStack>
 );
 
@@ -95,7 +96,9 @@ export const WithSingleAvatar: StoryFn<typeof AvatarStack> = () => (
 export const WithOverflow: StoryFn<typeof AvatarStack> = () => (
     <AvatarStack>
         {[...sources, ...sources].map((src, index) => (
-            <Avatar key={index} src={src} alt={`Contributor ${index + 1}`} />
+            <Avatar key={index}>
+                <Avatar.Image src={src} alt={`Contributor ${index + 1}`} />
+            </Avatar>
         ))}
     </AvatarStack>
 );

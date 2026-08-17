@@ -22,7 +22,9 @@ export default {
 const HoverCard = () => (
     <Stack gap="condensed" padding="normal" className={classes.card}>
         <Stack direction="horizontal" gap="condensed" justify="space-between">
-            <Avatar src="https://avatars.githubusercontent.com/u/7143434?v=4" size={48} />
+            <Avatar size={48}>
+                <Avatar.Image src="https://avatars.githubusercontent.com/u/7143434?v=4" />
+            </Avatar>
             <Button size="small">Follow</Button>
         </Stack>
         <Stack gap="none">

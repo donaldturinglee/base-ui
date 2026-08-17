@@ -13,7 +13,9 @@ const sources = [
 ];
 
 const contributors = sources.map((src, index) => (
-    <Avatar key={src} src={src} alt={`Contributor ${index + 1}`} />
+    <Avatar key={src}>
+        <Avatar.Image src={src} alt={`Contributor ${index + 1}`} />
+    </Avatar>
 ));
 
 export default {

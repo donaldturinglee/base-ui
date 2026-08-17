@@ -21,14 +21,18 @@ export default {
 
 // Square Shape
 export const Square: StoryFn<typeof Avatar> = () => (
-    <Avatar shape="square" alt="mona" src={source} />
+    <Avatar shape="square">
+        <Avatar.Image src={source} alt="mona" />
+    </Avatar>
 );
 
 // Size
 export const Size: StoryFn<typeof Avatar> = () => (
     <div>
         {sizes.map((size) => (
-            <Avatar key={size} size={size} alt="mona" src={source} />
+            <Avatar key={size} size={size}>
+                <Avatar.Image src={source} alt="mona" />
+            </Avatar>
         ))}
     </div>
 );
@@ -40,9 +44,9 @@ export const SizeResponsive: StoryFn<typeof Avatar> = () => (
             <Avatar
                 key={size}
                 size={{ narrow: size, regular: sizes[index + 1], wide: sizes[index + 2] }}
-                alt="mona"
-                src={source}
-            />
+            >
+                <Avatar.Image src={source} alt="mona" />
+            </Avatar>
         ))}
     </div>
 );

@@ -37,7 +37,9 @@ export const Conversation: StoryFn<typeof Message> = () => (
     <div className={classes.thread}>
         <Message>
             <Message.Avatar>
-                <Avatar src={speakers.ada} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={speakers.ada} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Message.Header>Ada</Message.Header>
@@ -49,7 +51,9 @@ export const Conversation: StoryFn<typeof Message> = () => (
 
         <Message align="end">
             <Message.Avatar>
-                <Avatar src={speakers.alan} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={speakers.alan} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Message.Header>Alan</Message.Header>
@@ -66,7 +70,9 @@ export const Conversation: StoryFn<typeof Message> = () => (
 export const AlignInherited: StoryFn<typeof Message> = () => (
     <Message align="end">
         <Message.Avatar>
-            <Avatar src={speakers.alan} size={32} />
+            <Avatar size={32}>
+                <Avatar.Image src={speakers.alan} />
+            </Avatar>
         </Message.Avatar>
         <Message.Content>
             <Message.Header>Alan</Message.Header>
@@ -133,7 +139,9 @@ export const WithAHeaderAndFooter: StoryFn<typeof Message> = () => (
     <div className={classes.thread}>
         <Message>
             <Message.Avatar>
-                <Avatar src={speakers.ada} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={speakers.ada} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Message.Header>Ada · 09:14</Message.Header>
@@ -146,7 +154,9 @@ export const WithAHeaderAndFooter: StoryFn<typeof Message> = () => (
 
         <Message align="end">
             <Message.Avatar>
-                <Avatar src={speakers.alan} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={speakers.alan} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Message.Header>Alan · 09:20</Message.Header>
@@ -186,7 +196,9 @@ export const WithoutAnAvatar: StoryFn<typeof Message> = () => (
 export const WithAGhostBubble: StoryFn<typeof Message> = () => (
     <Message>
         <Message.Avatar>
-            <Avatar src={speakers.ada} size={32} />
+            <Avatar size={32}>
+                <Avatar.Image src={speakers.ada} />
+            </Avatar>
         </Message.Avatar>
         <Message.Content>
             <Message.Header>Assistant</Message.Header>
@@ -208,7 +220,9 @@ export const WithReactions: StoryFn<typeof Message> = () => (
     <div className={classes.roomToHang}>
         <Message>
             <Message.Avatar>
-                <Avatar src={speakers.ada} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={speakers.ada} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Bubble variant="muted">
@@ -220,7 +234,9 @@ export const WithReactions: StoryFn<typeof Message> = () => (
 
         <Message align="end">
             <Message.Avatar>
-                <Avatar src={speakers.alan} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={speakers.alan} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Bubble>
@@ -236,7 +252,9 @@ export const WithReactions: StoryFn<typeof Message> = () => (
 export const Pending: StoryFn<typeof Message> = () => (
     <Message>
         <Message.Avatar>
-            <Avatar src={speakers.ada} size={32} />
+            <Avatar size={32}>
+                <Avatar.Image src={speakers.ada} />
+            </Avatar>
         </Message.Avatar>
         <Message.Content>
             <Message.Header>Assistant</Message.Header>
@@ -255,7 +273,9 @@ export const Pending: StoryFn<typeof Message> = () => (
 export const Failed: StoryFn<typeof Message> = () => (
     <Message align="end">
         <Message.Avatar>
-            <Avatar src={speakers.alan} size={32} />
+            <Avatar size={32}>
+                <Avatar.Image src={speakers.alan} />
+            </Avatar>
         </Message.Avatar>
         <Message.Content>
             <Bubble variant="danger">

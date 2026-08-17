@@ -20,7 +20,9 @@ export const Default: StoryFn<typeof Message> = () => (
     <div className={classes.container}>
         <Message>
             <Message.Avatar>
-                <Avatar src={source} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={source} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Message.Header>Ada</Message.Header>
@@ -40,7 +42,9 @@ export const Playground: StoryFn<MessageProps> = (args) => (
     <div className={classes.container}>
         <Message {...args}>
             <Message.Avatar>
-                <Avatar src={source} size={32} />
+                <Avatar size={32}>
+                    <Avatar.Image src={source} />
+                </Avatar>
             </Message.Avatar>
             <Message.Content>
                 <Message.Header>Ada</Message.Header>

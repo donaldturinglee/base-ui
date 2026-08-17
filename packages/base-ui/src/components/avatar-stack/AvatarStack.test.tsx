@@ -262,8 +262,12 @@ describe("AvatarStack", () => {
     it("reads an avatar's responsive size the way the avatar reads it", () => {
         render(
             <AvatarStack data-testid="stack">
-                <Avatar src="a.png" size={{ regular: 40 }} />
-                <Avatar src="b.png" size={{ regular: 40, wide: 64 }} />
+                <Avatar size={{ regular: 40 }}>
+                    <Avatar.Image src="a.png" />
+                </Avatar>
+                <Avatar size={{ regular: 40, wide: 64 }}>
+                    <Avatar.Image src="b.png" />
+                </Avatar>
             </AvatarStack>,
         );
         const stack = screen.getByTestId("stack");
@@ -275,8 +279,12 @@ describe("AvatarStack", () => {
     it("takes the smallest avatar size when it has no size of its own", () => {
         render(
             <AvatarStack data-testid="stack">
-                <Avatar src="a.png" size={48} />
-                <Avatar src="b.png" size={32} />
+                <Avatar size={48}>
+                    <Avatar.Image src="a.png" />
+                </Avatar>
+                <Avatar size={32}>
+                    <Avatar.Image src="b.png" />
+                </Avatar>
             </AvatarStack>,
         );
         const stack = screen.getByTestId("stack");

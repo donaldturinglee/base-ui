@@ -1,6 +1,6 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
 import { getResponsiveControlValues } from "../../utilities/responsive";
-import Avatar, { DEFAULT_AVATAR_SIZE } from "./Avatar";
+import { Avatar, DEFAULT_AVATAR_SIZE } from ".";
 import type { AvatarProps } from "./Avatar.types";
 
 const source = "https://avatars.githubusercontent.com/u/7143434?v=4";
@@ -10,7 +10,11 @@ export default {
     component: Avatar,
 } as Meta<typeof Avatar>;
 
-export const Default: StoryFn<typeof Avatar> = () => <Avatar src={source} />;
+export const Default: StoryFn<typeof Avatar> = () => (
+    <Avatar>
+        <Avatar.Image src={source} />
+    </Avatar>
+);
 
 Default.parameters = {
     layout: "centered",
@@ -38,9 +42,9 @@ export const Playground: StoryFn<PlaygroundArgs> = ({
             regular: sizeAtRegular,
             wide: sizeAtWide,
         })}
-        src={source}
-        alt="mona"
-    />
+    >
+        <Avatar.Image src={source} alt="mona" />
+    </Avatar>
 );
 
 Playground.args = {
