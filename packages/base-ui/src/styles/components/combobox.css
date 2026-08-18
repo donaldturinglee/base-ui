@@ -1,0 +1,253 @@
+@layer components {
+    /* The combobox is a column: its name, then the field, and nothing else, since the list is
+       drawn out of the page and laid out against the viewport rather than standing here. It
+       takes whatever room it is given, so a field in a form is as wide as the form */
+    .combobox {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+        width: 100%;
+    }
+
+    .combobox-label {
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    .combobox-label-disabled {
+        color: var(--foreground-color-disabled);
+    }
+
+    /* The control carries the border, the background and the ring rather than the field inside
+       it, so that the field and the buttons standing after it read as the one control rather
+       than as a field with things placed beside it. It is what the list is measured and placed
+       against for the same reason */
+    .combobox-control {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-inline-end: var(--base-size-4);
+        background-color: var(--background-color-default);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-border-color-rest);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-inset);
+        color: var(--foreground-color-default);
+
+        &:focus-within {
+            border-color: var(--border-color-accent-emphasis);
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: -1px;
+        }
+    }
+
+    .combobox-control-disabled {
+        background-color: var(--control-background-color-disabled);
+        border-color: var(--control-border-color-disabled);
+        box-shadow: none;
+        color: var(--foreground-color-disabled);
+    }
+
+    /* Last, so a control that is both switched off and invalid still reads as invalid */
+    .combobox-control-invalid {
+        border-color: var(--border-color-danger-emphasis);
+
+        &:focus-within {
+            border-color: var(--control-border-color-danger);
+            outline-color: var(--control-border-color-danger);
+        }
+    }
+
+    /* The field is what is typed into rather than what is drawn: the control around it is
+       already a field to look at, so this gives up its own border, its shadow and its ring and
+       keeps only the typing area. It is left to stretch to whatever the buttons after it leave
+       rather than told to fill the control, since a field given the whole width would push
+       them out past the end */
+    .combobox-control .combobox-input {
+        flex: 1;
+        min-width: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+
+        &:focus-within {
+            outline: none;
+        }
+    }
+
+    /* The buttons are the same height as the row they stand in whatever the field is set to,
+       so the control keeps one line down its trailing end */
+    .combobox-trigger,
+    .combobox-clear-trigger {
+        flex-shrink: 0;
+        color: var(--control-icon-color-rest);
+    }
+
+    /* An invisible button takes a fill under the pointer, and the one that opens a list holds
+       that fill for as long as the list is standing, which is what says a menu is the one being
+       read. Neither of these is a control of its own: they are ways into the field they stand
+       inside, so both give the fill up. A filled box sitting inside the field would read as a
+       second thing standing beside the one being typed into, and the field already carries the
+       ring that says where the reader is */
+    .combobox-trigger:hover,
+    .combobox-clear-trigger:hover,
+    .combobox-trigger[aria-expanded="true"] {
+        background-color: transparent;
+    }
+
+    /* The list is laid out against the viewport, because that is what the control it stands
+       under is measured against. Where it ends up is carried in variables rather than written
+       straight onto the element, so that a narrow viewport can put it somewhere else. It is
+       drawn as wide as the control, which is where a reader looks for the list belonging to a
+       field */
+    .combobox-positioner {
+        position: fixed;
+        top: var(--combobox-positioner-top);
+        left: var(--combobox-positioner-left);
+        z-index: var(--z-index-dropdown);
+        width: var(--combobox-positioner-anchor-width);
+        transition: none;
+    }
+
+    /* The surface the list is drawn on. Everything it holds is clipped to its own corners, so
+       nothing standing at either end of it rounds out past them, and it scrolls rather than
+       growing past what the page has room for */
+    .combobox-content {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-height: var(--overlay-height-medium);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        color: var(--foreground-color-default);
+
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    /* A column laid out by flex, so that a group standing inside it reads no differently from
+       the items standing beside it. The gap is what holds the rows apart, so nothing that
+       stands down leaves the space it was taking behind it */
+    .combobox-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-2);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scroll-padding: var(--base-size-4);
+        padding: var(--base-size-4);
+    }
+
+    .combobox-item-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-2);
+    }
+
+    /* The name is set small and muted rather than heavy, so the items are what the eye lands
+       on going down the list. It begins where the items below it begin, so the whole surface
+       reads down one edge */
+    .combobox-item-group-label {
+        display: flex;
+        align-items: center;
+        padding-block: var(--base-size-4);
+        padding-inline: var(--base-size-8);
+        user-select: none;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-medium);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* An item is a choice being read rather than somewhere to go, so it is laid out as a row
+       with its name at the start and its mark at the end. Dragging across the rows picks
+       rather than selecting them as text, so the text is left alone */
+    .combobox-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--base-size-8);
+        min-height: var(--control-medium-size);
+        padding-block: var(--control-medium-padding-block);
+        padding-inline: var(--base-size-8);
+        text-align: start;
+        cursor: pointer;
+        user-select: none;
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+        transition: background-color var(--motion-transition-hover);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* Whichever item the field is pointing at is the one drawn as in hand, whether the keys or
+       the pointer left it there, so the list only ever draws the one highlight. Focus never
+       reaches it, so there is no ring to draw: the field keeps the caret and points at it */
+    .combobox-item-highlighted {
+        background-color: var(--control-transparent-background-color-hover);
+    }
+
+    .combobox-item-selected {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* Last, so an item that is both held and switched off still reads as switched off */
+    .combobox-item-disabled {
+        cursor: not-allowed;
+        color: var(--foreground-color-disabled);
+
+        @media (forced-colors: active) {
+            color: GrayText;
+        }
+    }
+
+    /* The name is what gives way when the list is narrower than the item, so the mark beside
+       it keeps its room */
+    .combobox-item-text {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    /* The mark stands at the end of the row rather than in front of the name, so the names
+       down the list all begin at the same place */
+    .combobox-item-indicator {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+
+        & svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+    }
+
+    /* A box of a fixed height, so the surface keeps its size as the list goes from holding
+       something to holding nothing */
+    .combobox-empty {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        height: var(--base-size-64);
+        padding-inline: var(--base-size-8);
+        white-space: pre-wrap;
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-medium);
+    }
+}

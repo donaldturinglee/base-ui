@@ -29,6 +29,7 @@ export * from "./clipboard";
 export * from "./code";
 export * from "./code-block";
 export * from "./collapsible";
+export * from "./combobox";
 export * from "./command-palette";
 export * from "./confirmation-dialog";
 export * from "./counter-label";
