@@ -1,0 +1,99 @@
+@layer components {
+    /* Two indicators laid on the one cell of a single-cell grid, so the swap is as wide and as tall
+       as the larger of them and nothing beside it moves when the one being shown changes.
+
+       Where the indicator standing back rests is written here rather than on the indicators, so a
+       swap says once how its two take turns and both read it the same way */
+    .swap {
+        --swap-rest-axis: z;
+        --swap-rest-turn: 0deg;
+        --swap-rest-scale: 1;
+        --swap-rest-opacity: 0;
+
+        display: inline-grid;
+        place-items: center;
+        vertical-align: middle;
+    }
+
+    /* Both indicators stand in the same cell, so one is drawn over the other rather than beside it.
+       The individual transform properties are eased rather than the shorthand, so an indicator can
+       be turned and drawn back at once without either being written as part of the other */
+    .swap-indicator {
+        --swap-direction: 1;
+
+        display: inline-flex;
+        grid-area: 1 / 1;
+        align-items: center;
+        justify-content: center;
+        transition-property: opacity, rotate, scale;
+        transition-duration: var(--motion-duration-short);
+        transition-timing-function: var(--motion-easing-move);
+    }
+
+    /* The two travel opposite ways round, so the one standing back and the one coming forward cross
+       rather than both arriving from the same side */
+    .swap-indicator[data-type="off"] {
+        --swap-direction: -1;
+    }
+
+    /* The indicator that is not being shown stays where it is: it is what the one being shown comes
+       forward from, and taking it away would leave the swap with nothing to be measured by. It is
+       kept from the pointer, so only what is being shown can be reached */
+    .swap-indicator:not(.swap-indicator-active) {
+        rotate: var(--swap-rest-axis) calc(var(--swap-direction) * var(--swap-rest-turn));
+        scale: var(--swap-rest-scale);
+        opacity: var(--swap-rest-opacity);
+        pointer-events: none;
+    }
+
+    /* Fading is what a swap does when it is told nothing else, and rests on the opacity every one
+       of them already carries, so it names nothing of its own */
+
+    /* Turned a quarter round, both the same way, so the pair reads as one dial being moved on */
+    .swap-rotate {
+        --swap-rest-turn: 90deg;
+    }
+
+    /* Drawn back towards nothing, so the one being shown grows into place */
+    .swap-scale {
+        --swap-rest-scale: 0.5;
+    }
+
+    /* Turned right over about the upright axis. The one standing back keeps its opacity: it is
+       hidden by having its back to the reader rather than by being faded, which is what makes the
+       pair read as two sides of the one thing. The depth is kept shallow, so the turn is read as a
+       card being flipped rather than as something travelling away */
+    .swap-flip {
+        --swap-rest-axis: y;
+        --swap-rest-turn: 180deg;
+        --swap-rest-opacity: 1;
+
+        perspective: var(--base-size-128);
+    }
+
+    .swap-flip .swap-indicator {
+        backface-visibility: hidden;
+    }
+
+    /* Cut from one to the other, for a swap that reports something rather than moves */
+    .swap-none .swap-indicator {
+        transition: none;
+    }
+
+    /* Content that changes on its own is content some readers cannot follow. Where that has been
+       asked against, the swap still shows one of its two and simply stops travelling to do it. The
+       one standing back is faded rather than turned, since a flip that cannot turn would otherwise
+       be left with its back showing and neither indicator read */
+    @media (prefers-reduced-motion: reduce) {
+        .swap {
+            --swap-rest-axis: z;
+            --swap-rest-turn: 0deg;
+            --swap-rest-scale: 1;
+            --swap-rest-opacity: 0;
+        }
+
+        .swap-indicator {
+            transition: none;
+        }
+    }
+}
