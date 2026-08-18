@@ -41,6 +41,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -232,6 +233,16 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [![Discord](https://go-skill-icons.vercel.app/api/icons?i=discord&theme=dark)](https://discord.gg/YsteKRjrSH) &nbsp;
 [![Twitter](https://go-skill-icons.vercel.app/api/icons?i=x&theme=dark)](https://x.com/donaldturinglee) &nbsp;
 [![YouTube](https://go-skill-icons.vercel.app/api/icons?i=youtube&theme=dark)](https://www.youtube.com/channel/UCOHOUOsJjGPBlov7FuwPDbA) &nbsp;
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Acknowledgments
+
+<a href="https://linux.do/">
+  <img src="https://i.imgur.com/XuAMvhs.png" alt="LINUX DO" width="64" />
+</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
