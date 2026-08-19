@@ -1,0 +1,170 @@
+@layer components {
+    /* The dim over the page behind the step. It is drawn and nothing more: what closes a tour is
+       Escape or a press the tour hears for itself, so the dim is kept out of the pointer's way and
+       a step can ask the reader to click the very thing it is pointing at */
+    .tour-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: var(--z-index-overlay);
+        background-color: var(--overlay-backdrop-background-color);
+        pointer-events: none;
+    }
+
+    /* Where the step points at something, the dim is cast out from around that rather than laid
+       over the whole screen. A shadow with a spread wider than any screen is what does it, so the
+       hole keeps its own rounded corners — which a clipped path could not give it — and the target
+       is left lit and reachable */
+    .tour-backdrop-spotlit {
+        --tour-backdrop-spread: 100vmax;
+
+        inset: auto;
+        top: var(--tour-target-top);
+        left: var(--tour-target-left);
+        width: var(--tour-target-width);
+        height: var(--tour-target-height);
+        background-color: transparent;
+        border-radius: var(--tour-target-radius);
+        box-shadow: 0 0 0 var(--tour-backdrop-spread) var(--overlay-backdrop-background-color);
+    }
+
+    /* The ring around what the step points at. The dim is the backdrop's to cast, so this only
+       picks the target out of it. Presses fall through it for the same reason they fall through
+       the dim */
+    .tour-spotlight {
+        position: fixed;
+        top: var(--tour-target-top);
+        left: var(--tour-target-left);
+        z-index: var(--z-index-overlay);
+        width: var(--tour-target-width);
+        height: var(--tour-target-height);
+        border-radius: var(--tour-target-radius);
+        outline: var(--border-width-thick) solid var(--border-color-accent-emphasis);
+        outline-offset: calc(-1 * var(--border-width-thick));
+        pointer-events: none;
+    }
+
+    /* Where the surface stands. It is laid out against the viewport, because what it points at may
+       be standing anywhere, in a region that clips or scrolls. It sits above the dim, since the
+       whole of a step is read from it */
+    .tour-positioner {
+        position: fixed;
+        z-index: var(--z-index-popover);
+    }
+
+    /* A step standing against something is placed by measuring the two, so where it ends up is
+       carried in variables rather than written into this file */
+    .tour-positioner-tooltip {
+        top: var(--tour-positioner-top);
+        left: var(--tour-positioner-left);
+    }
+
+    /* A step with nothing to point at stands in the middle of the screen, where a dialog would */
+    .tour-positioner-dialog {
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+    }
+
+    /* A floating step keeps to a corner wherever the reader has scrolled to, which is what a step
+       speaking about the page as a whole wants: near enough to read, far enough not to stand over
+       whatever is being spoken about */
+    .tour-positioner-floating {
+        --tour-floating-offset: var(--base-size-24);
+
+        &[data-placement="top-start"] {
+            inset-block-start: var(--tour-floating-offset);
+            inset-inline-start: var(--tour-floating-offset);
+        }
+
+        &[data-placement="top-end"] {
+            inset-block-start: var(--tour-floating-offset);
+            inset-inline-end: var(--tour-floating-offset);
+        }
+
+        &[data-placement="bottom-start"] {
+            inset-block-end: var(--tour-floating-offset);
+            inset-inline-start: var(--tour-floating-offset);
+        }
+
+        &[data-placement="bottom-end"] {
+            inset-block-end: var(--tour-floating-offset);
+            inset-inline-end: var(--tour-floating-offset);
+        }
+    }
+
+    /* The surface a step is read from. It is the room the caret is laid out against as well, which
+       is why it is positioned and why nothing it holds is clipped: the caret is drawn past its
+       edge */
+    .tour-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-8);
+        width: var(--overlay-width-small);
+        max-width: calc(100dvw - var(--base-size-32));
+        padding: var(--overlay-padding-normal);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        color: var(--foreground-color-default);
+
+        /* The surface takes focus as each step is reached, so that a reader who cannot see where
+           the spotlight has moved to is still told what it has moved to. It is not a stop of its
+           own on the page, so it draws no ring of its own either */
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    /* A step standing in the middle of the screen is the one that opens or closes a tour, and is
+       given a little more room since it has no target beside it to be read against */
+    .tour-content[data-type="dialog"] {
+        width: var(--overlay-width-medium);
+    }
+
+    /* The way out stands at the top trailing corner, clear of the words rather than in the row
+       with them, so a long title runs the whole width of the surface underneath it */
+    .tour-close-trigger {
+        position: absolute;
+        top: var(--base-size-8);
+        inset-inline-end: var(--base-size-8);
+    }
+
+    /* Set small and muted, and given the room the close button takes so the two never meet */
+    .tour-progress-text {
+        padding-inline-end: var(--base-size-24);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* The step is a document of its own while it is being read, so its title reads as the heading
+       of one rather than taking the size that comes with it */
+    .tour-title {
+        margin: 0;
+        padding-inline-end: var(--base-size-24);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--text-title-weight-large);
+    }
+
+    .tour-description {
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* The ways on stand at the end of the row, which is where a reader looks for what comes next.
+       They wrap rather than run off the surface, since a step is free to carry as many as it likes */
+    .tour-control {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--base-size-8);
+        margin-top: var(--base-size-4);
+    }
+}

@@ -117,5 +117,6 @@ export * from "./toggle-switch";
 export * from "./token";
 export * from "./tooltip";
 export * from "./topic-tag";
+export * from "./tour";
 export * from "./tree-view";
 export * from "./truncate";
