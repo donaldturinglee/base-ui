@@ -97,7 +97,7 @@ To work on the library itself:
 Wrap the application in a `ThemeProvider` so the tokens resolve, then reach for the components:
 
 ```jsx
-import { Box, Button, FormControl, Stack, TextInput, ThemeProvider } from '@gamecrafters/base-ui';
+import { Box, Button, FormControl, Stack, TextInput, ThemeProvider } from '@gamecrafters/base-ui/react';
 import '@gamecrafters/base-ui/main.css';
 
 const App = () => (
@@ -123,7 +123,7 @@ export default App;
 For a right-to-left subtree, wrap it in a `DirectionProvider`:
 
 ```jsx
-import { DirectionProvider } from '@gamecrafters/base-ui';
+import { DirectionProvider } from '@gamecrafters/base-ui/react';
 
 <DirectionProvider direction="rtl">{children}</DirectionProvider>;
 ```
@@ -137,7 +137,7 @@ against its inputs so an unchanged package is not built or tested twice:
 | `npm run storybook:build` | Builds the static Storybook |
 | `npm test` | Runs the Vitest suites |
 | `npm run test:e2e` | Runs the Playwright suites against Storybook |
-| `npm run build` | Builds the package with Rolldown into `packages/base-ui/build/` |
+| `npm run build` | Builds the package with Rolldown into `packages/react/build/` |
 | `npm run lint` | Lints each package's own sources with ESLint |
 | `npm run format` | Applies both the ESLint and Prettier fixes |
 | `npm run clean` | Removes the build output |
@@ -202,7 +202,7 @@ Don't forget to give the project a star! Thanks again!
 5. Push to the Branch (`git push origin feature/AmazingFeature`)
 6. Open a Pull Request
 
-A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Vitest suite and two Storybook files under `packages/base-ui/src/components/<component-name>`, with its stylesheet under `packages/base-ui/src/styles/components` and one line added to each of the two barrels.
+A new component follows the shape of the ones already there: a `ComponentName.tsx`, a `ComponentName.types.ts`, an `index.ts`, a Vitest suite and two Storybook files under `packages/react/src/components/<component-name>`, with its stylesheet under `packages/react/src/styles/components` and one line added to each of the two barrels.
 
 A Vitest suite is where a component is held to what it draws and what it says, and it is what
 every component carries. A Playwright suite under `e2e` is for the behaviour only a browser can

@@ -1,6 +1,6 @@
 import type { Preview, Renderer } from "@storybook/react-vite";
 import { withThemeByDataAttribute } from "@storybook/addon-themes";
-import "../src/styles/main.css";
+import "../../../packages/react/src/styles/main.css";
 
 const preview: Preview = {
     // The design tokens in styles/themes are scoped to [data-theme], so stories only

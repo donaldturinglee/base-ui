@@ -1,9 +1,9 @@
 import * as React from "react";
 import type { Decorator, StoryFn } from "@storybook/react-vite";
-import { Code } from "../../components/code";
-import { Heading } from "../../components/heading";
-import { Stack } from "../../components/stack";
-import { Text } from "../../components/text";
+import { Code } from "../../../../packages/react/src/components/code";
+import { Heading } from "../../../../packages/react/src/components/heading";
+import { Stack } from "../../../../packages/react/src/components/stack";
+import { Text } from "../../../../packages/react/src/components/text";
 
 const classes = {
     // A specimen sheet rather than prose, so it is given the width it is opened in and only

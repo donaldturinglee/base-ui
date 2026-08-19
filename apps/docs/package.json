@@ -1,0 +1,49 @@
+{
+  "name": "@gamecrafters/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The Storybook the components of the design system are developed and read in.",
+  "scripts": {
+    "storybook": "storybook dev -p 9000",
+    "storybook:build": "storybook build",
+    "lint": "npx eslint .storybook stories --config ../../packages/config/eslint/react.js",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier .storybook stories --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run lint:fix && npm run prettier:fix",
+    "clean": "rm -rf storybook-static"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donaldturinglee/base-ui.git",
+    "directory": "apps/docs"
+  },
+  "keywords": [
+    "base-ui",
+    "docs",
+    "storybook",
+    "react",
+    "typescript"
+  ],
+  "author": "donaldturinglee <donaldturinglee@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donaldturinglee/base-ui/issues"
+  },
+  "homepage": "https://github.com/donaldturinglee/base-ui#readme",
+  "devDependencies": {
+    "@gamecrafters/base-ui": "*",
+    "@gamecrafters/base-ui-icons": "^0.0.9",
+    "@gamecrafters/eslint-config": "*",
+    "@gamecrafters/typescript-config": "*",
+    "@storybook/addon-a11y": "^10.4.2",
+    "@storybook/addon-docs": "^10.4.2",
+    "@storybook/addon-themes": "^10.4.2",
+    "@storybook/react-vite": "^10.4.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "storybook": "^10.4.2",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.4"
+  }
+}

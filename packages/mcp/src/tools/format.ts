@@ -13,10 +13,10 @@ export const fence = (language: string, source: string): string => {
     return ["```" + language, source, "```"].join("\n");
 };
 
-// How anything the library exports is reached. The package root is the one place an application
+// How anything the library exports is reached. The one path is the only place an application
 // ever imports from, however deep inside the library the component is written
 export const importLine = (registry: Registry, names: string[]): string => {
-    return `import { ${names.join(", ")} } from "${registry.package}";`;
+    return `import { ${names.join(", ")} } from "${registry.import}";`;
 };
 
 // A prop said the way it is written, so that what is optional reads as optional

@@ -21,7 +21,7 @@ type Index = {
 export const readEntry = (
     directory: string,
     section: RegistrySection,
-    packageName: string,
+    importPath: string,
 ): RegistryEntry | undefined => {
     const files = readdirSync(directory);
     // A directory that exports nothing is not an entry yet, whatever else it is holding
@@ -48,7 +48,7 @@ export const readEntry = (
             (one, other) =>
                 Number(one.includes(".features.")) - Number(other.includes(".features.")),
         );
-    const stories = storyFiles.map((file) => readStories(file, read(directory, file), packageName));
+    const stories = storyFiles.map((file) => readStories(file, read(directory, file), importPath));
     const docs = stories.reduce<StoryDocs>((all, one) => ({ ...all, ...one.docs }), {});
 
     return {
@@ -66,11 +66,11 @@ export const readEntry = (
 export const readSection = (
     directory: string,
     section: RegistrySection,
-    packageName: string,
+    importPath: string,
 ): RegistryEntry[] => {
     return readdirSync(directory, { withFileTypes: true })
         .filter((file) => file.isDirectory())
-        .map((file) => readEntry(join(directory, file.name), section, packageName))
+        .map((file) => readEntry(join(directory, file.name), section, importPath))
         .filter((entry): entry is RegistryEntry => entry !== undefined)
         .sort((one, other) => one.name.localeCompare(other.name));
 };

@@ -1,11 +1,11 @@
 import type { Decorator, StoryFn } from "@storybook/react-vite";
-import { Code } from "../../components/code";
-import { CodeBlock } from "../../components/code-block";
-import { Heading } from "../../components/heading";
-import { Link } from "../../components/link";
-import { List } from "../../components/list";
-import { Stack } from "../../components/stack";
-import { Text } from "../../components/text";
+import { Code } from "../../../../packages/react/src/components/code";
+import { CodeBlock } from "../../../../packages/react/src/components/code-block";
+import { Heading } from "../../../../packages/react/src/components/heading";
+import { Link } from "../../../../packages/react/src/components/link";
+import { List } from "../../../../packages/react/src/components/list";
+import { Stack } from "../../../../packages/react/src/components/stack";
+import { Text } from "../../../../packages/react/src/components/text";
 
 const classes = {
     // The page is read as prose rather than looked at as a specimen, so it is held to a
@@ -21,8 +21,9 @@ git checkout -b feature/amazing-feature`;
 const layout = `package.json           the workspace root, private and never published
 turbo.json             the task pipeline, and what each task caches
 .prettierrc            shared by every package
-packages/base-ui/      @gamecrafters/base-ui, the published package
-packages/base-ui/e2e/  @gamecrafters/e2e, the suites driven through a browser
+apps/docs/             @gamecrafters/docs, the Storybook the components are read in
+packages/react/        @gamecrafters/base-ui, the published package
+packages/react/e2e/    @gamecrafters/e2e, the suites driven through a browser
 packages/config/       a package per tool, the config the packages are checked under`;
 
 const checks = `npm run lint
@@ -32,7 +33,7 @@ npm run test:e2e`;
 const commit = `git commit -m "feat: add StatusDot component with stories, tests, and styles"
 git push origin feature/amazing-feature`;
 
-const files = `packages/base-ui/src/components/status-dot/
+const files = `packages/react/src/components/status-dot/
     StatusDot.tsx                    the component
     StatusDot.types.ts               the props, and the unions they are drawn from
     StatusDot.test.tsx               the Vitest suite
@@ -40,7 +41,7 @@ const files = `packages/base-ui/src/components/status-dot/
     StatusDot.features.stories.tsx   one story for each thing it can do
     index.ts                         the component and its types, named
 
-packages/base-ui/src/styles/components/status-dot.css`;
+packages/react/src/styles/components/status-dot.css`;
 
 const barrel = 'export * from "./status-dot";';
 
@@ -70,7 +71,7 @@ const scripts = `npm run storybook        Runs Storybook on port 9000
 npm run storybook:build  Builds the static Storybook
 npm test                 Runs the Vitest suites
 npm run test:e2e         Runs the Playwright suites against Storybook
-npm run build            Builds the package with Rolldown into packages/base-ui/build/
+npm run build            Builds the package with Rolldown into packages/react/build/
 npm run lint             Lints each package's own sources with ESLint
 npm run format           Applies both the ESLint and Prettier fixes
 npm run clean            Removes the build output`;
@@ -162,7 +163,7 @@ export const AddingAComponent: StoryFn = () => (
         </Text>
         <CodeBlock language="typescript">
             <CodeBlock.Header>
-                <CodeBlock.Title>packages/base-ui/src/components/index.ts</CodeBlock.Title>
+                <CodeBlock.Title>packages/react/src/components/index.ts</CodeBlock.Title>
             </CodeBlock.Header>
             <CodeBlock.Content>
                 <CodeBlock.Code>{barrel}</CodeBlock.Code>
@@ -170,7 +171,7 @@ export const AddingAComponent: StoryFn = () => (
         </CodeBlock>
         <CodeBlock language="css">
             <CodeBlock.Header>
-                <CodeBlock.Title>packages/base-ui/src/styles/components/main.css</CodeBlock.Title>
+                <CodeBlock.Title>packages/react/src/styles/components/main.css</CodeBlock.Title>
             </CodeBlock.Header>
             <CodeBlock.Content>
                 <CodeBlock.Code>{stylesheet}</CodeBlock.Code>
@@ -243,11 +244,11 @@ export const WhatIsChecked: StoryFn = () => (
             </List.Item>
             <List.Item>
                 <Code>npm test</Code> — the Vitest suites, run under the config in{" "}
-                <Code>packages/base-ui/src/tests</Code>
+                <Code>packages/react/src/tests</Code>
             </List.Item>
             <List.Item>
                 <Code>npm run test:e2e</Code> — the Playwright suites in{" "}
-                <Code>packages/base-ui/e2e</Code>, run against a Storybook brought up for them
+                <Code>packages/react/e2e</Code>, run against a Storybook brought up for them
             </List.Item>
             <List.Item>
                 <Code>npm run format</Code> — the ESLint and Prettier fixes, applied rather than
@@ -257,7 +258,7 @@ export const WhatIsChecked: StoryFn = () => (
         <Text as="p">
             Lint and tests are run again on the way to npm, and so is the build. Prettier is left
             out of that workflow on purpose: it currently fails on the generated stylesheets under{" "}
-            <Code>packages/base-ui/src/styles</Code>, and a check that is known to fail would stop
+            <Code>packages/react/src/styles</Code>, and a check that is known to fail would stop
             every publish rather than catch anything. It goes back in once those files are
             formatted.
         </Text>
@@ -277,7 +278,7 @@ export const Releasing: StoryFn = () => (
         <Text as="p">
             A merged change is not published by being merged. What sends the package to npm is a
             published GitHub release, so a release is cut once the version in{" "}
-            <Code>packages/base-ui/package.json</Code> has been raised to what is going out.
+            <Code>packages/react/package.json</Code> has been raised to what is going out.
         </Text>
         <Text as="p">
             The tag the release is cut from is held against that version before anything is

@@ -9,12 +9,12 @@ import {
     StarRegular,
 } from "@gamecrafters/base-ui-icons";
 import type { Icon } from "@gamecrafters/base-ui-icons";
-import { Code } from "../../components/code";
-import { CodeBlock } from "../../components/code-block";
-import { Heading } from "../../components/heading";
-import { Stack } from "../../components/stack";
-import { Text } from "../../components/text";
-import { TextInput } from "../../components/text-input";
+import { Code } from "../../../../packages/react/src/components/code";
+import { CodeBlock } from "../../../../packages/react/src/components/code-block";
+import { Heading } from "../../../../packages/react/src/components/heading";
+import { Stack } from "../../../../packages/react/src/components/stack";
+import { Text } from "../../../../packages/react/src/components/text";
+import { TextInput } from "../../../../packages/react/src/components/text-input";
 
 const classes = {
     page: "p-[var(--base-size-24)]",

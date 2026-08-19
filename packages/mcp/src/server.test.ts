@@ -80,7 +80,7 @@ describe("list_components", () => {
 describe("get_component", () => {
     it("gives the line the component is imported by", async () => {
         expect(await call("get_component", { name: "Button" })).toContain(
-            'import { Button } from "@gamecrafters/base-ui";',
+            'import { Button } from "@gamecrafters/base-ui/react";',
         );
     });
 

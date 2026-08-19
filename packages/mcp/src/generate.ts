@@ -6,7 +6,7 @@ import { readLibrary } from "./sources";
 // beside the bundle that answers from it. Both paths are read against the package this is run
 // from, which is where npm starts a script
 
-const LIBRARY = "../base-ui";
+const LIBRARY = "../react";
 const REGISTRY = "build/registry.json";
 
 const registry = readLibrary(resolve(LIBRARY));

@@ -47,7 +47,7 @@ export const LabelScale: StoryFn<typeof Thing> = () => (
 );
 `;
 
-const read = () => readStories("Thing.stories.tsx", source, "@gamecrafters/base-ui");
+const read = () => readStories("Thing.stories.tsx", source, "@gamecrafters/base-ui/react");
 
 const example = (title: string) => {
     const found = read().examples.find((one) => one.title === title);
@@ -76,7 +76,7 @@ describe("readStories", () => {
 
     it("imports what the library exports from the package rather than from a path", () => {
         expect(example("The Plain One").source).toContain(
-            'import { Thing } from "@gamecrafters/base-ui";',
+            'import { Thing } from "@gamecrafters/base-ui/react";',
         );
     });
 
@@ -89,7 +89,7 @@ describe("readStories", () => {
     it("imports only what the example it is written for reaches for", () => {
         expect(example("The Plain One").source).not.toContain("Stack");
         expect(example("Label Scale").source).toContain(
-            'import { Stack, Thing } from "@gamecrafters/base-ui";',
+            'import { Stack, Thing } from "@gamecrafters/base-ui/react";',
         );
     });
 

@@ -1,0 +1,9 @@
+{
+    "extends": "../../packages/config/typescript/react.json",
+    // Nothing here is built: what the app holds is the Storybook config the stories are read
+    // through, and the pages that are about the library rather than about any one component, and
+    // both are read by Vite rather than compiled ahead of it. What is left is the sources an
+    // editor holds against the same options the rest of the workspace is written under
+    "include": [".storybook/**/*", "stories/**/*"],
+    "exclude": ["node_modules", "storybook-static"]
+}

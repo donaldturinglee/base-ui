@@ -67,6 +67,9 @@ export type RegistryToken = {
 export type Registry = {
     // The package an application installs, and the version it was read at
     package: string;
+    // What a component is imported from, which is the package and the implementation inside it
+    // rather than the package on its own, since the package holds one per framework
+    import: string;
     version: string;
     entries: RegistryEntry[];
     tokens: RegistryToken[];

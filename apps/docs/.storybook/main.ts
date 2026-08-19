@@ -2,7 +2,16 @@ import type { StorybookConfig } from "@storybook/react-vite";
 import tailwindcss from "@tailwindcss/vite";
 
 const config: StorybookConfig = {
-    stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+    // The pages that are about the library rather than about any one component are the app's own
+    // and are held here. A component's stories are kept beside the component they are written for,
+    // so the rest of what is named here reaches across the workspace into the library the app is
+    // the documentation for
+    stories: [
+        "../stories/**/*.mdx",
+        "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+        "../../../packages/react/src/**/*.mdx",
+        "../../../packages/react/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    ],
     addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-themes"],
     framework: {
         name: "@storybook/react-vite",

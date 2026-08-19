@@ -1,4 +1,10 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
+
+// Storybook is an app of its own rather than part of this package, so the directory it is
+// started from is read against this file rather than against the directory the run was started
+// from, which is what Playwright would otherwise have used
+const storybook = fileURLToPath(new URL("../../apps/docs", import.meta.url));
 
 // The same port `npm run storybook` serves on, so a Storybook already up is the one the suites
 // are run against rather than a second one beside it
@@ -38,11 +44,11 @@ export default defineConfig({
         },
     ],
     // Storybook is what the components are served from, so it is brought up for the run and
-    // left alone where it is already up. It is started from this file's directory, which is the
-    // package the script it is named by belongs to, rather than from the directory the run was
-    // started from
+    // left alone where it is already up. It is started from the app the script it is named by
+    // belongs to, which is where the stories these suites drive are read through
     webServer: {
         command: "npm run storybook -- --ci --quiet",
+        cwd: storybook,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 180_000,

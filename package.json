@@ -3,15 +3,16 @@
   "private": true,
   "description": "An implementation of GameCrafters' Base UI Design System using React.",
   "workspaces": [
+    "apps/*",
     "packages/*",
     "packages/config/*",
-    "packages/base-ui/e2e"
+    "packages/react/e2e"
   ],
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
-    "storybook": "npm run storybook --workspace @gamecrafters/base-ui",
+    "storybook": "npm run storybook --workspace @gamecrafters/docs",
     "storybook:build": "turbo run storybook:build",
     "lint": "turbo run lint",
     "lint:fix": "npm run lint:fix --workspaces --if-present",

@@ -8,6 +8,11 @@ import { readTokens } from "./tokens";
 // that the registry says what the library says and cannot fall behind it. This is the whole of
 // that reading, and it is done once at the end of a build
 
+// The subpath the package publishes this implementation under. A component is imported from the
+// package and the implementation together rather than from the package root, which is what lets
+// one package hold an implementation for more than one framework
+const IMPLEMENTATION = "react";
+
 // Where each of the things the library says about itself is written down, against the root of
 // the package they are read from
 const COMPONENTS = "src/components";
@@ -23,13 +28,15 @@ type Manifest = {
 
 export const readLibrary = (root: string): Registry => {
     const manifest = JSON.parse(read(root, "package.json")) as Manifest;
+    const importPath = `${manifest.name}/${IMPLEMENTATION}`;
 
     return {
         package: manifest.name,
+        import: importPath,
         version: manifest.version,
         entries: [
-            ...readSection(join(root, COMPONENTS), "components", manifest.name),
-            ...readSection(join(root, PROVIDERS), "providers", manifest.name),
+            ...readSection(join(root, COMPONENTS), "components", importPath),
+            ...readSection(join(root, PROVIDERS), "providers", importPath),
         ],
         // The primitives are read first, since they are the only ones the library heads with a
         // group and a group said out loud beats one read off the front of a name

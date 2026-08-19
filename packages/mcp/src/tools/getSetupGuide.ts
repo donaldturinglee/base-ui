@@ -24,7 +24,7 @@ const guide = (registry: Registry): string => {
     const stylesheet = `${registry.package}/main.css`;
 
     const themed = [
-        `import { ThemeProvider } from "${registry.package}";`,
+        `import { ThemeProvider } from "${registry.import}";`,
         `import "${stylesheet}";`,
         "",
         "const App = ({ children }: { children: React.ReactNode }) => (",
@@ -35,8 +35,8 @@ const guide = (registry: Registry): string => {
     return [
         `# ${registry.package} ${registry.version}`,
         "An implementation of GameCrafters' Base UI Design System in React. Every component " +
-            "is imported by name from the package root, however deep inside the library it " +
-            "is written.",
+            `is imported by name from \`${registry.import}\`, however deep inside the library ` +
+            "it is written.",
 
         "## Installing",
         fence("sh", `npm install ${registry.package}`),

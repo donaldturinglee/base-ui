@@ -5,7 +5,7 @@ import { isExported, mentions, normalize, readComment, titleize } from "./syntax
 // Storybook is where the components are developed and read, so the stories beside a component
 // are the worked examples of it that already exist. They are read back out of the story file
 // as they would be written in an application: the framing Storybook needs is dropped, the paths
-// inside the library become the package an application installs, and whatever a story reaches
+// inside the library become the path an application imports from, and whatever a story reaches
 // for beside itself comes with it
 
 // The playground is driven by its controls rather than showing something, so it documents the
@@ -41,9 +41,9 @@ type Story = {
     source: string;
 };
 
-export const readStories = (file: string, text: string, packageName: string): Stories => {
+export const readStories = (file: string, text: string, importPath: string): Stories => {
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
-    const imports = readImports(source, packageName);
+    const imports = readImports(source, importPath);
     const helpers: Helper[] = [];
     const stories: Story[] = [];
     let docs: StoryDocs = {};
@@ -78,7 +78,7 @@ export const readStories = (file: string, text: string, packageName: string): St
     };
 };
 
-const readImports = (source: ts.SourceFile, packageName: string): StoryImport[] => {
+const readImports = (source: ts.SourceFile, importPath: string): StoryImport[] => {
     const imports: StoryImport[] = [];
 
     source.forEachChild((node) => {
@@ -92,8 +92,9 @@ const readImports = (source: ts.SourceFile, packageName: string): StoryImport[] 
             return;
         }
 
-        // A path into the library is the package itself once the story is read from outside it
-        const from = specifier.startsWith(".") ? packageName : specifier;
+        // A path into the library is what the package publishes it under once the story is read
+        // from outside it
+        const from = specifier.startsWith(".") ? importPath : specifier;
         const clause = node.importClause;
         if (!clause) {
             return;

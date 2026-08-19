@@ -1,11 +1,11 @@
 import type { Decorator, StoryFn } from "@storybook/react-vite";
-import { Code } from "../../components/code";
-import { CodeBlock } from "../../components/code-block";
-import { Heading } from "../../components/heading";
-import { Link } from "../../components/link";
-import { List } from "../../components/list";
-import { Stack } from "../../components/stack";
-import { Text } from "../../components/text";
+import { Code } from "../../../../packages/react/src/components/code";
+import { CodeBlock } from "../../../../packages/react/src/components/code-block";
+import { Heading } from "../../../../packages/react/src/components/heading";
+import { Link } from "../../../../packages/react/src/components/link";
+import { List } from "../../../../packages/react/src/components/list";
+import { Stack } from "../../../../packages/react/src/components/stack";
+import { Text } from "../../../../packages/react/src/components/text";
 
 const classes = {
     // The page is read as prose rather than looked at as a specimen, so it is held to a
@@ -29,7 +29,7 @@ const peerDependencies = `{
 const stylesheet = 'import "@gamecrafters/base-ui/main.css";';
 
 const themed = `import type { ReactNode } from "react";
-import { ThemeProvider } from "@gamecrafters/base-ui";
+import { ThemeProvider } from "@gamecrafters/base-ui/react";
 import "@gamecrafters/base-ui/main.css";
 
 const App = ({ children }: { children: ReactNode }) => (

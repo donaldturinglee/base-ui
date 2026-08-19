@@ -7,6 +7,7 @@ import type { Registry } from "../registry/registry.types";
 
 export const registry: Registry = {
     package: "@gamecrafters/base-ui",
+    import: "@gamecrafters/base-ui/react",
     version: "1.2.3",
     entries: [
         {

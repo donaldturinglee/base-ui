@@ -5,12 +5,12 @@ import { readEntry } from "./entries";
 // Read against the library itself rather than against a fixture: what a reader of sources is
 // worth is whether it reads the sources there are, so the components it is pointed at here are
 // the ones the design system is least likely to stop having
-const LIBRARY = fileURLToPath(new URL("../../../base-ui/src", import.meta.url));
+const LIBRARY = fileURLToPath(new URL("../../../react/src", import.meta.url));
 
-const PACKAGE = "@gamecrafters/base-ui";
+const IMPORT = "@gamecrafters/base-ui/react";
 
 const read = (section: "components" | "providers", directory: string) => {
-    const entry = readEntry(`${LIBRARY}/${section}/${directory}`, section, PACKAGE);
+    const entry = readEntry(`${LIBRARY}/${section}/${directory}`, section, IMPORT);
     if (!entry) {
         throw new Error(`${directory} was not read as an entry`);
     }
@@ -47,6 +47,6 @@ describe("readEntry", () => {
     });
 
     it("reads nothing from a directory that exports nothing", () => {
-        expect(readEntry(`${LIBRARY}/styles/themes`, "components", PACKAGE)).toBeUndefined();
+        expect(readEntry(`${LIBRARY}/styles/themes`, "components", IMPORT)).toBeUndefined();
     });
 });
