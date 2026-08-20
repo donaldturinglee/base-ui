@@ -1,0 +1,9 @@
+{
+    "extends": "../../packages/config/typescript/react.json",
+    // Nothing here is emitted: what the app holds is read by Vite, which compiles the sources on
+    // the way to the bundle rather than leaving anything behind for `tsc` to write. What is left
+    // is the sources an editor holds against the same options the rest of the workspace is
+    // written under, with the Vite config among them since it is written in TypeScript too
+    "include": ["src/**/*", "vite.config.mts"],
+    "exclude": ["node_modules", "build"]
+}

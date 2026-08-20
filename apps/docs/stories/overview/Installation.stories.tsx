@@ -160,7 +160,7 @@ export const WorkingOnTheLibrary: StoryFn = () => (
         <Heading size="medium">Working on the library</Heading>
         <Text as="p">
             The components are developed and read in Storybook, so a clone is set up by installing
-            the dependencies and starting it. It is served on port 9000.
+            the dependencies and starting it. It is served on port 3001.
         </Text>
         <CodeBlock language="shellscript">
             <CodeBlock.Content>

@@ -9,6 +9,12 @@
             "dependsOn": ["^build"],
             "outputs": ["build/**", "stats.html"]
         },
+        "dev": {
+            "dependsOn": ["^build"],
+            "outputs": [],
+            "cache": false,
+            "persistent": true
+        },
         "storybook:build": {
             "dependsOn": ["^build"],
             "outputs": ["storybook-static/**"]

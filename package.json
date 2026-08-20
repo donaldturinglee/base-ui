@@ -12,6 +12,7 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
+    "dev": "turbo run dev",
     "storybook": "npm run storybook --workspace @gamecrafters/docs",
     "storybook:build": "turbo run storybook:build",
     "lint": "turbo run lint",

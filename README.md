@@ -133,7 +133,8 @@ against its inputs so an unchanged package is not built or tested twice:
 
 | Script | What it does |
 | --- | --- |
-| `npm run storybook` | Runs Storybook on port 9000 |
+| `npm run dev` | Runs the docs and the site, on ports 3001 and 3000 |
+| `npm run storybook` | Runs Storybook on port 3001 |
 | `npm run storybook:build` | Builds the static Storybook |
 | `npm test` | Runs the Vitest suites |
 | `npm run test:e2e` | Runs the Playwright suites against Storybook |

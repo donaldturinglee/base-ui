@@ -8,7 +8,7 @@ const storybook = fileURLToPath(new URL("../../apps/docs", import.meta.url));
 
 // The same port `npm run storybook` serves on, so a Storybook already up is the one the suites
 // are run against rather than a second one beside it
-const baseURL = "http://localhost:9000";
+const baseURL = "http://localhost:3001";
 
 export default defineConfig({
     // The suites sit in a directory of their own rather than beside this file, so they are named

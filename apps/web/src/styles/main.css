@@ -1,0 +1,4 @@
+/* The utilities the app lays its own sections out with. Everything the components themselves are
+   drawn by is in the library's stylesheet, which is imported once at the root beside this one and
+   arrives first, so a utility written here is free to say the last word */
+@import "tailwindcss";
