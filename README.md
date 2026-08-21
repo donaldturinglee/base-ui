@@ -74,9 +74,9 @@ To work on the library itself:
    ```sh
    npm install
    ```
-3. Start Storybook, which is where the components are developed and read
+3. Start the docs and the site, where the components are developed and read
    ```sh
-   npm run storybook
+   npm run dev
    ```
 4. Install the browsers the end to end suites are driven through, which is only needed once
    ```sh
@@ -134,11 +134,11 @@ against its inputs so an unchanged package is not built or tested twice:
 | Script | What it does |
 | --- | --- |
 | `npm run dev` | Runs the docs and the site, on ports 3001 and 3000 |
-| `npm run storybook` | Runs Storybook on port 3001 |
-| `npm run storybook:build` | Builds the static Storybook |
 | `npm test` | Runs the Vitest suites |
 | `npm run test:e2e` | Runs the Playwright suites against Storybook |
 | `npm run build` | Builds the package with Rolldown into `packages/react/build/` |
+| `npm run build:docs` | Builds the static Storybook into `apps/docs/storybook-static/` |
+| `npm run build:web` | Builds the site into `apps/web/build/` |
 | `npm run lint` | Lints each package's own sources with ESLint |
 | `npm run format` | Applies both the ESLint and Prettier fixes |
 | `npm run clean` | Removes the build output |

@@ -39,7 +39,7 @@ const App = ({ children }: { children: ReactNode }) => (
 const clone = `git clone https://github.com/donaldturinglee/base-ui.git
 cd base-ui
 npm install
-npm run storybook`;
+npm run dev`;
 
 const remote = `git remote set-url origin https://github.com/your_username/base-ui.git
 git remote -v`;
@@ -160,7 +160,8 @@ export const WorkingOnTheLibrary: StoryFn = () => (
         <Heading size="medium">Working on the library</Heading>
         <Text as="p">
             The components are developed and read in Storybook, so a clone is set up by installing
-            the dependencies and starting it. It is served on port 3001.
+            the dependencies and starting the docs and the site together. Storybook is served on
+            port 3001 and the site on port 3000.
         </Text>
         <CodeBlock language="shellscript">
             <CodeBlock.Content>

@@ -67,15 +67,15 @@ const component = `function StatusDot<As extends React.ElementType = "span">(
     );
 }`;
 
-const scripts = `npm run dev              Runs the docs and the site, on ports 3001 and 3000
-npm run storybook        Runs Storybook on port 3001
-npm run storybook:build  Builds the static Storybook
-npm test                 Runs the Vitest suites
-npm run test:e2e         Runs the Playwright suites against Storybook
-npm run build            Builds the package with Rolldown into packages/react/build/
-npm run lint             Lints each package's own sources with ESLint
-npm run format           Applies both the ESLint and Prettier fixes
-npm run clean            Removes the build output`;
+const scripts = `npm run dev        Runs the docs and the site, on ports 3001 and 3000
+npm test           Runs the Vitest suites
+npm run test:e2e   Runs the Playwright suites against Storybook
+npm run build      Builds the package with Rolldown into packages/react/build/
+npm run build:docs Builds the static Storybook into apps/docs/storybook-static/
+npm run build:web  Builds the site into apps/web/build/
+npm run lint       Lints each package's own sources with ESLint
+npm run format     Applies both the ESLint and Prettier fixes
+npm run clean      Removes the build output`;
 
 const withPage: Decorator = (Story) => (
     <div className={classes.page}>

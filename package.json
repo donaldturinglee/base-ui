@@ -10,11 +10,11 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:docs": "turbo run storybook:build --filter=@gamecrafters/docs",
+    "build:web": "turbo run build --filter=@gamecrafters/web",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
     "dev": "turbo run dev",
-    "storybook": "npm run storybook --workspace @gamecrafters/docs",
-    "storybook:build": "turbo run storybook:build",
     "lint": "turbo run lint",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
     "prettier": "turbo run prettier",
