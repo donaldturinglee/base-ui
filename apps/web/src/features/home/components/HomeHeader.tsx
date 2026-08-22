@@ -42,7 +42,7 @@ const HomeHeader = () => {
                             isNight ? "Switch to the day scheme" : "Switch to the night scheme"
                         }
                         icon={isNight ? WeatherSunnyRegular : WeatherMoonRegular}
-                        variant="invisible"
+                        variant="default"
                         onClick={() => setColorMode(isNight ? "day" : "night")}
                     />
                 </Header.Item>
