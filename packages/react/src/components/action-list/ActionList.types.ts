@@ -155,6 +155,8 @@ export type ActionListContainerContextValue = {
     // Which component the list is standing inside, where it is standing inside one
     container?: string;
     listRole?: React.AriaRole;
+    // Names the list, for a container with nothing on the page that already names it
+    listLabel?: string;
     listLabelledBy?: string;
     // Says how the items are picked, for a list that is not told so itself
     selectionVariant?: ActionListSelectionVariant;

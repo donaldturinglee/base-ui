@@ -32,6 +32,7 @@ export * from "./collapsible";
 export * from "./combobox";
 export * from "./command-palette";
 export * from "./confirmation-dialog";
+export * from "./context-menu";
 export * from "./counter-label";
 export * from "./data-table";
 export * from "./date-picker";

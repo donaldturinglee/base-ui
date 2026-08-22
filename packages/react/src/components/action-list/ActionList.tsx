@@ -55,6 +55,7 @@ function ActionList<As extends React.ElementType = "ul">(
 
     const {
         listRole: listRoleFromContainer,
+        listLabel,
         listLabelledBy,
         selectionVariant: selectionVariantFromContainer,
         enableFocusZone: enableFocusZoneFromContainer,
@@ -98,6 +99,8 @@ function ActionList<As extends React.ElementType = "ul">(
             <Component
                 ref={mergedRef}
                 role={listRole}
+                // Whatever names the list stands over the name the container fell back to
+                aria-label={labelledBy ? undefined : listLabel}
                 aria-labelledby={labelledBy}
                 className={classNames(
                     actionListVariants({ variant, dividers: showDividers }),

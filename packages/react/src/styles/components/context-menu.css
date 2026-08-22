@@ -1,0 +1,33 @@
+@layer components {
+    /* The press is what the menu is about, so the area it is made in gives nothing else away
+       to it: the callout a long press would raise on a touch screen is held back, and so is
+       the run of text the same press would otherwise start selecting */
+    .context-menu-trigger {
+        -webkit-touch-callout: none;
+        user-select: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    /* The press held open as something the menu can be measured against, laid out against the
+       viewport because that is what the press was reported in. It is only there to be
+       measured, so nothing is drawn on it and nothing lands on it */
+    .context-menu-point {
+        position: fixed;
+        top: var(--context-menu-point-top);
+        left: var(--context-menu-point-left);
+        width: var(--context-menu-point-size);
+        height: var(--context-menu-point-size);
+        pointer-events: none;
+    }
+
+    /* The overlay is only as wide as the widest item, and gives way to a scrollbar rather
+       than growing past the screen */
+    .context-menu-overlay {
+        min-width: var(--overlay-width-xsmall);
+        max-height: inherit;
+        overflow: auto;
+    }
+}
