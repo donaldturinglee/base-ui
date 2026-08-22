@@ -556,12 +556,14 @@
     }
 
     /* The sidebar and the line beside it stand together, outside everything else the page
-       holds */
+       holds. The height they reach is left to the row they stand in to give, which is the whole
+       of it. Asking for the layout's own instead is only answered where the layout was told a
+       height rather than left to what it holds, and the asking is itself what stops the row
+       from giving one */
     .page-layout-sidebar-wrapper {
         display: flex;
         flex-direction: row;
         flex-shrink: 0;
-        height: 100%;
     }
 
     .page-layout-sidebar-position {
@@ -599,9 +601,10 @@
         }
     }
 
+    /* As with the wrapper it stands in, the height is the row's to give, and what the sidebar
+       holds scrolls within it once there is more of it than the row has to give */
     .page-layout-sidebar {
         width: var(--pane-width-size);
-        height: 100%;
         overflow: auto;
         padding: var(--spacing);
     }
