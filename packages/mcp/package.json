@@ -6,6 +6,10 @@
   "bin": {
     "base-ui-mcp": "build/main.js"
   },
+  "exports": {
+    "./registry.json": "./build/registry.json",
+    "./package.json": "./package.json"
+  },
   "files": [
     "build"
   ],

@@ -108,11 +108,6 @@ function PageLayoutSidebar(
             variant={resizable ? "line" : divider}
             position={position}
             className={classes.divider}
-            style={
-                {
-                    "--spacing-column": `var(--page-layout-spacing-${columnGap})`,
-                } as React.CSSProperties
-            }
         >
             {resizable ? (
                 <DragHandle

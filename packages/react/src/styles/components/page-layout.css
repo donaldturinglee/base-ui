@@ -626,16 +626,12 @@
         }
     }
 
+    /* The line stands against the sidebar rather than off it. The sidebar is held to the viewport
+       and scrolled on its own, so its bar is drawn at its own edge, and a gap on this side would
+       leave that bar stranded short of the line. What sets the two regions apart is the gap the
+       wrapper holds on the side facing the page, which keeps what is being read off the line */
     .page-layout-sidebar-divider {
         height: auto;
-
-        &[data-position="start"] {
-            margin-inline-start: var(--spacing-column);
-        }
-
-        &[data-position="end"] {
-            margin-inline-end: var(--spacing-column);
-        }
 
         @media (width < 48rem) {
             [data-responsive-variant="fullscreen"] > & {
