@@ -8,13 +8,13 @@ import type { CollapsibleProps } from "./Collapsible.types";
 const collapsible = (props: Partial<CollapsibleProps> = {}) => (
     <Collapsible {...props}>
         <Collapsible.Trigger>Show more</Collapsible.Trigger>
-        <Collapsible.Content>Content</Collapsible.Content>
+        <Collapsible.Panel>Content</Collapsible.Panel>
     </Collapsible>
 );
 
 const trigger = () => screen.getByRole("button", { name: "Show more" });
 
-const content = () => document.querySelector('[data-component="Collapsible.Content"]');
+const panel = () => document.querySelector('[data-component="Collapsible.Panel"]');
 
 const root = () => document.querySelector('[data-component="Collapsible"]') as HTMLElement;
 
@@ -28,7 +28,7 @@ describe("Collapsible", () => {
         render(
             <Collapsible as="section">
                 <Collapsible.Trigger>Show more</Collapsible.Trigger>
-                <Collapsible.Content>Content</Collapsible.Content>
+                <Collapsible.Panel>Content</Collapsible.Panel>
             </Collapsible>,
         );
         expect(root().tagName).toBe("SECTION");
@@ -37,21 +37,21 @@ describe("Collapsible", () => {
     it("tags the disclosure and its parts with data-component attributes", () => {
         render(collapsible());
 
-        for (const name of ["Collapsible", "Collapsible.Trigger", "Collapsible.Content"]) {
+        for (const name of ["Collapsible", "Collapsible.Trigger", "Collapsible.Panel"]) {
             expect(document.querySelector(`[data-component="${name}"]`)).not.toBeNull();
         }
     });
 
     it("says what the trigger controls, and points it at the content", () => {
         render(collapsible());
-        expect(trigger()).toHaveAttribute("aria-controls", content()?.getAttribute("id"));
+        expect(trigger()).toHaveAttribute("aria-controls", panel()?.getAttribute("id"));
     });
 
     it("starts closed, with the content off the page", () => {
         render(collapsible());
 
         expect(trigger()).toHaveAttribute("aria-expanded", "false");
-        expect(content()).not.toBeVisible();
+        expect(panel()).not.toBeVisible();
         expect(root()).toHaveAttribute("data-open", "false");
     });
 
@@ -59,7 +59,7 @@ describe("Collapsible", () => {
         render(collapsible({ defaultOpen: true }));
 
         expect(trigger()).toHaveAttribute("aria-expanded", "true");
-        expect(content()).toBeVisible();
+        expect(panel()).toBeVisible();
         expect(root()).toHaveAttribute("data-open", "true");
     });
 
@@ -68,11 +68,11 @@ describe("Collapsible", () => {
 
         fireEvent.click(trigger());
         expect(trigger()).toHaveAttribute("aria-expanded", "true");
-        expect(content()).toBeVisible();
+        expect(panel()).toBeVisible();
 
         fireEvent.click(trigger());
         expect(trigger()).toHaveAttribute("aria-expanded", "false");
-        expect(content()).not.toBeVisible();
+        expect(panel()).not.toBeVisible();
     });
 
     it("reports whether it is open as it changes", () => {
@@ -94,15 +94,15 @@ describe("Collapsible", () => {
 
         expect(onChange).toHaveBeenCalledWith(true);
         expect(trigger()).toHaveAttribute("aria-expanded", "false");
-        expect(content()).not.toBeVisible();
+        expect(panel()).not.toBeVisible();
     });
 
     it("follows the caller where they are holding the state", () => {
         const { rerender } = render(collapsible({ open: false }));
-        expect(content()).not.toBeVisible();
+        expect(panel()).not.toBeVisible();
 
         rerender(collapsible({ open: true }));
-        expect(content()).toBeVisible();
+        expect(panel()).toBeVisible();
     });
 
     describe("disabled", () => {
@@ -115,7 +115,7 @@ describe("Collapsible", () => {
 
             fireEvent.click(trigger());
             expect(onChange).not.toHaveBeenCalled();
-            expect(content()).not.toBeVisible();
+            expect(panel()).not.toBeVisible();
         });
 
         it("dims the trigger", () => {
@@ -125,7 +125,7 @@ describe("Collapsible", () => {
 
         it("leaves a disclosure that was already open showing", () => {
             render(collapsible({ disabled: true, defaultOpen: true }));
-            expect(content()).toBeVisible();
+            expect(panel()).toBeVisible();
         });
     });
 
@@ -135,14 +135,14 @@ describe("Collapsible", () => {
             render(
                 <Collapsible>
                     <Collapsible.Trigger onClick={onClick}>Show more</Collapsible.Trigger>
-                    <Collapsible.Content>Content</Collapsible.Content>
+                    <Collapsible.Panel>Content</Collapsible.Panel>
                 </Collapsible>,
             );
 
             fireEvent.click(trigger());
 
             expect(onClick).toHaveBeenCalledTimes(1);
-            expect(content()).toBeVisible();
+            expect(panel()).toBeVisible();
         });
 
         it("leaves the disclosure alone where the caller has answered the press", () => {
@@ -151,12 +151,12 @@ describe("Collapsible", () => {
                     <Collapsible.Trigger onClick={(event) => event.preventDefault()}>
                         Show more
                     </Collapsible.Trigger>
-                    <Collapsible.Content>Content</Collapsible.Content>
+                    <Collapsible.Panel>Content</Collapsible.Panel>
                 </Collapsible>,
             );
 
             fireEvent.click(trigger());
-            expect(content()).not.toBeVisible();
+            expect(panel()).not.toBeVisible();
         });
 
         it("draws a chevron after the label by default", () => {
@@ -175,7 +175,7 @@ describe("Collapsible", () => {
             const { container } = render(
                 <Collapsible>
                     <Collapsible.Trigger indicator="start">Show more</Collapsible.Trigger>
-                    <Collapsible.Content>Content</Collapsible.Content>
+                    <Collapsible.Panel>Content</Collapsible.Panel>
                 </Collapsible>,
             );
 
@@ -190,7 +190,7 @@ describe("Collapsible", () => {
             const { container } = render(
                 <Collapsible>
                     <Collapsible.Trigger indicator="none">Show more</Collapsible.Trigger>
-                    <Collapsible.Content>Content</Collapsible.Content>
+                    <Collapsible.Panel>Content</Collapsible.Panel>
                 </Collapsible>,
             );
 
@@ -199,22 +199,79 @@ describe("Collapsible", () => {
         });
     });
 
-    describe("the content", () => {
+    describe("the panel", () => {
         it("stays on the page while it is closed, so the trigger has something to point at", () => {
             render(collapsible());
-            expect(content()).toBeInTheDocument();
+            expect(panel()).toBeInTheDocument();
         });
 
         it("renders as whatever it is told to", () => {
             render(
                 <Collapsible defaultOpen>
                     <Collapsible.Trigger>Show more</Collapsible.Trigger>
-                    <Collapsible.Content as="ul">
+                    <Collapsible.Panel as="ul">
                         <li>One</li>
-                    </Collapsible.Content>
+                    </Collapsible.Panel>
                 </Collapsible>,
             );
-            expect(content()?.tagName).toBe("UL");
+            expect(panel()?.tagName).toBe("UL");
+        });
+
+        it("measures how tall it opens to and writes it onto itself", () => {
+            render(collapsible({ defaultOpen: true }));
+            expect(
+                (panel() as HTMLElement).style.getPropertyValue("--collapsible-panel-height"),
+            ).toMatch(/^\d+px$/);
+        });
+
+        it("takes itself off the page while it is closed where it is not to be kept", () => {
+            render(
+                <Collapsible>
+                    <Collapsible.Trigger>Show more</Collapsible.Trigger>
+                    <Collapsible.Panel keepMounted={false}>Content</Collapsible.Panel>
+                </Collapsible>,
+            );
+
+            expect(panel()).not.toBeInTheDocument();
+            expect(trigger()).not.toHaveAttribute("aria-controls");
+
+            fireEvent.click(trigger());
+            expect(panel()).toBeVisible();
+            expect(trigger()).toHaveAttribute("aria-controls", panel()?.getAttribute("id"));
+        });
+
+        it("stays on the page for the browser to find in, whatever it was told about keeping", () => {
+            render(
+                <Collapsible>
+                    <Collapsible.Trigger>Show more</Collapsible.Trigger>
+                    <Collapsible.Panel keepMounted={false} hiddenUntilFound>
+                        Content
+                    </Collapsible.Panel>
+                </Collapsible>,
+            );
+
+            expect(panel()).toBeInTheDocument();
+            expect(panel()).toHaveAttribute("hidden", "until-found");
+        });
+
+        it("opens on what the browser's find-in-page turned up", () => {
+            const onChange = vi.fn();
+            render(
+                <Collapsible onChange={onChange}>
+                    <Collapsible.Trigger>Show more</Collapsible.Trigger>
+                    <Collapsible.Panel hiddenUntilFound>Content</Collapsible.Panel>
+                </Collapsible>,
+            );
+
+            fireEvent(panel() as HTMLElement, new Event("beforematch"));
+
+            expect(onChange).toHaveBeenCalledWith(true);
+            expect(panel()).toBeVisible();
+        });
+
+        it("hides the panel outright where the browser is not to find in it", () => {
+            render(collapsible());
+            expect(panel()).toHaveAttribute("hidden", "");
         });
     });
 
@@ -222,12 +279,12 @@ describe("Collapsible", () => {
         render(
             <Collapsible defaultOpen>
                 <Collapsible.Trigger>Outer</Collapsible.Trigger>
-                <Collapsible.Content>
+                <Collapsible.Panel>
                     <Collapsible>
                         <Collapsible.Trigger>Inner</Collapsible.Trigger>
-                        <Collapsible.Content>Inner content</Collapsible.Content>
+                        <Collapsible.Panel>Inner content</Collapsible.Panel>
                     </Collapsible>
-                </Collapsible.Content>
+                </Collapsible.Panel>
             </Collapsible>,
         );
 
@@ -251,7 +308,7 @@ describe("Collapsible", () => {
         render(
             <Collapsible ref={ref}>
                 <Collapsible.Trigger>Show more</Collapsible.Trigger>
-                <Collapsible.Content>Content</Collapsible.Content>
+                <Collapsible.Panel>Content</Collapsible.Panel>
             </Collapsible>,
         );
         expect(ref.current).toBe(root());
@@ -262,7 +319,7 @@ describe("Collapsible", () => {
         render(
             <Collapsible>
                 <Collapsible.Trigger ref={ref}>Show more</Collapsible.Trigger>
-                <Collapsible.Content>Content</Collapsible.Content>
+                <Collapsible.Panel>Content</Collapsible.Panel>
             </Collapsible>,
         );
         expect(ref.current).toBe(trigger());
@@ -272,12 +329,12 @@ describe("Collapsible", () => {
         render(
             <Collapsible className="root">
                 <Collapsible.Trigger className="trigger">Show more</Collapsible.Trigger>
-                <Collapsible.Content className="content">Content</Collapsible.Content>
+                <Collapsible.Panel className="content">Content</Collapsible.Panel>
             </Collapsible>,
         );
 
         expect(root()).toHaveClass("root");
         expect(trigger()).toHaveClass("trigger");
-        expect(content()).toHaveClass("content");
+        expect(panel()).toHaveClass("content");
     });
 });

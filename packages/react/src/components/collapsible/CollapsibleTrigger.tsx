@@ -27,7 +27,8 @@ function CollapsibleTrigger(
     ref: React.ForwardedRef<any>,
 ) {
     const { className, children, indicator = "end", onClick, ...rest } = props;
-    const { triggerId, contentId, isOpen, disabled, toggle } = React.useContext(CollapsibleContext);
+    const { triggerId, panelId, isOpen, disabled, isPanelPresent, toggle } =
+        React.useContext(CollapsibleContext);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         onClick?.(event);
@@ -64,7 +65,10 @@ function CollapsibleTrigger(
             onClick={handleClick}
             disabled={disabled}
             aria-expanded={Boolean(isOpen)}
-            aria-controls={contentId}
+            // A panel that has been taken off the page is not there to be pointed at, so the
+            // trigger says nothing about it rather than naming something that is not in the
+            // document
+            aria-controls={isPanelPresent ? panelId : undefined}
             data-component="Collapsible.Trigger"
             data-open={Boolean(isOpen)}
             data-indicator={indicator}

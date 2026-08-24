@@ -25,9 +25,9 @@ export default {
 export const StartsOpen: StoryFn<typeof Collapsible> = () => (
     <Collapsible className={classes.box} defaultOpen>
         <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <Text>{summary}</Text>
-        </Collapsible.Content>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
@@ -35,9 +35,9 @@ export const StartsOpen: StoryFn<typeof Collapsible> = () => (
 export const IndicatorAtStart: StoryFn<typeof Collapsible> = () => (
     <Collapsible className={classes.box}>
         <Collapsible.Trigger indicator="start">What is a collapsible?</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <Text>{summary}</Text>
-        </Collapsible.Content>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
@@ -45,9 +45,9 @@ export const IndicatorAtStart: StoryFn<typeof Collapsible> = () => (
 export const WithoutIndicator: StoryFn<typeof Collapsible> = () => (
     <Collapsible className={classes.box}>
         <Collapsible.Trigger indicator="none">What is a collapsible?</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <Text>{summary}</Text>
-        </Collapsible.Content>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
@@ -56,16 +56,16 @@ export const Disabled: StoryFn<typeof Collapsible> = () => (
     <div className={classes.stack}>
         <Collapsible disabled>
             <Collapsible.Trigger>Closed, and cannot be opened</Collapsible.Trigger>
-            <Collapsible.Content>
+            <Collapsible.Panel>
                 <Text>{summary}</Text>
-            </Collapsible.Content>
+            </Collapsible.Panel>
         </Collapsible>
 
         <Collapsible disabled defaultOpen>
             <Collapsible.Trigger>Open, and cannot be closed</Collapsible.Trigger>
-            <Collapsible.Content>
+            <Collapsible.Panel>
                 <Text>{summary}</Text>
-            </Collapsible.Content>
+            </Collapsible.Panel>
         </Collapsible>
     </div>
 );
@@ -80,9 +80,9 @@ export const Controlled: StoryFn<typeof Collapsible> = () => {
 
             <Collapsible open={open} onChange={setOpen}>
                 <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
-                <Collapsible.Content>
+                <Collapsible.Panel>
                     <Text>{summary}</Text>
-                </Collapsible.Content>
+                </Collapsible.Panel>
             </Collapsible>
         </div>
     );
@@ -92,13 +92,13 @@ export const Controlled: StoryFn<typeof Collapsible> = () => {
 export const WithAList: StoryFn<typeof Collapsible> = () => (
     <Collapsible className={classes.box} defaultOpen>
         <Collapsible.Trigger>Filters</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <ActionList>
                 <ActionList.Item>Open issues</ActionList.Item>
                 <ActionList.Item>Your issues</ActionList.Item>
                 <ActionList.Item>Everything assigned to you</ActionList.Item>
             </ActionList>
-        </Collapsible.Content>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
@@ -106,21 +106,43 @@ export const WithAList: StoryFn<typeof Collapsible> = () => (
 export const Nested: StoryFn<typeof Collapsible> = () => (
     <Collapsible className={classes.box} defaultOpen>
         <Collapsible.Trigger indicator="start">Components</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <Collapsible className={classes.nested}>
                 <Collapsible.Trigger indicator="start">Forms</Collapsible.Trigger>
-                <Collapsible.Content>
+                <Collapsible.Panel>
                     <Text>Checkbox, Radio, Select, TextInput, Textarea</Text>
-                </Collapsible.Content>
+                </Collapsible.Panel>
             </Collapsible>
 
             <Collapsible className={classes.nested}>
                 <Collapsible.Trigger indicator="start">Overlays</Collapsible.Trigger>
-                <Collapsible.Content>
+                <Collapsible.Panel>
                     <Text>Dialog, Popover, SelectPanel, Tooltip</Text>
-                </Collapsible.Content>
+                </Collapsible.Panel>
             </Collapsible>
-        </Collapsible.Content>
+        </Collapsible.Panel>
+    </Collapsible>
+);
+
+// Drawn Only Once It Is Asked For, where the panel is taken off the page while it is closed
+// rather than left there hidden. The trigger stops pointing at it while it is gone
+export const NotKeptMounted: StoryFn<typeof Collapsible> = () => (
+    <Collapsible className={classes.box}>
+        <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
+        <Collapsible.Panel keepMounted={false}>
+            <Text>{summary}</Text>
+        </Collapsible.Panel>
+    </Collapsible>
+);
+
+// Found By The Browser, where find-in-page reaches the closed panel and what it turns up opens
+// the disclosure rather than being passed over
+export const HiddenUntilFound: StoryFn<typeof Collapsible> = () => (
+    <Collapsible className={classes.box}>
+        <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
+        <Collapsible.Panel hiddenUntilFound>
+            <Text>{summary}</Text>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
@@ -132,9 +154,9 @@ export const ReportingChanges: StoryFn<typeof Collapsible> = () => {
         <div className={classes.stack}>
             <Collapsible onChange={setOpen}>
                 <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
-                <Collapsible.Content>
+                <Collapsible.Panel>
                     <Text>{summary}</Text>
-                </Collapsible.Content>
+                </Collapsible.Panel>
             </Collapsible>
 
             <Text size="small">Currently {open ? "open" : "closed"}</Text>

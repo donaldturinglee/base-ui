@@ -34,12 +34,14 @@ function Collapsible<As extends React.ElementType = "div">(
     const [selfOpen, setSelfOpen] = React.useState(Boolean(defaultOpen));
     const isOpen = isControlled ? open : selfOpen;
 
-    const toggle = () => {
+    // A panel is on the page unless it says otherwise, which is what one written without a
+    // panel at all comes to as well
+    const [isPanelPresent, setPanelPresent] = React.useState(true);
+
+    const setOpen = (next: boolean) => {
         if (disabled) {
             return;
         }
-
-        const next = !isOpen;
 
         if (!isControlled) {
             setSelfOpen(next);
@@ -50,10 +52,13 @@ function Collapsible<As extends React.ElementType = "div">(
 
     const context = {
         triggerId: `${uuid}-trigger`,
-        contentId: `${uuid}-content`,
+        panelId: `${uuid}-panel`,
         isOpen,
         disabled: Boolean(disabled),
-        toggle,
+        isPanelPresent,
+        setPanelPresent,
+        setOpen,
+        toggle: () => setOpen(!isOpen),
     };
 
     return (

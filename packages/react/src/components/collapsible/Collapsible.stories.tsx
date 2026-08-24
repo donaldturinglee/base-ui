@@ -15,12 +15,12 @@ export default {
 export const Default: StoryFn<typeof Collapsible> = () => (
     <Collapsible className={classes.box}>
         <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <Text>
                 A disclosure standing on its own: something to press, and content that is only there
                 once it has been pressed.
             </Text>
-        </Collapsible.Content>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
@@ -31,12 +31,12 @@ Default.parameters = {
 export const Playground: StoryFn<CollapsibleProps> = (args) => (
     <Collapsible {...args} className={classes.box}>
         <Collapsible.Trigger>What is a collapsible?</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
             <Text>
                 A disclosure standing on its own: something to press, and content that is only there
                 once it has been pressed.
             </Text>
-        </Collapsible.Content>
+        </Collapsible.Panel>
     </Collapsible>
 );
 
