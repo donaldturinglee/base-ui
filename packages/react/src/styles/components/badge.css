@@ -1,0 +1,150 @@
+@layer components {
+    /* A filled pill, where Label draws the same word in outline. The border is declared and left
+       transparent so that a badge and a label of the same size stand the same height, and the dot
+       appearance has a border to colour in rather than one to add.
+
+       The colour the dot takes is held on a property of its own, since the variant sets the
+       ground for a filled badge and only the dot for a plain one, and both come off the one
+       class */
+    .badge {
+        --badge-indicator-color: var(--foreground-color-muted);
+        --badge-visual-size: var(--base-size-12);
+
+        display: inline-flex;
+        align-items: center;
+        gap: var(--base-size-4);
+        white-space: nowrap;
+        line-height: 1;
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-medium);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: transparent;
+        border-radius: var(--border-radius-full);
+    }
+
+    /* The steps are Label's own, so the two sit level wherever they are set side by side. A
+       visual is drawn to the step rather than to whatever size it arrived at, so a badge stands
+       the same height however it was filled */
+    .badge-small {
+        --badge-visual-size: var(--base-size-12);
+
+        height: var(--base-size-20);
+        padding-block: 0;
+        padding-inline: var(--base-size-6);
+    }
+
+    .badge-medium {
+        --badge-visual-size: var(--base-size-16);
+
+        height: var(--base-size-24);
+        padding-block: 0;
+        padding-inline: var(--base-size-6);
+    }
+
+    .badge-large {
+        --badge-visual-size: var(--base-size-16);
+
+        height: var(--base-size-24);
+        padding-block: 0;
+        padding-inline: var(--base-size-8);
+    }
+
+    /* A tint under the colour the role is read in, which carries as much as a badge is asked to
+       carry and stays legible under either scheme. The one exception is primary, which is the
+       badge that has to be seen before anything around it and so is filled outright */
+    .badge-default {
+        --badge-indicator-color: var(--foreground-color-muted);
+
+        background-color: var(--background-color-neutral-muted);
+        color: var(--foreground-color-default);
+    }
+
+    .badge-primary {
+        --badge-indicator-color: var(--background-color-neutral-emphasis);
+
+        background-color: var(--background-color-neutral-emphasis);
+        color: var(--foreground-color-on-emphasis);
+    }
+
+    .badge-accent {
+        --badge-indicator-color: var(--background-color-accent-emphasis);
+
+        background-color: var(--background-color-accent-muted);
+        color: var(--foreground-color-accent);
+    }
+
+    .badge-success {
+        --badge-indicator-color: var(--background-color-success-emphasis);
+
+        background-color: var(--background-color-success-muted);
+        color: var(--foreground-color-success);
+    }
+
+    .badge-attention {
+        --badge-indicator-color: var(--background-color-attention-emphasis);
+
+        background-color: var(--background-color-attention-muted);
+        color: var(--foreground-color-attention);
+    }
+
+    .badge-severe {
+        --badge-indicator-color: var(--background-color-severe-emphasis);
+
+        background-color: var(--background-color-severe-muted);
+        color: var(--foreground-color-severe);
+    }
+
+    .badge-danger {
+        --badge-indicator-color: var(--background-color-danger-emphasis);
+
+        background-color: var(--background-color-danger-muted);
+        color: var(--foreground-color-danger);
+    }
+
+    .badge-done {
+        --badge-indicator-color: var(--background-color-done-emphasis);
+
+        background-color: var(--background-color-done-muted);
+        color: var(--foreground-color-done);
+    }
+
+    .badge-sponsors {
+        --badge-indicator-color: var(--background-color-sponsors-emphasis);
+
+        background-color: var(--background-color-sponsors-muted);
+        color: var(--foreground-color-sponsors);
+    }
+
+    /* The dot carries the colour, so the pill around it goes back to plain. It is written after
+       the variants rather than given a weight of its own, so what it takes off is taken off by
+       coming later and the property the variant set on the way past is left where it is */
+    .badge-dot {
+        background-color: transparent;
+        color: var(--foreground-color-default);
+        border-color: var(--border-color-default);
+    }
+
+    .badge-indicator {
+        flex: none;
+        width: var(--base-size-6);
+        height: var(--base-size-6);
+        border-radius: var(--border-radius-full);
+        background-color: var(--badge-indicator-color);
+    }
+
+    /* Whatever stands before the text. The room between it and the text is the badge's own gap,
+       so a visual only has to be held to the size the step asks for and left in the colour of
+       the text it stands beside */
+    .badge-visual {
+        display: flex;
+        flex: none;
+        align-items: center;
+        line-height: 1;
+
+        & > svg {
+            width: var(--badge-visual-size);
+            height: var(--badge-visual-size);
+        }
+    }
+}

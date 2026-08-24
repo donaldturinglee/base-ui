@@ -9,6 +9,7 @@ export * from "./attachment";
 export * from "./autocomplete";
 export * from "./avatar";
 export * from "./avatar-stack";
+export * from "./badge";
 export * from "./banner";
 export * from "./blankslate";
 export * from "./blockquote";
