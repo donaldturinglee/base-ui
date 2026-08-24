@@ -304,104 +304,24 @@ describe("Accordion header and panel", () => {
     });
 });
 
-describe("Accordion keyboard navigation", () => {
-    it("moves to the next header on ArrowDown", () => {
+describe("Accordion keyboard behaviour", () => {
+    // The arrow keys were taken back out of the APG pattern, so the headers are ordinary tab
+    // stops and nothing moves focus between them but the reader's own Tab
+    it("leaves the arrow keys to the page", () => {
         renderAccordion();
         header("One").focus();
-        fireEvent.keyDown(header("One"), { key: "ArrowDown" });
-        expect(header("Two")).toHaveFocus();
+
+        for (const key of ["ArrowDown", "ArrowUp", "Home", "End"]) {
+            fireEvent.keyDown(header("One"), { key });
+            expect(header("One")).toHaveFocus();
+        }
     });
 
-    it("moves to the previous header on ArrowUp", () => {
+    it("leaves every header in the tab order", () => {
         renderAccordion();
-        header("Two").focus();
-        fireEvent.keyDown(header("Two"), { key: "ArrowUp" });
-        expect(header("One")).toHaveFocus();
-    });
-
-    it("wraps around the ends of the accordion", () => {
-        renderAccordion();
-        header("One").focus();
-        fireEvent.keyDown(header("One"), { key: "ArrowUp" });
-        expect(header("Three")).toHaveFocus();
-
-        fireEvent.keyDown(header("Three"), { key: "ArrowDown" });
-        expect(header("One")).toHaveFocus();
-    });
-
-    it("moves to the first and last headers on Home and End", () => {
-        renderAccordion();
-        header("Two").focus();
-        fireEvent.keyDown(header("Two"), { key: "End" });
-        expect(header("Three")).toHaveFocus();
-
-        fireEvent.keyDown(header("Three"), { key: "Home" });
-        expect(header("One")).toHaveFocus();
-    });
-
-    it("passes over the headers that cannot be used", () => {
-        render(
-            <Accordion>
-                <Accordion.Item value="one">
-                    <Accordion.Header>One</Accordion.Header>
-                    <Accordion.Panel>One panel</Accordion.Panel>
-                </Accordion.Item>
-                <Accordion.Item value="two" disabled>
-                    <Accordion.Header>Two</Accordion.Header>
-                    <Accordion.Panel>Two panel</Accordion.Panel>
-                </Accordion.Item>
-                <Accordion.Item value="three">
-                    <Accordion.Header>Three</Accordion.Header>
-                    <Accordion.Panel>Three panel</Accordion.Panel>
-                </Accordion.Item>
-            </Accordion>,
-        );
-        header("One").focus();
-        fireEvent.keyDown(header("One"), { key: "ArrowDown" });
-        expect(header("Three")).toHaveFocus();
-    });
-
-    it("leaves the other keys alone", () => {
-        renderAccordion();
-        header("One").focus();
-        fireEvent.keyDown(header("One"), { key: "ArrowRight" });
-        expect(header("One")).toHaveFocus();
-    });
-
-    it("keeps an accordion inside a panel to its own headers", () => {
-        render(
-            <Accordion defaultValue={["outer"]}>
-                <Accordion.Item value="outer">
-                    <Accordion.Header>Outer</Accordion.Header>
-                    <Accordion.Panel>
-                        <Accordion>
-                            <Accordion.Item value="inner-one">
-                                <Accordion.Header>Inner one</Accordion.Header>
-                                <Accordion.Panel>Inner one panel</Accordion.Panel>
-                            </Accordion.Item>
-                            <Accordion.Item value="inner-two">
-                                <Accordion.Header>Inner two</Accordion.Header>
-                                <Accordion.Panel>Inner two panel</Accordion.Panel>
-                            </Accordion.Item>
-                        </Accordion>
-                    </Accordion.Panel>
-                </Accordion.Item>
-                <Accordion.Item value="after">
-                    <Accordion.Header>After</Accordion.Header>
-                    <Accordion.Panel>After panel</Accordion.Panel>
-                </Accordion.Item>
-            </Accordion>,
-        );
-
-        // The inner accordion answers first, so its last header wraps round to its own first
-        header("Inner two").focus();
-        fireEvent.keyDown(header("Inner two"), { key: "ArrowDown" });
-        expect(header("Inner one")).toHaveFocus();
-
-        // The outer accordion passes over the headers the inner one holds
-        header("Outer").focus();
-        fireEvent.keyDown(header("Outer"), { key: "ArrowDown" });
-        expect(header("After")).toHaveFocus();
+        for (const section of sections) {
+            expect(header(section)).not.toHaveAttribute("tabindex");
+        }
     });
 
     it("calls a key handler it was given", () => {
@@ -410,5 +330,45 @@ describe("Accordion keyboard navigation", () => {
         header("One").focus();
         fireEvent.keyDown(header("One"), { key: "ArrowDown" });
         expect(onKeyDown).toHaveBeenCalled();
+    });
+});
+
+describe("Accordion panels that are not kept", () => {
+    it("measures how tall a panel opens to and writes it onto itself", () => {
+        renderAccordion({ defaultValue: ["one"] });
+        expect(panel("One").style.getPropertyValue("--accordion-panel-height")).toMatch(/^\d+px$/);
+    });
+
+    it("takes a closed panel off the page where it is not to be kept", () => {
+        renderAccordion({ keepMounted: false });
+
+        expect(screen.queryByText("One panel")).not.toBeInTheDocument();
+        expect(header("One")).not.toHaveAttribute("aria-controls");
+
+        fireEvent.click(header("One"));
+        expect(panel("One")).toBeVisible();
+        expect(header("One")).toHaveAttribute("aria-controls", panel("One").getAttribute("id"));
+    });
+
+    it("keeps panels on the page for the browser to find in, whatever it was told about keeping", () => {
+        renderAccordion({ keepMounted: false, hiddenUntilFound: true });
+
+        expect(panel("One")).toBeInTheDocument();
+        expect(panel("One")).toHaveAttribute("hidden", "until-found");
+    });
+
+    it("opens the item that the browser's find-in-page turned up", () => {
+        const onChange = vi.fn();
+        renderAccordion({ hiddenUntilFound: true, onChange });
+
+        fireEvent(panel("Two"), new Event("beforematch"));
+
+        expect(onChange).toHaveBeenCalledWith(["two"]);
+        expect(panel("Two")).toBeVisible();
+    });
+
+    it("hides a panel outright where the browser is not to find in it", () => {
+        renderAccordion();
+        expect(panel("One")).toHaveAttribute("hidden", "");
     });
 });

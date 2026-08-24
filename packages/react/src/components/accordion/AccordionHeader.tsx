@@ -22,7 +22,8 @@ function AccordionHeader(
 ) {
     const { className, children, headingLevel, ...rest } = props;
     const { headingLevel: accordionHeadingLevel } = React.useContext(AccordionContext);
-    const { headerId, panelId, isOpen, disabled, toggle } = React.useContext(AccordionItemContext);
+    const { headerId, panelId, isOpen, disabled, isPanelPresent, toggle } =
+        React.useContext(AccordionItemContext);
 
     const Heading = headingLevel ?? accordionHeadingLevel ?? "h3";
 
@@ -36,7 +37,10 @@ function AccordionHeader(
                 onClick={toggle}
                 disabled={disabled}
                 aria-expanded={Boolean(isOpen)}
-                aria-controls={panelId}
+                // A panel that has been taken off the page is not there to be pointed at, so
+                // the header says nothing about it rather than naming something that is not in
+                // the document
+                aria-controls={isPanelPresent ? panelId : undefined}
                 data-component="Accordion.HeaderButton"
                 data-open={Boolean(isOpen)}
                 {...rest}

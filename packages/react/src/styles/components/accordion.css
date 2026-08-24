@@ -75,11 +75,45 @@
         }
     }
 
+    /* The height the panel runs out to as it opens, which the panel measures and writes onto
+       itself. It rests at `auto` so that the animation always has something to run to, even on
+       the pass before anything has been measured */
     .accordion-panel {
+        --accordion-panel-height: auto;
+
         padding-bottom: var(--base-size-12);
         padding-inline: var(--base-size-8);
         color: var(--foreground-color-default);
         font-size: var(--text-body-size-medium);
         line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The panel runs out to the height it measured rather than standing at full height at once.
+       Nothing is animated on the way out, since a closed panel is taken off the page and there
+       is nothing left to see */
+    .accordion-panel[data-open="true"] {
+        animation: accordion-panel-open var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
+        }
+    }
+
+    /* The height is left off the end of the animation rather than held there, so a panel whose
+       content grows after it has opened is not kept at what it measured on the way in. What
+       runs over while the panel is still short of its height is kept in for the duration and
+       the panel is left to overflow as it would once it is over */
+    @keyframes accordion-panel-open {
+        from {
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        to {
+            height: var(--accordion-panel-height);
+            overflow: hidden;
+            opacity: 1;
+        }
     }
 }

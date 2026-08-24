@@ -21,6 +21,14 @@ export type AccordionProps<As extends React.ElementType = "div"> = Omit<
             // What each header is as a heading, so that the accordion sits at the right depth
             // in the document outline
             headingLevel?: AccordionHeadingLevel;
+            // Whether a closed panel stays on the page. It does by default, so that its header
+            // always has something to point at; an accordion whose panels are expensive to draw
+            // can take them off instead, and a header stops pointing at one while it is gone
+            keepMounted?: boolean;
+            // Lets the browser's own find-in-page reach a closed panel: what it finds opens the
+            // item rather than being passed over. A panel has to be on the page to be found in,
+            // so this keeps it there whatever `keepMounted` says
+            hiddenUntilFound?: boolean;
             className?: string;
         }
     >,
@@ -60,9 +68,12 @@ export type AccordionPanelProps<As extends React.ElementType = "div"> = Polymorp
 
 export type AccordionContextValue = {
     open?: string[];
+    setOpen?: (value: string, open: boolean) => void;
     toggle?: (value: string) => void;
     disabled?: boolean;
     headingLevel?: AccordionHeadingLevel;
+    keepMounted?: boolean;
+    hiddenUntilFound?: boolean;
 };
 
 export type AccordionItemContextValue = {
@@ -70,5 +81,14 @@ export type AccordionItemContextValue = {
     panelId?: string;
     isOpen?: boolean;
     disabled?: boolean;
+    keepMounted?: boolean;
+    hiddenUntilFound?: boolean;
+    // Whether the panel is on the page at all. The panel is the one that decides, since it is
+    // the one reading what it was told about being kept, and the header reads it so that it
+    // never points at something that is not there
+    isPanelPresent?: boolean;
+    setPanelPresent?: (isPresent: boolean) => void;
+    // Opens the item without its header being pressed, which is how find-in-page reaches it
+    setOpen?: (open: boolean) => void;
     toggle?: () => void;
 };

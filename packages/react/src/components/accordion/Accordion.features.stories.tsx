@@ -182,7 +182,37 @@ export const Controlled: StoryFn<typeof Accordion> = () => {
     );
 };
 
-// Nested, where an accordion inside a panel keeps its arrow keys to itself
+// Panels Drawn Only Once They Are Asked For, where a closed panel is taken off the page rather
+// than left there hidden. Its header stops pointing at it while it is gone
+export const NotKeptMounted: StoryFn<typeof Accordion> = () => (
+    <div className={classes.container}>
+        <Accordion keepMounted={false}>
+            {sections.map((section) => (
+                <Accordion.Item key={section.value} value={section.value}>
+                    <Accordion.Header>{section.heading}</Accordion.Header>
+                    <Accordion.Panel>{section.body}</Accordion.Panel>
+                </Accordion.Item>
+            ))}
+        </Accordion>
+    </div>
+);
+
+// Found By The Browser, where find-in-page reaches a closed panel and what it turns up opens the
+// item it was found in rather than being passed over
+export const HiddenUntilFound: StoryFn<typeof Accordion> = () => (
+    <div className={classes.container}>
+        <Accordion hiddenUntilFound>
+            {sections.map((section) => (
+                <Accordion.Item key={section.value} value={section.value}>
+                    <Accordion.Header>{section.heading}</Accordion.Header>
+                    <Accordion.Panel>{section.body}</Accordion.Panel>
+                </Accordion.Item>
+            ))}
+        </Accordion>
+    </div>
+);
+
+// Nested, where an accordion stands inside the panel of another
 export const Nested: StoryFn<typeof Accordion> = () => (
     <div className={classes.container}>
         <Accordion defaultValue={["notifications"]}>

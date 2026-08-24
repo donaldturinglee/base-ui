@@ -23,7 +23,14 @@ function AccordionItem<As extends React.ElementType = "div">(
         ...rest
     } = props as AccordionItemProps<"div">;
 
-    const { open, toggle, disabled: accordionDisabled } = React.useContext(AccordionContext);
+    const {
+        open,
+        setOpen,
+        toggle,
+        disabled: accordionDisabled,
+        keepMounted,
+        hiddenUntilFound,
+    } = React.useContext(AccordionContext);
 
     const uuid = useId();
     // An item that was not named stands for itself, so an accordion can be put together
@@ -32,11 +39,22 @@ function AccordionItem<As extends React.ElementType = "div">(
     const isOpen = open?.includes(itemValue) ?? false;
     const isDisabled = disabled ?? accordionDisabled ?? false;
 
+    // A panel is on the page unless it says otherwise, which is what an item written without a
+    // panel at all comes to as well
+    const [isPanelPresent, setPanelPresent] = React.useState(true);
+
     const context = {
         headerId: `${uuid}-header`,
         panelId: `${uuid}-panel`,
         isOpen,
         disabled: isDisabled,
+        // What the accordion was told about keeping its panels is settled once, for all of
+        // them, rather than said again on every panel it holds
+        keepMounted,
+        hiddenUntilFound,
+        isPanelPresent,
+        setPanelPresent,
+        setOpen: (nextOpen: boolean) => setOpen?.(itemValue, nextOpen),
         toggle: () => toggle?.(itemValue),
     };
 

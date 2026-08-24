@@ -65,6 +65,8 @@ Playground.args = {
     multiple: false,
     disabled: false,
     headingLevel: "h3",
+    keepMounted: true,
+    hiddenUntilFound: false,
 };
 
 Playground.argTypes = {
@@ -93,6 +95,18 @@ Playground.argTypes = {
         },
         options: ["h2", "h3", "h4", "h5", "h6"],
         description: "What each header is as a heading",
+    },
+    keepMounted: {
+        control: {
+            type: "boolean",
+        },
+        description: "Whether a closed panel stays on the page rather than being taken off",
+    },
+    hiddenUntilFound: {
+        control: {
+            type: "boolean",
+        },
+        description: "Lets the browser's own find-in-page reach a closed panel and open it",
     },
     value: {
         table: {

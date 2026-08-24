@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { AccordionContext } from "./AccordionContext";
@@ -9,18 +8,13 @@ const classes = {
     root: "accordion",
 };
 
-const accordionSelector = "[data-component='Accordion']";
-const headerSelector = "[data-component='Accordion.HeaderButton']:not([disabled])";
-
-// The headers the arrow keys move between. An accordion inside a panel keeps its own headers
-// to itself, so the keys never carry a reader out of the set they are working through
-const getHeaders = (root: HTMLElement | null) =>
-    root
-        ? Array.from(root.querySelectorAll<HTMLElement>(headerSelector)).filter(
-              (header) => header.closest(accordionSelector) === root,
-          )
-        : [];
-
+// A set of disclosures that open and close together. One standing on its own is a Collapsible
+// instead.
+//
+// The headers are ordinary tab stops rather than one stop the arrow keys move within. The APG
+// pattern called for the second until the arrow keys were taken back out of it, on the grounds
+// that a set of buttons already reads as a set of buttons and moving between them by arrow was
+// a rule a reader had to be told rather than one they could guess
 function Accordion<As extends React.ElementType = "div">(
     props: AccordionProps<As>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,12 +29,10 @@ function Accordion<As extends React.ElementType = "div">(
         multiple = false,
         disabled,
         headingLevel = "h3",
-        onKeyDown,
+        keepMounted = true,
+        hiddenUntilFound = false,
         ...rest
     } = props as AccordionProps<"div">;
-
-    const rootRef = React.useRef<HTMLElement>(null);
-    const mergedRef = useMergedRefs(ref, rootRef);
 
     // An accordion the caller is holding the state of takes what is open from the prop; one
     // that is not keeps its own
@@ -48,8 +40,18 @@ function Accordion<As extends React.ElementType = "div">(
     const [selfValue, setSelfValue] = React.useState(() => defaultValue ?? []);
     const open = isControlled ? value : selfValue;
 
-    const toggle = (itemValue: string) => {
-        const next = open.includes(itemValue)
+    const setOpen = (itemValue: string, nextOpen: boolean) => {
+        if (disabled) {
+            return;
+        }
+
+        const isOpen = open.includes(itemValue);
+
+        if (isOpen === nextOpen) {
+            return;
+        }
+
+        const next = !nextOpen
             ? open.filter((entry) => entry !== itemValue)
             : multiple
               ? [...open, itemValue]
@@ -63,39 +65,21 @@ function Accordion<As extends React.ElementType = "div">(
         onChange?.(next);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        onKeyDown?.(event);
-
-        const step = event.key === "ArrowDown" ? 1 : event.key === "ArrowUp" ? -1 : 0;
-        const toEdge = event.key === "Home" || event.key === "End";
-
-        // An accordion nested in a panel answers the key first, so the one around it stands
-        // aside once the move has been made
-        if (event.defaultPrevented || (step === 0 && !toEdge)) {
-            return;
-        }
-
-        const headers = getHeaders(rootRef.current);
-        const current = headers.indexOf(document.activeElement as HTMLElement);
-
-        if (current === -1) {
-            return;
-        }
-
-        event.preventDefault();
-        // Moving on from the last header wraps round to the first
-        (toEdge
-            ? headers[event.key === "Home" ? 0 : headers.length - 1]
-            : headers[(current + step + headers.length) % headers.length]
-        ).focus();
+    const context = {
+        open,
+        setOpen,
+        toggle: (itemValue: string) => setOpen(itemValue, !open.includes(itemValue)),
+        disabled,
+        headingLevel,
+        keepMounted,
+        hiddenUntilFound,
     };
 
     return (
-        <AccordionContext.Provider value={{ open, toggle, disabled, headingLevel }}>
+        <AccordionContext.Provider value={context}>
             <Component
-                ref={mergedRef}
+                ref={ref}
                 className={classNames(classes.root, className)}
-                onKeyDown={handleKeyDown}
                 data-component="Accordion"
                 data-multiple={multiple}
                 data-disabled={Boolean(disabled)}
