@@ -1,6 +1,6 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
-import { Clipboard } from ".";
-import type { ClipboardProps } from "./Clipboard.types";
+import { ClipboardText } from ".";
+import type { ClipboardTextProps } from "./ClipboardText.types";
 
 const classes = {
     // Gives the row a container to lay itself out against
@@ -10,16 +10,16 @@ const classes = {
 const value = "https://github.com/donaldturinglee/base-ui.git";
 
 export default {
-    title: "Components/Clipboard",
-    component: Clipboard,
-} as Meta<typeof Clipboard>;
+    title: "Components/ClipboardText",
+    component: ClipboardText,
+} as Meta<typeof ClipboardText>;
 
-export const Default: StoryFn<typeof Clipboard> = () => (
+export const Default: StoryFn<typeof ClipboardText> = () => (
     <div className={classes.container}>
-        <Clipboard value={value}>
-            <Clipboard.Input aria-label="Repository URL" />
-            <Clipboard.Trigger />
-        </Clipboard>
+        <ClipboardText value={value}>
+            <ClipboardText.Input aria-label="Repository URL" />
+            <ClipboardText.Trigger />
+        </ClipboardText>
     </div>
 );
 
@@ -27,12 +27,12 @@ Default.parameters = {
     layout: "centered",
 };
 
-export const Playground: StoryFn<ClipboardProps> = (args) => (
+export const Playground: StoryFn<ClipboardTextProps> = (args) => (
     <div className={classes.container}>
-        <Clipboard {...args}>
-            <Clipboard.Input aria-label="Repository URL" />
-            <Clipboard.Trigger />
-        </Clipboard>
+        <ClipboardText {...args}>
+            <ClipboardText.Input aria-label="Repository URL" />
+            <ClipboardText.Trigger />
+        </ClipboardText>
     </div>
 );
 

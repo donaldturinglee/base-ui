@@ -3,8 +3,8 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { FormControl } from "../form-control";
-import { Clipboard } from ".";
-import type { ClipboardProps } from "./Clipboard.types";
+import { ClipboardText } from ".";
+import type { ClipboardTextProps } from "./ClipboardText.types";
 
 const VALUE = "https://example.com/base-ui.git";
 
@@ -22,22 +22,22 @@ const setClipboard = (value: { writeText: typeof writeText } | undefined) => {
     });
 };
 
-const clipboard = (props: Partial<ClipboardProps> = {}) => (
-    <Clipboard value={VALUE} {...props}>
-        <Clipboard.Input aria-label="Repository URL" />
-        <Clipboard.Trigger />
-    </Clipboard>
+const clipboard = (props: Partial<ClipboardTextProps> = {}) => (
+    <ClipboardText value={VALUE} {...props}>
+        <ClipboardText.Input aria-label="Repository URL" />
+        <ClipboardText.Trigger />
+    </ClipboardText>
 );
 
-const root = () => document.querySelector('[data-component="Clipboard"]') as HTMLElement;
+const root = () => document.querySelector('[data-component="ClipboardText"]') as HTMLElement;
 
 const field = () => screen.getByLabelText("Repository URL") as HTMLInputElement;
 
 const trigger = () => screen.getByRole("button", { name: "Copy" });
 
-const indicator = () => document.querySelector('[data-component="Clipboard.Indicator"]');
+const indicator = () => document.querySelector('[data-component="ClipboardText.Indicator"]');
 
-const announcement = () => document.querySelector('[data-component="Clipboard.Announcement"]');
+const announcement = () => document.querySelector('[data-component="ClipboardText.Announcement"]');
 
 // The write is a promise, so the press is flushed before anything is asked about what it did
 const press = async (button: HTMLElement = trigger()) => {
@@ -60,7 +60,7 @@ beforeEach(() => {
     });
 });
 
-describe("Clipboard", () => {
+describe("ClipboardText", () => {
     it("renders a plain box by default", () => {
         render(clipboard());
         expect(root().tagName).toBe("DIV");
@@ -68,9 +68,9 @@ describe("Clipboard", () => {
 
     it("renders as whatever it is told to", () => {
         render(
-            <Clipboard as="section" value={VALUE}>
-                <Clipboard.Trigger />
-            </Clipboard>,
+            <ClipboardText as="section" value={VALUE}>
+                <ClipboardText.Trigger />
+            </ClipboardText>,
         );
         expect(root().tagName).toBe("SECTION");
     });
@@ -79,11 +79,11 @@ describe("Clipboard", () => {
         render(clipboard());
 
         for (const name of [
-            "Clipboard",
-            "Clipboard.Input",
-            "Clipboard.Trigger",
-            "Clipboard.Indicator",
-            "Clipboard.Announcement",
+            "ClipboardText",
+            "ClipboardText.Input",
+            "ClipboardText.Trigger",
+            "ClipboardText.Indicator",
+            "ClipboardText.Announcement",
         ]) {
             expect(document.querySelector(`[data-component="${name}"]`)).not.toBeNull();
         }
@@ -315,18 +315,18 @@ describe("Clipboard", () => {
 
         it("takes a name of its own", () => {
             render(
-                <Clipboard value={VALUE}>
-                    <Clipboard.Trigger label="Copy the clone URL" />
-                </Clipboard>,
+                <ClipboardText value={VALUE}>
+                    <ClipboardText.Trigger label="Copy the clone URL" />
+                </ClipboardText>,
             );
             expect(screen.getByRole("button", { name: "Copy the clone URL" })).toBeInTheDocument();
         });
 
         it("is named by its children where it was given any", () => {
             render(
-                <Clipboard value={VALUE}>
-                    <Clipboard.Trigger>Copy the clone URL</Clipboard.Trigger>
-                </Clipboard>,
+                <ClipboardText value={VALUE}>
+                    <ClipboardText.Trigger>Copy the clone URL</ClipboardText.Trigger>
+                </ClipboardText>,
             );
             expect(screen.getByRole("button", { name: "Copy the clone URL" })).toBeInTheDocument();
         });
@@ -334,9 +334,9 @@ describe("Clipboard", () => {
         it("still calls a press handler of the caller's own", async () => {
             const onClick = vi.fn();
             render(
-                <Clipboard value={VALUE}>
-                    <Clipboard.Trigger onClick={onClick} />
-                </Clipboard>,
+                <ClipboardText value={VALUE}>
+                    <ClipboardText.Trigger onClick={onClick} />
+                </ClipboardText>,
             );
 
             await press();
@@ -347,9 +347,9 @@ describe("Clipboard", () => {
 
         it("leaves the value alone where the caller has answered the press", async () => {
             render(
-                <Clipboard value={VALUE}>
-                    <Clipboard.Trigger onClick={(event) => event.preventDefault()} />
-                </Clipboard>,
+                <ClipboardText value={VALUE}>
+                    <ClipboardText.Trigger onClick={(event) => event.preventDefault()} />
+                </ClipboardText>,
             );
 
             await press();
@@ -365,7 +365,7 @@ describe("Clipboard", () => {
 
             expect(before).toBe("false");
             expect(indicator()).toHaveAttribute("data-copied", "true");
-            expect(indicator()).toHaveClass("clipboard-indicator-copied");
+            expect(indicator()).toHaveClass("clipboard-text-indicator-copied");
         });
 
         it("keeps the indicator out of the way of a screen reader", () => {
@@ -398,12 +398,12 @@ describe("Clipboard", () => {
 
         it("leaves the selection alone where the caller has answered the arrival", () => {
             render(
-                <Clipboard value={VALUE}>
-                    <Clipboard.Input
+                <ClipboardText value={VALUE}>
+                    <ClipboardText.Input
                         aria-label="Repository URL"
                         onFocus={(event) => event.preventDefault()}
                     />
-                </Clipboard>,
+                </ClipboardText>,
             );
 
             fireEvent.focus(field());
@@ -415,10 +415,10 @@ describe("Clipboard", () => {
             render(
                 <FormControl id="repository">
                     <FormControl.Label>Repository URL</FormControl.Label>
-                    <Clipboard value={VALUE}>
-                        <Clipboard.Input />
-                        <Clipboard.Trigger />
-                    </Clipboard>
+                    <ClipboardText value={VALUE}>
+                        <ClipboardText.Input />
+                        <ClipboardText.Trigger />
+                    </ClipboardText>
                     <FormControl.Caption>Clone over HTTPS</FormControl.Caption>
                 </FormControl>,
             );
@@ -436,9 +436,9 @@ describe("Clipboard", () => {
                     {/* A required field marks its name with an asterisk, so the input is
                         reached for by the id the field gave it rather than by that name */}
                     <FormControl.Label>Repository URL</FormControl.Label>
-                    <Clipboard value={VALUE}>
-                        <Clipboard.Input />
-                    </Clipboard>
+                    <ClipboardText value={VALUE}>
+                        <ClipboardText.Input />
+                    </ClipboardText>
                 </FormControl>,
             );
 
@@ -449,9 +449,9 @@ describe("Clipboard", () => {
     it("forwards a ref to the root element", () => {
         const ref = React.createRef<HTMLDivElement>();
         render(
-            <Clipboard ref={ref} value={VALUE}>
-                <Clipboard.Trigger />
-            </Clipboard>,
+            <ClipboardText ref={ref} value={VALUE}>
+                <ClipboardText.Trigger />
+            </ClipboardText>,
         );
         expect(ref.current).toBe(root());
     });
@@ -459,9 +459,9 @@ describe("Clipboard", () => {
     it("forwards a ref to the trigger", () => {
         const ref = React.createRef<HTMLButtonElement>();
         render(
-            <Clipboard value={VALUE}>
-                <Clipboard.Trigger ref={ref} />
-            </Clipboard>,
+            <ClipboardText value={VALUE}>
+                <ClipboardText.Trigger ref={ref} />
+            </ClipboardText>,
         );
         expect(ref.current).toBe(trigger());
     });
@@ -469,19 +469,19 @@ describe("Clipboard", () => {
     it("forwards a ref to the field", () => {
         const ref = React.createRef<HTMLInputElement>();
         render(
-            <Clipboard value={VALUE}>
-                <Clipboard.Input ref={ref} aria-label="Repository URL" />
-            </Clipboard>,
+            <ClipboardText value={VALUE}>
+                <ClipboardText.Input ref={ref} aria-label="Repository URL" />
+            </ClipboardText>,
         );
         expect(ref.current).toBe(field());
     });
 
     it("merges a custom className onto each part", () => {
         render(
-            <Clipboard className="root" value={VALUE}>
-                <Clipboard.Input className="field" aria-label="Repository URL" />
-                <Clipboard.Trigger className="action" />
-            </Clipboard>,
+            <ClipboardText className="root" value={VALUE}>
+                <ClipboardText.Input className="field" aria-label="Repository URL" />
+                <ClipboardText.Trigger className="action" />
+            </ClipboardText>,
         );
 
         expect(root()).toHaveClass("root");

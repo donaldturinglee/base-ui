@@ -3,11 +3,11 @@ import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { useFormControlForwardedProps } from "../form-control/useFormControlForwardedProps";
 import { TextInput } from "../text-input";
-import { ClipboardContext } from "./ClipboardContext";
-import type { ClipboardInputProps } from "./Clipboard.types";
+import { ClipboardTextContext } from "./ClipboardTextContext";
+import type { ClipboardTextInputProps } from "./ClipboardText.types";
 
 const classes = {
-    root: "clipboard-input",
+    root: "clipboard-text-input",
 };
 
 // What is about to be copied, shown so that a reader can see what they are taking before they
@@ -17,8 +17,8 @@ const classes = {
 //
 // A field standing in a FormControl is wired into it, so the name above it and the hint below it
 // belong to this input rather than to nothing at all
-function ClipboardInput(
-    props: ClipboardInputProps,
+function ClipboardTextInput(
+    props: ClipboardTextInputProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -27,7 +27,7 @@ function ClipboardInput(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { required: _required, ...inputProps } = useFormControlForwardedProps(props);
     const { className, id, disabled, onFocus, ...rest } = inputProps;
-    const { value, inputId, disabled: isDisabled } = React.useContext(ClipboardContext);
+    const { value, inputId, disabled: isDisabled } = React.useContext(ClipboardTextContext);
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         onFocus?.(event);
@@ -52,12 +52,12 @@ function ClipboardInput(
             className={classNames(classes.root, className)}
             // The field around it stays a TextInput, which is what it is; this names the part
             // the clipboard field itself contributes
-            data-component="Clipboard.Input"
+            data-component="ClipboardText.Input"
             {...rest}
         />
     );
 }
 
-ClipboardInput.displayName = "Clipboard.Input";
+ClipboardTextInput.displayName = "ClipboardText.Input";
 
-export default fixedForwardRef(ClipboardInput);
+export default fixedForwardRef(ClipboardTextInput);

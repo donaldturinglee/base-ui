@@ -2,12 +2,12 @@ import * as React from "react";
 import { useId } from "../../hooks/useId";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import { ClipboardContext } from "./ClipboardContext";
+import { ClipboardTextContext } from "./ClipboardTextContext";
 import { copyText } from "./copyText";
-import type { ClipboardElementProps, ClipboardProps } from "./Clipboard.types";
+import type { ClipboardTextElementProps, ClipboardTextProps } from "./ClipboardText.types";
 
 const classes = {
-    root: "clipboard",
+    root: "clipboard-text",
     hidden: "sr-only",
 };
 
@@ -19,10 +19,10 @@ const DEFAULT_TIMEOUT = 2000;
 // A value laid out to be taken away: something showing what will be copied, and something to
 // press to copy it.
 //
-//     <Clipboard value={url}>
-//         <Clipboard.Input />
-//         <Clipboard.Trigger />
-//     </Clipboard>
+//     <ClipboardText value={url}>
+//         <ClipboardText.Input />
+//         <ClipboardText.Trigger />
+//     </ClipboardText>
 //
 // The value is named here rather than on the parts, so the field and the trigger cannot drift
 // apart, and so a value with nowhere to show it can still be copied from a trigger standing on
@@ -33,8 +33,8 @@ const DEFAULT_TIMEOUT = 2000;
 // as contradicting itself the moment it does. What has happened is said twice over instead, once
 // in the tick the indicator swaps to and once through the live region below, which is what a
 // reader who cannot see the tick is told
-function Clipboard<As extends React.ElementType = "div">(
-    props: ClipboardProps<As>,
+function ClipboardText<As extends React.ElementType = "div">(
+    props: ClipboardTextProps<As>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -49,7 +49,7 @@ function Clipboard<As extends React.ElementType = "div">(
         onCopyError,
         children,
         ...rest
-    } = props as unknown as ClipboardElementProps;
+    } = props as unknown as ClipboardTextElementProps;
 
     const inputId = useId();
 
@@ -97,11 +97,11 @@ function Clipboard<As extends React.ElementType = "div">(
     };
 
     return (
-        <ClipboardContext.Provider value={context}>
+        <ClipboardTextContext.Provider value={context}>
             <Component
                 ref={ref}
                 className={classNames(classes.root, className)}
-                data-component="Clipboard"
+                data-component="ClipboardText"
                 data-copied={isCopied}
                 data-disabled={Boolean(disabled)}
                 {...rest}
@@ -114,15 +114,15 @@ function Clipboard<As extends React.ElementType = "div">(
                     role="status"
                     aria-live="polite"
                     className={classes.hidden}
-                    data-component="Clipboard.Announcement"
+                    data-component="ClipboardText.Announcement"
                 >
                     {isCopied ? copiedAnnouncement : ""}
                 </span>
             </Component>
-        </ClipboardContext.Provider>
+        </ClipboardTextContext.Provider>
     );
 }
 
-Clipboard.displayName = "Clipboard";
+ClipboardText.displayName = "ClipboardText";
 
-export default fixedForwardRef(Clipboard);
+export default fixedForwardRef(ClipboardText);

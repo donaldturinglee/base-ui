@@ -3,12 +3,12 @@ import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
 import { Button } from "../button";
 import { IconButton } from "../icon-button";
-import { ClipboardContext } from "./ClipboardContext";
-import ClipboardIndicator from "./ClipboardIndicator";
-import type { ClipboardTriggerProps } from "./Clipboard.types";
+import { ClipboardTextContext } from "./ClipboardTextContext";
+import ClipboardTextIndicator from "./ClipboardTextIndicator";
+import type { ClipboardTextTriggerProps } from "./ClipboardText.types";
 
 const classes = {
-    root: "clipboard-trigger",
+    root: "clipboard-text-trigger",
 };
 
 // What puts the value on the clipboard. Given nothing to say it is drawn as an icon button, and
@@ -17,13 +17,13 @@ const classes = {
 // The name it carries says what pressing it does, and goes on saying it after the value has been
 // taken: pressing a copy button a second time copies a second time, and a button that renamed
 // itself for what it had just done would be offering something it does not do
-function ClipboardTrigger(
-    props: ClipboardTriggerProps,
+function ClipboardTextTrigger(
+    props: ClipboardTextTriggerProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
     const { className, children, label = "Copy", disabled, onClick, ...rest } = props;
-    const { copied, disabled: isDisabled, copy } = React.useContext(ClipboardContext);
+    const { copied, disabled: isDisabled, copy } = React.useContext(ClipboardTextContext);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         onClick?.(event);
@@ -40,22 +40,24 @@ function ClipboardTrigger(
         disabled: disabled ?? isDisabled,
         onClick: handleClick,
         className: classNames(classes.root, className),
-        "data-component": "Clipboard.Trigger",
+        "data-component": "ClipboardText.Trigger",
         "data-copied": Boolean(copied),
         ...rest,
     };
 
     if (children) {
         return (
-            <Button ref={ref} leadingVisual={<ClipboardIndicator />} {...shared}>
+            <Button ref={ref} leadingVisual={<ClipboardTextIndicator />} {...shared}>
                 {children}
             </Button>
         );
     }
 
-    return <IconButton ref={ref} icon={<ClipboardIndicator />} aria-label={label} {...shared} />;
+    return (
+        <IconButton ref={ref} icon={<ClipboardTextIndicator />} aria-label={label} {...shared} />
+    );
 }
 
-ClipboardTrigger.displayName = "Clipboard.Trigger";
+ClipboardTextTrigger.displayName = "ClipboardText.Trigger";
 
-export default fixedForwardRef(ClipboardTrigger);
+export default fixedForwardRef(ClipboardTextTrigger);
