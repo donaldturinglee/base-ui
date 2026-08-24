@@ -26,7 +26,6 @@ export * from "./chart";
 export * from "./checkbox";
 export * from "./checkbox-card";
 export * from "./checkbox-group";
-export * from "./clipboard-text";
 export * from "./code";
 export * from "./code-block";
 export * from "./collapsible";
