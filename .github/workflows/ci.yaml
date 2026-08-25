@@ -82,14 +82,34 @@ jobs:
       - name: Build
         run: npm run build
 
-      # The root of the repository is a private workspace root and is never published, so the
+      # The root of the repository is a private workspace root and is never published, so each
       # package that goes to npm is named rather than left to the working directory
-      - name: Publish
+      - name: Publish the React package
         if: ${{ github.event_name == 'release' || !inputs.dry-run }}
         run: npm publish --workspace @gamecrafters/base-ui --provenance --access public
+
+      # The MCP server carries its own version and is not bumped alongside the React package,
+      # so the registry is asked what it already holds. A release that left the server alone
+      # would otherwise be rejected here for sending a version that is already up there
+      - name: Check whether the MCP server has a version to publish
+        id: mcp
+        run: |
+          version="$(node -p "require('./packages/mcp/package.json').version")"
+          if npm view "@gamecrafters/base-ui-mcp@${version}" version > /dev/null 2>&1; then
+            echo "::notice::Version ${version} of the MCP server is already on npm, nothing to send"
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish the MCP server
+        if: ${{ steps.mcp.outputs.publish == 'true' && (github.event_name == 'release' || !inputs.dry-run) }}
+        run: npm publish --workspace @gamecrafters/base-ui-mcp --provenance --access public
 
       # A dry run does everything a publish does but the upload, so the workflow can be tried
       # out before a release depends on it
       - name: List what a publish would send
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
-        run: npm publish --workspace @gamecrafters/base-ui --dry-run
+        run: |
+          npm publish --workspace @gamecrafters/base-ui --dry-run
+          npm publish --workspace @gamecrafters/base-ui-mcp --dry-run
