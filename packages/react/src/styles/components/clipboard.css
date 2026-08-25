@@ -1,0 +1,84 @@
+@layer components {
+    /* Reading down: the name, then the value and the button that takes it away. The row itself
+       belongs to the control, so a clipboard given no name is laid out no differently */
+    .clipboard {
+        display: flex;
+        flex-direction: column;
+        gap: var(--base-size-4);
+    }
+
+    /* A name standing over the value it belongs to, set the way every other field's name is */
+    .clipboard-label {
+        display: block;
+        align-self: flex-start;
+        cursor: pointer;
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .clipboard-label-disabled {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+    }
+
+    /* What is about to be copied, read across: the value, and the button that takes it. The parts
+       are only ever a value and a trigger or two, so they are set in a row rather than given a
+       grid to stand in */
+    .clipboard-control {
+        display: flex;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* The field takes whatever room the triggers beside it leave. `min-width: 0` goes with that:
+       without it a long value would hold the field open past the row it stands in */
+    .clipboard-input {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    /* A value shown as text is held to one line and cut where it runs past the row: it is there
+       to be recognised rather than read to the end, and the whole of it goes to the clipboard
+       however much of it is drawn */
+    .clipboard-value-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        color: var(--foreground-color-muted);
+        font-family: var(--font-stack-monospace);
+        font-size: var(--text-body-size-small);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* The trigger keeps the width it had before it was pressed, so swapping the sheets for a tick
+       does not shift the value beside it */
+    .clipboard-trigger {
+        flex: none;
+    }
+
+    .clipboard-indicator {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* The words change under the reader's finger, so they are held to one line: a trigger that
+       reflowed as it was pressed would move out from under the press that changed it */
+    .clipboard-copy-text {
+        white-space: nowrap;
+    }
+
+    /* The tick is the only thing on the page that says the value was taken, so it is coloured
+       rather than left to read as another icon that happens to have changed shape. The colour is
+       eased in, since the swap is a report rather than a movement and lands better arriving than
+       cutting */
+    .clipboard-indicator-copied {
+        color: var(--foreground-color-success);
+        transition: color var(--motion-transition-enter);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+}
