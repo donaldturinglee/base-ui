@@ -131,7 +131,6 @@ const sections: SidebarSection[] = [
             { label: "Status", href: "/components/status" },
             { label: "Steps", href: "/components/steps" },
             { label: "Swap", href: "/components/swap" },
-            { label: "Table of Contents", href: "/components/table-of-contents" },
             { label: "Tabs", href: "/components/tabs" },
             { label: "Text", href: "/components/text" },
             { label: "Text Input", href: "/components/text-input" },
