@@ -1,401 +1,422 @@
 import * as React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { Marquee } from ".";
-import { useMarquee } from "./useMarquee";
-import type { MarqueeProps, MarqueeSide, MarqueeSpacing, MarqueeSpeed } from "./Marquee.types";
+import { Marquee, useMarquee } from ".";
+import type { MarqueeProps, UseMarqueeProps } from "./Marquee.types";
 
 const originalResizeObserver = window.ResizeObserver;
+const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "offsetWidth");
 
-// Everything jsdom measures is zero, so the run and the copy inside it are given sizes of their
-// own. They are told apart by the class each carries. Height follows width unless the two are
-// given apart, which is how the axis a run was measured by is told
-const measureAs = (
-    rootWidth: number,
-    groupWidth: number,
-    rootHeight = rootWidth,
-    groupHeight = groupWidth,
-) => {
-    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (
-        this: Element,
-    ) {
-        const isGroup = this.classList.contains("marquee-group");
-        const width = isGroup ? groupWidth : rootWidth;
-        const height = isGroup ? groupHeight : rootHeight;
+// jsdom lays nothing out, so a run has no length to be timed by and no window to be drawn out to
+// fill. Both are stood in here, and each part is given the size the part it is standing for
+// would have had
+const setSizes = ({ viewport, copy }: { viewport: number; copy: number }) => {
+    Object.defineProperty(HTMLElement.prototype, "clientWidth", {
+        configurable: true,
+        get(this: HTMLElement) {
+            return this.dataset.component === "Marquee.Viewport" ? viewport : 0;
+        },
+    });
 
-        return {
-            width,
-            height,
-            top: 0,
-            left: 0,
-            right: width,
-            bottom: height,
-            x: 0,
-            y: 0,
-            toJSON: () => ({}),
-        } as DOMRect;
+    Object.defineProperty(HTMLElement.prototype, "offsetWidth", {
+        configurable: true,
+        get(this: HTMLElement) {
+            return this.dataset.component === "Marquee.Content" ? copy : 0;
+        },
     });
 };
 
-const renderMarquee = (props: Partial<MarqueeProps> = {}) =>
-    render(
-        <Marquee data-testid="marquee" {...props}>
-            <span>Item</span>
-        </Marquee>,
-    );
+type TestProps = Partial<MarqueeProps> & Partial<Record<`data-${string}`, string>>;
 
-const root = () => screen.getByTestId("marquee");
+const marquee = (props: TestProps = {}) => (
+    <Marquee {...props}>
+        <span>Apple</span>
+        <span>Banana</span>
+    </Marquee>
+);
 
-const groups = () => Array.from(root().querySelectorAll("[data-component='Marquee.Group']"));
+const root = () => document.querySelector('[data-component="Marquee"]') as HTMLElement;
+
+const viewport = () => document.querySelector('[data-component="Marquee.Viewport"]');
+
+const copies = () =>
+    Array.from(document.querySelectorAll<HTMLElement>('[data-component="Marquee.Content"]'));
+
+const edges = () =>
+    Array.from(document.querySelectorAll<HTMLElement>('[data-component="Marquee.Edge"]'));
+
+const variable = (name: string) => root().style.getPropertyValue(name);
+
+beforeEach(() => {
+    // jsdom has no ResizeObserver, and a run watches both its window and itself so it can be
+    // timed again as either changes
+    window.ResizeObserver = class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+    } as unknown as typeof ResizeObserver;
+});
+
+afterEach(() => {
+    window.ResizeObserver = originalResizeObserver;
+
+    if (originalOffsetWidth) {
+        Object.defineProperty(HTMLElement.prototype, "offsetWidth", originalOffsetWidth);
+    }
+
+    Reflect.deleteProperty(HTMLElement.prototype, "clientWidth");
+});
 
 describe("Marquee", () => {
-    // jsdom has no ResizeObserver, and the run watches its own size so it can be measured again
-    // as it grows
-    beforeEach(() => {
-        window.ResizeObserver = class {
-            observe() {}
-            unobserve() {}
-            disconnect() {}
-        } as unknown as typeof ResizeObserver;
+    it("renders a plain box by default", () => {
+        render(marquee());
+        expect(root().tagName).toBe("DIV");
     });
 
-    afterEach(() => {
-        vi.restoreAllMocks();
-        window.ResizeObserver = originalResizeObserver;
+    it("renders as whatever it is told to", () => {
+        render(
+            <Marquee as="section">
+                <span>Apple</span>
+            </Marquee>,
+        );
+        expect(root().tagName).toBe("SECTION");
     });
 
-    it("tags the root element with a data-component attribute", () => {
-        renderMarquee();
-        expect(root()).toHaveAttribute("data-component", "Marquee");
+    it("tags the marquee and its parts with data-component attributes", () => {
+        render(marquee({ edges: true }));
+
+        expect(root()).toBeInTheDocument();
+        expect(viewport()).toBeInTheDocument();
+        expect(copies()).toHaveLength(2);
+        expect(edges()).toHaveLength(2);
     });
 
-    it("draws the content it is given", () => {
-        renderMarquee();
-        expect(screen.getAllByText("Item").length).toBeGreaterThan(0);
+    it("lets the caller name the root element something else", () => {
+        render(marquee({ "data-component": "SponsorMarquee" }));
+        expect(document.querySelector('[data-component="SponsorMarquee"]')).toBeInTheDocument();
     });
 
-    it("stands the content on a track of its own", () => {
-        renderMarquee();
-
-        const track = root().firstElementChild;
-        expect(track).toHaveClass("marquee-track");
-        expect(track?.children.length).toBe(groups().length);
+    it("keeps the class it was given alongside its own", () => {
+        render(marquee({ className: "sponsors" }));
+        expect(root()).toHaveClass("marquee", "sponsors");
     });
 
-    describe("the copies the loop is made of", () => {
-        it("makes at least two, since one cannot follow itself", () => {
-            renderMarquee();
-            expect(groups().length).toBeGreaterThanOrEqual(2);
-        });
+    it("reads across towards the start of the line by default", () => {
+        render(marquee());
 
-        it("makes enough to fill the run and one more to come round behind them", () => {
-            measureAs(600, 120);
-            renderMarquee();
-
-            // Five copies of 120 cover the 600 the run is wide, and a sixth follows them
-            expect(groups().length).toBe(6);
-        });
-
-        it("still makes two where the content is wider than the run", () => {
-            measureAs(100, 400);
-            renderMarquee();
-
-            expect(groups().length).toBe(2);
-        });
-
-        it("reads the content once rather than once for every copy", () => {
-            measureAs(600, 120);
-            renderMarquee();
-
-            const [first, ...rest] = groups();
-            expect(first).not.toHaveAttribute("aria-hidden");
-            rest.forEach((group) => {
-                expect(group).toHaveAttribute("aria-hidden", "true");
-            });
-        });
+        expect(root()).toHaveAttribute("data-orientation", "horizontal");
+        expect(root()).toHaveAttribute("data-side", "start");
     });
 
-    describe("how far and how fast it travels", () => {
-        it("travels the width of one copy, so the next stands where the last one was", () => {
-            measureAs(600, 120);
-            renderMarquee();
+    it("reads down where it is headed for the top or the bottom", () => {
+        render(marquee({ side: "bottom" }));
 
-            expect(root().style.getPropertyValue("--marquee-distance")).toBe("120px");
-        });
-
-        it("takes as long as that distance at the speed it was given", () => {
-            measureAs(600, 120);
-            renderMarquee({ speed: "medium" });
-
-            // 120 pixels at 60 a second
-            expect(root().style.getPropertyValue("--marquee-duration")).toBe("2s");
-        });
-
-        it("takes longer over the same distance at a slower speed", () => {
-            measureAs(600, 120);
-            renderMarquee({ speed: "slow" });
-
-            expect(root().style.getPropertyValue("--marquee-duration")).toBe("4s");
-        });
-
-        it("takes less over the same distance at a faster speed", () => {
-            measureAs(600, 120);
-            renderMarquee({ speed: "fast" });
-
-            expect(root().style.getPropertyValue("--marquee-duration")).toBe("1s");
-        });
-
-        it("records the speed it was asked for", () => {
-            renderMarquee({ speed: "fast" });
-            expect(root()).toHaveAttribute("data-speed", "fast");
-        });
+        expect(root()).toHaveAttribute("data-orientation", "vertical");
+        expect(root()).toHaveAttribute("data-side", "bottom");
     });
 
-    describe("which side it travels towards", () => {
-        it("travels towards the start of the line by default", () => {
-            renderMarquee();
+    it("sends the run the other way when it is told to", () => {
+        render(marquee({ reverse: true }));
+        expect(root()).toHaveAttribute("data-reverse", "true");
+    });
 
-            expect(root()).toHaveClass("marquee-inline");
-            expect(root()).not.toHaveClass("marquee-reversed");
-            expect(root()).toHaveAttribute("data-side", "start");
-            expect(root()).toHaveAttribute("data-axis", "inline");
+    it("fades the run out at either end when it is told to", () => {
+        render(marquee({ edges: true }));
+
+        expect(edges()[0]).toHaveAttribute("data-side", "start");
+        expect(edges()[1]).toHaveAttribute("data-side", "end");
+    });
+
+    it("fades a run that reads down out at the top and the bottom", () => {
+        render(marquee({ edges: true, side: "top" }));
+
+        expect(edges()[0]).toHaveAttribute("data-side", "top");
+        expect(edges()[1]).toHaveAttribute("data-side", "bottom");
+    });
+
+    describe("the copies the run stands in", () => {
+        it("lays the run out twice, so that one copy follows the other", () => {
+            render(marquee());
+
+            expect(copies()).toHaveLength(2);
+            expect(screen.getAllByText("Apple")).toHaveLength(2);
         });
 
-        it("runs the same travel backwards to reach the end of the line", () => {
-            renderMarquee({ side: "end" });
+        it("reads the first copy and no other", () => {
+            render(marquee());
 
-            expect(root()).toHaveClass("marquee-inline", "marquee-reversed");
-            expect(root()).toHaveAttribute("data-side", "end");
-            expect(root()).toHaveAttribute("data-axis", "inline");
+            expect(copies()[0]).not.toHaveAttribute("aria-hidden");
+            expect(copies()[0]).not.toHaveAttribute("inert");
+
+            expect(copies()[1]).toHaveAttribute("aria-hidden", "true");
+            expect(copies()[1]).toHaveAttribute("inert");
         });
 
-        it("lays itself out down the page to travel to the top", () => {
-            renderMarquee({ side: "top" });
+        it("draws out as many copies as the window takes when it is asked to fill it", () => {
+            setSizes({ viewport: 300, copy: 100 });
+            render(marquee({ autoFill: true }));
 
-            expect(root()).toHaveClass("marquee-block");
-            expect(root()).not.toHaveClass("marquee-reversed");
-            expect(root()).toHaveAttribute("data-side", "top");
-            expect(root()).toHaveAttribute("data-axis", "block");
+            expect(copies()).toHaveLength(4);
         });
 
-        it("runs that travel backwards to reach the bottom", () => {
-            renderMarquee({ side: "bottom" });
+        it("stands in two copies where a run already fills the window", () => {
+            setSizes({ viewport: 100, copy: 400 });
+            render(marquee({ autoFill: true }));
 
-            expect(root()).toHaveClass("marquee-block", "marquee-reversed");
-            expect(root()).toHaveAttribute("data-side", "bottom");
-            expect(root()).toHaveAttribute("data-axis", "block");
+            expect(copies()).toHaveLength(2);
         });
 
-        it("is measured along the line where it travels along the line", () => {
-            // The run is 600 by 300 and a copy of it 120 by 60
-            measureAs(600, 120, 300, 60);
-            renderMarquee({ side: "start" });
+        it("leaves a run that was not asked to fill the window in two copies", () => {
+            setSizes({ viewport: 300, copy: 100 });
+            render(marquee());
 
-            expect(root().style.getPropertyValue("--marquee-distance")).toBe("120px");
-            expect(groups().length).toBe(6);
-        });
-
-        it("is measured down the page where it travels down the page", () => {
-            measureAs(600, 120, 300, 60);
-            renderMarquee({ side: "top" });
-
-            expect(root().style.getPropertyValue("--marquee-distance")).toBe("60px");
-            expect(groups().length).toBe(6);
+            expect(copies()).toHaveLength(2);
         });
     });
 
-    describe("the room between the items", () => {
-        const spacings: MarqueeSpacing[] = [
-            "none",
-            "tight",
-            "condensed",
-            "cozy",
-            "normal",
-            "spacious",
-        ];
+    describe("timing the run", () => {
+        it("times a copy by how long it is and how fast it was asked to travel", () => {
+            setSizes({ viewport: 300, copy: 200 });
+            render(marquee({ speed: 50 }));
 
-        it.each(spacings)("leaves %s room where it is asked for", (spacing) => {
-            renderMarquee({ spacing });
-
-            expect(root()).toHaveClass(`marquee-spacing-${spacing}`);
-            expect(root()).toHaveAttribute("data-spacing", spacing);
+            expect(variable("--marquee-duration")).toBe("4s");
         });
 
-        it("leaves the spacing to the stylesheet where it is given none", () => {
-            renderMarquee();
+        it("takes longer over a longer run at the same speed", () => {
+            setSizes({ viewport: 300, copy: 400 });
+            render(marquee({ speed: 50 }));
 
-            // Nothing is written onto the run, so it falls back to the room a Stack leaves
-            spacings.forEach((spacing) => {
-                expect(root()).not.toHaveClass(`marquee-spacing-${spacing}`);
-            });
-            expect(root()).not.toHaveAttribute("data-spacing");
+            expect(variable("--marquee-duration")).toBe("8s");
         });
 
-        it("spaces the copies apart by the same room it spaces the items by", () => {
-            renderMarquee({ spacing: "spacious" });
+        it("leaves the run standing until there is something to time it by", () => {
+            render(marquee());
 
-            // The room a copy leaves for the next one is carried by the copy itself, so both
-            // are settled by the one class on the run
-            expect(root()).toHaveClass("marquee-spacing-spacious");
-            expect(groups()[0]).toHaveClass("marquee-group");
+            expect(root()).not.toHaveAttribute("data-running");
+            expect(variable("--marquee-duration")).toBe("0s");
+        });
+
+        it("sets the run going once it has been measured", () => {
+            setSizes({ viewport: 300, copy: 200 });
+            render(marquee());
+
+            expect(root()).toHaveAttribute("data-running", "true");
+        });
+
+        it("goes round for good where it was given no number of times", () => {
+            render(marquee());
+            expect(variable("--marquee-loop-count")).toBe("infinite");
+        });
+
+        it("writes the delay and the number of times round onto the run", () => {
+            render(marquee({ delay: 1500, loopCount: 3 }));
+
+            expect(variable("--marquee-delay")).toBe("1500ms");
+            expect(variable("--marquee-loop-count")).toBe("3");
+        });
+
+        it("takes a gap of its own between one thing and the next", () => {
+            render(marquee({ spacing: "3rem" }));
+            expect(variable("--marquee-spacing")).toBe("3rem");
+        });
+
+        it("leaves the gap to the stylesheet where it was given none", () => {
+            render(marquee());
+            expect(variable("--marquee-spacing")).toBe("");
+        });
+
+        it("keeps whatever else the caller wrote onto the box", () => {
+            render(marquee({ style: { width: "400px" } }));
+            expect(root()).toHaveStyle({ width: "400px" });
         });
     });
 
-    describe("holding it still", () => {
-        it("stops for the pointer by default", () => {
-            renderMarquee();
-            expect(root()).toHaveClass("marquee-pause-on-hover");
+    describe("holding the run", () => {
+        it("goes as soon as it is drawn", () => {
+            render(marquee());
+            expect(root()).not.toHaveAttribute("data-paused");
         });
 
-        it("keeps going under the pointer where it is told to", () => {
-            renderMarquee({ pauseOnHover: false });
-            expect(root()).not.toHaveClass("marquee-pause-on-hover");
+        it("holds still while a pointer is on it", () => {
+            render(marquee());
+
+            fireEvent.mouseEnter(root());
+            expect(root()).toHaveAttribute("data-paused", "true");
+
+            fireEvent.mouseLeave(root());
+            expect(root()).not.toHaveAttribute("data-paused");
         });
 
-        it("stands still where the caller is holding it", () => {
-            renderMarquee({ paused: true });
+        it("holds still while something inside it has focus", () => {
+            render(marquee());
 
-            expect(root()).toHaveClass("marquee-paused");
+            fireEvent.focusIn(screen.getAllByText("Apple")[0]);
             expect(root()).toHaveAttribute("data-paused", "true");
         });
 
-        it("travels while the caller is not", () => {
-            renderMarquee();
+        it("keeps holding while focus moves from one thing in the run to another", () => {
+            render(marquee());
 
-            expect(root()).not.toHaveClass("marquee-paused");
-            expect(root()).toHaveAttribute("data-paused", "false");
+            fireEvent.focusIn(screen.getAllByText("Apple")[0]);
+            fireEvent.focusOut(screen.getAllByText("Apple")[0], {
+                relatedTarget: screen.getAllByText("Banana")[0],
+            });
+
+            expect(root()).toHaveAttribute("data-paused", "true");
+        });
+
+        it("lets go once focus has left it altogether", () => {
+            render(marquee());
+
+            fireEvent.focusIn(screen.getAllByText("Apple")[0]);
+            fireEvent.focusOut(screen.getAllByText("Apple")[0], { relatedTarget: document.body });
+
+            expect(root()).not.toHaveAttribute("data-paused");
+        });
+
+        it("leaves the run going where it was told not to hold", () => {
+            render(marquee({ pauseOnInteraction: false }));
+
+            fireEvent.mouseEnter(root());
+            expect(root()).not.toHaveAttribute("data-paused");
+        });
+
+        it("still tells the caller about the pointer it was handed", () => {
+            const onMouseEnter = vi.fn();
+            render(marquee({ onMouseEnter }));
+
+            fireEvent.mouseEnter(root());
+            expect(onMouseEnter).toHaveBeenCalledTimes(1);
+        });
+
+        it("starts out held where it is told to", () => {
+            render(marquee({ defaultPaused: true }));
+            expect(root()).toHaveAttribute("data-paused", "true");
+        });
+
+        it("takes the state from the caller where the caller keeps hold of it", () => {
+            const { rerender } = render(marquee({ paused: true }));
+            expect(root()).toHaveAttribute("data-paused", "true");
+
+            rerender(marquee({ paused: false }));
+            expect(root()).not.toHaveAttribute("data-paused");
+        });
+
+        it("leaves a run the caller is holding alone while a pointer rests on it", () => {
+            const onPauseChange = vi.fn();
+            render(marquee({ paused: false, onPauseChange }));
+
+            fireEvent.mouseEnter(root());
+
+            expect(root()).toHaveAttribute("data-paused", "true");
+            expect(onPauseChange).not.toHaveBeenCalled();
         });
     });
 
-    it("forwards a ref to the root element", () => {
-        const ref = React.createRef<HTMLDivElement>();
+    describe("reporting the run", () => {
+        it("reports each time the run comes round", () => {
+            const onLoopComplete = vi.fn();
+            render(marquee({ onLoopComplete }));
 
-        render(
-            <Marquee ref={ref} data-testid="marquee">
-                <span>Item</span>
-            </Marquee>,
-        );
+            fireEvent.animationIteration(copies()[0]);
+            fireEvent.animationIteration(copies()[0]);
 
-        expect(ref.current).toBe(root());
-    });
+            expect(onLoopComplete).toHaveBeenNthCalledWith(1, 1);
+            expect(onLoopComplete).toHaveBeenNthCalledWith(2, 2);
+        });
 
-    it("merges a custom className onto the root element", () => {
-        renderMarquee({ className: "custom" });
-        expect(root()).toHaveClass("marquee", "custom");
-    });
+        it("reports the last time round and that the run has finished", () => {
+            const onLoopComplete = vi.fn();
+            const onComplete = vi.fn();
+            render(marquee({ loopCount: 1, onLoopComplete, onComplete }));
 
-    it("keeps a style of the caller's own alongside what the loop is worked from", () => {
-        measureAs(600, 120);
-        renderMarquee({ style: { opacity: 0.5 } });
+            fireEvent.animationEnd(copies()[0]);
 
-        expect(root().style.opacity).toBe("0.5");
-        expect(root().style.getPropertyValue("--marquee-distance")).toBe("120px");
+            expect(onLoopComplete).toHaveBeenCalledWith(1);
+            expect(onComplete).toHaveBeenCalledTimes(1);
+        });
+
+        it("counts the first copy alone, so a run is not reported once for each of them", () => {
+            const onLoopComplete = vi.fn();
+            render(marquee({ onLoopComplete }));
+
+            fireEvent.animationIteration(copies()[1]);
+
+            expect(onLoopComplete).not.toHaveBeenCalled();
+        });
+
+        it("leaves an animation of something in the run out of the count", () => {
+            const onLoopComplete = vi.fn();
+            render(marquee({ onLoopComplete }));
+
+            fireEvent.animationIteration(screen.getAllByText("Apple")[0]);
+
+            expect(onLoopComplete).not.toHaveBeenCalled();
+        });
     });
 });
 
-// The hook is handed out on its own, so it is exercised on its own: a run laid out by hand
-// rather than by the component should still be worked out the same way
 describe("useMarquee", () => {
-    const CustomMarquee = ({ speed, side }: { speed?: MarqueeSpeed; side?: MarqueeSide }) => {
-        const { rootRef, groupRef, axis, copies, distance, duration, style } = useMarquee({
-            speed,
-            side,
-        });
+    const Store = (props: UseMarqueeProps) => {
+        const store = useMarquee(props);
 
         return (
-            <div
-                ref={rootRef}
-                style={style}
-                data-testid="custom"
-                data-axis={axis}
-                data-copies={copies}
-                data-distance={distance}
-                data-duration={duration}
-            >
-                {Array.from({ length: copies }, (_, index) => (
-                    <div
-                        key={index}
-                        ref={index === 0 ? groupRef : undefined}
-                        className="marquee-group"
-                    >
-                        Item
-                    </div>
-                ))}
-            </div>
+            <>
+                <button type="button" onClick={store.toggle}>
+                    {store.paused ? "Play" : "Pause"}
+                </button>
+                <button type="button" onClick={store.pause}>
+                    Hold
+                </button>
+                <button type="button" onClick={store.resume}>
+                    Let go
+                </button>
+            </>
         );
     };
 
-    const custom = () => screen.getByTestId("custom");
+    const toggle = () => screen.getByRole("button", { name: /Play|Pause/ });
 
-    beforeEach(() => {
-        window.ResizeObserver = class {
-            observe() {}
-            unobserve() {}
-            disconnect() {}
-        } as unknown as typeof ResizeObserver;
+    const hold = () => screen.getByRole("button", { name: "Hold" });
+
+    it("starts the run going", () => {
+        render(<Store />);
+        expect(toggle()).toHaveTextContent("Pause");
     });
 
-    afterEach(() => {
-        vi.restoreAllMocks();
-        window.ResizeObserver = originalResizeObserver;
+    it("holds the run and lets it go again", () => {
+        render(<Store />);
+
+        fireEvent.click(toggle());
+        expect(toggle()).toHaveTextContent("Play");
+
+        fireEvent.click(toggle());
+        expect(toggle()).toHaveTextContent("Pause");
     });
 
-    it("measures how far the track has to travel", () => {
-        measureAs(600, 120);
-        render(<CustomMarquee />);
-
-        expect(custom()).toHaveAttribute("data-distance", "120");
+    it("starts out held where it is told to", () => {
+        render(<Store defaultPaused />);
+        expect(toggle()).toHaveTextContent("Play");
     });
 
-    it("works out how long that takes at the speed it was given", () => {
-        measureAs(600, 120);
-        render(<CustomMarquee speed="fast" />);
+    it("leaves the state to the caller where the caller keeps hold of it", () => {
+        const onPauseChange = vi.fn();
+        render(<Store paused={false} onPauseChange={onPauseChange} />);
 
-        // 120 pixels at 120 a second
-        expect(custom()).toHaveAttribute("data-duration", "1");
+        fireEvent.click(toggle());
+
+        // The caller holds the state, so nothing has moved here until they say it has
+        expect(toggle()).toHaveTextContent("Pause");
+        expect(onPauseChange).toHaveBeenCalledWith(true);
     });
 
-    it("works out how many copies it takes to keep the run from emptying", () => {
-        measureAs(600, 120);
-        render(<CustomMarquee />);
+    it("says nothing where the run is already where it is being put", () => {
+        const onPauseChange = vi.fn();
+        render(<Store defaultPaused onPauseChange={onPauseChange} />);
 
-        expect(custom()).toHaveAttribute("data-copies", "6");
-    });
+        fireEvent.click(hold());
 
-    it("hands both measurements over as custom properties, ready to go on the run", () => {
-        measureAs(600, 120);
-        render(<CustomMarquee />);
-
-        expect(custom().style.getPropertyValue("--marquee-distance")).toBe("120px");
-        expect(custom().style.getPropertyValue("--marquee-duration")).toBe("2s");
-    });
-
-    it("holds at the fewest copies a loop can be made of until it has been measured", () => {
-        render(<CustomMarquee />);
-
-        // Everything jsdom measures is zero, so there is nothing to work a copy count from
-        expect(custom()).toHaveAttribute("data-copies", "2");
-        expect(custom()).toHaveAttribute("data-distance", "0");
-    });
-
-    it.each([
-        ["start", "inline"],
-        ["end", "inline"],
-        ["top", "block"],
-        ["bottom", "block"],
-    ] as [MarqueeSide, string][])(
-        "lays a run travelling to the %s out along the %s axis",
-        (side, axis) => {
-            render(<CustomMarquee side={side} />);
-            expect(custom()).toHaveAttribute("data-axis", axis);
-        },
-    );
-
-    it("measures the axis it travels along rather than always the width", () => {
-        measureAs(600, 120, 300, 60);
-        render(<CustomMarquee side="bottom" />);
-
-        expect(custom()).toHaveAttribute("data-distance", "60");
+        expect(onPauseChange).not.toHaveBeenCalled();
     });
 });

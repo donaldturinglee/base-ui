@@ -1,155 +1,179 @@
 @layer components {
-    /* A run of content that travels across its own width and comes round again. How far it
-       travels and how long that takes are measured rather than written down here, because both
-       follow from how much content there is, and they arrive through custom properties */
+    /* The window the run is seen through, which is the marquee's own size. Everything standing
+       outside it is cut off rather than reflowed, so the run keeps its length whatever room it
+       is given */
     .marquee {
+        --marquee-spacing: var(--base-size-16);
+        --marquee-edge-size: 15%;
+        --marquee-edge-color: var(--background-color-default);
+
+        /* Which way a copy travels, as a sign rather than a direction, so that the same pair of
+           steps serves a run heading either way */
         --marquee-step: -1;
 
-        display: flex;
+        position: relative;
         overflow: hidden;
     }
 
-    /* Everything but which keyframes to run, since that is the one part of the travel that
-       depends on which way the run is laid out. The longhands are set rather than the shorthand,
-       which would clear the name the axis below goes on to set */
-    .marquee-track {
+    /* A run heading for the far end of the line or the bottom of the window travels the other
+       way from one heading for the near end or the top */
+    .marquee[data-side="end"],
+    .marquee[data-side="bottom"] {
+        --marquee-step: 1;
+    }
+
+    /* The two ends of the line are the reading direction's, so a run heading for the start goes
+       rightwards where the page is read right to left. The top and the bottom are the same
+       either way and are left alone */
+    .marquee[data-side="start"]:dir(rtl) {
+        --marquee-step: 1;
+    }
+
+    .marquee[data-side="end"]:dir(rtl) {
+        --marquee-step: -1;
+    }
+
+    .marquee-viewport {
         display: flex;
-        flex-shrink: 0;
-        animation-duration: var(--marquee-duration);
-        animation-timing-function: var(--motion-easing-linear);
-        animation-iteration-count: infinite;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
     }
 
-    /* The gap that follows a copy is carried by the copy itself rather than sitting between the
-       copies, so the distance the track travels is the size of one copy and nothing beside it
-       has to be measured to work the loop out */
-    .marquee-group {
-        /* Settled once here, so the room between the items and the room the next copy comes
-           round to are always the same, and so what a run falls back to where it has been given
-           no spacing of its own is written down in one place */
-        --marquee-group-gap: var(--marquee-gap, var(--stack-gap-normal));
-
-        display: flex;
-        flex-shrink: 0;
-        gap: var(--marquee-group-gap);
-    }
-
-    .marquee-spacing-none {
-        --marquee-gap: 0;
-    }
-
-    .marquee-spacing-tight {
-        --marquee-gap: var(--base-size-4);
-    }
-
-    .marquee-spacing-condensed {
-        --marquee-gap: var(--stack-gap-condensed);
-    }
-
-    .marquee-spacing-cozy {
-        --marquee-gap: var(--base-size-12);
-    }
-
-    .marquee-spacing-normal {
-        --marquee-gap: var(--stack-gap-normal);
-    }
-
-    .marquee-spacing-spacious {
-        --marquee-gap: var(--stack-gap-spacious);
-    }
-
-    /* A run travelling along the line is held back by the width of the page. Which way "the
-       start" lies is the reading direction's, so the run travels the way the page is read
-       rather than always leftwards */
-    .marquee-inline {
-        max-width: 100%;
-
-        &:dir(rtl) {
-            --marquee-step: 1;
-        }
-
-        & .marquee-track {
-            align-items: center;
-            animation-name: marquee-scroll-inline;
-        }
-
-        & .marquee-group {
-            align-items: center;
-            padding-inline-end: var(--marquee-group-gap);
-        }
-    }
-
-    /* A run travelling down the page is laid out in a column. Nothing holds a column back the
-       way the width of the page holds back a row, so one of these is only a run at all once it
-       has been given a height to be read through */
-    .marquee-block {
+    .marquee[data-orientation="vertical"] .marquee-viewport {
         flex-direction: column;
+    }
 
-        & .marquee-track {
-            flex-direction: column;
-            animation-name: marquee-scroll-block;
-        }
+    /* One copy of the run, held at its own length so that it is never squeezed to fit the
+       window it is standing in. A copy travels its own length and starts over, which is what
+       puts the copy behind it where it was and leaves the run without a seam to be seen */
+    .marquee-content {
+        display: flex;
+        flex: none;
+        align-items: center;
+        min-width: max-content;
+        animation-timing-function: linear;
+        animation-duration: var(--marquee-duration);
+        animation-delay: var(--marquee-delay);
+        animation-iteration-count: var(--marquee-loop-count);
+        animation-fill-mode: forwards;
 
-        & .marquee-group {
-            flex-direction: column;
-            padding-block-end: var(--marquee-group-gap);
+        /* A run travelling of its own accord is stood down for a reader who has asked for less
+           movement. The first copy still stands there to be read, and the rest are cut off by
+           the window as they always were */
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
         }
     }
 
-    /* Running the same travel backwards rather than describing it twice */
-    .marquee-reversed .marquee-track {
+    .marquee[data-orientation="vertical"] .marquee-content {
+        flex-direction: column;
+        min-width: 0;
+        min-height: max-content;
+    }
+
+    /* The gap between one thing in the run and the next is set on the things themselves rather
+       than on the copy holding them, so that the last thing in a copy is followed by the same
+       gap as everything else and the join between one copy and the next cannot be picked out */
+    .marquee[data-orientation="horizontal"] .marquee-content > * {
+        margin-inline-end: var(--marquee-spacing);
+    }
+
+    .marquee[data-orientation="vertical"] .marquee-content > * {
+        margin-block-end: var(--marquee-spacing);
+    }
+
+    /* The run sets off once the marquee has measured what it is carrying. Until then there is
+       no length to cross and no duration to cross it in, and a run given neither would be over
+       before it had been seen */
+    .marquee[data-running] .marquee-content {
+        animation-name: marquee-across;
+    }
+
+    .marquee[data-running][data-orientation="vertical"] .marquee-content {
+        animation-name: marquee-down;
+    }
+
+    /* Reversing plays the same steps backwards, so a run keeps the end it was named for and
+       arrives at it from the other side */
+    .marquee[data-reverse] .marquee-content {
         animation-direction: reverse;
     }
 
-    /* Held still while the pointer rests on it, and held still while anything inside it has
-       focus whether or not it stops for the pointer: a reader who has tabbed onto a link in the
-       run cannot follow it while it is travelling away from them */
-    .marquee-pause-on-hover:hover .marquee-track,
-    .marquee:focus-within .marquee-track,
-    .marquee-paused .marquee-track {
+    /* Held where it is rather than put back to the start, so that letting go of a run picks it
+       up from where the reader left it */
+    .marquee[data-paused] .marquee-content {
         animation-play-state: paused;
     }
 
-    @keyframes marquee-scroll-inline {
+    /* The run is faded out where it meets the edge of the window rather than cut off at it, so
+       that something on its way in or out is not simply there and then gone. The fade is drawn
+       over the run and takes no presses, since there is nothing there to press */
+    .marquee-edge {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .marquee-edge[data-side="start"],
+    .marquee-edge[data-side="end"] {
+        inset-block: 0;
+        width: var(--marquee-edge-size);
+    }
+
+    .marquee-edge[data-side="start"] {
+        inset-inline-start: 0;
+        background: linear-gradient(to right, var(--marquee-edge-color), transparent);
+
+        &:dir(rtl) {
+            background: linear-gradient(to left, var(--marquee-edge-color), transparent);
+        }
+    }
+
+    .marquee-edge[data-side="end"] {
+        inset-inline-end: 0;
+        background: linear-gradient(to left, var(--marquee-edge-color), transparent);
+
+        &:dir(rtl) {
+            background: linear-gradient(to right, var(--marquee-edge-color), transparent);
+        }
+    }
+
+    .marquee-edge[data-side="top"],
+    .marquee-edge[data-side="bottom"] {
+        inset-inline: 0;
+        height: var(--marquee-edge-size);
+    }
+
+    .marquee-edge[data-side="top"] {
+        top: 0;
+        background: linear-gradient(to bottom, var(--marquee-edge-color), transparent);
+    }
+
+    .marquee-edge[data-side="bottom"] {
+        bottom: 0;
+        background: linear-gradient(to top, var(--marquee-edge-color), transparent);
+    }
+
+    /* A copy crosses its own length and starts over. The length is the copy's own rather than a
+       measurement written onto it, so a run whose contents change is still unbroken */
+    @keyframes marquee-across {
         from {
             translate: 0 0;
         }
 
         to {
-            translate: calc(var(--marquee-step) * var(--marquee-distance)) 0;
+            translate: calc(var(--marquee-step) * 100%) 0;
         }
     }
 
-    @keyframes marquee-scroll-block {
+    @keyframes marquee-down {
         from {
             translate: 0 0;
         }
 
         to {
-            translate: 0 calc(var(--marquee-step) * var(--marquee-distance));
-        }
-    }
-
-    /* Content that travels on its own is content some readers cannot hold still. Where that has
-       been asked against, the run stands where it is and is scrolled by hand instead, and the
-       copies go with it: they were only ever there to keep the loop from emptying */
-    @media (prefers-reduced-motion: reduce) {
-        .marquee-inline {
-            overflow-x: auto;
-        }
-
-        .marquee-block {
-            overflow-y: auto;
-        }
-
-        /* Named through the run so that this carries the same weight as the rules that put the
-           keyframes on by axis, and comes after them */
-        .marquee .marquee-track {
-            animation-name: none;
-        }
-
-        .marquee-group[aria-hidden="true"] {
-            display: none;
+            translate: 0 calc(var(--marquee-step) * 100%);
         }
     }
 }
