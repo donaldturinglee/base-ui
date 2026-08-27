@@ -2,7 +2,7 @@ import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { Marquee, useMarquee } from ".";
+import { Marquee, useMarquee, useMarqueeContext } from ".";
 import type { MarqueeProps, UseMarqueeProps } from "./Marquee.types";
 
 const originalResizeObserver = window.ResizeObserver;
@@ -29,10 +29,19 @@ const setSizes = ({ viewport, copy }: { viewport: number; copy: number }) => {
 
 type TestProps = Partial<MarqueeProps> & Partial<Record<`data-${string}`, string>>;
 
-const marquee = (props: TestProps = {}) => (
+const run = (
+    <Marquee.Viewport>
+        <Marquee.Content>
+            <Marquee.Item>Apple</Marquee.Item>
+            <Marquee.Item>Banana</Marquee.Item>
+        </Marquee.Content>
+    </Marquee.Viewport>
+);
+
+const marquee = (props: TestProps = {}, extras?: React.ReactNode) => (
     <Marquee {...props}>
-        <span>Apple</span>
-        <span>Banana</span>
+        {run}
+        {extras}
     </Marquee>
 );
 
@@ -42,6 +51,9 @@ const viewport = () => document.querySelector('[data-component="Marquee.Viewport
 
 const copies = () =>
     Array.from(document.querySelectorAll<HTMLElement>('[data-component="Marquee.Content"]'));
+
+const items = () =>
+    Array.from(document.querySelectorAll<HTMLElement>('[data-component="Marquee.Item"]'));
 
 const edges = () =>
     Array.from(document.querySelectorAll<HTMLElement>('[data-component="Marquee.Edge"]'));
@@ -75,21 +87,17 @@ describe("Marquee", () => {
     });
 
     it("renders as whatever it is told to", () => {
-        render(
-            <Marquee as="section">
-                <span>Apple</span>
-            </Marquee>,
-        );
+        render(<Marquee as="section">{run}</Marquee>);
         expect(root().tagName).toBe("SECTION");
     });
 
     it("tags the marquee and its parts with data-component attributes", () => {
-        render(marquee({ edges: true }));
+        render(marquee());
 
         expect(root()).toBeInTheDocument();
         expect(viewport()).toBeInTheDocument();
         expect(copies()).toHaveLength(2);
-        expect(edges()).toHaveLength(2);
+        expect(items()).toHaveLength(4);
     });
 
     it("lets the caller name the root element something else", () => {
@@ -121,18 +129,67 @@ describe("Marquee", () => {
         expect(root()).toHaveAttribute("data-reverse", "true");
     });
 
-    it("fades the run out at either end when it is told to", () => {
-        render(marquee({ edges: true }));
+    describe("the parts the run is made of", () => {
+        it("gives every part a class of its own", () => {
+            render(marquee());
 
-        expect(edges()[0]).toHaveAttribute("data-side", "start");
-        expect(edges()[1]).toHaveAttribute("data-side", "end");
-    });
+            expect(viewport()).toHaveClass("marquee-viewport");
+            expect(copies()[0]).toHaveClass("marquee-content");
+            expect(items()[0]).toHaveClass("marquee-item");
+        });
 
-    it("fades a run that reads down out at the top and the bottom", () => {
-        render(marquee({ edges: true, side: "top" }));
+        it("lets a part be drawn as whatever it is told to", () => {
+            render(
+                <Marquee>
+                    <Marquee.Viewport as="section">
+                        <Marquee.Content as="ul">
+                            <Marquee.Item as="li">Apple</Marquee.Item>
+                        </Marquee.Content>
+                    </Marquee.Viewport>
+                </Marquee>,
+            );
 
-        expect(edges()[0]).toHaveAttribute("data-side", "top");
-        expect(edges()[1]).toHaveAttribute("data-side", "bottom");
+            expect(viewport()?.tagName).toBe("SECTION");
+            expect(copies()[0].tagName).toBe("UL");
+            expect(items()[0].tagName).toBe("LI");
+        });
+
+        it("draws a run standing outside a marquee the once", () => {
+            render(
+                <Marquee.Content>
+                    <Marquee.Item>Apple</Marquee.Item>
+                </Marquee.Content>,
+            );
+
+            expect(copies()).toHaveLength(1);
+            expect(screen.getAllByText("Apple")).toHaveLength(1);
+        });
+
+        it("fades the run out at whichever edge it is given", () => {
+            render(
+                <Marquee>
+                    <Marquee.Edge side="start" />
+                    {run}
+                    <Marquee.Edge side="end" />
+                </Marquee>,
+            );
+
+            expect(edges()).toHaveLength(2);
+            expect(edges()[0]).toHaveAttribute("data-side", "start");
+            expect(edges()[1]).toHaveAttribute("data-side", "end");
+        });
+
+        it("says nothing to a reader who cannot see the edge", () => {
+            render(
+                <Marquee>
+                    <Marquee.Edge side="top" />
+                    {run}
+                </Marquee>,
+            );
+
+            expect(edges()[0]).toHaveAttribute("aria-hidden", "true");
+            expect(edges()[0]).toHaveClass("marquee-edge");
+        });
     });
 
     describe("the copies the run stands in", () => {
@@ -312,6 +369,25 @@ describe("Marquee", () => {
             expect(root()).toHaveAttribute("data-paused", "true");
             expect(onPauseChange).not.toHaveBeenCalled();
         });
+
+        it("hands a control standing among the parts the run to hold", () => {
+            const PauseButton = () => {
+                const { paused, toggle } = useMarqueeContext();
+
+                return (
+                    <button type="button" onClick={toggle}>
+                        {paused ? "Play" : "Pause"}
+                    </button>
+                );
+            };
+
+            render(marquee({ pauseOnInteraction: false }, <PauseButton />));
+
+            fireEvent.click(screen.getByRole("button"));
+
+            expect(root()).toHaveAttribute("data-paused", "true");
+            expect(screen.getByRole("button")).toHaveTextContent("Play");
+        });
     });
 
     describe("reporting the run", () => {
@@ -350,7 +426,7 @@ describe("Marquee", () => {
             const onLoopComplete = vi.fn();
             render(marquee({ onLoopComplete }));
 
-            fireEvent.animationIteration(screen.getAllByText("Apple")[0]);
+            fireEvent.animationIteration(items()[0]);
 
             expect(onLoopComplete).not.toHaveBeenCalled();
         });

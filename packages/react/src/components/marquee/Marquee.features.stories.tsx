@@ -26,10 +26,10 @@ const fruits = [
 
 const toItems = (list: typeof fruits) =>
     list.map((fruit) => (
-        <span key={fruit.name} className={classes.item}>
+        <Marquee.Item key={fruit.name} className={classes.item}>
             <span className={classes.logo}>{fruit.logo}</span>
             {fruit.name}
-        </span>
+        </Marquee.Item>
     ));
 
 const items = toItems(fruits);
@@ -44,15 +44,28 @@ export default {
 // The Other Way Along The Line, for a second run set under the first that reads against it
 export const Reverse: StoryFn<typeof Marquee> = () => (
     <div className={classes.stack}>
-        <Marquee>{items}</Marquee>
-        <Marquee reverse>{items}</Marquee>
+        <Marquee>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
+
+        <Marquee reverse>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
 // Reading Down Rather Than Across, which is named for the edge the run heads towards
 export const Vertical: StoryFn<typeof Marquee> = () => (
     <div className={classes.column}>
-        <Marquee side="bottom">{items}</Marquee>
+        <Marquee side="bottom">
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
@@ -60,8 +73,17 @@ export const Vertical: StoryFn<typeof Marquee> = () => (
 // than going by faster
 export const Speed: StoryFn<typeof Marquee> = () => (
     <div className={classes.stack}>
-        <Marquee speed={20}>{items}</Marquee>
-        <Marquee speed={120}>{items}</Marquee>
+        <Marquee speed={20}>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
+
+        <Marquee speed={120}>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
@@ -69,21 +91,36 @@ export const Speed: StoryFn<typeof Marquee> = () => (
 // Without this the run travels with a gap behind it
 export const AutoFill: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee autoFill>{toItems(fruits.slice(0, 2))}</Marquee>
+        <Marquee autoFill>
+            <Marquee.Viewport>
+                <Marquee.Content>{toItems(fruits.slice(0, 2))}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
 // With A Gap Of Its Own between one thing and the next
 export const Spacing: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee spacing="var(--base-size-48)">{items}</Marquee>
+        <Marquee spacing="var(--base-size-48)">
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
-// Faded Out At Either End, so that something on its way in or out is not simply there and gone
+// Faded Out At Either End, so that something on its way in or out is not simply there and gone.
+// The edges are placed by hand, so a run can be faded at one end alone
 export const Edges: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee edges>{items}</Marquee>
+        <Marquee>
+            <Marquee.Edge side="start" />
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+            <Marquee.Edge side="end" />
+        </Marquee>
     </div>
 );
 
@@ -101,7 +138,9 @@ export const FiniteLoops: StoryFn<typeof Marquee> = () => {
                 onLoopComplete={setLoops}
                 onComplete={() => setIsDone(true)}
             >
-                {items}
+                <Marquee.Viewport>
+                    <Marquee.Content>{items}</Marquee.Content>
+                </Marquee.Viewport>
             </Marquee>
 
             <Text size="small">
@@ -114,7 +153,11 @@ export const FiniteLoops: StoryFn<typeof Marquee> = () => {
 // Waiting Before It Sets Off, for a run that is not the first thing a reader is meant to read
 export const Delay: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee delay={2000}>{items}</Marquee>
+        <Marquee delay={2000}>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
@@ -122,7 +165,11 @@ export const Delay: StoryFn<typeof Marquee> = () => (
 // on the way past
 export const WithoutPauseOnInteraction: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee pauseOnInteraction={false}>{items}</Marquee>
+        <Marquee pauseOnInteraction={false}>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
@@ -132,8 +179,12 @@ export const Controlled: StoryFn<typeof Marquee> = () => {
 
     return (
         <div className={classes.stack}>
-            <Marquee paused={marquee.paused} pauseOnInteraction={false} edges>
-                {items}
+            <Marquee paused={marquee.paused} pauseOnInteraction={false}>
+                <Marquee.Edge side="start" />
+                <Marquee.Viewport>
+                    <Marquee.Content>{items}</Marquee.Content>
+                </Marquee.Viewport>
+                <Marquee.Edge side="end" />
             </Marquee>
 
             <div className={classes.row}>
@@ -146,6 +197,10 @@ export const Controlled: StoryFn<typeof Marquee> = () => {
 // Starting Out Held, for a run that waits to be asked for
 export const DefaultPaused: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee defaultPaused>{items}</Marquee>
+        <Marquee defaultPaused>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );

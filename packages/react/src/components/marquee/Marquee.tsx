@@ -2,14 +2,12 @@ import * as React from "react";
 import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
+import { MarqueeContext } from "./MarqueeContext";
 import { useMarquee } from "./useMarquee";
 import type { MarqueeElementProps, MarqueeProps, MarqueeSide } from "./Marquee.types";
 
 const classes = {
     root: "marquee",
-    viewport: "marquee-viewport",
-    content: "marquee-content",
-    edge: "marquee-edge",
 };
 
 // How far the run travels in a second where the caller has not said. Slow enough that what goes
@@ -27,20 +25,26 @@ const isVertical = (side: MarqueeSide) => side === "top" || side === "bottom";
 // A run of things travelling past a window cut in the page: logos, headlines, anything short
 // enough to be taken in as it goes by.
 //
-//     <Marquee edges>
-//         {sponsors.map((sponsor) => (
-//             <Image key={sponsor.name} src={sponsor.logo} alt={sponsor.name} />
-//         ))}
+//     <Marquee>
+//         <Marquee.Edge side="start" />
+//         <Marquee.Viewport>
+//             <Marquee.Content>
+//                 {sponsors.map((sponsor) => (
+//                     <Marquee.Item key={sponsor.name}>{sponsor.name}</Marquee.Item>
+//                 ))}
+//             </Marquee.Content>
+//         </Marquee.Viewport>
+//         <Marquee.Edge side="end" />
 //     </Marquee>
 //
-// What it is given is laid out in copies, one behind the other, and each copy travels its own
-// length and starts over; a copy leaving the window is replaced by the one behind it, which is
-// what makes a run that has no end to reach. Only the first copy is read, since the rest are
-// there to keep the run going rather than to say anything a reader has not already been told.
+// The marquee itself draws nothing but the ground the parts stand on. It is where the run is
+// named, timed and held, since every one of those is the run's rather than any one part's, and
+// the parts read what they need of it from here rather than being handed it again by the caller.
 //
 // The run is given a speed rather than a duration, so what it holds can change without it
-// travelling any faster or slower, and it is measured rather than guessed at: a run is timed by
-// how long it is, and drawn out to as many copies as the window in front of it takes
+// travelling any faster or slower, and it is measured rather than guessed at: the window and one
+// copy of the run hand back what they came out as, and between them they say how long the run
+// takes to go by and how many copies it takes to leave no gap behind it
 function Marquee<As extends React.ElementType = "div">(
     props: MarqueeProps<As>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,7 +63,6 @@ function Marquee<As extends React.ElementType = "div">(
         paused,
         defaultPaused,
         pauseOnInteraction = true,
-        edges = false,
         onPauseChange,
         onLoopComplete,
         onComplete,
@@ -71,12 +74,12 @@ function Marquee<As extends React.ElementType = "div">(
 
     const vertical = isVertical(side);
 
-    const viewportRef = React.useRef<HTMLDivElement>(null);
-    const copyRef = React.useRef<HTMLDivElement>(null);
+    const viewportRef = React.useRef<HTMLElement>(null);
+    const copyRef = React.useRef<HTMLElement>(null);
 
-    // The window and one copy of the run, which between them say how long the run takes to go
-    // by and how many copies it stands in. Both are watched rather than measured the once,
-    // since either can change under a run that is already going
+    // What the window and one copy of the run came out as. The parts hand their elements back
+    // through the context, and both are watched rather than measured the once, since either can
+    // change under a run that is already going
     const [viewportSize, setViewportSize] = React.useState(0);
     const [copySize, setCopySize] = React.useState(0);
 
@@ -124,35 +127,6 @@ function Marquee<As extends React.ElementType = "div">(
     // How long one copy takes to cross its own length at the speed asked for
     const duration = copySize > 0 && speed > 0 ? copySize / speed : 0;
 
-    // The run reports each time it comes round, and once more where it was given a number of
-    // times to go round and has finished the last of them. The times are counted here rather
-    // than read off the animation, which starts over the moment anything about it changes
-    const loops = React.useRef(0);
-
-    // Something in the run with an animation of its own reaches the copy on its way up the
-    // page, and is not the run coming round
-    const isOwnAnimation = (event: React.AnimationEvent<HTMLElement>) =>
-        event.target === event.currentTarget;
-
-    const handleAnimationIteration = (event: React.AnimationEvent<HTMLElement>) => {
-        if (!isOwnAnimation(event)) {
-            return;
-        }
-
-        loops.current += 1;
-        onLoopComplete?.(loops.current);
-    };
-
-    const handleAnimationEnd = (event: React.AnimationEvent<HTMLElement>) => {
-        if (!isOwnAnimation(event)) {
-            return;
-        }
-
-        loops.current += 1;
-        onLoopComplete?.(loops.current);
-        onComplete?.();
-    };
-
     const { style, onMouseEnter, onMouseLeave, onFocus, onBlur, ...boxProps } =
         rest as React.HTMLAttributes<HTMLElement>;
 
@@ -193,75 +167,49 @@ function Marquee<As extends React.ElementType = "div">(
 
     const isPaused = marquee.paused || isInteracting;
 
+    const context = {
+        ...marquee,
+        side,
+        orientation: vertical ? ("vertical" as const) : ("horizontal" as const),
+        copyCount,
+        viewportRef,
+        copyRef,
+        onLoopComplete,
+        onComplete,
+    };
+
     return (
-        <Component
-            ref={ref}
-            className={classNames(classes.root, className)}
-            style={
-                {
-                    ...style,
-                    "--marquee-duration": `${duration}s`,
-                    "--marquee-delay": `${delay}ms`,
-                    "--marquee-loop-count": loopCount > 0 ? `${loopCount}` : "infinite",
-                    ...(spacing === undefined ? null : { "--marquee-spacing": spacing }),
-                } as React.CSSProperties
-            }
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            data-component="Marquee"
-            data-orientation={vertical ? "vertical" : "horizontal"}
-            data-side={side}
-            data-reverse={reverse || undefined}
-            data-paused={isPaused || undefined}
-            // A run sets off once there is something to time it by. A copy that has not been
-            // measured has no length to cross and no duration to cross it in, and standing
-            // still is nearer to what it will look like than crossing it in no time at all
-            data-running={copySize > 0 || undefined}
-            {...boxProps}
-        >
-            {edges ? (
-                <span
-                    className={classes.edge}
-                    aria-hidden="true"
-                    data-component="Marquee.Edge"
-                    data-side={vertical ? "top" : "start"}
-                />
-            ) : null}
-
-            <div ref={viewportRef} className={classes.viewport} data-component="Marquee.Viewport">
-                {Array.from({ length: copyCount }, (_, index) => {
-                    // The first copy is the run; the rest are it again, so they are kept from
-                    // being read out a second time and from being tabbed into on their way past
-                    const isFirst = index === 0;
-
-                    return (
-                        <div
-                            key={index}
-                            ref={isFirst ? copyRef : undefined}
-                            className={classes.content}
-                            aria-hidden={isFirst ? undefined : true}
-                            inert={!isFirst}
-                            onAnimationIteration={isFirst ? handleAnimationIteration : undefined}
-                            onAnimationEnd={isFirst ? handleAnimationEnd : undefined}
-                            data-component="Marquee.Content"
-                        >
-                            {children}
-                        </div>
-                    );
-                })}
-            </div>
-
-            {edges ? (
-                <span
-                    className={classes.edge}
-                    aria-hidden="true"
-                    data-component="Marquee.Edge"
-                    data-side={vertical ? "bottom" : "end"}
-                />
-            ) : null}
-        </Component>
+        <MarqueeContext.Provider value={context}>
+            <Component
+                ref={ref}
+                className={classNames(classes.root, className)}
+                style={
+                    {
+                        ...style,
+                        "--marquee-duration": `${duration}s`,
+                        "--marquee-delay": `${delay}ms`,
+                        "--marquee-loop-count": loopCount > 0 ? `${loopCount}` : "infinite",
+                        ...(spacing === undefined ? null : { "--marquee-spacing": spacing }),
+                    } as React.CSSProperties
+                }
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                data-component="Marquee"
+                data-orientation={vertical ? "vertical" : "horizontal"}
+                data-side={side}
+                data-reverse={reverse || undefined}
+                data-paused={isPaused || undefined}
+                // A run sets off once there is something to time it by. A copy that has not been
+                // measured has no length to cross and no duration to cross it in, and standing
+                // still is nearer to what it will look like than crossing it in no time at all
+                data-running={copySize > 0 || undefined}
+                {...boxProps}
+            >
+                {children}
+            </Component>
+        </MarqueeContext.Provider>
     );
 }
 

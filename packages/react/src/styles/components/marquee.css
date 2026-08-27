@@ -72,14 +72,15 @@
         min-height: max-content;
     }
 
-    /* The gap between one thing in the run and the next is set on the things themselves rather
-       than on the copy holding them, so that the last thing in a copy is followed by the same
-       gap as everything else and the join between one copy and the next cannot be picked out */
-    .marquee[data-orientation="horizontal"] .marquee-content > * {
+    /* The gap between one thing in the run and the next is carried by the things themselves
+       rather than by the copy holding them, so that the last thing in a copy is followed by the
+       same gap as everything else and the join between one copy and the next cannot be picked
+       out */
+    .marquee[data-orientation="horizontal"] .marquee-item {
         margin-inline-end: var(--marquee-spacing);
     }
 
-    .marquee[data-orientation="vertical"] .marquee-content > * {
+    .marquee[data-orientation="vertical"] .marquee-item {
         margin-block-end: var(--marquee-spacing);
     }
 

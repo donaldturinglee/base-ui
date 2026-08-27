@@ -67,8 +67,6 @@ type MarqueeOwnProps = MarqueePauseProps & {
     // Holds the run still while a reader is on it, whether they arrived with a pointer or with
     // the keyboard
     pauseOnInteraction?: boolean;
-    // Fades the run out where it meets either edge of the window rather than cutting it off
-    edges?: boolean;
     className?: string;
 };
 
@@ -81,3 +79,57 @@ export type MarqueeProps<As extends React.ElementType = "div"> = PolymorphicProp
 
 // The same props at the element a marquee renders by default, for reading inside the component
 export type MarqueeElementProps = MarqueeProps<"div">;
+
+// The window the run is seen through, which is what cuts off everything standing outside it
+export type MarqueeViewportProps<As extends React.ElementType = "div"> = PolymorphicProps<
+    As,
+    "div",
+    {
+        className?: string;
+    }
+>;
+
+// What the run is made of, written the once and laid out as many times as the window takes
+export type MarqueeContentProps<As extends React.ElementType = "div"> = PolymorphicProps<
+    As,
+    "div",
+    {
+        className?: string;
+    }
+>;
+
+// One thing in the run, which is what carries the gap to the next one
+export type MarqueeItemProps<As extends React.ElementType = "div"> = PolymorphicProps<
+    As,
+    "div",
+    {
+        className?: string;
+    }
+>;
+
+export type MarqueeEdgeProps<As extends React.ElementType = "div"> = PolymorphicProps<
+    As,
+    "div",
+    {
+        // Which edge of the window the run is faded out at
+        side: MarqueeSide;
+        className?: string;
+    }
+>;
+
+export type MarqueeContextValue = Partial<UseMarqueeReturn> & {
+    // Which end the run heads towards, and whether that reads across or down
+    side?: MarqueeSide;
+    orientation?: MarqueeOrientation;
+    // How many copies the run stands in, so that one follows the last without a gap behind it
+    copyCount?: number;
+    // The window and the first copy of the run. The marquee times the run by how long a copy is
+    // and works out how many copies the window takes, so both are handed back to it by the
+    // parts that draw them
+    viewportRef?: React.Ref<HTMLElement>;
+    copyRef?: React.Ref<HTMLElement>;
+    // Called each time the run has come round, with how many times it has done so
+    onLoopComplete?: (loops: number) => void;
+    // Called once a run that was given a number of times to go round has finished the last
+    onComplete?: () => void;
+};

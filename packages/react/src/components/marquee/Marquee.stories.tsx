@@ -19,10 +19,10 @@ const fruits = [
 ];
 
 const items = fruits.map((fruit) => (
-    <span key={fruit.name} className={classes.item}>
+    <Marquee.Item key={fruit.name} className={classes.item}>
         <span className={classes.logo}>{fruit.logo}</span>
         {fruit.name}
-    </span>
+    </Marquee.Item>
 ));
 
 export default {
@@ -32,7 +32,11 @@ export default {
 
 export const Default: StoryFn<typeof Marquee> = () => (
     <div className={classes.container}>
-        <Marquee>{items}</Marquee>
+        <Marquee>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
@@ -42,7 +46,11 @@ Default.parameters = {
 
 export const Playground: StoryFn<MarqueeProps> = (args) => (
     <div className={classes.container}>
-        <Marquee {...args}>{items}</Marquee>
+        <Marquee {...args}>
+            <Marquee.Viewport>
+                <Marquee.Content>{items}</Marquee.Content>
+            </Marquee.Viewport>
+        </Marquee>
     </div>
 );
 
@@ -54,7 +62,6 @@ Playground.args = {
     autoFill: false,
     reverse: false,
     pauseOnInteraction: true,
-    edges: false,
 };
 
 Playground.argTypes = {
@@ -121,12 +128,6 @@ Playground.argTypes = {
             type: "boolean",
         },
         description: "Holds the run still while a reader is on it",
-    },
-    edges: {
-        control: {
-            type: "boolean",
-        },
-        description: "Fades the run out where it meets either edge of the window",
     },
     children: {
         table: {
