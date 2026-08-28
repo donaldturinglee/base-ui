@@ -307,15 +307,9 @@ function TreeViewItem<As extends React.ElementType = "li">(
                         data-component="TreeView.Item.Toggle"
                     >
                         {isExpanded ? (
-                            <ChevronDownRegular
-                                width={TOGGLE_ICON_SIZE}
-                                height={TOGGLE_ICON_SIZE}
-                            />
+                            <ChevronDownRegular size={TOGGLE_ICON_SIZE} />
                         ) : (
-                            <ChevronRightRegular
-                                width={TOGGLE_ICON_SIZE}
-                                height={TOGGLE_ICON_SIZE}
-                            />
+                            <ChevronRightRegular size={TOGGLE_ICON_SIZE} />
                         )}
                     </span>
                 ) : null}

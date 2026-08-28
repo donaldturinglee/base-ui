@@ -1,0 +1,142 @@
+@layer components {
+    /* A value drawn as the tree it already is. The tree itself — the rows, the arrows, the lines
+       running down the page — belongs to the tree view; what is added here is the writing that
+       goes in the rows, which is the whole of what makes it read as data rather than as a list of
+       names.
+
+       Every colour is named once here and used by the rules below, so a caller who wants the
+       values drawn in a palette of their own says so in one place rather than in fifteen */
+    .json-tree-view {
+        --json-tree-view-punctuation-color: var(--foreground-color-muted);
+        --json-tree-view-key-color: var(--foreground-color-accent);
+        --json-tree-view-string-color: var(--foreground-color-success);
+        --json-tree-view-number-color: var(--foreground-color-severe);
+        --json-tree-view-boolean-color: var(--foreground-color-done);
+        --json-tree-view-empty-color: var(--foreground-color-muted);
+        --json-tree-view-symbol-color: var(--foreground-color-sponsors);
+        --json-tree-view-regex-color: var(--foreground-color-attention);
+        --json-tree-view-error-color: var(--foreground-color-danger);
+
+        /* Data is read a character at a time rather than a word at a time — a comma or a bracket
+           in the wrong place changes what it says — so it is set in a face where every character
+           takes the same room and none of them can hide behind another.
+
+           Only the face is set here. The size is set on the parts below instead: a row of the tree
+           names a size of its own, and a size named here would be inherited by the row rather than
+           applied to it, which a size the row names itself beats */
+        font-family: var(--font-stack-monospace);
+    }
+
+    /* A tree of files is a set of places to go, and a hand says so. A tree of data is not: the rows
+       are the thing itself rather than a way through to it, and the only thing pressing one does is
+       fold it up. A hand over every row of it would be offering a reader somewhere to go that there
+       is nowhere to go to.
+
+       The cursor belongs to the row, which is the tree view's rather than this component's, so it
+       is named again here for the rows standing inside a tree of data */
+    .json-tree-view .tree-view-item-container {
+        cursor: default;
+    }
+
+    /* Data is set smaller than the prose around it. There is a great deal of it, none of it is
+       read straight through, and the face it is set in carries at a size where a proportional one
+       would have started to close up */
+    .json-tree-view-key,
+    .json-tree-view-colon,
+    .json-tree-view-value {
+        font-size: var(--text-body-size-small);
+    }
+
+    /* The name and its value read as one line rather than as two things that happen to be next to
+       one another, so nothing between them is allowed to break */
+    .json-tree-view-key {
+        color: var(--json-tree-view-key-color);
+        font-weight: var(--base-text-weight-medium);
+        white-space: nowrap;
+    }
+
+    /* A name an ordinary walk of the thing holding it would have passed over is drawn as the aside
+       it is, so that what is really in the data is told from what had to be asked for */
+    .json-tree-view-key[data-non-enumerable="true"] {
+        color: var(--json-tree-view-punctuation-color);
+        font-style: italic;
+    }
+
+    .json-tree-view-colon {
+        margin-inline-end: var(--base-size-4);
+        color: var(--json-tree-view-punctuation-color);
+    }
+
+    .json-tree-view-value {
+        color: var(--foreground-color-default);
+    }
+
+    /* The punctuation is drawn quieter than the values it stands between: it is there to say how
+       the values are arranged rather than to be read alongside them */
+    .json-tree-view-value [data-kind="bracket"],
+    .json-tree-view-value [data-kind="separator"] {
+        color: var(--json-tree-view-punctuation-color);
+    }
+
+    /* What a closed row gives away of itself is a glimpse rather than the thing, and is drawn as
+       one so that it is not mistaken for the rows it stands in place of */
+    .json-tree-view-value [data-kind="more"] {
+        color: var(--json-tree-view-empty-color);
+        font-style: italic;
+    }
+
+    .json-tree-view-value [data-kind="constructor"] {
+        color: var(--json-tree-view-key-color);
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    .json-tree-view-value [data-type="string"] {
+        color: var(--json-tree-view-string-color);
+    }
+
+    .json-tree-view-value [data-type="number"],
+    .json-tree-view-value [data-type="bigint"],
+    .json-tree-view-value [data-type="date"] {
+        color: var(--json-tree-view-number-color);
+    }
+
+    .json-tree-view-value [data-type="boolean"] {
+        color: var(--json-tree-view-boolean-color);
+        font-weight: var(--base-text-weight-medium);
+    }
+
+    /* Nothing at all, and a thing that holds itself, are all drawn the same quiet way: none of
+       them is a value the reader can go on to read, and saying so is the whole of what they say */
+    .json-tree-view-value [data-type="null"],
+    .json-tree-view-value [data-type="undefined"],
+    .json-tree-view-value [data-type="circular"] {
+        color: var(--json-tree-view-empty-color);
+        font-style: italic;
+    }
+
+    .json-tree-view-value [data-type="function"] {
+        color: var(--json-tree-view-boolean-color);
+        font-style: italic;
+    }
+
+    .json-tree-view-value [data-type="symbol"] {
+        color: var(--json-tree-view-symbol-color);
+    }
+
+    .json-tree-view-value [data-type="regex"] {
+        color: var(--json-tree-view-regex-color);
+    }
+
+    .json-tree-view-value [data-type="error"] {
+        color: var(--json-tree-view-error-color);
+    }
+
+    /* A value told apart by colour alone says nothing in forced colours, and the quotes and
+       brackets around it go on saying what it is either way */
+    @media (forced-colors: active) {
+        .json-tree-view-key,
+        .json-tree-view-value * {
+            color: canvastext;
+        }
+    }
+}

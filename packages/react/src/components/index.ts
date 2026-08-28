@@ -58,6 +58,7 @@ export * from "./hover-card";
 export * from "./icon-button";
 export * from "./image";
 export * from "./inline-message";
+export * from "./json-tree-view";
 export * from "./keybinding-hint";
 export * from "./label";
 export * from "./label-group";
