@@ -1,0 +1,74 @@
+@layer components {
+    /* Reading down: the face, then the controls under it. The row the controls stand in belongs to
+       the control, so a clock that is only there to be watched is laid out no differently */
+    .timer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--stack-gap-condensed);
+        align-items: flex-start;
+    }
+
+    /* The face, read across. The units settle on the feet of the digits rather than on their
+       middles, so a unit set beside a word naming it lines up with the rest of the face */
+    .timer-area {
+        display: flex;
+        align-items: baseline;
+        gap: var(--base-size-4);
+        color: var(--foreground-color-default);
+    }
+
+    /* The digits are widened to a zero apiece and held at the width they are read at, so the face
+       holds still as the clock moves: a figure that narrowed on its way from a one to a two would
+       drag everything after it along the row once a second */
+    .timer-item {
+        font-size: var(--text-title-size-large);
+        font-weight: var(--base-text-weight-semibold);
+        font-variant-numeric: tabular-nums;
+        line-height: var(--text-title-line-height-large);
+    }
+
+    /* Quieter than the digits it stands between, since it is there to group them rather than to be
+       read. It keeps a gap of its own on either side so that the pairs it separates read as pairs */
+    .timer-separator {
+        padding-inline: var(--base-size-4);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-title-size-medium);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-title-line-height-large);
+    }
+
+    /* A clock that has arrived is left standing at the end of its run rather than cleared, and is
+       drawn as having got there: the digits are what say it, since a control turning itself off
+       says only that there is nothing left to press */
+    .timer[data-status="completed"] .timer-area {
+        color: var(--foreground-color-success);
+    }
+
+    /* A clock held still is drawn as quieter than one that is going, so that a face which is not
+       moving is not read as one that has stopped for good */
+    .timer[data-status="paused"] .timer-area {
+        color: var(--foreground-color-muted);
+    }
+
+    .timer-control {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+    }
+
+    /* A trigger keeps the width it had before the clock moved under it, so a control turning itself
+       off as the run arrives does not shift the ones beside it */
+    .timer-action-trigger {
+        flex: none;
+    }
+
+    /* A face told apart by colour alone says nothing in forced colours, and the digits go on
+       carrying the time either way */
+    @media (forced-colors: active) {
+        .timer[data-status="completed"] .timer-area,
+        .timer[data-status="paused"] .timer-area {
+            color: canvastext;
+        }
+    }
+}
