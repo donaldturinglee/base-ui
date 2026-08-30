@@ -5,6 +5,11 @@ import { useResolvedValues } from "./hooks";
 const classes = {
     // The prose is read, the ramps below it are looked at, so only the prose is held to a measure
     prose: "max-w-[46rem]",
+    // The steps a column holds stand one under the other, so a scale carried on below is read in
+    // the row it belongs to rather than in one of its own, with no rule drawn across it and its
+    // name set against the whole of it. They are held to the top of the row, so the first line of
+    // every scale is read straight across whether the one beside it runs to a second line or not
+    steps: "flex flex-col gap-[var(--base-size-8)] self-start",
     // The chip and the value under it stand together as the one step, close enough to be read as
     // a pair rather than as two things that happen to share a cell
     step: "flex flex-col gap-[var(--base-size-2)]",
@@ -47,14 +52,23 @@ const names = scales.flatMap(({ name, steps }) =>
     Array.from({ length: steps }, (_, step) => token(name, step, steps)),
 );
 
-// The longest scale is what sets the width of the table, so every step of every scale has a
-// column of its own to stand in
-const stepCount = Math.max(...scales.map(({ steps }) => steps));
+// How many steps stand on a line, which is what every scale but neutral runs to. Neutral is the
+// one that runs further, and were the table widened for it the hues would be pushed off the side
+// of the page and read by scrolling after them, so it is broken over as many lines as it takes
+const stepsPerLine = 10;
+
+// Which steps of a scale fall in a column: the one the first line opens on, and one for every
+// further line the scale is carried on over
+const stepsInColumn = (column: number, steps: number) =>
+    Array.from(
+        { length: Math.ceil((steps - column) / stepsPerLine) },
+        (_, line) => column + line * stepsPerLine,
+    );
 
 const titleId = "palette";
 
-// One scale of the palette. The table tells its rows apart by a field of their own, and a scale
-// is named once, so the name is what stands as the id
+// One scale of the palette, however many lines it is carried on over. The table tells its rows
+// apart by a field of their own, and a scale is named once, so the name is what stands as the id
 type ScaleRow = {
     id: string;
     name: string;
@@ -69,6 +83,8 @@ const scaleColumn: Column<ScaleRow> = {
     width: "auto",
     minWidth: "max-content",
     rowHeader: true,
+    // The cell stands the height of the whole scale, so a name is set against the middle of what
+    // it names rather than against the first line of it
     renderCell: ({ name }) => (
         <Text size="small" weight="semibold">
             {name}
@@ -76,33 +92,41 @@ const scaleColumn: Column<ScaleRow> = {
     ),
 };
 
-// One column to a step, so a step is read down the palette as well as across the scale it belongs
-// to, which is what a step is chosen by. The headers are left empty, since a row of numbers across
-// the top said nothing the token under each chip does not already say
-const stepColumns: Column<ScaleRow>[] = Array.from({ length: stepCount }, (_, step) => ({
-    id: `step-${step}`,
+// One column to a step of a line, so a step is read down the palette as well as across the scale
+// it belongs to, which is what a step is chosen by. The headers are left empty, since a row of
+// numbers across the top said nothing the token under each chip does not already say
+const stepColumns: Column<ScaleRow>[] = Array.from({ length: stepsPerLine }, (_, column) => ({
+    id: `step-${column}`,
     header: "",
     width: "auto",
     minWidth: "max-content",
     renderCell: ({ name, values }) => {
-        // A scale that stops short of the longest leaves the rest of its row empty, which is
-        // what says it stops short
-        if (step >= values.length) {
+        const steps = stepsInColumn(column, values.length);
+
+        // The last line of a scale runs out partway across and leaves the rest of the row empty,
+        // which is what says the scale stops there
+        if (steps.length === 0) {
             return null;
         }
 
-        const property = token(name, step, values.length);
-
         return (
-            <div className={classes.step}>
-                <div
-                    className={classes.chip}
-                    style={{ backgroundColor: `var(${property})` }}
-                    title={property}
-                />
-                <Text size="small" className={classes.value}>
-                    {values[step]}
-                </Text>
+            <div className={classes.steps}>
+                {steps.map((step) => {
+                    const property = token(name, step, values.length);
+
+                    return (
+                        <div key={property} className={classes.step}>
+                            <div
+                                className={classes.chip}
+                                style={{ backgroundColor: `var(${property})` }}
+                                title={property}
+                            />
+                            <Text size="small" className={classes.value}>
+                                {values[step]}
+                            </Text>
+                        </div>
+                    );
+                })}
             </div>
         );
     },

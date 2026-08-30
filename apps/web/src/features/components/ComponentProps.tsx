@@ -2,36 +2,65 @@ import {
     Code,
     DataTable,
     Heading,
-    Label,
     Separator,
     Stack,
     Table,
     Text,
+    Token,
 } from "@gamecrafters/base-ui/react";
 import type { Column } from "@gamecrafters/base-ui/react";
 import type { ComponentProp, ComponentPropGroup } from "./ComponentProps.types";
 
 const classes = {
-    // A type is read as a value rather than as prose, so it is set in the monospace stack the
-    // rest of the library sets code in
-    type: "font-[family-name:var(--font-stack-monospace)]",
+    // What a prop is called and whether it has to be given are read as the one thing, so they
+    // stand together on a line rather than a column apart from each other. What is said about the
+    // prop runs to more than one line, so they are set against the top of the row rather than down
+    // the middle of it, where they would stand level with nothing
+    prop: "flex flex-wrap items-center gap-[var(--base-size-8)] self-start",
+    // A name is read as a value rather than as prose, so it is set in the monospace stack the
+    // rest of the library sets code in. It is read in a column rather than inside a line, with no
+    // words around it to be told apart from, so it is left without the ground a fragment of code
+    // read in prose is given
+    name: "font-[family-name:var(--font-stack-monospace)]",
+    // A type is a fragment of code and is given a ground of its own like one, so that it is told
+    // apart from the prose it stands over. It is held to its own width, since a block standing in
+    // a stack is otherwise drawn the whole way across and the ground with it
+    type: "self-start",
     // The values a prop takes are read across rather than down, and there are rarely more than
     // a handful, so they stay on one line for as long as there is room for them
     options: "flex flex-wrap gap-[var(--base-size-4)]",
+    // A default is set against the top of the row for the same reason a name is, which puts it
+    // level with the type it is the value of
+    default: "self-start",
     muted: "text-[var(--foreground-color-muted)]",
 };
 
 // The table tells its rows apart by a field of their own, and a prop is named once within the
-// type it was declared in, so the name is what stands as the id
+// part that takes it, so the name is what stands as the id
 type PropRow = ComponentProp & { id: string };
+
+// A name, and after it whether the prop has to be given. Only a prop that is required says so:
+// one that is not is left to say nothing, since a prop is optional unless it says otherwise, and
+// answering "no" would be read as a value the prop carries
+const Name = ({ name, required }: ComponentProp) => (
+    <div className={classes.prop}>
+        <Text size="small" className={classes.name}>
+            {name}
+        </Text>
+        {required ? <Token size="small" text="Required" /> : null}
+    </div>
+);
+
+// What the prop comes to where it is left out. A prop with no default of its own leaves the cell
+// empty, since anything standing in it would be read as a value the prop falls back to
+const Default = ({ default: fallback }: ComponentProp) =>
+    fallback ? <Code className={classes.default}>{fallback}</Code> : null;
 
 // A type is written out rather than resolved, and the values it takes are named beneath it where
 // it names them one by one. A shape has nothing to list, so nothing is listed
 const Type = ({ type, options }: ComponentProp) => (
     <Stack gap="condensed">
-        <Text size="small" className={classes.type}>
-            {type}
-        </Text>
+        <Code className={classes.type}>{type}</Code>
         {options?.length ? (
             <div className={classes.options}>
                 {options.map((option) => (
@@ -42,41 +71,40 @@ const Type = ({ type, options }: ComponentProp) => (
     </Stack>
 );
 
+// What the prop takes, and under it what it is for. The type is what a caller is actually held
+// to, so it is read first and the prose that follows says why the prop is there
+const Description = ({ description, ...prop }: ComponentProp) => (
+    <Stack gap="condensed">
+        <Type {...prop} />
+        <Text size="small" className={description ? undefined : classes.muted}>
+            {description ?? "—"}
+        </Text>
+    </Stack>
+);
+
 const columns: Column<PropRow>[] = [
     {
-        header: "Prop",
+        header: "Name",
         field: "name",
-        rowHeader: true,
-        renderCell: ({ name }) => <Code>{name}</Code>,
-    },
-    {
-        header: "Type",
-        field: "type",
-        renderCell: (prop) => <Type {...prop} />,
-    },
-    {
-        header: "Required",
-        field: "required",
+        // A name is short and the column beside it is prose, so the names are given no more room
+        // than the longest of them takes and the rest of the table is left to what is said about
+        // them
         width: "auto",
-        // A prop that has to be given is said so; one that does not is left blank rather than
-        // answered "no", which would be read as a value the prop carries
-        renderCell: ({ required }) =>
-            required ? (
-                <Label variant="danger">Required</Label>
-            ) : (
-                <Text size="small" className={classes.muted}>
-                    —
-                </Text>
-            ),
+        rowHeader: true,
+        renderCell: (prop) => <Name {...prop} />,
+    },
+    {
+        header: "Default",
+        field: "default",
+        // A default is as short as a name is, and the prose beside it is what the table has room
+        // to spare for
+        width: "auto",
+        renderCell: (prop) => <Default {...prop} />,
     },
     {
         header: "Description",
         field: "description",
-        renderCell: ({ description }) => (
-            <Text size="small" className={description ? undefined : classes.muted}>
-                {description ?? "—"}
-            </Text>
-        ),
+        renderCell: (prop) => <Description {...prop} />,
     },
 ];
 
@@ -85,7 +113,7 @@ const columns: Column<PropRow>[] = [
 // underneath it
 const note = ({ props }: ComponentPropGroup) => (props.length ? undefined : "Nothing of its own.");
 
-// One table to the type the props were declared in, so a part can be told from the component it
+// One table to the part the props are taken by, so a part can be told from the component it
 // hangs off
 const Group = (group: ComponentPropGroup) => {
     const { name, props } = group;

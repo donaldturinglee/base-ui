@@ -8,15 +8,21 @@ export type ComponentProp = {
     // to is the name in front of it
     type: string;
     required: boolean;
+    // What the prop comes to where the caller leaves it out, written as it would be given. A prop
+    // that takes its value from whatever it stands in has none of its own to name, and neither has
+    // one there is nothing to fall back to
+    default?: string;
     description?: string;
     // The values the prop takes, where the type names them one by one rather than describing
     // a shape
     options?: string[];
 };
 
-// Props are kept under the type they were declared in rather than flattened into one list, so
-// that a part can be told from the component it hangs off
+// Props are kept under the part that takes them rather than flattened into one list, so that a
+// part can be told from the component it hangs off
 export type ComponentPropGroup = {
+    // The part the props belong to, named as it is reached for rather than as the type they were
+    // declared in, since it is the part a reader is looking up
     name: string;
     props: ComponentProp[];
 };

@@ -73,8 +73,19 @@ const examples: ComponentExample[] = [
 ];
 
 // What a header can be as a heading. Both the accordion and the one header take it, and the two
-// answer each other, so the values are named once rather than written out under each of them
-const headingLevels = ["h2", "h3", "h4", "h5", "h6"];
+// answer each other, so it is written once rather than under each of them. It stands as the levels
+// themselves rather than as the name they are collected under, since one of them is what a caller
+// actually hands over
+const headingLevel = '"h2" | "h3" | "h4" | "h5" | "h6"';
+
+// What every part takes to be styled from outside. It is the same prop saying the same thing
+// wherever it stands, so it is named once rather than written out under each of them
+const styling = {
+    name: "className",
+    type: "string",
+    required: false,
+    description: "Class name for custom styling",
+};
 
 // What the element being drawn takes on top of what the library declares itself. Those props are
 // the element's own and are documented wherever elements are, so what is said here is what the
@@ -83,13 +94,14 @@ const polymorphic = {
     name: "as",
     type: "React.ElementType",
     required: false,
+    default: '"div"',
     description: "The element or component this is drawn as, in place of its default",
 };
 
-// Every prop the accordion and its parts take, under the type each one was declared in
+// Every prop the accordion and its parts take, under the one that takes it
 const groups: ComponentPropGroup[] = [
     {
-        name: "AccordionProps",
+        name: "Accordion",
         props: [
             {
                 name: "value",
@@ -101,6 +113,7 @@ const groups: ComponentPropGroup[] = [
                 name: "defaultValue",
                 type: "string[]",
                 required: false,
+                default: "[]",
                 description:
                     "Which items start out open, where the accordion keeps hold of the state itself",
             },
@@ -108,26 +121,29 @@ const groups: ComponentPropGroup[] = [
                 name: "multiple",
                 type: "boolean",
                 required: false,
+                default: "false",
                 description: "Whether more than one item can stand open at once",
             },
             {
                 name: "disabled",
                 type: "boolean",
                 required: false,
+                default: "false",
                 description: "Stops every item being opened or closed",
             },
             {
                 name: "headingLevel",
-                type: "AccordionHeadingLevel",
+                type: headingLevel,
                 required: false,
+                default: '"h3"',
                 description:
                     "What each header is as a heading, so that the accordion sits at the right depth in the document outline",
-                options: headingLevels,
             },
             {
                 name: "keepMounted",
                 type: "boolean",
                 required: false,
+                default: "true",
                 description:
                     "Whether a closed panel stays on the page. It does by default, so that its header always has something to point at",
             },
@@ -135,10 +151,11 @@ const groups: ComponentPropGroup[] = [
                 name: "hiddenUntilFound",
                 type: "boolean",
                 required: false,
+                default: "false",
                 description:
                     "Lets the browser's own find-in-page reach a closed panel, opening the item it was found in rather than passing it over",
             },
-            { name: "className", type: "string", required: false },
+            styling,
             polymorphic,
             {
                 name: "onChange",
@@ -150,7 +167,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AccordionItemProps",
+        name: "AccordionItem",
         props: [
             {
                 name: "value",
@@ -165,27 +182,26 @@ const groups: ComponentPropGroup[] = [
                 required: false,
                 description: "Stops the item being opened or closed",
             },
-            { name: "className", type: "string", required: false },
+            styling,
             polymorphic,
         ],
     },
     {
-        name: "AccordionHeaderProps",
+        name: "AccordionHeader",
         props: [
             {
                 name: "headingLevel",
-                type: "AccordionHeadingLevel",
+                type: headingLevel,
                 required: false,
                 description:
                     "The heading this one button sits in, which takes the place of the accordion's own level",
-                options: headingLevels,
             },
-            { name: "className", type: "string", required: false },
+            styling,
         ],
     },
     {
-        name: "AccordionPanelProps",
-        props: [{ name: "className", type: "string", required: false }, polymorphic],
+        name: "AccordionPanel",
+        props: [styling, polymorphic],
     },
 ];
 
