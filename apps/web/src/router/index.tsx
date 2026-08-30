@@ -1,0 +1,46 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import { Layout } from "../components";
+import {
+    Accordion,
+    GettingStartedInstallation,
+    Home,
+    NotFound,
+    PrimitivesColor,
+    PrimitivesSize,
+    PrimitivesTypography,
+} from "../features";
+
+// What the site is driven by from the address bar: the path is read from the browser's own history,
+// so a link is followed by redrawing the page rather than by asking the server for another one.
+//
+// It is a piece of its own rather than part of the mount, so what the app is drawn under is settled
+// in one place and where it can be gone in another, and neither has to be read to change the other
+const Router = () => (
+    <BrowserRouter>
+        {/* Which page stands at which path. Every one of them is drawn inside the layout rather
+            than beside it, so the row across the top and the column of links are drawn once and
+            stay where they are as the reader moves between pages.
+
+            A component is named here as every other page is, since each one stands on its own and
+            says what is true of it rather than being handed a name to answer under. The column
+            beside the page names every component the library exports and is written up ahead of
+            them, so a path it names that has yet to be written lands on the page for a path with
+            nothing behind it, inside the layout, with the column still there to be gone on from */}
+        <Routes>
+            <Route element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route
+                    path="getting-started/installation"
+                    element={<GettingStartedInstallation />}
+                />
+                <Route path="primitives/color" element={<PrimitivesColor />} />
+                <Route path="primitives/size" element={<PrimitivesSize />} />
+                <Route path="primitives/typography" element={<PrimitivesTypography />} />
+                <Route path="components/accordion" element={<Accordion />} />
+                <Route path="*" element={<NotFound />} />
+            </Route>
+        </Routes>
+    </BrowserRouter>
+);
+
+export default Router;

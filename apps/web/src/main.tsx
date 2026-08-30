@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { LocaleProvider, ThemeProvider } from "@gamecrafters/base-ui/react";
-import { Home } from "./features";
+import Router from "./router";
 import "@gamecrafters/base-ui/main.css";
 import "./styles/main.css";
 
@@ -26,14 +26,18 @@ if (!container) {
     throw new Error("The element the app is mounted into is missing from the document");
 }
 
-// Everything the app settles before any feature is drawn, and then the page the site is: the
-// language it is read in and the direction that follows from it, and the colour scheme its
-// tokens resolve under. `auto` follows the operating system until the reader says otherwise
+// Everything the app settles before any feature is drawn, and then the site itself: the language
+// it is read in and the direction that follows from it, and the colour scheme its tokens resolve
+// under. `auto` follows the operating system until the reader says otherwise.
+//
+// Which page is drawn is the router's, so it is the one thing mounted here. The providers stand
+// outside it rather than within a page, so what a page is drawn under is settled once and does
+// not go and come back as the reader moves between them
 createRoot(container).render(
     <React.StrictMode>
         <LocaleProvider locale={locale}>
             <ThemeProvider className={classes.theme} colorMode="auto">
-                <Home />
+                <Router />
             </ThemeProvider>
         </LocaleProvider>
     </React.StrictMode>,

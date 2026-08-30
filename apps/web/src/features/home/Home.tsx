@@ -1,31 +1,8 @@
-import { PageLayout } from "@gamecrafters/base-ui/react";
-import { HomeHeader, HomeHero, HomeSidebar } from "./components";
+import { HomeHero } from "./components";
 
-const classes = {
-    // The row across the top has taken what it needs, and what is left over is the layout's, so
-    // the page reaches the foot of the viewport rather than stopping where its content does.
-    // The column of links and the line marking it off are given the height from there by the
-    // layout itself
-    layout: "grow",
-};
-
-// The page itself. The row across the top stands outside the layout so that it runs the width
-// of the viewport, and what is meant to be read is held to the page container beneath it
-const Home = () => (
-    <>
-        <HomeHeader />
-        <PageLayout className={classes.layout} containerWidth="full" rowGap="none" padding="none">
-            {/* The column of links stands outside the page container rather than in a region of
-                it, and is taken away on a narrow screen, where it would otherwise be as wide as
-                the page and leave nothing for what is meant to be read */}
-            <PageLayout.Sidebar padding="condensed" divider="line" hidden={{ narrow: true }}>
-                <HomeSidebar />
-            </PageLayout.Sidebar>
-            <PageLayout.Content>
-                <HomeHero />
-            </PageLayout.Content>
-        </PageLayout>
-    </>
-);
+// The page the site opens on. The row across the top and the column of links stand around every
+// page rather than belonging to this one, so they are the layout's and what is written here is
+// only what is read in the region between them
+const Home = () => <HomeHero />;
 
 export default Home;

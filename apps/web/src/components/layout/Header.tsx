@@ -1,42 +1,53 @@
 import type { CSSProperties } from "react";
+import { Link } from "react-router";
 import { WeatherMoonRegular, WeatherSunnyRegular } from "@gamecrafters/base-ui-icons";
-import { Header, IconButton, Separator, Text, useTheme } from "@gamecrafters/base-ui/react";
+import {
+    Header as BaseHeader,
+    IconButton,
+    Separator,
+    Text,
+    useTheme,
+} from "@gamecrafters/base-ui/react";
 
 const classes = {
     // The row ends where the page does, so the last item is not held off the end
     lastItem: "me-0",
 };
 
-// The row is drawn white whichever of the two schemes the page is read under. The light pair of
-// colours it is written in by default cannot be read on that, so both are pointed at the dark
-// end of the scale instead, which is dark under either scheme
+// The row is drawn in whatever the page is drawn in, so it follows the scheme the reader chose
+// rather than standing white against a dark page. The pair of colours it is written in by default
+// are pitched for the dark ground the library gives it and cannot be read on the page's own, so
+// both are pointed at what the page is written in instead
 const colors = {
-    "--header-background-color": "var(--base-color-white)",
-    "--header-foreground-color-logo": "var(--base-color-black)",
-    "--header-foreground-color-default": "var(--base-color-black)",
+    "--header-background-color": "var(--background-color-default)",
+    "--header-foreground-color-logo": "var(--foreground-color-default)",
+    "--header-foreground-color-default": "var(--foreground-color-default)",
 } as CSSProperties;
 
 // The row across the top of the page: what the site is, and the one control the page carries.
 // It stands outside the layout rather than in a region of it, so the row itself is the `header`
-// the page is headed by
-const HomeHeader = () => {
+// every page is headed by
+const Header = () => {
     const { colorScheme, setColorMode } = useTheme();
     const isNight = colorScheme === "dark";
 
     return (
         <>
-            <Header style={colors}>
+            <BaseHeader style={colors}>
                 {/* What the site is takes whatever room the row leaves, so the control after it
                     is held to the far end */}
-                <Header.Item full>
-                    <Header.Link href="/">
+                <BaseHeader.Item full>
+                    {/* The name of the site leads back to the page the site opens on, and is
+                        followed the way the links beside the page are: the router answers it
+                        rather than the browser fetching the document again */}
+                    <BaseHeader.Link as={Link} to="/">
                         {/* The weight is said rather than left to the link to pass down, since
                             text carries a weight of its own and would otherwise draw the name
                             of the site lighter than the row means it to be read */}
                         <Text weight="semibold">Base UI</Text>
-                    </Header.Link>
-                </Header.Item>
-                <Header.Item className={classes.lastItem}>
+                    </BaseHeader.Link>
+                </BaseHeader.Item>
+                <BaseHeader.Item className={classes.lastItem}>
                     <IconButton
                         aria-label={
                             isNight ? "Switch to the day scheme" : "Switch to the night scheme"
@@ -45,13 +56,13 @@ const HomeHeader = () => {
                         variant="default"
                         onClick={() => setColorMode(isNight ? "day" : "night")}
                     />
-                </Header.Item>
-            </Header>
-            {/* The row is drawn in the same white the page is, so where one ends and the other
+                </BaseHeader.Item>
+            </BaseHeader>
+            {/* The row is drawn in the same colour the page is, so where one ends and the other
                 begins is said by a line rather than left to the colours to say */}
             <Separator />
         </>
     );
 };
 
-export default HomeHeader;
+export default Header;
