@@ -1,17 +1,17 @@
 import * as React from "react";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { SplitterResizeTriggerIndicatorProps } from "./Splitter.types";
+import type { ResizableResizeTriggerIndicatorProps } from "./Resizable.types";
 
 const classes = {
-    root: "splitter-resize-trigger-indicator",
+    root: "resizable-resize-trigger-indicator",
 };
 
 // The grip standing in the middle of the trigger, which says the line it sits on is something to
 // take hold of rather than one only there to part two panels. It is thicker than the line and
 // stands out either side of it, so the line stays a line everywhere the grip is not
-function SplitterResizeTriggerIndicator(
-    props: SplitterResizeTriggerIndicatorProps,
+function ResizableResizeTriggerIndicator(
+    props: ResizableResizeTriggerIndicatorProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -21,13 +21,13 @@ function SplitterResizeTriggerIndicator(
         <span
             ref={ref}
             className={classNames(classes.root, className)}
-            data-component="Splitter.ResizeTriggerIndicator"
+            data-component="Resizable.ResizeTriggerIndicator"
             aria-hidden="true"
             {...rest}
         />
     );
 }
 
-SplitterResizeTriggerIndicator.displayName = "Splitter.ResizeTriggerIndicator";
+ResizableResizeTriggerIndicator.displayName = "Resizable.ResizeTriggerIndicator";
 
-export default fixedForwardRef(SplitterResizeTriggerIndicator);
+export default fixedForwardRef(ResizableResizeTriggerIndicator);

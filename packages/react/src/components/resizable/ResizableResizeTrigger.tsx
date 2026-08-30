@@ -2,10 +2,10 @@ import * as React from "react";
 import { Separator } from "react-resizable-panels";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { SplitterResizeTriggerProps } from "./Splitter.types";
+import type { ResizableResizeTriggerProps } from "./Resizable.types";
 
 const classes = {
-    root: "splitter-resize-trigger",
+    root: "resizable-resize-trigger",
 };
 
 // What stands between one panel and the next, and what a reader takes hold of to move it. It is
@@ -19,10 +19,10 @@ const classes = {
 // part two panels and one meant to be taken hold of are told apart by what they are given rather
 // than by a prop.
 //
-// A trigger is not required between two panels, but a splitter without one can only be resized by
+// A trigger is not required between two panels, but a group without one can only be resized by
 // dragging the edge where the panels meet, which leaves a keyboard with nothing to reach
-function SplitterResizeTrigger(
-    props: SplitterResizeTriggerProps,
+function ResizableResizeTrigger(
+    props: ResizableResizeTriggerProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -32,12 +32,12 @@ function SplitterResizeTrigger(
         <Separator
             elementRef={ref}
             className={classNames(classes.root, className)}
-            data-component="Splitter.ResizeTrigger"
+            data-component="Resizable.ResizeTrigger"
             {...rest}
         />
     );
 }
 
-SplitterResizeTrigger.displayName = "Splitter.ResizeTrigger";
+ResizableResizeTrigger.displayName = "Resizable.ResizeTrigger";
 
-export default fixedForwardRef(SplitterResizeTrigger);
+export default fixedForwardRef(ResizableResizeTrigger);

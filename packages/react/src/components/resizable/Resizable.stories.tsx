@@ -1,9 +1,9 @@
 import type { Decorator, StoryFn, Meta } from "@storybook/react-vite";
-import { Splitter } from ".";
-import type { SplitterProps } from "./Splitter.types";
+import { Resizable } from ".";
+import type { ResizableProps } from "./Resizable.types";
 
 const classes = {
-    // A splitter fills the room it is given, so the stories give it some to fill
+    // A group of panels fills the room it is given, so the stories give it some to fill
     container:
         "w-[var(--overlay-width-medium)] max-w-full h-[var(--overlay-height-small)] border-solid border-[length:var(--border-width-thin)] border-border-default rounded-[var(--border-radius-medium)]",
     panel: "flex items-center justify-center p-[var(--base-size-8)] [font-weight:var(--base-text-weight-semibold)]",
@@ -16,34 +16,34 @@ const withContainer: Decorator = (Story) => (
 );
 
 export default {
-    title: "Components/Splitter",
-    component: Splitter,
+    title: "Components/Resizable",
+    component: Resizable,
     decorators: [withContainer],
-} as Meta<typeof Splitter>;
+} as Meta<typeof Resizable>;
 
-export const Default: StoryFn<typeof Splitter> = () => (
-    <Splitter>
-        <Splitter.Panel defaultSize="30" className={classes.panel}>
+export const Default: StoryFn<typeof Resizable> = () => (
+    <Resizable>
+        <Resizable.Panel defaultSize="30" className={classes.panel}>
             Sidebar
-        </Splitter.Panel>
-        <Splitter.ResizeTrigger>
-            <Splitter.ResizeTriggerSeparator />
-        </Splitter.ResizeTrigger>
-        <Splitter.Panel className={classes.panel}>Content</Splitter.Panel>
-    </Splitter>
+        </Resizable.Panel>
+        <Resizable.ResizeTrigger>
+            <Resizable.ResizeTriggerSeparator />
+        </Resizable.ResizeTrigger>
+        <Resizable.Panel className={classes.panel}>Content</Resizable.Panel>
+    </Resizable>
 );
 
-export const Playground: StoryFn<SplitterProps> = (args) => (
-    <Splitter {...args}>
-        <Splitter.Panel defaultSize="30" className={classes.panel}>
+export const Playground: StoryFn<ResizableProps> = (args) => (
+    <Resizable {...args}>
+        <Resizable.Panel defaultSize="30" className={classes.panel}>
             Sidebar
-        </Splitter.Panel>
-        <Splitter.ResizeTrigger>
-            <Splitter.ResizeTriggerSeparator />
-            <Splitter.ResizeTriggerIndicator />
-        </Splitter.ResizeTrigger>
-        <Splitter.Panel className={classes.panel}>Content</Splitter.Panel>
-    </Splitter>
+        </Resizable.Panel>
+        <Resizable.ResizeTrigger>
+            <Resizable.ResizeTriggerSeparator />
+            <Resizable.ResizeTriggerIndicator />
+        </Resizable.ResizeTrigger>
+        <Resizable.Panel className={classes.panel}>Content</Resizable.Panel>
+    </Resizable>
 );
 
 Playground.args = {
@@ -92,7 +92,7 @@ Playground.argTypes = {
             disable: true,
         },
     },
-    splitterRef: {
+    resizableRef: {
         table: {
             disable: true,
         },

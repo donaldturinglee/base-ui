@@ -91,6 +91,7 @@
 @import "./radio-card.css";
 @import "./radio-group.css";
 @import "./rating.css";
+@import "./resizable.css";
 @import "./rich-text-editor.css";
 @import "./scrollable-region.css";
 @import "./segmented-control.css";
@@ -102,7 +103,6 @@
 @import "./skeleton-text.css";
 @import "./slider.css";
 @import "./spinner.css";
-@import "./splitter.css";
 @import "./stack.css";
 @import "./state-label.css";
 @import "./statistic-card.css";

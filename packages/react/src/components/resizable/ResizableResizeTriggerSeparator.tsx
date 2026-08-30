@@ -1,16 +1,16 @@
 import * as React from "react";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { SplitterResizeTriggerSeparatorProps } from "./Splitter.types";
+import type { ResizableResizeTriggerSeparatorProps } from "./Resizable.types";
 
 const classes = {
-    root: "splitter-resize-trigger-separator",
+    root: "resizable-resize-trigger-separator",
 };
 
 // The line one panel is parted from the next by. It fills the trigger it is put in rather than
 // standing anywhere of its own, so a trigger given nothing else is drawn as a line and no more
-function SplitterResizeTriggerSeparator(
-    props: SplitterResizeTriggerSeparatorProps,
+function ResizableResizeTriggerSeparator(
+    props: ResizableResizeTriggerSeparatorProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
@@ -20,13 +20,13 @@ function SplitterResizeTriggerSeparator(
         <span
             ref={ref}
             className={classNames(classes.root, className)}
-            data-component="Splitter.ResizeTriggerSeparator"
+            data-component="Resizable.ResizeTriggerSeparator"
             aria-hidden="true"
             {...rest}
         />
     );
 }
 
-SplitterResizeTriggerSeparator.displayName = "Splitter.ResizeTriggerSeparator";
+ResizableResizeTriggerSeparator.displayName = "Resizable.ResizeTriggerSeparator";
 
-export default fixedForwardRef(SplitterResizeTriggerSeparator);
+export default fixedForwardRef(ResizableResizeTriggerSeparator);
