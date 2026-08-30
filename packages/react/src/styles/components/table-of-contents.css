@@ -1,0 +1,166 @@
+@layer components {
+    /* The document and the shape of it, read across. The nav is what stands still while the
+       document moves, so it is what the reader keeps as they work down the page */
+    .table-of-contents {
+        --table-of-contents-nav-width: 12rem;
+        --table-of-contents-indent: var(--base-size-12);
+        --table-of-contents-rail-width: var(--base-size-2);
+
+        display: flex;
+        position: relative;
+        align-items: flex-start;
+        gap: var(--stack-gap-spacious);
+        width: 100%;
+    }
+
+    /* The document takes whatever room is left over once the nav has had its width. Told it may
+       be narrower than what it holds, so a long word or a wide code block is cut off by the
+       document rather than pushing the nav off the page */
+    .table-of-contents-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Held at the top of whatever is scrolling it, and scrolled in its own right once the page
+       has more headings than there is room for */
+    .table-of-contents-nav {
+        display: flex;
+        position: sticky;
+        top: 0;
+        flex: none;
+        flex-direction: column;
+        gap: var(--stack-gap-condensed);
+        align-self: flex-start;
+        width: var(--table-of-contents-nav-width);
+        max-height: 100vh;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* Which side the nav stands on is said rather than left to the order the parts were written
+       in, so the same markup serves a page with the contents on either hand */
+    .table-of-contents-nav[data-placement="start"] {
+        order: -1;
+    }
+
+    .table-of-contents-nav[data-placement="end"] {
+        order: 1;
+    }
+
+    /* Quieter and smaller than the lines under it: it names the list rather than being one of
+       the things in it. Lined up with the labels of those lines rather than with the edge of the
+       list, since the lines are held in from that edge by their own padding */
+    .table-of-contents-title {
+        margin: 0;
+        padding-inline: var(--control-medium-padding-inline-condensed);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-caption-size);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-caption-line-height);
+    }
+
+    /* The lines stand against the rail rather than against the nav, so a nav scrolled in its own
+       right carries the rail and the bar along with them */
+    .table-of-contents-list {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* A heading standing under another is stepped in from it, so that a glance down the list says
+       which headings belong to which. An h2 is the shallowest a page ordinarily has under its
+       title, so it is where the step starts from, and anything shallower is left where it is */
+    .table-of-contents-item {
+        padding-inline-start: calc(
+            max(var(--table-of-contents-item-depth, 2) - 2, 0) * var(--table-of-contents-indent)
+        );
+    }
+
+    .table-of-contents-link {
+        display: block;
+        padding-block: var(--control-small-padding-block);
+        padding-inline: var(--control-medium-padding-inline-condensed);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+        text-decoration: none;
+        transition: color var(--motion-transition-hover);
+
+        &:hover {
+            color: var(--foreground-color-default);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: var(--focus-outline-offset);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The heading the reader is under is the one thing on the page they are already looking at,
+       so it is drawn as reached rather than as picked: coloured and weighted, with the bar beside
+       it saying how far the section runs */
+    .table-of-contents-link[data-active] {
+        color: var(--foreground-color-accent);
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* The rail the bar runs against, drawn by the list rather than by a part of its own: it is
+       the ground the bar is read against, and there is nothing on it to reach for */
+    .table-of-contents-list:has(.table-of-contents-indicator) {
+        border-inline-start: var(--table-of-contents-rail-width) solid var(--border-color-muted);
+    }
+
+    /* Measured rather than told where to stand, so it covers a run of headings as readily as it
+       covers one. It is drawn over the rail at the same width, which is what makes it read as the
+       part of the page the reader is in rather than as a mark beside it */
+    .table-of-contents-indicator {
+        position: absolute;
+        top: var(--table-of-contents-indicator-y);
+        inset-inline-start: calc(var(--table-of-contents-rail-width) * -1);
+        width: var(--table-of-contents-rail-width);
+        height: var(--table-of-contents-indicator-height);
+        border-radius: var(--border-radius-full);
+        background-color: var(--foreground-color-accent);
+        transition:
+            top var(--motion-transition-state-change),
+            height var(--motion-transition-state-change);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* Where there is no room to stand beside the document, the contents are read before it rather
+       than beside it, and the nav gives up standing still: a bar across the top of a page that is
+       already short of room is room spent on the way somewhere rather than on being there */
+    @media (max-width: 40rem) {
+        .table-of-contents {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .table-of-contents-nav {
+            position: static;
+            order: -1;
+            width: 100%;
+            max-height: none;
+        }
+    }
+
+    /* A line told apart by colour and weight alone says nothing in forced colours, and the bar
+       beside it is what carries the reader's place either way */
+    @media (forced-colors: active) {
+        .table-of-contents-indicator {
+            background-color: highlight;
+        }
+    }
+}
