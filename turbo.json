@@ -9,6 +9,10 @@
             "dependsOn": ["^build"],
             "outputs": ["build/**", "stats.html"]
         },
+        "@gamecrafters/web#build": {
+            "dependsOn": ["^build", "@gamecrafters/docs#storybook:build"],
+            "outputs": ["build/**"]
+        },
         "dev": {
             "dependsOn": ["^build"],
             "outputs": [],

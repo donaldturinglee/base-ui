@@ -5,10 +5,12 @@ import {
     CodeBlock,
     Collapsible,
     Heading,
+    LinkButton,
     Separator,
     Stack,
     Text,
 } from "@gamecrafters/base-ui/react";
+import { storybookUrl } from "../storybook";
 import type { ComponentExample } from "./ComponentExamples.types";
 
 const classes = {
@@ -22,12 +24,12 @@ const classes = {
     // just within the first. All of it is taken away but the edge between the halves, which is
     // what sets the two apart, and the corners go with it since the card is already rounded
     code: "rounded-none border-x-0 border-b-0",
-    // The strip sets a title at the start and everything done to the listing at the end. There is
-    // no title, since the name over the card already says which example this is, so the button is
-    // held to the end rather than left to fall to the start. The line the strip is drawn under
-    // sets it apart from a listing it says something about; here it says nothing, and a rule under
-    // a button alone would divide the listing from what copies it
-    header: "justify-end border-b-0",
+    // The strip sets a title at the start and everything done to the listing at the end, which is
+    // where the two controls fall without being told to: the way out to the Storybook stands where
+    // a title would, and what copies the listing is held to the far end. The line the strip is
+    // drawn under sets it apart from a listing it says something about; here it says nothing, and
+    // a rule under the controls alone would divide the listing from what acts on it
+    header: "border-b-0",
     // The strip along the foot of the card, on the same ground the listing above it stands on, so
     // that the two read as the one half of the card rather than as a row that has wandered in
     // under it
@@ -47,6 +49,24 @@ const classes = {
     // were both already written, so it is put up at once rather than drawn out
     panel: "p-0 text-inherit animate-none",
 };
+
+// What the link to the Storybook is opened with. The Storybook is a document of its own rather
+// than a page the router draws, so it is opened away from the example instead of in place of it,
+// and the reader keeps what they were reading to come back to
+const storybookLinkProps = {
+    target: "_blank",
+    rel: "noreferrer",
+} as const;
+
+// Where in the Storybook the component being read about is written up. A section is named by the
+// title it is collected under, run together and lowered, and the library collects every component
+// under the name it is exported as, so that name is all that has to be given.
+//
+// The section is named rather than a story within it, which leaves the Storybook to open it at the
+// first story it holds. Nothing here has to know what the stories are called, and a component that
+// gains or loses one is still arrived at
+const storybookSection = (component: string) =>
+    `${storybookUrl}?path=/story/components-${component.toLowerCase()}`;
 
 // Which of the library's components a listing reaches for, read off the listing itself. A tag
 // names the component it draws, and a part is named for the component it hangs off, so what
@@ -92,7 +112,13 @@ const fullListing = (name: string, code: string) => {
 // One example, as a card: what it draws above, and what was written to draw it below. The card
 // gives its padding up, since the listing is already set in from its own edges, and the half
 // above is padded on its own instead
-const Example = ({ name, description, preview, code }: ComponentExample) => {
+const Example = ({
+    storybookHref,
+    name,
+    description,
+    preview,
+    code,
+}: ComponentExample & { storybookHref: string }) => {
     // The snippet is what stands, since it is the part a reader came for; the file it would be
     // written in is there to be asked for. Which of the two is showing is held here rather than
     // left to the disclosure, because both the trigger's words and the listing depend on it
@@ -115,12 +141,28 @@ const Example = ({ name, description, preview, code }: ComponentExample) => {
                 </Stack>
                 <Collapsible open={isOpen} onChange={setOpen}>
                     <CodeBlock language="tsx" className={classes.code}>
-                        {/* The clipboard is handed whichever of the two is being read rather than
-                            reading it back off the page, so what is copied is what is shown: a
-                            reader who asked for the whole file is handed the whole file. Every
-                            example on the page carries one, so each is named for the example it
-                            stands under rather than left as another "Copy" among several */}
                         <CodeBlock.Header className={classes.header}>
+                            {/* Where the component is gone through rather than read about: every
+                                way it can be drawn, each of them working, which is more than a
+                                page of examples sets out to show. It leads to the section the
+                                component is written up in rather than to the Storybook's front
+                                door, so the reader arrives at what they were already reading
+                                about. It is named in words rather than by a mark, since there is
+                                nothing a reader would already know to look for */}
+                            <LinkButton
+                                href={storybookHref}
+                                variant="default"
+                                size="small"
+                                {...storybookLinkProps}
+                            >
+                                Storybook
+                            </LinkButton>
+                            {/* The clipboard is handed whichever of the two is being read rather
+                                than reading it back off the page, so what is copied is what is
+                                shown: a reader who asked for the whole file is handed the whole
+                                file. Every example on the page carries one, so each is named for
+                                the example it stands under rather than left as another "Copy"
+                                among several */}
                             <Clipboard value={isOpen ? full : code}>
                                 <Clipboard.Trigger
                                     variant="invisible"
@@ -161,11 +203,26 @@ const Example = ({ name, description, preview, code }: ComponentExample) => {
 // Every example the page shows, in the order they are meant to be read: the plainest first, and
 // whatever it takes to say the rest after it. The cards are the other thing every component page
 // is built the same way out of, so they are written once here and each page hands over what it
-// has to show rather than laying the cards out again
-const ComponentExamples = ({ examples }: { examples: ComponentExample[] }) => {
+// has to show rather than laying the cards out again.
+//
+// The component is named as the library exports it rather than as the page titles it, since that
+// is the name the Storybook collects its stories under. It is said by the page rather than read
+// off a listing, because a listing names whatever it was written with and the outermost of those
+// is as often the thing an example is laid out in as the thing it is about
+const ComponentExamples = ({
+    component,
+    examples,
+}: {
+    component: string;
+    examples: ComponentExample[];
+}) => {
     if (!examples.length) {
         return null;
     }
+
+    // Every card leads to the one section, since it is the component they are all examples of, so
+    // where that is is worked out once here rather than again under each of them
+    const storybookHref = storybookSection(component);
 
     return (
         <Stack gap="spacious">
@@ -176,7 +233,7 @@ const ComponentExamples = ({ examples }: { examples: ComponentExample[] }) => {
                 begins is said by a line rather than left to the spacing alone */}
             <Separator />
             {examples.map((example) => (
-                <Example key={example.name} {...example} />
+                <Example key={example.name} storybookHref={storybookHref} {...example} />
             ))}
         </Stack>
     );

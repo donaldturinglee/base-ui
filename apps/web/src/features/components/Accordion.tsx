@@ -222,7 +222,7 @@ const Accordion = () => (
                 content.
             </Text>
         </Stack>
-        <ComponentExamples examples={examples} />
+        <ComponentExamples component="Accordion" examples={examples} />
         <ComponentProps groups={groups} />
     </Stack>
 );
