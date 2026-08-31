@@ -82,8 +82,8 @@ const sections: SidebarSection[] = [
     {
         title: "Overview",
         links: [
-            { label: "Installation", href: "/getting-started/installation" },
-            { label: "Changelog", href: "/getting-started/changelog" },
+            { label: "Installation", href: "/overview/installation" },
+            { label: "Changelog", href: "/overview/changelog" },
         ],
     },
     {

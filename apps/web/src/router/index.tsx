@@ -42,8 +42,8 @@ const Router = () => (
         <Routes>
             <Route element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="getting-started/installation" element={<Installation />} />
-                <Route path="getting-started/changelog" element={<Changelog />} />
+                <Route path="overview/installation" element={<Installation />} />
+                <Route path="overview/changelog" element={<Changelog />} />
                 <Route path="guides/mcp-server" element={<MCPServer />} />
                 <Route path="primitives/color" element={<PrimitivesColor />} />
                 <Route path="primitives/size" element={<PrimitivesSize />} />
