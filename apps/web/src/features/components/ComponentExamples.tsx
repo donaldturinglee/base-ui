@@ -111,11 +111,16 @@ const indent = (code: string, spaces: number) =>
         .map((line) => (line.trim() ? `${" ".repeat(spaces)}${line}` : line))
         .join("\n");
 
+// The snippet as it stands on the page: what the example has to have in hand, and the element it
+// draws under it. The two are read as the one thing, so they are set down together rather than the
+// second alone, and an example with nothing to get ready is the element by itself
+const snippetOf = ({ setup, code }: ComponentExample) => (setup ? `${setup}\n\n${code}` : code);
+
 // The whole file an example would be written in: what it imports, and the component it is drawn
 // from. It is worked out from the snippet rather than written beside it, so the two cannot fall
 // out of step, and a listing that runs to more than a line is returned in brackets the way it
 // would have been typed
-const fullListing = (name: string, code: string) => {
+const fullListing = ({ name, setup, code }: ComponentExample) => {
     const body = code.includes("\n") ? `  return (\n${indent(code, 4)}\n  )` : `  return ${code}`;
 
     return [
@@ -123,6 +128,9 @@ const fullListing = (name: string, code: string) => {
         ...importsIn(code),
         "",
         `const ${componentName(name)} = () => {`,
+        // What the example got ready stands inside the component, above what it returns, which is
+        // where it would have been typed
+        ...(setup ? [indent(setup, 2), ""] : []),
         body,
         "}",
     ].join("\n");
@@ -131,18 +139,14 @@ const fullListing = (name: string, code: string) => {
 // One example, as a card: what it draws above, and what was written to draw it below. The card
 // gives its padding up, since the listing is already set in from its own edges, and the half
 // above is padded on its own instead
-const Example = ({
-    storybookHref,
-    name,
-    description,
-    preview,
-    code,
-}: ComponentExample & { storybookHref: string }) => {
+const Example = ({ storybookHref, ...example }: ComponentExample & { storybookHref: string }) => {
+    const { name, description, preview } = example;
     // The snippet is what stands, since it is the part a reader came for; the file it would be
     // written in is there to be asked for. Which of the two is showing is held here rather than
     // left to the disclosure, because both the trigger's words and the listing depend on it
     const [isOpen, setOpen] = React.useState(false);
-    const full = fullListing(name, code);
+    const snippet = snippetOf(example);
+    const full = fullListing(example);
 
     return (
         <Stack gap="condensed">
@@ -182,7 +186,7 @@ const Example = ({
                                 file. Every example on the page carries one, so each is named for
                                 the example it stands under rather than left as another "Copy"
                                 among several */}
-                            <Clipboard value={isOpen ? full : code}>
+                            <Clipboard value={isOpen ? full : snippet}>
                                 <Clipboard.Trigger
                                     variant="invisible"
                                     size="small"
@@ -195,7 +199,7 @@ const Example = ({
                             and the two together would say it twice */}
                         {isOpen ? null : (
                             <CodeBlock.Content>
-                                <CodeBlock.Code>{code}</CodeBlock.Code>
+                                <CodeBlock.Code>{snippet}</CodeBlock.Code>
                             </CodeBlock.Content>
                         )}
                         <Collapsible.Panel className={classes.panel}>

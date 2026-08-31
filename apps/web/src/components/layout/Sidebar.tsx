@@ -99,7 +99,7 @@ const sections: SidebarSection[] = [
             { label: "ActionList", href: "/components/action-list" },
             { label: "ActionMenu", href: "/components/action-menu" },
             { label: "Alert", href: "/components/alert" },
-            { label: "Anchored Overlay", href: "/components/anchored-overlay" },
+            { label: "AnchoredOverlay", href: "/components/anchored-overlay" },
             { label: "Aspect Ratio", href: "/components/aspect-ratio" },
             { label: "Attachment", href: "/components/attachment" },
             { label: "Autocomplete", href: "/components/autocomplete" },

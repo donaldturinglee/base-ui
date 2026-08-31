@@ -9,6 +9,11 @@ export type ComponentExample = {
     name: string;
     // What the example is showing, where the name alone does not say it
     description?: string;
+    // What the example has to have in hand before it can be drawn, for a component the caller
+    // keeps the state of and which therefore cannot be written down as an element alone. It stands
+    // above the snippet, and inside the component in the whole file, so that what a reader copies
+    // out of either of them runs
+    setup?: string;
     // The example as it is drawn, which is the component itself rather than a picture of it
     preview: ReactNode;
     // The same example as it is written. It is one string, with its line breaks and its
