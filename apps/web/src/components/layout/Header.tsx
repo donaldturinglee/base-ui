@@ -48,11 +48,14 @@ const Header = () => {
                     </BaseHeader.Link>
                 </BaseHeader.Item>
                 <BaseHeader.Item className={classes.lastItem}>
+                    {/* The mark says which scheme the page is already in rather than which one
+                        the press would bring: a sun where it is day and a moon where it is night.
+                        What the press would do is left to the label, which says it in words */}
                     <IconButton
                         aria-label={
                             isNight ? "Switch to the day scheme" : "Switch to the night scheme"
                         }
-                        icon={isNight ? WeatherSunnyRegular : WeatherMoonRegular}
+                        icon={isNight ? WeatherMoonRegular : WeatherSunnyRegular}
                         variant="default"
                         onClick={() => setColorMode(isNight ? "day" : "night")}
                     />
