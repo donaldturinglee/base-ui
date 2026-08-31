@@ -8,6 +8,7 @@ import {
     Alert,
     AnchoredOverlay,
     AspectRatio,
+    Avatar,
     Box,
     Changelog,
     Home,
@@ -53,6 +54,7 @@ const Router = () => (
                 <Route path="components/alert" element={<Alert />} />
                 <Route path="components/anchored-overlay" element={<AnchoredOverlay />} />
                 <Route path="components/aspect-ratio" element={<AspectRatio />} />
+                <Route path="components/avatar" element={<Avatar />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/stack" element={<Stack />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
