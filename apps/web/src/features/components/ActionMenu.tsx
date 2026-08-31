@@ -22,16 +22,16 @@ const classes = {
 //
 // The card draws what it is handed in a column, and a column runs what stands in it out to its
 // width. A menu is opened from a button, and a button is as wide as the words on it, so the
-// example is held to the start of the column: run out, the label would sit in the middle of the
-// card with the chevron off at the far edge, and the menu would come out under a button several
-// times its width. The Stack is the page's own furniture, as the card around it is, so the
-// listing beneath is of the menu alone.
+// example is held to its own width and stood on the centre of the column: run out, the label would
+// sit alone in the middle with the chevron off at the far edge, and the menu would come out under
+// a button several times its width. The Stack is the page's own furniture, as the card around it
+// is, so the listing beneath is of the menu alone.
 //
 // The page and the component it is about are both called ActionMenu, so the component is brought
 // in under a name saying which of the two it is. The listing beneath says ActionMenu, as an
 // application importing it would
 const defaultPreview = (
-    <Stack align="start">
+    <Stack align="center">
         <ActionMenuComponent>
             <ActionMenuComponent.Button>Actions</ActionMenuComponent.Button>
             <ActionMenuComponent.Overlay>

@@ -34,9 +34,9 @@ const overlayProps = {
 // whatever the caller wrote.
 //
 // The card draws what it is handed in a column, and a column runs what stands in it out to its
-// width, so the button is held to the start of it rather than run across the card. The Stack is
-// the page's own furniture, as the card around it is, so the listing beneath is of the overlay
-// alone.
+// width, so the button is held to its own width and stood on the centre of it rather than run
+// across the card. The Stack is the page's own furniture, as the card around it is, so the listing
+// beneath is of the overlay alone.
 //
 // The page and the component it is about are both called AnchoredOverlay, so the component is
 // brought in under a name saying which of the two it is. The listing beneath says AnchoredOverlay,
@@ -45,7 +45,7 @@ const DefaultPreview = () => {
     const [open, setOpen] = React.useState(false);
 
     return (
-        <Stack align="start">
+        <Stack align="center">
             <AnchoredOverlayComponent
                 open={open}
                 onOpen={() => setOpen(true)}
