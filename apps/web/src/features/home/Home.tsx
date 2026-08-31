@@ -1,8 +1,46 @@
-import { HomeHero } from "./components";
+import { ArrowRightRegular } from "@gamecrafters/base-ui-icons";
+import { Heading, Label, LinkButton, Stack, Text } from "@gamecrafters/base-ui/react";
+import { version } from "@gamecrafters/base-ui/package.json";
 
-// The page the site opens on. The row across the top and the column of links stand around every
+const classes = {
+    // The opening is read as prose rather than looked at as a specimen, so it is held to a
+    // measure instead of running out to the width of whatever it is opened in
+    root: "max-w-[46rem]",
+};
+
+// The page the site opens on: what the library is and what it is for, said once, above anything
+// asking to be read in order. The row across the top and the column of links stand around every
 // page rather than belonging to this one, so they are the layout's and what is written here is
-// only what is read in the region between them
-const Home = () => <HomeHero />;
+// only what is read in the region between them.
+//
+// The version is taken from the package itself so the page cannot say an old one
+const Home = () => (
+    <Stack className={classes.root} gap="normal" align="start" paddingBlock="spacious">
+        <Label variant="accent" size="medium">
+            v{version}
+        </Label>
+        <Heading as="h1" size="large">
+            The design system GameCrafters draws its interfaces with
+        </Heading>
+        <Text as="p" size="large">
+            Base UI is a React implementation of the GameCrafters design language: the components an
+            interface is assembled from, the tokens they are drawn by, and the two colour schemes
+            those tokens resolve under. Install it, import one stylesheet, and the rest is a
+            component import.
+        </Text>
+        <Stack direction="horizontal" gap="condensed" wrap="wrap">
+            <LinkButton
+                href="https://github.com/donaldturinglee/base-ui"
+                target="_blank"
+                rel="noreferrer"
+                variant="primary"
+                size="large"
+                trailingVisual={ArrowRightRegular}
+            >
+                Read the source
+            </LinkButton>
+        </Stack>
+    </Stack>
+);
 
 export default Home;
