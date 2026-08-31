@@ -1,7 +1,7 @@
 {
   "name": "@gamecrafters/base-ui-mcp",
-  "version": "0.0.1",
-  "description": "The Model Context Protocol server the Base UI Design System is read through.",
+  "version": "0.0.2",
+  "description": "An MCP server implementation that connects AI tools to GameCrafters' Base UI Design System.",
   "type": "module",
   "bin": {
     "base-ui-mcp": "build/main.js"
