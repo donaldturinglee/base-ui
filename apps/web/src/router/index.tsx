@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { Layout } from "../components";
 import {
     Accordion,
+    ActionBar,
     GettingStartedInstallation,
     Home,
     NotFound,
@@ -38,6 +39,7 @@ const Router = () => (
                 <Route path="primitives/size" element={<PrimitivesSize />} />
                 <Route path="primitives/typography" element={<PrimitivesTypography />} />
                 <Route path="components/accordion" element={<Accordion />} />
+                <Route path="components/action-bar" element={<ActionBar />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
                     under it in a build is the Storybook's own files, answered as files before
                     the site is reached, so a path written here would never be read */}

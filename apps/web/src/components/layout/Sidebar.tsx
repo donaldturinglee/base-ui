@@ -95,7 +95,7 @@ const sections: SidebarSection[] = [
         // Every component the library exports, named as it is imported
         links: [
             { label: "Accordion", href: "/components/accordion" },
-            { label: "Action Bar", href: "/components/action-bar" },
+            { label: "ActionBar", href: "/components/action-bar" },
             { label: "Action List", href: "/components/action-list" },
             { label: "Action Menu", href: "/components/action-menu" },
             { label: "Alert", href: "/components/alert" },

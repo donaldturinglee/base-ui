@@ -83,7 +83,6 @@ const headingLevel = '"h2" | "h3" | "h4" | "h5" | "h6"';
 const styling = {
     name: "className",
     type: "string",
-    required: false,
     description: "Class name for custom styling",
 };
 
@@ -93,7 +92,6 @@ const styling = {
 const polymorphic = {
     name: "as",
     type: "React.ElementType",
-    required: false,
     default: '"div"',
     description: "The element or component this is drawn as, in place of its default",
 };
@@ -106,13 +104,11 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "value",
                 type: "string[]",
-                required: false,
                 description: "Which items are open, where the caller keeps hold of the state",
             },
             {
                 name: "defaultValue",
                 type: "string[]",
-                required: false,
                 default: "[]",
                 description:
                     "Which items start out open, where the accordion keeps hold of the state itself",
@@ -120,21 +116,18 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "multiple",
                 type: "boolean",
-                required: false,
                 default: "false",
                 description: "Whether more than one item can stand open at once",
             },
             {
                 name: "disabled",
                 type: "boolean",
-                required: false,
                 default: "false",
                 description: "Stops every item being opened or closed",
             },
             {
                 name: "headingLevel",
                 type: headingLevel,
-                required: false,
                 default: '"h3"',
                 description:
                     "What each header is as a heading, so that the accordion sits at the right depth in the document outline",
@@ -142,7 +135,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "keepMounted",
                 type: "boolean",
-                required: false,
                 default: "true",
                 description:
                     "Whether a closed panel stays on the page. It does by default, so that its header always has something to point at",
@@ -150,7 +142,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "hiddenUntilFound",
                 type: "boolean",
-                required: false,
                 default: "false",
                 description:
                     "Lets the browser's own find-in-page reach a closed panel, opening the item it was found in rather than passing it over",
@@ -160,7 +151,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "onChange",
                 type: "(value: string[]) => void",
-                required: false,
                 description:
                     "Called with every item that is open whenever any of them opens or closes",
             },
@@ -172,14 +162,12 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "value",
                 type: "string",
-                required: false,
                 description:
                     "Names the item to the accordion around it. One is worked out where it is left out, which is enough for an accordion nobody is holding the state of",
             },
             {
                 name: "disabled",
                 type: "boolean",
-                required: false,
                 description: "Stops the item being opened or closed",
             },
             styling,
@@ -192,7 +180,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "headingLevel",
                 type: headingLevel,
-                required: false,
                 description:
                     "The heading this one button sits in, which takes the place of the accordion's own level",
             },

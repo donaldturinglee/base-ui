@@ -2,3 +2,4 @@
 // the tables they are all built the same way out of are their own, and are reached through them
 // rather than around them
 export { default as Accordion } from "./Accordion";
+export { default as ActionBar } from "./ActionBar";
