@@ -5,7 +5,12 @@
 
        The colour the dot takes is held on a property of its own, since the variant sets the
        ground for a filled badge and only the dot for a plain one, and both come off the one
-       class */
+       class.
+
+       A badge is drawn as whatever it is told to be, an anchor among them, so the underline that
+       would arrive with one is taken off here rather than under each variant in turn: a badge is
+       read as a pill wherever it stands, and which element it was drawn as is not something it
+       should change shape over */
     .badge {
         --badge-indicator-color: var(--foreground-color-muted);
         --badge-visual-size: var(--base-size-12);
@@ -14,6 +19,7 @@
         align-items: center;
         gap: var(--base-size-4);
         white-space: nowrap;
+        text-decoration: none;
         line-height: 1;
         font-size: var(--text-body-size-small);
         font-weight: var(--base-text-weight-medium);
@@ -147,7 +153,6 @@
         background-color: transparent;
         color: var(--foreground-color-accent);
         border-color: transparent;
-        text-decoration: none;
         text-underline-offset: 0.05rem;
     }
 

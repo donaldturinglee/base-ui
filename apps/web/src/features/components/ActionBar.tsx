@@ -59,7 +59,6 @@ const visual = "React.ElementType | React.ReactElement | null";
 const styling = {
     name: "className",
     type: "string",
-    required: false,
     description: "Class name for custom styling",
 };
 
@@ -69,14 +68,12 @@ const styling = {
 const ariaLabel = {
     name: "aria-label",
     type: "string",
-    required: false,
     description: "Names it in words, where there are none on the page to point at",
 };
 
 const ariaLabelledBy = {
     name: "aria-labelledby",
     type: "string",
-    required: false,
     description: "Names it by whatever on the page already says what it is, in place of aria-label",
 };
 
@@ -92,7 +89,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "size",
                 type: size,
-                required: false,
                 default: '"medium"',
                 description:
                     "How much room each item of the bar is given. It is set on the bar rather than on the items, so they are all drawn to the same size",
@@ -100,7 +96,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "flush",
                 type: "boolean",
-                required: false,
                 default: "false",
                 description:
                     "Lets the bar sit flush with whatever holds it, rather than held in from the edges",
@@ -108,7 +103,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "gap",
                 type: gap,
-                required: false,
                 default: '"condensed"',
                 description: "How much room is left between one item and the next",
             },
@@ -123,14 +117,12 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "leadingVisual",
                 type: visual,
-                required: false,
                 description:
                     "Drawn before the label, where an icon says something the words leave out",
             },
             {
                 name: "disabled",
                 type: "boolean",
-                required: false,
                 default: "false",
                 description:
                     "Stops the action being taken, in the bar and in the overflow menu alike",
@@ -139,7 +131,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "onClick",
                 type: "React.MouseEventHandler",
-                required: false,
                 description: "Called when the action is taken",
             },
         ],
@@ -156,7 +147,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "disabled",
                 type: "boolean",
-                required: false,
                 default: "false",
                 description:
                     "Stops the action being taken, in the bar and in the overflow menu alike",
@@ -167,7 +157,6 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "onClick",
                 type: "React.MouseEventHandler",
-                required: false,
                 description: "Called when the action is taken",
             },
         ],
@@ -199,14 +188,12 @@ const groups: ComponentPropGroup[] = [
             {
                 name: "overflowIcon",
                 type: visual,
-                required: false,
                 description:
                     "Stands in for the icon once the menu itself has moved into the overflow menu",
             },
             {
                 name: "returnFocusRef",
                 type: "React.RefObject<HTMLElement | null>",
-                required: false,
                 description:
                     "Takes focus once the menu closes, in place of the button that opened it",
             },

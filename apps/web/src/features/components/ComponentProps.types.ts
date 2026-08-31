@@ -7,7 +7,10 @@ export type ComponentProp = {
     // The type as the library writes it rather than as it resolves, since what a caller is held
     // to is the name in front of it
     type: string;
-    required: boolean;
+    // Whether the prop has to be given. Only one that has to says so: a prop is optional unless
+    // it says otherwise, so the rest are left to say nothing rather than to answer "no", which
+    // would be read as a value they carry
+    required?: boolean;
     // What the prop comes to where the caller leaves it out, written as it would be given. A prop
     // that takes its value from whatever it stands in has none of its own to name, and neither has
     // one there is nothing to fall back to

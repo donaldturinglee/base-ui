@@ -1,4 +1,5 @@
 import {
+    Badge,
     Code,
     DataTable,
     Heading,
@@ -6,7 +7,6 @@ import {
     Stack,
     Table,
     Text,
-    Token,
 } from "@gamecrafters/base-ui/react";
 import type { Column } from "@gamecrafters/base-ui/react";
 import type { ComponentProp, ComponentPropGroup } from "./ComponentProps.types";
@@ -47,7 +47,11 @@ const Name = ({ name, required }: ComponentProp) => (
         <Text size="small" className={classes.name}>
             {name}
         </Text>
-        {required ? <Token size="small" text="Required" /> : null}
+        {required ? (
+            <Badge variant="outline" size="small">
+                Required
+            </Badge>
+        ) : null}
     </div>
 );
 
