@@ -5,3 +5,4 @@ export { default as Accordion } from "./Accordion";
 export { default as ActionBar } from "./ActionBar";
 export { default as ActionList } from "./ActionList";
 export { default as ActionMenu } from "./ActionMenu";
+export { default as Alert } from "./Alert";

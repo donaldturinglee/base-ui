@@ -5,6 +5,7 @@ import {
     ActionBar,
     ActionList,
     ActionMenu,
+    Alert,
     GettingStartedInstallation,
     Home,
     NotFound,
@@ -44,6 +45,7 @@ const Router = () => (
                 <Route path="components/action-bar" element={<ActionBar />} />
                 <Route path="components/action-list" element={<ActionList />} />
                 <Route path="components/action-menu" element={<ActionMenu />} />
+                <Route path="components/alert" element={<Alert />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
                     under it in a build is the Storybook's own files, answered as files before
                     the site is reached, so a path written here would never be read */}

@@ -75,6 +75,25 @@ const componentsIn = (code: string) => [
     ...new Set([...code.matchAll(/<([A-Z][A-Za-z0-9]*)/g)].map(([, component]) => component)),
 ];
 
+// Whether a tag names an icon rather than a component. The icons are a package of their own rather
+// than part of the library, so a listing that draws one imports it from somewhere else. Every icon
+// is named for the weight it is drawn at and the package ships the one weight, so the name says
+// which of the two packages a tag came from and the listing does not have to be told
+const isIcon = (component: string) => component.endsWith("Regular");
+
+// What a listing imports, a line to the package it is imported from. A package nothing was drawn
+// from is left out rather than written as an empty pair of braces
+const importsIn = (code: string) => {
+    const components = componentsIn(code);
+    const icons = components.filter(isIcon);
+    const rest = components.filter((component) => !isIcon(component));
+
+    return [
+        rest.length ? `import { ${rest.join(", ")} } from "@gamecrafters/base-ui/react";` : "",
+        icons.length ? `import { ${icons.join(", ")} } from "@gamecrafters/base-ui-icons";` : "",
+    ].filter(Boolean);
+};
+
 // An example is named in words on the page and a component is named in one, so the words are run
 // together to make a name the listing can be written under
 const componentName = (name: string) =>
@@ -101,7 +120,7 @@ const fullListing = (name: string, code: string) => {
 
     return [
         'import React from "react";',
-        `import { ${componentsIn(code).join(", ")} } from "@gamecrafters/base-ui/react";`,
+        ...importsIn(code),
         "",
         `const ${componentName(name)} = () => {`,
         body,
