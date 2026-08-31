@@ -17,6 +17,7 @@ import {
     PrimitivesColor,
     PrimitivesSize,
     PrimitivesTypography,
+    Stack,
     Storybook,
 } from "../features";
 
@@ -53,6 +54,7 @@ const Router = () => (
                 <Route path="components/anchored-overlay" element={<AnchoredOverlay />} />
                 <Route path="components/aspect-ratio" element={<AspectRatio />} />
                 <Route path="components/box" element={<Box />} />
+                <Route path="components/stack" element={<Stack />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
                     under it in a build is the Storybook's own files, answered as files before
                     the site is reached, so a path written here would never be read */}
