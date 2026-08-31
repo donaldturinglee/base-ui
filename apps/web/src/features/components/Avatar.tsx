@@ -27,13 +27,18 @@ const setup = `const source = "https://avatars.githubusercontent.com/u/7143434?v
 // beside a name already written out is decorative and says as much by staying silent; one standing
 // on its own, as it does here, is all there is to go on.
 //
+// The Stack that stands it in the middle of the card is the page's own furniture, as the card
+// around it is, so the listing beneath is of the avatar alone.
+//
 // The page and the component it is about are both called Avatar, so the component is brought in
 // under a name saying which of the two it is. The listing beneath says Avatar, as an application
 // importing it would
 const defaultPreview = (
-    <AvatarComponent>
-        <AvatarComponent.Image src={source} alt="Mona Lisa Octocat" />
-    </AvatarComponent>
+    <Stack align="center">
+        <AvatarComponent>
+            <AvatarComponent.Image src={source} alt="Mona Lisa Octocat" />
+        </AvatarComponent>
+    </Stack>
 );
 
 // The same example as it is written, which is what a reader takes away with them. Nothing on the
@@ -46,7 +51,7 @@ const defaultCode = `<Avatar>
 // an example, since a shape is read against the other rather than on its own, and both are given a
 // size the shape can be seen at
 const shapePreview = (
-    <Stack direction="horizontal" gap="normal" align="center">
+    <Stack direction="horizontal" gap="normal" align="center" justify="center">
         <AvatarComponent size={48}>
             <AvatarComponent.Image src={source} alt="Mona Lisa Octocat" />
         </AvatarComponent>
@@ -57,8 +62,11 @@ const shapePreview = (
 );
 
 // The stack is part of what is being shown rather than the page's own furniture, since what the
-// example is about is the two read beside one another, so it is written out with them
-const shapeCode = `<Stack direction="horizontal" gap="normal" align="center">
+// example is about is the two read beside one another, so it is written out with them, and
+// everything it was told with it. The example above is set in the middle by a Stack that does
+// nothing else, which is the page's own and is left out; nothing is held back from one that is
+// already being shown
+const shapeCode = `<Stack direction="horizontal" gap="normal" align="center" justify="center">
     <Avatar size={48}>
         <Avatar.Image src={source} alt="Mona Lisa Octocat" />
     </Avatar>
@@ -72,7 +80,7 @@ const shapeCode = `<Stack direction="horizontal" gap="normal" align="center">
 // keep it where it never does. The second is whoever has no picture at all, which is the same
 // fallback standing on its own
 const fallbackPreview = (
-    <Stack direction="horizontal" gap="normal" align="center">
+    <Stack direction="horizontal" gap="normal" align="center" justify="center">
         <AvatarComponent size={48}>
             <AvatarComponent.Image src={source} alt="Mona Lisa Octocat" />
             <AvatarComponent.Fallback name="Mona Lisa Octocat" />
@@ -83,7 +91,7 @@ const fallbackPreview = (
     </Stack>
 );
 
-const fallbackCode = `<Stack direction="horizontal" gap="normal" align="center">
+const fallbackCode = `<Stack direction="horizontal" gap="normal" align="center" justify="center">
     <Avatar size={48}>
         <Avatar.Image src={source} alt="Mona Lisa Octocat" />
         <Avatar.Fallback name="Mona Lisa Octocat" />
