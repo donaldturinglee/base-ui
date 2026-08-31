@@ -79,7 +79,7 @@ const renderLink = (
 // without icons, which would say nothing the labels have not already said
 const sections: SidebarSection[] = [
     {
-        title: "Getting Started",
+        title: "Overview",
         links: [{ label: "Installation", href: "/getting-started/installation" }],
     },
     {
@@ -100,7 +100,7 @@ const sections: SidebarSection[] = [
             { label: "ActionMenu", href: "/components/action-menu" },
             { label: "Alert", href: "/components/alert" },
             { label: "AnchoredOverlay", href: "/components/anchored-overlay" },
-            { label: "Aspect Ratio", href: "/components/aspect-ratio" },
+            { label: "AspectRatio", href: "/components/aspect-ratio" },
             { label: "Attachment", href: "/components/attachment" },
             { label: "Autocomplete", href: "/components/autocomplete" },
             { label: "Avatar", href: "/components/avatar" },
