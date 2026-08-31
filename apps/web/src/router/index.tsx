@@ -8,6 +8,7 @@ import {
     Alert,
     AnchoredOverlay,
     AspectRatio,
+    Box,
     Changelog,
     Home,
     Installation,
@@ -51,6 +52,7 @@ const Router = () => (
                 <Route path="components/alert" element={<Alert />} />
                 <Route path="components/anchored-overlay" element={<AnchoredOverlay />} />
                 <Route path="components/aspect-ratio" element={<AspectRatio />} />
+                <Route path="components/box" element={<Box />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
                     under it in a build is the Storybook's own files, answered as files before
                     the site is reached, so a path written here would never be read */}
