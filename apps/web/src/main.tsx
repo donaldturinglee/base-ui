@@ -38,6 +38,16 @@ createRoot(container).render(
         <LocaleProvider locale={locale}>
             <ThemeProvider className={classes.theme} colorMode="auto">
                 <Router />
+                {/* Where everything drawn outside the page it was opened from goes: a menu, an
+                    overlay, a dialog. The library puts those on the body unless it is given
+                    somewhere of its own, and the body stands outside the element carrying
+                    `data-theme`, which is what every token is declared against — so a menu put
+                    there would be drawn with none of them resolving.
+
+                    It stands inside the provider and so inside the theme, and holds nothing
+                    itself: what is put into it is placed against the page rather than laid out
+                    where it was written, so it takes no room in the column */}
+                <div data-portal-root />
             </ThemeProvider>
         </LocaleProvider>
     </React.StrictMode>,

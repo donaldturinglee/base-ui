@@ -97,7 +97,7 @@ const sections: SidebarSection[] = [
             { label: "Accordion", href: "/components/accordion" },
             { label: "ActionBar", href: "/components/action-bar" },
             { label: "ActionList", href: "/components/action-list" },
-            { label: "Action Menu", href: "/components/action-menu" },
+            { label: "ActionMenu", href: "/components/action-menu" },
             { label: "Alert", href: "/components/alert" },
             { label: "Anchored Overlay", href: "/components/anchored-overlay" },
             { label: "Aspect Ratio", href: "/components/aspect-ratio" },
