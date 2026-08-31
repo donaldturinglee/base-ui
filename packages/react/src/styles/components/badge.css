@@ -116,6 +116,52 @@
         color: var(--foreground-color-sponsors);
     }
 
+    /* No ground at all, and the border the badge already declared coloured in rather than left
+       transparent. It is the one variant that adds no colour to a row, so it is drawn in the
+       text's own and reads as a badge by its shape alone */
+    .badge-outline {
+        --badge-indicator-color: var(--foreground-color-muted);
+
+        background-color: transparent;
+        color: var(--foreground-color-default);
+        border-color: var(--border-color-default);
+    }
+
+    /* The border off as well, so nothing is drawn but the word. It keeps the height and the room
+       to the side that every other badge takes, so one that falls back to it beside others sits
+       where it would have sat rather than closing the row up */
+    .badge-invisible {
+        --badge-indicator-color: var(--foreground-color-muted);
+
+        background-color: transparent;
+        color: var(--foreground-color-default);
+        border-color: transparent;
+    }
+
+    /* The word in the colour a link is read in, on no ground and inside no border, so what is
+       left is the badge saying where it goes. The underline is kept off until the pointer is on
+       it, as it is on a link anywhere else */
+    .badge-link {
+        --badge-indicator-color: var(--background-color-accent-emphasis);
+
+        background-color: transparent;
+        color: var(--foreground-color-accent);
+        border-color: transparent;
+        text-decoration: none;
+        text-underline-offset: 0.05rem;
+    }
+
+    /* Only a badge that leads somewhere reads as something to follow. A badge is a span until it
+       is told otherwise, and the colour alone would have one that leads nowhere answering the
+       pointer as though it did */
+    .badge-link:is(a, button) {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     /* The dot carries the colour, so the pill around it goes back to plain. It is written after
        the variants rather than given a weight of its own, so what it takes off is taken off by
        coming later and the property the variant set on the way past is left where it is */

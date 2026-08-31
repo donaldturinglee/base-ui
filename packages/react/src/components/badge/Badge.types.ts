@@ -3,9 +3,14 @@ import type { PolymorphicProps } from "../../utilities/polymorphic";
 import type { ButtonVisual } from "../button";
 
 // What the badge is saying, rather than the colour it happens to be drawn in, so a scheme can be
-// changed underneath it without every name going stale. The set is the one Label carries, less
-// the two that only make sense on an outline: a badge is filled, and a fill has nothing to say
-// twice over
+// changed underneath it without every name going stale. The roles are the ones Label carries,
+// less the ones that only make sense on an outline: a badge is filled, and a fill has nothing to
+// say twice over.
+//
+// Outline, invisible and link stand apart from them. None of the three names a role: the first
+// two say how much of the badge is drawn rather than what it is for, the ground taken off and
+// then the border after it, and the last says the badge leads somewhere. So they come after the
+// roles rather than among them
 export type BadgeVariant =
     | "default"
     | "primary"
@@ -15,7 +20,10 @@ export type BadgeVariant =
     | "severe"
     | "danger"
     | "done"
-    | "sponsors";
+    | "sponsors"
+    | "outline"
+    | "invisible"
+    | "link";
 
 // Whether the colour is the badge's own ground, or a dot standing inside a plain one. A row of
 // filled badges is read as a row of colours; a row of dots is read as a column of states, which

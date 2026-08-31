@@ -28,6 +28,9 @@ const badgeVariants = cva("badge", {
             danger: "badge-danger",
             done: "badge-done",
             sponsors: "badge-sponsors",
+            outline: "badge-outline",
+            invisible: "badge-invisible",
+            link: "badge-link",
         } satisfies Record<BadgeVariant, string>,
         // A filled badge is the variant's own ground, so it adds nothing here. The dot
         // appearance takes the ground back off and is written after the variants in the

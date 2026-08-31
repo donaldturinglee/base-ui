@@ -61,6 +61,38 @@ describe("Badge", () => {
         expect(badge).not.toHaveClass("badge-default");
     });
 
+    it("applies the outline variant", () => {
+        render(<Badge variant="outline">Outline</Badge>);
+        const badge = screen.getByText("Outline");
+        expect(badge).toHaveClass("badge-outline");
+        expect(badge).not.toHaveClass("badge-default");
+    });
+
+    it("applies the invisible variant", () => {
+        render(<Badge variant="invisible">Invisible</Badge>);
+        const badge = screen.getByText("Invisible");
+        expect(badge).toHaveClass("badge-invisible");
+        expect(badge).not.toHaveClass("badge-default");
+    });
+
+    it("applies the link variant", () => {
+        render(<Badge variant="link">Link</Badge>);
+        const badge = screen.getByText("Link");
+        expect(badge).toHaveClass("badge-link");
+        expect(badge).not.toHaveClass("badge-default");
+    });
+
+    it("keeps the link variant on the element it is drawn as", () => {
+        render(
+            <Badge as="a" href="https://github.com" variant="link">
+                Link
+            </Badge>,
+        );
+        const badge = screen.getByText("Link");
+        expect(badge.tagName).toBe("A");
+        expect(badge).toHaveClass("badge-link");
+    });
+
     it("draws no dot for the filled appearance", () => {
         const { container } = render(<Badge>Default</Badge>);
         expect(container.querySelector(".badge-indicator")).toBeNull();
