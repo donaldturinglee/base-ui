@@ -88,8 +88,33 @@ jobs:
         if: ${{ github.event_name == 'release' || !inputs.dry-run }}
         run: npm publish --workspace @gamecrafters/base-ui --provenance --access public
 
+      # The server is versioned apart from the library, and the tag is held against the library
+      # alone, so a release that only moves the library leaves the server where it was. An upload
+      # of a version the registry already holds is answered with an error rather than with
+      # nothing, which would fail a release that had already shipped, so what is there is asked
+      # for first and the publish below is passed over
+      - name: Check whether the MCP server has already been published
+        id: mcp
+        run: |
+          version="$(node -p "require('./packages/mcp/package.json').version")"
+          if npm view "@gamecrafters/base-ui-mcp@${version}" version > /dev/null 2>&1; then
+            echo "::notice::The MCP server is already published at ${version}, so it is left as it is"
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # The server is a package of its own beside the library rather than part of it, so it is
+      # sent under its own name and on its own version
+      - name: Publish the MCP server
+        if: ${{ (github.event_name == 'release' || !inputs.dry-run) && steps.mcp.outputs.published == 'false' }}
+        run: npm publish --workspace @gamecrafters/base-ui-mcp --provenance --access public
+
       # A dry run does everything a publish does but the upload, so the workflow can be tried
-      # out before a release depends on it
+      # out before a release depends on it. Both are listed, since either of them can be what a
+      # release was cut for
       - name: List what a publish would send
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
-        run: npm publish --workspace @gamecrafters/base-ui --dry-run
+        run: |
+          npm publish --workspace @gamecrafters/base-ui --dry-run
+          npm publish --workspace @gamecrafters/base-ui-mcp --dry-run
