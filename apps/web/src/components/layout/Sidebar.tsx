@@ -115,7 +115,7 @@ const sections: SidebarSection[] = [
             { label: "Attachment", href: "/components/attachment" },
             { label: "Autocomplete", href: "/components/autocomplete" },
             { label: "Avatar", href: "/components/avatar" },
-            { label: "Avatar Stack", href: "/components/avatar-stack" },
+            { label: "AvatarStack", href: "/components/avatar-stack" },
             { label: "Badge", href: "/components/badge" },
             { label: "Banner", href: "/components/banner" },
             { label: "Blankslate", href: "/components/blankslate" },
