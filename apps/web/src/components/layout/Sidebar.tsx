@@ -74,13 +74,24 @@ const renderLink = (
 };
 
 // Where the reader can go from here, in the order the library is learned: the one thing that has
-// to be done before any of it can be used, the primitives everything else is drawn by, and then
-// the components themselves. It is read down rather than picked over, so the links are written
-// without icons, which would say nothing the labels have not already said
+// to be done before any of it can be used, the guides that are read through rather than looked
+// up, the primitives everything else is drawn by, and then the components themselves. It is read
+// down rather than picked over, so the links are written without icons, which would say nothing
+// the labels have not already said
 const sections: SidebarSection[] = [
     {
         title: "Overview",
-        links: [{ label: "Installation", href: "/getting-started/installation" }],
+        links: [
+            { label: "Installation", href: "/getting-started/installation" },
+            { label: "Changelog", href: "/getting-started/changelog" },
+        ],
+    },
+    {
+        // A guide is read through from the top rather than looked up, so it stands near the head
+        // of the column where a reader arrives at it, rather than under the components, where the
+        // length of that list would bury it
+        title: "Guides",
+        links: [{ label: "MCP Server", href: "/guides/mcp-server" }],
     },
     {
         title: "Primitives",

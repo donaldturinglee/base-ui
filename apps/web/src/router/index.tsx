@@ -8,8 +8,10 @@ import {
     Alert,
     AnchoredOverlay,
     AspectRatio,
+    Changelog,
     Home,
     Installation,
+    MCPServer,
     NotFound,
     PrimitivesColor,
     PrimitivesSize,
@@ -37,6 +39,8 @@ const Router = () => (
             <Route element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="getting-started/installation" element={<Installation />} />
+                <Route path="getting-started/changelog" element={<Changelog />} />
+                <Route path="guides/mcp-server" element={<MCPServer />} />
                 <Route path="primitives/color" element={<PrimitivesColor />} />
                 <Route path="primitives/size" element={<PrimitivesSize />} />
                 <Route path="primitives/typography" element={<PrimitivesTypography />} />
