@@ -44,7 +44,7 @@ const SignIn = () => (
 // What has to be done before any of the library can be used, in the order it is done in. It is
 // three steps rather than one because the stylesheet and the providers are settled at the root and
 // nowhere else, and a component reached for before either of them is drawn by nothing
-const GettingStartedInstallation = () => (
+const Installation = () => (
     <Stack gap="spacious" paddingBlock="spacious">
         <Stack gap="normal" className={classes.prose}>
             <Heading as="h1" size="large">
@@ -121,4 +121,4 @@ const GettingStartedInstallation = () => (
     </Stack>
 );
 
-export default GettingStartedInstallation;
+export default Installation;

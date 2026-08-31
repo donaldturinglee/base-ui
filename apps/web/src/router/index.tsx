@@ -8,8 +8,8 @@ import {
     Alert,
     AnchoredOverlay,
     AspectRatio,
-    GettingStartedInstallation,
     Home,
+    Installation,
     NotFound,
     PrimitivesColor,
     PrimitivesSize,
@@ -36,10 +36,7 @@ const Router = () => (
         <Routes>
             <Route element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route
-                    path="getting-started/installation"
-                    element={<GettingStartedInstallation />}
-                />
+                <Route path="getting-started/installation" element={<Installation />} />
                 <Route path="primitives/color" element={<PrimitivesColor />} />
                 <Route path="primitives/size" element={<PrimitivesSize />} />
                 <Route path="primitives/typography" element={<PrimitivesTypography />} />

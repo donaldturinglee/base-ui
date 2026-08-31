@@ -4,7 +4,7 @@
 // themselves, the Storybook they are developed and read in, and then what is answered with when a
 // path names none of them
 export * from "./home";
-export * from "./getting-started";
+export * from "./overview";
 export * from "./primitives";
 export * from "./components";
 export * from "./storybook";
