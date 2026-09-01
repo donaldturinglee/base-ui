@@ -8,11 +8,16 @@
 
        The colours come through custom properties, so a caller can repaint the stars without
        having to unpick the classes they came with. The fallback value lives here as well, so a
-       rating is drawn empty rather than unfilled until it knows where it stands */
+       rating is drawn empty rather than unfilled until it knows where it stands.
+
+       The filled stars are drawn in the colour the system already keeps for a star, which is a
+       bright yellow in both schemes rather than the dark gold that stands behind a warning. It
+       is named for the button a star was first drawn on, but it is the star's colour rather
+       than the button's */
     .rating {
         --rating-value: 0;
         --rating-track-color: var(--border-color-default);
-        --rating-fill-color: var(--background-color-attention-emphasis);
+        --rating-fill-color: var(--button-star-icon-color);
 
         display: inline-flex;
         align-items: center;
