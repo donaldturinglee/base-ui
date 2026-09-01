@@ -13,25 +13,18 @@ import {
     Slider,
     Stack,
     Text,
-    ToggleSwitch,
 } from "@gamecrafters/base-ui/react";
 
 const classes = {
     // The specimens are laid out as many to a line as there is room for, and share out whatever
     // is left over rather than leaving a ragged end. The measure is the narrowest a tile can be
     // and still draw what stands in it at the size it was meant to be read at, which is what puts
-    // all five on one line on a page as wide as the layout allows and folds them as it narrows
+    // all four on one line on a page as wide as the layout allows and folds them as it narrows
     grid: "grid grid-cols-[repeat(auto-fit,minmax(13.5rem,1fr))] gap-[var(--base-size-16)]",
     // A specimen is named rather than labelled: the name is what it would be imported under, so
     // it is set in the monospace stack the rest of the library sets code in
     name: "text-[var(--foreground-color-muted)] font-[family-name:var(--font-stack-monospace)]",
-    // The switch is named by the text beside it, so the pair are laid out across the tile
-    switchRow: "flex items-center justify-between gap-[var(--base-size-16)]",
 };
-
-// What names the switch, which is a word standing beside it rather than a label of its own. The
-// switch is pointed at it, so the id has to be settled here rather than made up as it is drawn
-const switchLabelId = "home-showcase-switch-label";
 
 // A range that is dragged rather than typed. It runs the width of the tile, since a slider held
 // to its content is a slider with nowhere to go
@@ -48,16 +41,6 @@ const segmentedControl = (
         <SegmentedControl.Button defaultSelected>Preview</SegmentedControl.Button>
         <SegmentedControl.Button>Raw</SegmentedControl.Button>
     </SegmentedControl>
-);
-
-// Something that is either on or off, and says which without being pressed to find out
-const toggleSwitch = (
-    <div className={classes.switchRow}>
-        <Text id={switchLabelId} weight="semibold">
-            Notifications
-        </Text>
-        <ToggleSwitch aria-labelledby={switchLabelId} defaultChecked />
-    </div>
 );
 
 // What can be done to the thing the menu hangs off, gathered behind one press rather than laid
@@ -98,13 +81,12 @@ const actionMenu = (
 );
 
 // The specimens, in the order they are read across: a control dragged, one typed into, one
-// chosen from, one turned on, and one that opens onto the rest. They are named as they would be
-// imported, so a reader who wants one knows what to reach for
+// chosen from, and one that opens onto the rest. They are named as they would be imported, so a
+// reader who wants one knows what to reach for
 const specimens = [
     { name: "Slider", specimen: slider },
     { name: "PINInput", specimen: pinInput },
     { name: "SegmentedControl", specimen: segmentedControl },
-    { name: "ToggleSwitch", specimen: toggleSwitch },
     { name: "ActionMenu", specimen: actionMenu },
 ];
 
@@ -115,7 +97,7 @@ const specimens = [
 //
 // A tile is not a way in to anything, so none of them leads anywhere. The column of links beside
 // every other page is where a component is looked up, and it names every one of them rather than
-// the five that happen to stand here
+// the four that happen to stand here
 const HomeShowcase = () => (
     <div className={classes.grid}>
         {specimens.map(({ name, specimen }) => (

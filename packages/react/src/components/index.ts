@@ -117,7 +117,6 @@ export * from "./textarea";
 export * from "./timeline";
 export * from "./timer";
 export * from "./toast";
-export * from "./toggle-switch";
 export * from "./token";
 export * from "./tooltip";
 export * from "./topic-tag";

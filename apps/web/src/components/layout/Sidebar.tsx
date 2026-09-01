@@ -224,7 +224,6 @@ const sections: SidebarSection[] = [
             { label: "Timeline", href: "/components/timeline" },
             { label: "Timer", href: "/components/timer" },
             { label: "Toast", href: "/components/toast" },
-            { label: "Toggle Switch", href: "/components/toggle-switch" },
             { label: "Token", href: "/components/token" },
             { label: "Tooltip", href: "/components/tooltip" },
             { label: "Topic Tag", href: "/components/topic-tag" },
