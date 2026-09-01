@@ -11,6 +11,7 @@ import {
     Avatar,
     AvatarStack,
     Box,
+    Button,
     Changelog,
     Home,
     Installation,
@@ -65,6 +66,7 @@ const Router = () => (
                 <Route path="components/avatar" element={<Avatar />} />
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/box" element={<Box />} />
+                <Route path="components/button" element={<Button />} />
                 <Route path="components/stack" element={<Stack />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
                     under it in a build is the Storybook's own files, answered as files before
