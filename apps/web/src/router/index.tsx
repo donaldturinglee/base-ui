@@ -31,8 +31,8 @@ import {
 const Router = () => (
     <BrowserRouter>
         {/* Which page stands at which path. Every one of them is drawn inside the layout rather
-            than beside it, so the row across the top and the column of links are drawn once and
-            stay where they are as the reader moves between pages.
+            than beside it, so the row across the top is drawn once and stays where it is as the
+            reader moves between pages, and so does the column of links on the pages that carry it.
 
             A component is named here as every other page is, since each one stands on its own and
             says what is true of it rather than being handed a name to answer under. The column
@@ -40,8 +40,15 @@ const Router = () => (
             them, so a path it names that has yet to be written lands on the page for a path with
             nothing behind it, inside the layout, with the column still there to be gone on from */}
         <Routes>
-            <Route element={<Layout />}>
+            {/* The page the site opens on is arrived at rather than looked up, and says what the
+                library is before there is anything in it to look up, so it is drawn without the
+                column of links. Which pages carry the column is said here, where which page
+                stands at which path is settled already, rather than inside the layout, which
+                would then have to know the paths as well as draw what stands at them */}
+            <Route element={<Layout sidebar={false} />}>
                 <Route index element={<Home />} />
+            </Route>
+            <Route element={<Layout />}>
                 <Route path="overview/installation" element={<Installation />} />
                 <Route path="overview/changelog" element={<Changelog />} />
                 <Route path="guides/mcp-server" element={<MCPServer />} />

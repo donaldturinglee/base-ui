@@ -1,15 +1,34 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router";
-import { WeatherMoonRegular, WeatherSunnyRegular } from "@gamecrafters/base-ui-icons";
+import {
+    GithubRegular,
+    WeatherMoonRegular,
+    WeatherSunnyRegular,
+} from "@gamecrafters/base-ui-icons";
 import {
     Header as BaseHeader,
     IconButton,
+    NavigationMenu,
     Separator,
     Text,
     useTheme,
 } from "@gamecrafters/base-ui/react";
 
 const classes = {
+    // The page under the row is capped and set in the middle of what it is read in, so the row is
+    // held to the same measure and centred in the same room, and the name at its start stands over
+    // the first line of the page rather than out at the edge of the viewport. The measure and the
+    // gap it is held off by are the ones `PageLayout.Content` gives an `xlarge` page: 1280px, and
+    // 16px until there is room for 24, which is where the layout's own spacing steps up and
+    // matches --breakpoint-large in the library's variables.css.
+    //
+    // It is held to this only where the menu is drawn, since a page that carries the column of
+    // links begins where that column leaves off rather than in the middle of the viewport
+    row: "mx-auto w-full max-w-[1280px] px-[var(--base-size-16)] min-[63.25rem]:px-[var(--base-size-24)]",
+    // The menu is the item given the room the row leaves, so what it holds would otherwise be
+    // read hard against the name. It is set in the middle of that room instead, where it stands
+    // apart from the name it followed and from the control at the far end alike
+    menu: "justify-center",
     // The row ends where the page does, so the last item is not held off the end
     lastItem: "me-0",
 };
@@ -24,19 +43,33 @@ const colors = {
     "--header-foreground-color-default": "var(--foreground-color-default)",
 } as CSSProperties;
 
-// The row across the top of the page: what the site is, and the one control the page carries.
-// It stands outside the layout rather than in a region of it, so the row itself is the `header`
-// every page is headed by
-const Header = () => {
+// Where the menu leads into the library: the page naming the one thing that has to be done before
+// any of it can be used, which is also what the column of links opens on. A reader arrives at the
+// same place whichever of the two they came by
+const docsHref = "/overview/installation";
+
+// Where the library itself is kept, which is somewhere else entirely rather than another page of
+// the site, so it is written out in full and opened away from whatever was being read
+const sourceHref = "https://github.com/donaldturinglee/base-ui";
+
+// The row across the top of the page: what the site is, the way into the rest of it, and the one
+// control the page carries. It stands outside the layout rather than in a region of it, so the row
+// itself is the `header` every page is headed by.
+//
+// The menu is asked for rather than always drawn, since it is the way in for a page that has no
+// column of links beside it. A page that has one is already standing in the library, and would be
+// offered the way into it twice
+const Header = ({ menu = false }: { menu?: boolean }) => {
     const { colorScheme, setColorMode } = useTheme();
     const isNight = colorScheme === "dark";
 
     return (
         <>
-            <BaseHeader style={colors}>
-                {/* What the site is takes whatever room the row leaves, so the control after it
-                    is held to the far end */}
-                <BaseHeader.Item full>
+            <BaseHeader className={menu ? classes.row : undefined} style={colors}>
+                {/* Whatever stands next to the name takes the room the row leaves, so the control
+                    at the end is held to the far end of it: the menu where there is one, and the
+                    name itself where there is not */}
+                <BaseHeader.Item full={!menu}>
                     {/* The name of the site leads back to the page the site opens on, and is
                         followed the way the links beside the page are: the router answers it
                         rather than the browser fetching the document again */}
@@ -46,6 +79,45 @@ const Header = () => {
                             of the site lighter than the row means it to be read */}
                         <Text weight="semibold">Base UI</Text>
                     </BaseHeader.Link>
+                </BaseHeader.Item>
+                {menu ? (
+                    <BaseHeader.Item className={classes.menu} full>
+                        {/* The menu is a landmark of its own, so it is named rather than left as
+                            one more list of links in the row. It stands in the middle of the row
+                            rather than at the far end, since it is read as part of what the site
+                            is rather than as another control */}
+                        <NavigationMenu aria-label="Main">
+                            <NavigationMenu.List>
+                                <NavigationMenu.Item>
+                                    {/* Followed by the router, the way the name of the site
+                                        beside it and the links beside a page are */}
+                                    <NavigationMenu.Link as={Link} to={docsHref}>
+                                        Docs
+                                    </NavigationMenu.Link>
+                                </NavigationMenu.Item>
+                            </NavigationMenu.List>
+                        </NavigationMenu>
+                    </BaseHeader.Item>
+                ) : null}
+                <BaseHeader.Item>
+                    {/* The way out to the source, which is a link drawn as a button so that it
+                        is read as one of the pair of controls the row ends on rather than as a
+                        word standing among them. It leads away from the site rather than to
+                        another page of it, so it is opened beside what was being read.
+
+                        What it is drawn as is said to the compiler as well as to the component:
+                        the icon button's props are written so that a name is always given, and
+                        what that leaves cannot be read back to the element `as` names, so the
+                        anchor's own attributes are refused until the type says `a` too */}
+                    <IconButton<"a">
+                        as="a"
+                        href={sourceHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Read the source on GitHub"
+                        icon={GithubRegular}
+                        variant="default"
+                    />
                 </BaseHeader.Item>
                 <BaseHeader.Item className={classes.lastItem}>
                     {/* The mark says which scheme the page is already in rather than which one
