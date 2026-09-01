@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@gamecrafters/base-ui": "*",
-    "@gamecrafters/base-ui-icons": "^0.0.9",
+    "@gamecrafters/base-ui-icons": "^0.0.10",
     "@gamecrafters/eslint-config": "*",
     "@gamecrafters/typescript-config": "*",
     "@tailwindcss/vite": "^4.3.3",
