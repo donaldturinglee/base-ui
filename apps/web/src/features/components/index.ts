@@ -12,4 +12,5 @@ export { default as Avatar } from "./Avatar";
 export { default as AvatarStack } from "./AvatarStack";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
+export { default as Rating } from "./Rating";
 export { default as Stack } from "./Stack";
