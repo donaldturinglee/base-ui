@@ -26,9 +26,9 @@ const classes = {
     // links begins where that column leaves off rather than in the middle of the viewport
     row: "mx-auto w-full max-w-[1280px] px-[var(--base-size-16)] min-[63.25rem]:px-[var(--base-size-24)]",
     // The menu is the item given the room the row leaves, so what it holds would otherwise be
-    // read hard against the name. It is set in the middle of that room instead, where it stands
-    // apart from the name it followed and from the control at the far end alike
-    menu: "justify-center",
+    // read hard against the name. It is held to the far end of that room instead, where it comes
+    // to rest beside the controls the row ends on rather than out on its own in the middle
+    menu: "justify-end",
     // The row ends where the page does, so the last item is not held off the end
     lastItem: "me-0",
 };
@@ -83,9 +83,10 @@ const Header = ({ menu = false }: { menu?: boolean }) => {
                 {menu ? (
                     <BaseHeader.Item className={classes.menu} full>
                         {/* The menu is a landmark of its own, so it is named rather than left as
-                            one more list of links in the row. It stands in the middle of the row
-                            rather than at the far end, since it is read as part of what the site
-                            is rather than as another control */}
+                            one more list of links in the row. It stands at the far end of the row
+                            rather than in the middle of it, so the way into the library is come
+                            upon where a reader is already looking for what the row can be asked
+                            for */}
                         <NavigationMenu aria-label="Main">
                             <NavigationMenu.List>
                                 <NavigationMenu.Item>
