@@ -1,0 +1,8 @@
+# What the Sponsor button at the head of the repository leads to. GitHub reads this off the default
+# branch and draws the button from it, so the way to pay for the work is offered where the work is
+# kept as well as on the site that is built out of it, which sends a reader to the same page.
+#
+# One account is named, which is the one the work is done under. The other platforms GitHub will
+# draw a button for are left out rather than listed empty, since a key with nothing behind it is a
+# way in that leads nowhere
+github: donaldturinglee
