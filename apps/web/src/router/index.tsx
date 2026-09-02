@@ -13,6 +13,7 @@ import {
     Box,
     Button,
     Changelog,
+    Em,
     Heading,
     Home,
     Image,
@@ -73,6 +74,7 @@ const Router = () => (
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/button" element={<Button />} />
+                <Route path="components/em" element={<Em />} />
                 <Route path="components/heading" element={<Heading />} />
                 <Route path="components/image" element={<Image />} />
                 <Route path="components/rating" element={<Rating />} />
