@@ -20,12 +20,12 @@ const classes = {
     // held to the same measure and centred in the same room, and the name at its start stands over
     // the first line of the page rather than out at the edge of the viewport. The measure and the
     // gap it is held off by are the ones `PageLayout.Content` gives an `xlarge` page: 1280px, and
-    // 16px until there is room for 24, which is where the layout's own spacing steps up and
-    // matches --breakpoint-large in the library's variables.css.
+    // the 16px the whole layout is held off its edges by, which the row itself carries already and
+    // which is the same at every width.
     //
     // It is held to this only where the menu is drawn, since a page that carries the column of
     // links begins where that column leaves off rather than in the middle of the viewport
-    row: "mx-auto w-full max-w-[1280px] px-[var(--base-size-16)] min-[63.25rem]:px-[var(--base-size-24)]",
+    row: "mx-auto w-full max-w-[1280px] px-[var(--base-size-16)]",
     // The menu is the item given the room the row leaves, so what it holds would otherwise be
     // read hard against the name. It is held to the far end of that room instead, where it comes
     // to rest beside the controls the row ends on rather than out on its own in the middle

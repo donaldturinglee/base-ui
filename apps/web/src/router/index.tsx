@@ -21,6 +21,7 @@ import {
     PrimitivesSize,
     PrimitivesTypography,
     Rating,
+    Spinner,
     Stack,
     Storybook,
     Switch,
@@ -70,6 +71,7 @@ const Router = () => (
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/rating" element={<Rating />} />
+                <Route path="components/spinner" element={<Spinner />} />
                 <Route path="components/stack" element={<Stack />} />
                 <Route path="components/switch" element={<Switch />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands

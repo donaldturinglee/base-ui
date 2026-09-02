@@ -115,8 +115,12 @@ const Layout = ({ sidebar = true }: { sidebar?: boolean }) => {
                     the gap the column is set apart from it by. The column ends well short of the
                     far edge and is taken away altogether on a narrow screen, so a page leaning
                     on it for that was read hard against the edge on a phone and ran into the far
-                    edge at every width. It is set off by the same measure on every side instead */}
-                <PageLayout.Content width="xlarge" padding="normal">
+                    edge at every width. It is set off by the same measure on every side instead.
+                    That measure is the condensed one, which is the same at every width: the row
+                    across the top and the column of links are both held off the edge by it and
+                    neither of them changes, so a page that stepped up to a wider one on a large
+                    tablet was left standing further in from the far edge than the row above it */}
+                <PageLayout.Content width="xlarge" padding="condensed">
                     <Outlet />
                 </PageLayout.Content>
             </PageLayout>
