@@ -14,6 +14,7 @@ import {
     Button,
     Changelog,
     Home,
+    Image,
     Installation,
     MCPServer,
     NotFound,
@@ -71,6 +72,7 @@ const Router = () => (
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/button" element={<Button />} />
+                <Route path="components/image" element={<Image />} />
                 <Route path="components/rating" element={<Rating />} />
                 <Route path="components/spinner" element={<Spinner />} />
                 <Route path="components/stack" element={<Stack />} />
