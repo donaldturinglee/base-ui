@@ -108,6 +108,12 @@ const columns: Column<PropRow>[] = [
     {
         header: "Description",
         field: "description",
+        // What is said about a prop runs to a sentence or two, and a column comes to one that
+        // fills the room left over without ever being narrower than its widest cell. That holds
+        // the longest description on a single line and opens the table out to the width of it,
+        // which on a phone is several screens of scrolling to read one row. It is allowed to
+        // shrink below its widest cell instead, so the prose wraps and the table is read down
+        width: "growCollapse",
         renderCell: (prop) => <Description {...prop} />,
     },
 ];

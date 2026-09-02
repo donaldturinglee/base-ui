@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { Link } from "react-router";
 import {
     GithubRegular,
+    NavigationRegular,
     WeatherMoonRegular,
     WeatherSunnyRegular,
 } from "@gamecrafters/base-ui-icons";
@@ -31,6 +32,10 @@ const classes = {
     menu: "justify-end",
     // The row ends where the page does, so the last item is not held off the end
     lastItem: "me-0",
+    // What opens the column of links stands only where the column itself does not. The measure
+    // is the one the layout calls a narrow viewport, so the button arrives exactly as the column
+    // is taken away and there is never both or neither
+    navigation: "min-[48rem]:hidden",
 };
 
 // The row is drawn in whatever the page is drawn in, so it follows the scheme the reader chose
@@ -58,14 +63,39 @@ const sourceHref = "https://github.com/donaldturinglee/base-ui";
 //
 // The menu is asked for rather than always drawn, since it is the way in for a page that has no
 // column of links beside it. A page that has one is already standing in the library, and would be
-// offered the way into it twice
-const Header = ({ menu = false }: { menu?: boolean }) => {
+// offered the way into it twice.
+//
+// The button that opens the column is asked for the same way, and by the page that has a column
+// rather than the page that has none: it is what stands in for the column on a screen too narrow
+// to hold it. A page that never had one has nothing for it to open
+const Header = ({
+    menu = false,
+    onOpenNavigation,
+}: {
+    menu?: boolean;
+    onOpenNavigation?: () => void;
+}) => {
     const { colorScheme, setColorMode } = useTheme();
     const isNight = colorScheme === "dark";
 
     return (
         <>
             <BaseHeader className={menu ? classes.row : undefined} style={colors}>
+                {onOpenNavigation ? (
+                    <BaseHeader.Item className={classes.navigation}>
+                        {/* Where else the reader can go, on a screen with no room for the column
+                            that usually says so. It stands at the start of the row, before the
+                            name of the site, since it is about the page being read rather than
+                            about the site as a whole, and it is the first thing a reader looking
+                            for a way out of the page comes to */}
+                        <IconButton
+                            aria-label="Browse the library"
+                            icon={NavigationRegular}
+                            variant="default"
+                            onClick={onOpenNavigation}
+                        />
+                    </BaseHeader.Item>
+                ) : null}
                 {/* Whatever stands next to the name takes the room the row leaves, so the control
                     at the end is held to the far end of it: the menu where there is one, and the
                     name itself where there is not */}

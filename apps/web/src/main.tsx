@@ -11,6 +11,12 @@ const classes = {
     // is stood down it in a column so that the height it reaches is a height the page can be
     // given a share of, rather than one it is only drawn against
     theme: "min-h-dvh flex flex-col",
+    // What is drawn outside the page stands over everything on it, the row across the top
+    // included. The row is a sticky layer and the portal is drawn after it, but the layer the
+    // library gives what is portalled is lower than the row's, so the row would otherwise be
+    // drawn over a dialog and take the presses meant for it. Both are laid out in this column,
+    // so saying which layer this one is on is enough to settle the two
+    portal: "z-[var(--z-index-modal)]",
 };
 
 // The locale the site is written in. It is said rather than followed from the reader's browser,
@@ -47,7 +53,7 @@ createRoot(container).render(
                     It stands inside the provider and so inside the theme, and holds nothing
                     itself: what is put into it is placed against the page rather than laid out
                     where it was written, so it takes no room in the column */}
-                <div data-portal-root />
+                <div className={classes.portal} data-portal-root />
             </ThemeProvider>
         </LocaleProvider>
     </React.StrictMode>,

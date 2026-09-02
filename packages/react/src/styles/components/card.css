@@ -1,7 +1,13 @@
 @layer components {
+    /* The card lays what it holds out in a column of one track. The track is allowed to shrink
+       below what stands in it: a track sized to its content is opened out by anything wider than
+       the card — a listing whose lines are kept as they were written, a table read by scrolling —
+       and since the card clips, whatever ran past its edge was cut off rather than reachable. A
+       part that means to be scrolled is left to do its own scrolling this way */
     .card {
         position: relative;
         display: grid;
+        grid-template-columns: minmax(0, 1fr);
         grid-auto-rows: max-content auto;
         gap: var(--stack-gap-normal);
         overflow: hidden;
@@ -62,8 +68,10 @@
         width: auto;
     }
 
+    /* Held to the card's own track for the same reason the card is */
     .card-body {
         display: grid;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--stack-gap-normal);
     }
 
@@ -73,6 +81,7 @@
 
     .card-content {
         display: grid;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--stack-gap-condensed);
     }
 
