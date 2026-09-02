@@ -1,0 +1,28 @@
+@layer components {
+    /* Words the reader is not to pass over, set in the weight the library keeps for importance.
+       The weight is said here rather than left to the browser: an element drawn as something
+       other than a `strong` would otherwise be set at whatever the line it is read in is, and a
+       `strong` itself at whatever `bolder` works out to against that line rather than at a weight
+       the design system chose.
+
+       Nothing else is answered, so the words keep the family and the size of the line they are
+       read in. The sizes below are only there for the caller who asks for one */
+    .strong {
+        font-weight: var(--base-text-weight-semibold);
+    }
+
+    .strong-size-large {
+        font-size: var(--text-body-size-large);
+        line-height: var(--text-body-line-height-large);
+    }
+
+    .strong-size-medium {
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .strong-size-small {
+        font-size: var(--text-body-size-small);
+        line-height: var(--text-body-line-height-small);
+    }
+}

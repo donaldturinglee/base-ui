@@ -108,6 +108,7 @@ export * from "./state-label";
 export * from "./statistic-card";
 export * from "./status";
 export * from "./steps";
+export * from "./strong";
 export * from "./swap";
 export * from "./switch";
 export * from "./table-of-contents";
