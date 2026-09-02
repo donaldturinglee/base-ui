@@ -1,6 +1,6 @@
 {
   "name": "@gamecrafters/base-ui-mcp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An MCP server implementation that connects AI tools to GameCrafters' Base UI Design System.",
   "type": "module",
   "bin": {
