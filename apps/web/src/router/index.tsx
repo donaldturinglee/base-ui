@@ -27,6 +27,7 @@ import {
     Spinner,
     Stack,
     Storybook,
+    Strong,
     Switch,
     Text,
 } from "../features";
@@ -80,6 +81,7 @@ const Router = () => (
                 <Route path="components/rating" element={<Rating />} />
                 <Route path="components/spinner" element={<Spinner />} />
                 <Route path="components/stack" element={<Stack />} />
+                <Route path="components/strong" element={<Strong />} />
                 <Route path="components/switch" element={<Switch />} />
                 <Route path="components/text" element={<Text />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
