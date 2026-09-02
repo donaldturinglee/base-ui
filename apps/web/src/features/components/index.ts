@@ -16,3 +16,4 @@ export { default as Rating } from "./Rating";
 export { default as Spinner } from "./Spinner";
 export { default as Stack } from "./Stack";
 export { default as Switch } from "./Switch";
+export { default as Text } from "./Text";

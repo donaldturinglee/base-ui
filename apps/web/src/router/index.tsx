@@ -25,6 +25,7 @@ import {
     Stack,
     Storybook,
     Switch,
+    Text,
 } from "../features";
 
 // What the site is driven by from the address bar: the path is read from the browser's own history,
@@ -74,6 +75,7 @@ const Router = () => (
                 <Route path="components/spinner" element={<Spinner />} />
                 <Route path="components/stack" element={<Stack />} />
                 <Route path="components/switch" element={<Switch />} />
+                <Route path="components/text" element={<Text />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
                     under it in a build is the Storybook's own files, answered as files before
                     the site is reached, so a path written here would never be read */}
