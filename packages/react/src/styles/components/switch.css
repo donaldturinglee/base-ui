@@ -1,0 +1,211 @@
+@layer components {
+    /* Something that is either on or off, turned rather than picked. The track, the thumb and the
+       words beside them stand in a row, and the whole row is a label pointing at the input among
+       them, so a press anywhere on it is a press on the input.
+
+       The sizes come through custom properties, so a caller can draw a bigger or a smaller
+       switch without unpicking the classes it came with. The room between the edge of the track
+       and the thumb is measured from the outside of the track, border and all, and the thumb is
+       worked out from the height less that room on either side, so the two cannot be told
+       different sizes */
+    .switch {
+        --switch-track-width: var(--base-size-40);
+        --switch-track-height: var(--base-size-20);
+        --switch-track-padding: var(--base-size-2);
+        --switch-thumb-size: calc(var(--switch-track-height) - 2 * var(--switch-track-padding));
+        --switch-thumb-inset: calc(var(--switch-track-padding) - var(--border-width-thin));
+
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--base-size-8);
+        cursor: pointer;
+    }
+
+    /* A switch that cannot be turned says so under the pointer. A read-only one is left where it
+       stands rather than refused, since it can still be reached and read */
+    .switch[data-disabled] {
+        cursor: not-allowed;
+    }
+
+    .switch[data-readonly] {
+        cursor: default;
+    }
+
+    /* The track, drawn in the colours the system keeps for a control that is off and for one
+       that is on. Its edge is a border rather than a shadow, so that it still stands in forced
+       colours, where a shadow would not */
+    .switch-control {
+        position: relative;
+        display: inline-flex;
+        flex-shrink: 0;
+        width: var(--switch-track-width);
+        height: var(--switch-track-height);
+        background-color: var(--control-track-background-color-rest);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-track-border-color-rest);
+        border-radius: var(--border-radius-full);
+        transition:
+            background-color var(--motion-transition-state-change),
+            border-color var(--motion-transition-state-change);
+
+        /* A coarse pointer is given a target taller than the track itself to aim at */
+        @media (pointer: coarse) {
+            &::before {
+                content: "";
+                position: absolute;
+                inset-inline: 0;
+                top: 50%;
+                translate: 0 -50%;
+                min-height: var(--control-min-target-coarse);
+            }
+        }
+
+        /* A track drawn in colour says nothing in forced colours, so it is drawn in the colours
+           the system keeps apart for a control that is off and one that is on */
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: Canvas;
+            border-color: ButtonText;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    .switch-control[data-state="checked"] {
+        background-color: var(--control-checked-background-color-rest);
+        border-color: var(--control-checked-border-color-rest);
+
+        @media (forced-colors: active) {
+            background-color: Highlight;
+            border-color: Highlight;
+        }
+    }
+
+    /* The track answers the pointer resting anywhere on the switch, words and all, since the
+       whole of it is the target. One that cannot be turned answers nothing */
+    .switch:not([data-disabled], [data-readonly]):hover .switch-control {
+        background-color: var(--control-track-background-color-hover);
+    }
+
+    .switch:not([data-disabled], [data-readonly]):active .switch-control {
+        background-color: var(--control-track-background-color-active);
+    }
+
+    .switch:not([data-disabled], [data-readonly]):hover .switch-control[data-state="checked"] {
+        background-color: var(--control-checked-background-color-hover);
+        border-color: var(--control-checked-border-color-hover);
+    }
+
+    .switch:not([data-disabled], [data-readonly]):active .switch-control[data-state="checked"] {
+        background-color: var(--control-checked-background-color-active);
+        border-color: var(--control-checked-border-color-active);
+    }
+
+    /* The input is what the keyboard reaches; the track is what it is drawn as, so the ring a
+       keyboard leaves is drawn there, outside the track rather than inset, where the fill behind
+       it would swallow it */
+    .switch:has(.switch-hidden-input:focus-visible) .switch-control {
+        outline: var(--focus-outline-width) solid var(--focus-outline-color);
+        outline-offset: var(--base-size-2);
+    }
+
+    .switch-control[data-invalid] {
+        border-color: var(--control-border-color-danger);
+    }
+
+    .switch-control[data-disabled] {
+        background-color: var(--control-track-background-color-disabled);
+        border-color: var(--control-track-border-color-disabled);
+
+        @media (forced-colors: active) {
+            background-color: Canvas;
+            border-color: GrayText;
+        }
+    }
+
+    .switch-control[data-disabled][data-state="checked"] {
+        background-color: var(--control-checked-background-color-disabled);
+        border-color: var(--control-checked-border-color-disabled);
+
+        @media (forced-colors: active) {
+            background-color: GrayText;
+            border-color: GrayText;
+        }
+    }
+
+    /* The thumb, set in from the edge of the track by the room it is given and slid to the far
+       end as the switch goes on. It is moved by its inset rather than by a transform, so that it
+       moves the way the switch is read: towards the end of the line, whichever way that runs */
+    .switch-thumb {
+        position: absolute;
+        inset-block-start: var(--switch-thumb-inset);
+        inset-inline-start: var(--switch-thumb-inset);
+        width: var(--switch-thumb-size);
+        height: var(--switch-thumb-size);
+        background-color: var(--control-knob-background-color-rest);
+        border-style: solid;
+        border-width: var(--border-width-thin);
+        border-color: var(--control-knob-border-color-rest);
+        border-radius: var(--border-radius-full);
+        transition:
+            inset-inline-start var(--motion-transition-state-change),
+            background-color var(--motion-transition-state-change),
+            border-color var(--motion-transition-state-change);
+
+        @media (forced-colors: active) {
+            forced-color-adjust: none;
+            background-color: ButtonText;
+            border-color: ButtonText;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    .switch-thumb[data-state="checked"] {
+        inset-inline-start: calc(100% - var(--switch-thumb-size) - var(--switch-thumb-inset));
+        background-color: var(--control-knob-background-color-checked);
+        border-color: var(--control-knob-border-color-checked);
+
+        @media (forced-colors: active) {
+            background-color: HighlightText;
+            border-color: HighlightText;
+        }
+    }
+
+    .switch-thumb[data-disabled] {
+        background-color: var(--control-knob-background-color-disabled);
+        border-color: var(--control-knob-border-color-disabled);
+
+        @media (forced-colors: active) {
+            background-color: GrayText;
+            border-color: GrayText;
+        }
+    }
+
+    /* On a track that is itself drawn in the disabled colour, the thumb is drawn in the colour of
+       the page so that the two are still told apart */
+    .switch-thumb[data-disabled][data-state="checked"] {
+        @media (forced-colors: active) {
+            background-color: Canvas;
+            border-color: Canvas;
+        }
+    }
+
+    /* The words beside the track, set at the size of body text. The weight is the root's, which
+       is a label and is set the way every field's name is, so it is not said again here */
+    .switch-label {
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .switch-label[data-disabled] {
+        color: var(--control-foreground-color-disabled);
+    }
+}

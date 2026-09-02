@@ -14,3 +14,4 @@ export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Rating } from "./Rating";
 export { default as Stack } from "./Stack";
+export { default as Switch } from "./Switch";

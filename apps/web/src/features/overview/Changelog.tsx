@@ -27,6 +27,23 @@ type Release = {
 // read in: what is being upgraded to stands above what is being upgraded from
 const releases: Release[] = [
     {
+        version: "0.0.32",
+        date: "2 September 2026",
+        changes: [
+            "Switch is new, drawn from a Control, a Thumb, a Label and a HiddenInput. The checkbox underneath is what the browser turns, tabs to and submits, so the track and the thumb are only what that is drawn as",
+            "ToggleSwitch is gone and Switch stands in its place: what the switch turns is said by the Label among its parts rather than by an element beside it pointed at with aria-labelledby, and what it holds is submitted with the form it stands in",
+            "Rating draws its filled stars in the colour the system keeps for a star, in place of the gold that stands behind a warning",
+            "The icons the library is drawn with brought up to date",
+        ],
+    },
+    {
+        version: "0.0.31",
+        date: "31 August 2026",
+        changes: [
+            "Badge takes outline, invisible and link variants. None of the three names a role the way the rest do: the first two say how much of the badge is drawn, and the last says it leads somewhere",
+        ],
+    },
+    {
         version: "0.0.30",
         date: "30 August 2026",
         changes: [

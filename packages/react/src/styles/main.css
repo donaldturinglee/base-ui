@@ -1,5 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+/* The utilities the components reach for by name, `sr-only` say, are only written out where
+   Tailwind has read them off a file. It reads from wherever the stylesheet is compiled, which is
+   this package when it is built and the Storybook when it is developed in, so the components are
+   named here as a source of their own and are read either way */
+@source "../";
 @import "./utilities/main.css";
 @import "./base/main.css";
 @import "./themes/main.css";

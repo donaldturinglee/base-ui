@@ -216,6 +216,7 @@ const sections: SidebarSection[] = [
             { label: "Status", href: "/components/status" },
             { label: "Steps", href: "/components/steps" },
             { label: "Swap", href: "/components/swap" },
+            { label: "Switch", href: "/components/switch" },
             { label: "Table of Contents", href: "/components/table-of-contents" },
             { label: "Tabs", href: "/components/tabs" },
             { label: "Text", href: "/components/text" },
