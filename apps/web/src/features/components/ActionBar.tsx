@@ -1,3 +1,4 @@
+import { CopyRegular, EditRegular, ShareRegular } from "@gamecrafters/base-ui-icons";
 import { ActionBar as ActionBarComponent, Heading, Stack, Text } from "@gamecrafters/base-ui/react";
 import ComponentExamples from "./ComponentExamples";
 import ComponentProps from "./ComponentProps";
@@ -10,27 +11,36 @@ const classes = {
     prose: "max-w-[46rem]",
 };
 
-// The plainest bar there is: a run of actions on one thing, each saying in words what it does. The
-// bar is a landmark of its own, so it is named, and that name is the one thing it cannot be drawn
-// without.
+// The plainest bar there is: a run of actions on one thing, each drawn as the mark it is known by.
+// The bar is a landmark of its own, so it is named, and that name is the one thing it cannot be
+// drawn without.
+//
+// An icon button is named for a stronger reason still. A mark says nothing that can be read out, so
+// the words the label would have been are handed to the button instead, and that name is then doing
+// two jobs at once: it is what the button is called to anybody not looking at the mark, and it is
+// what the bar shows in its place once the row runs out of room and the button is offered from the
+// overflow menu rather than being lost.
+//
+// The icon is handed over as the icon itself rather than as an element built from it, so the button
+// draws it at the size and in the colour the bar is drawing its items at.
 //
 // The page and the component it is about are both called ActionBar, so the component is brought in
 // under a name saying which of the two it is. The listing beneath says ActionBar, as an application
 // importing it would
 const defaultPreview = (
     <ActionBarComponent aria-label="Review actions">
-        <ActionBarComponent.Button>Rename</ActionBarComponent.Button>
-        <ActionBarComponent.Button>Copy link</ActionBarComponent.Button>
-        <ActionBarComponent.Button>Share</ActionBarComponent.Button>
+        <ActionBarComponent.IconButton icon={EditRegular} aria-label="Rename" />
+        <ActionBarComponent.IconButton icon={CopyRegular} aria-label="Copy link" />
+        <ActionBarComponent.IconButton icon={ShareRegular} aria-label="Share" />
     </ActionBarComponent>
 );
 
 // The same example as it is written, which is what a reader takes away with them. Nothing on the
 // page runs what it is showing, so the two are kept in step by hand
 const defaultCode = `<ActionBar aria-label="Review actions">
-    <ActionBar.Button>Rename</ActionBar.Button>
-    <ActionBar.Button>Copy link</ActionBar.Button>
-    <ActionBar.Button>Share</ActionBar.Button>
+    <ActionBar.IconButton icon={EditRegular} aria-label="Rename" />
+    <ActionBar.IconButton icon={CopyRegular} aria-label="Copy link" />
+    <ActionBar.IconButton icon={ShareRegular} aria-label="Share" />
 </ActionBar>`;
 
 // The bar as it is reached for, drawn and written out one above the other. The plainest one comes
