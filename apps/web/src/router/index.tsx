@@ -10,6 +10,7 @@ import {
     AspectRatio,
     Avatar,
     AvatarStack,
+    Badge,
     Box,
     Button,
     Card,
@@ -76,6 +77,7 @@ const Router = () => (
                 <Route path="components/aspect-ratio" element={<AspectRatio />} />
                 <Route path="components/avatar" element={<Avatar />} />
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
+                <Route path="components/badge" element={<Badge />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/card" element={<Card />} />
