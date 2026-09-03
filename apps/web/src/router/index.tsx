@@ -12,6 +12,7 @@ import {
     AvatarStack,
     Badge,
     Banner,
+    Blockquote,
     Box,
     Breadcrumbs,
     Button,
@@ -87,6 +88,7 @@ const Router = () => (
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/badge" element={<Badge />} />
                 <Route path="components/banner" element={<Banner />} />
+                <Route path="components/blockquote" element={<Blockquote />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/breadcrumbs" element={<Breadcrumbs />} />
                 <Route path="components/button" element={<Button />} />
