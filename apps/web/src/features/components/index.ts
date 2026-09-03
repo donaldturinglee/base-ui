@@ -15,6 +15,7 @@ export { default as Banner } from "./Banner";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Card } from "./Card";
+export { default as Collapsible } from "./Collapsible";
 export { default as Details } from "./Details";
 export { default as Em } from "./Em";
 export { default as Flow } from "./Flow";

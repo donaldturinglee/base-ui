@@ -16,6 +16,7 @@ import {
     Button,
     Card,
     Changelog,
+    Collapsible,
     Details,
     Em,
     Flow,
@@ -87,6 +88,7 @@ const Router = () => (
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/card" element={<Card />} />
+                <Route path="components/collapsible" element={<Collapsible />} />
                 <Route path="components/details" element={<Details />} />
                 <Route path="components/em" element={<Em />} />
                 <Route path="components/flow" element={<Flow />} />
