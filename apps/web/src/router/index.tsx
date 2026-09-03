@@ -20,6 +20,7 @@ import {
     Frame,
     Heading,
     Home,
+    IconButton,
     Image,
     Installation,
     MCPServer,
@@ -86,6 +87,7 @@ const Router = () => (
                 <Route path="components/em" element={<Em />} />
                 <Route path="components/frame" element={<Frame />} />
                 <Route path="components/heading" element={<Heading />} />
+                <Route path="components/icon-button" element={<IconButton />} />
                 <Route path="components/image" element={<Image />} />
                 <Route path="components/rating" element={<Rating />} />
                 <Route path="components/spinner" element={<Spinner />} />

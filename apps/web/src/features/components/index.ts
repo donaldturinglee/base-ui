@@ -18,6 +18,7 @@ export { default as Card } from "./Card";
 export { default as Em } from "./Em";
 export { default as Frame } from "./Frame";
 export { default as Heading } from "./Heading";
+export { default as IconButton } from "./IconButton";
 export { default as Image } from "./Image";
 export { default as Rating } from "./Rating";
 export { default as Spinner } from "./Spinner";

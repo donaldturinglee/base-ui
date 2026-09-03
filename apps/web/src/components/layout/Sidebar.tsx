@@ -162,7 +162,7 @@ const sections: SidebarSection[] = [
             { label: "Hidden", href: "/components/hidden" },
             { label: "Highlight", href: "/components/highlight" },
             { label: "Hover Card", href: "/components/hover-card" },
-            { label: "Icon Button", href: "/components/icon-button" },
+            { label: "IconButton", href: "/components/icon-button" },
             { label: "Image", href: "/components/image" },
             { label: "Inline Message", href: "/components/inline-message" },
             { label: "JSON Tree View", href: "/components/json-tree-view" },
