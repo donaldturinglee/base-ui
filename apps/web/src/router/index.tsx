@@ -29,6 +29,7 @@ import {
     PrimitivesColor,
     PrimitivesSize,
     PrimitivesTypography,
+    Radio,
     Rating,
     Spinner,
     Stack,
@@ -91,6 +92,7 @@ const Router = () => (
                 <Route path="components/heading" element={<Heading />} />
                 <Route path="components/icon-button" element={<IconButton />} />
                 <Route path="components/image" element={<Image />} />
+                <Route path="components/radio" element={<Radio />} />
                 <Route path="components/rating" element={<Rating />} />
                 <Route path="components/spinner" element={<Spinner />} />
                 <Route path="components/stack" element={<Stack />} />

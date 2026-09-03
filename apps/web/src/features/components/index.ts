@@ -21,6 +21,7 @@ export { default as Frame } from "./Frame";
 export { default as Heading } from "./Heading";
 export { default as IconButton } from "./IconButton";
 export { default as Image } from "./Image";
+export { default as Radio } from "./Radio";
 export { default as Rating } from "./Rating";
 export { default as Spinner } from "./Spinner";
 export { default as Stack } from "./Stack";
