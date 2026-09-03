@@ -16,8 +16,14 @@ const classes = {
     grid: "grid grid-cols-[repeat(auto-fit,8rem)] justify-center gap-[var(--base-size-16)]",
     // The card is as tall as it is wide. What stands in it is one mark and nothing else, so it is
     // set in the middle of that square both ways rather than at the head of it, since a mark held
-    // to the top of a square card is a card with a hole under it
-    card: "aspect-square place-content-center",
+    // to one corner of a square card is a card with a hole beside it.
+    //
+    // The two ways are not asked for the same way round. Down the card there is height left over
+    // once the one row has been given what it stands in, so it is that leftover the row is set in
+    // the middle of. Across the card there is nothing left over: the card lays itself out in one
+    // track that runs its whole width, so what is set in the middle is the mark within that track
+    // rather than the track within the card
+    card: "aspect-square content-center justify-items-center",
     // The mark is drawn at the size a card draws the icon it puts at its head. Where it stands is
     // the card's business rather than its own, so nothing is said about that here
     logo: "size-[var(--base-size-32)]",
