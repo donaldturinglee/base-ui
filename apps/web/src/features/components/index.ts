@@ -11,6 +11,7 @@ export { default as AspectRatio } from "./AspectRatio";
 export { default as Avatar } from "./Avatar";
 export { default as AvatarStack } from "./AvatarStack";
 export { default as Badge } from "./Badge";
+export { default as Banner } from "./Banner";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Card } from "./Card";

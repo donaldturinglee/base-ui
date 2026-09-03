@@ -149,45 +149,21 @@
         margin-bottom: var(--base-size-6);
     }
 
-    /* Both orders are laid out and one of them is taken away, since which one reads
-       correctly depends on the room the banner is given */
-    .banner-actions-shown {
-        display: flex;
-    }
-
-    .banner-actions-hidden {
-        display: none;
-    }
-
-    .banner-actions-inline-leading {
-        display: none;
-
-        @media (width < 48rem) {
-            display: flex;
+    /* The row is written primary first, which is the order it is read out and tabbed through
+       whatever the room. Where it has the room to stand beside the content it is a row of
+       buttons at the end of a line, which is read from its end, so the drawing is turned round
+       to put the primary action there. Only the drawing turns: the row is laid out the once,
+       so what a reader is told and what a key moves through stay as they were written */
+    .banner-actions-reversed-inline {
+        /* The width matches --breakpoint-medium in variables.css */
+        @media (width >= 48rem) {
+            flex-direction: row-reverse;
         }
     }
 
-    .banner-actions-inline-trailing {
-        display: flex;
-
-        @media (width < 48rem) {
-            display: none;
-        }
-    }
-
-    .banner-actions-responsive-leading {
-        display: none;
-
-        @container banner (width < 500px) {
-            display: flex;
-        }
-    }
-
-    .banner-actions-responsive-trailing {
-        display: flex;
-
-        @container banner (width < 500px) {
-            display: none;
+    .banner-actions-reversed-responsive {
+        @container banner (width >= 500px) {
+            flex-direction: row-reverse;
         }
     }
 

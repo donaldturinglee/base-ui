@@ -20,13 +20,13 @@ const classes = {
     actions: "banner-actions",
     actionsInline: "banner-actions-inline",
     actionsStacked: "banner-actions-stacked",
-    order: {
-        shown: "banner-actions-shown",
-        hidden: "banner-actions-hidden",
-        inlineLeading: "banner-actions-inline-leading",
-        inlineTrailing: "banner-actions-inline-trailing",
-        responsiveLeading: "banner-actions-responsive-leading",
-        responsiveTrailing: "banner-actions-responsive-trailing",
+    // Which way round the row is drawn where it has the room to stand beside the content, named
+    // for what settles that: the window for a row laid out inline, and the banner's own width for
+    // one following the room it was given. A stacked row is read down the banner rather than
+    // across the end of a line, so it is never turned and names neither
+    reversed: {
+        inline: "banner-actions-reversed-inline",
+        responsive: "banner-actions-reversed-responsive",
     },
     hidden: "sr-only",
 };
@@ -99,37 +99,32 @@ const iconForVariant = {
 // Only the variants whose icon carries no meaning of its own leave room for another
 const variantsWithCustomVisual: BannerVariant[] = ["info", "upsell"];
 
-// Both orders are laid out and one of them is taken away, because which one reads correctly
-// depends on the room the banner is given, which is not known while rendering. Only the one
-// that is left standing is in the accessibility tree or the tab order
+// An action is held in a wrapper keyed for the part it is rather than being set down as it
+// arrived. The two stand together as a pair, which React reads as a list, and an action handed
+// over as a prop was written by the caller as one element rather than as one of several, so it
+// carries nothing to tell it from the other. The wrapper draws nothing of its own, so the buttons
+// are still the row's own children
+const keyed = (name: string, action: React.ReactNode) => (
+    <React.Fragment key={name}>{action}</React.Fragment>
+);
+
+// The row is written the once, primary first, which is the order it is read out and tabbed
+// through however much room the banner turns out to have. Where there is room for it to stand
+// beside the content the drawing is turned round, so the primary action falls at the end of the
+// line, which is where the last button on a line is looked for. Only the drawing turns: what a
+// reader is told and what a key moves through is the order it was written in
 const BannerActions = ({
     primaryAction,
     secondaryAction,
     className,
-    leadingClassName,
-    trailingClassName,
 }: {
     primaryAction?: React.ReactNode;
     secondaryAction?: React.ReactNode;
     className?: string;
-    leadingClassName: string;
-    trailingClassName: string;
 }) => (
-    <div data-component="Banner.Actions">
-        <div
-            className={classNames(classes.actions, className, trailingClassName)}
-            data-primary-action="trailing"
-        >
-            {secondaryAction}
-            {primaryAction}
-        </div>
-        <div
-            className={classNames(classes.actions, className, leadingClassName)}
-            data-primary-action="leading"
-        >
-            {primaryAction}
-            {secondaryAction}
-        </div>
+    <div className={classNames(classes.actions, className)} data-component="Banner.Actions">
+        {keyed("primary", primaryAction)}
+        {keyed("secondary", secondaryAction)}
     </div>
 );
 
@@ -172,14 +167,14 @@ function Banner(
     const isStacked =
         actionsLayout === "stacked" || (dismissible && !hideTitle && actionsLayout !== "inline");
 
-    const order = isStacked
-        ? { leading: classes.order.shown, trailing: classes.order.hidden }
+    // A stacked row stands below the content whatever the room, so it is left the way round it
+    // was written. The rest are turned where there is room to stand beside it, which the window
+    // settles for an inline row and the banner's own width for one following the room it has
+    const reversed = isStacked
+        ? undefined
         : actionsLayout === "inline"
-          ? { leading: classes.order.inlineLeading, trailing: classes.order.inlineTrailing }
-          : {
-                leading: classes.order.responsiveLeading,
-                trailing: classes.order.responsiveTrailing,
-            };
+          ? classes.reversed.inline
+          : classes.reversed.responsive;
 
     const heading = title ? <BannerTitle>{title}</BannerTitle> : null;
 
@@ -246,9 +241,8 @@ function Banner(
                                 className={classNames(
                                     actionsLayout === "inline" && classes.actionsInline,
                                     isStacked && classes.actionsStacked,
+                                    reversed,
                                 )}
-                                leadingClassName={order.leading}
-                                trailingClassName={order.trailing}
                             />
                         ) : null}
                     </div>

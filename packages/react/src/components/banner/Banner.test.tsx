@@ -11,9 +11,11 @@ const banner = () => screen.getByRole("region");
 
 const part = (name: string) => banner().querySelector(`[data-component='Banner.${name}']`);
 
-// Both orders of the actions are laid out, so a query has to say which one it means
-const actionsFor = (order: "leading" | "trailing") =>
-    banner().querySelector(`[data-primary-action='${order}']`) as HTMLElement;
+// The actions are laid out the once, so the row is reached for as the part it is
+const actions = () => part("Actions") as HTMLElement;
+
+// Every part that carries a name, so that one drawn twice over is caught rather than counted once
+const parts = (name: string) => banner().querySelectorAll(`[data-component='Banner.${name}']`);
 
 const variants: BannerVariant[] = ["critical", "info", "success", "upsell", "warning"];
 
@@ -287,31 +289,34 @@ describe("Banner actions", () => {
             ),
         });
 
-        fireEvent.click(
-            actionsFor("leading").querySelector(
-                "[data-component='Banner.PrimaryAction']",
-            ) as HTMLElement,
-        );
-        fireEvent.click(
-            actionsFor("leading").querySelector(
-                "[data-component='Banner.SecondaryAction']",
-            ) as HTMLElement,
-        );
+        fireEvent.click(part("PrimaryAction") as HTMLElement);
+        fireEvent.click(part("SecondaryAction") as HTMLElement);
 
         expect(onPrimary).toHaveBeenCalledTimes(1);
         expect(onSecondary).toHaveBeenCalledTimes(1);
     });
 
-    it("lays both orders out and leaves only one of them standing", () => {
+    it("lays each action out the once", () => {
         withActions();
 
-        // The order that reads correctly depends on the room the banner has, which is not
-        // known while rendering, so one of the two is taken away in CSS
-        expect(actionsFor("leading").firstElementChild).toHaveAttribute(
+        // An action is drawn where it was handed over rather than in every order it might be
+        // read in, so whatever a caller passes is mounted once and only once
+        expect(parts("Actions")).toHaveLength(1);
+        expect(parts("PrimaryAction")).toHaveLength(1);
+        expect(parts("SecondaryAction")).toHaveLength(1);
+    });
+
+    it("writes the row primary first, whichever way round it is drawn", () => {
+        withActions();
+
+        // Which way round it reads depends on the room the banner has, which is not known
+        // while rendering, so the drawing is turned in CSS and the order it is read out and
+        // tabbed through stays as it was written
+        expect(actions().firstElementChild).toHaveAttribute(
             "data-component",
             "Banner.PrimaryAction",
         );
-        expect(actionsFor("trailing").firstElementChild).toHaveAttribute(
+        expect(actions().lastElementChild).toHaveAttribute(
             "data-component",
             "Banner.SecondaryAction",
         );
@@ -320,40 +325,40 @@ describe("Banner actions", () => {
     it("falls back to following the room the banner has", () => {
         withActions();
         expect(banner()).toHaveAttribute("data-actions-layout", "default");
-        expect(actionsFor("trailing")).toHaveClass("banner-actions-responsive-trailing");
-        expect(actionsFor("leading")).toHaveClass("banner-actions-responsive-leading");
+        expect(actions()).toHaveClass("banner-actions-reversed-responsive");
     });
 
     it("keeps inline actions beside the content until the viewport is narrow", () => {
         withActions({ actionsLayout: "inline" });
         expect(banner()).toHaveAttribute("data-actions-layout", "inline");
-        expect(actionsFor("trailing")).toHaveClass("banner-actions-inline-trailing");
-        expect(actionsFor("leading")).toHaveClass("banner-actions-inline-leading");
+        expect(actions()).toHaveClass("banner-actions-inline", "banner-actions-reversed-inline");
     });
 
     it("drops stacked actions below the content whatever the room", () => {
         withActions({ actionsLayout: "stacked" });
         expect(banner()).toHaveAttribute("data-actions-layout", "stacked");
-        expect(actionsFor("trailing")).toHaveClass("banner-actions-hidden");
-        expect(actionsFor("leading")).toHaveClass("banner-actions-shown");
+        expect(actions()).toHaveClass("banner-actions-stacked");
+
+        // A row read down the banner is never turned, so it names neither of the two
+        expect(actions().className).not.toMatch(/banner-actions-reversed/);
     });
 
     it("drops the actions below the content where a dismiss button takes their room", () => {
         withActions({ onDismiss: () => {} });
 
         // The dismiss button stands where the actions would otherwise sit
-        expect(actionsFor("trailing")).toHaveClass("banner-actions-hidden");
-        expect(actionsFor("leading")).toHaveClass("banner-actions-shown");
+        expect(actions()).toHaveClass("banner-actions-stacked");
+        expect(actions().className).not.toMatch(/banner-actions-reversed/);
     });
 
     it("keeps inline actions beside the content even when it can be dismissed", () => {
         withActions({ actionsLayout: "inline", onDismiss: () => {} });
-        expect(actionsFor("trailing")).toHaveClass("banner-actions-inline-trailing");
+        expect(actions()).toHaveClass("banner-actions-reversed-inline");
     });
 
     it("keeps the actions beside a hidden title", () => {
         withActions({ hideTitle: true, onDismiss: () => {} });
-        expect(actionsFor("trailing")).toHaveClass("banner-actions-responsive-trailing");
+        expect(actions()).toHaveClass("banner-actions-reversed-responsive");
     });
 });
 
