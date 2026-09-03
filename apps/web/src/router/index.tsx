@@ -30,6 +30,7 @@ import {
     Image,
     Installation,
     MCPServer,
+    NativeSelect,
     NotFound,
     PrimitivesColor,
     PrimitivesSize,
@@ -102,6 +103,7 @@ const Router = () => (
                 <Route path="components/heading" element={<Heading />} />
                 <Route path="components/icon-button" element={<IconButton />} />
                 <Route path="components/image" element={<Image />} />
+                <Route path="components/native-select" element={<NativeSelect />} />
                 <Route path="components/radio" element={<Radio />} />
                 <Route path="components/rating" element={<Rating />} />
                 <Route path="components/spinner" element={<Spinner />} />
