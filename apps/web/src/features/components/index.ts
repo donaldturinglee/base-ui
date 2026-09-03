@@ -13,6 +13,7 @@ export { default as AvatarStack } from "./AvatarStack";
 export { default as Box } from "./Box";
 export { default as Button } from "./Button";
 export { default as Em } from "./Em";
+export { default as Frame } from "./Frame";
 export { default as Heading } from "./Heading";
 export { default as Image } from "./Image";
 export { default as Rating } from "./Rating";

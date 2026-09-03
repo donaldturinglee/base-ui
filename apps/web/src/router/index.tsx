@@ -14,6 +14,7 @@ import {
     Button,
     Changelog,
     Em,
+    Frame,
     Heading,
     Home,
     Image,
@@ -77,6 +78,7 @@ const Router = () => (
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/em" element={<Em />} />
+                <Route path="components/frame" element={<Frame />} />
                 <Route path="components/heading" element={<Heading />} />
                 <Route path="components/image" element={<Image />} />
                 <Route path="components/rating" element={<Rating />} />
