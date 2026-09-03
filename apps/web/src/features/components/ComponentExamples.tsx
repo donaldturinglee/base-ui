@@ -81,21 +81,22 @@ const componentsIn = (code: string) => [
 // the name says which of the two packages it came from and the listing does not have to be told
 const isIcon = (component: string) => component.endsWith("Regular");
 
-// An icon handed to a prop rather than drawn as a tag, which is how a component that keeps a place
-// for one is given it: the icon is passed as it comes, so that whatever draws it settles the size
-// and the colour. Only a name saying it is an icon is taken, since what else is handed to a prop is
-// as often something the listing already has in hand as it is something imported
-const iconsHandedOver = (code: string) =>
-    [...new Set([...code.matchAll(/=\{([A-Z][A-Za-z0-9]*)\}/g)].map(([, name]) => name))].filter(
-        isIcon,
-    );
+// A component handed to a prop rather than drawn as a tag, which is how one component is given
+// another to be: an icon passed to the place a component keeps for one, so that whatever draws it
+// settles the size and the colour, or the element a part is to be drawn as in place of its own.
+//
+// What a listing already has in hand is written in lower case, as the setup above it is, so a name
+// in upper case here is one that had to be imported to be handed over at all
+const handedOver = (code: string) => [
+    ...new Set([...code.matchAll(/=\{([A-Z][A-Za-z0-9]*)\}/g)].map(([, name]) => name)),
+];
 
 // What a listing imports, a line to the package it is imported from. A package nothing was drawn
 // from is left out rather than written as an empty pair of braces
 const importsIn = (code: string) => {
-    const components = componentsIn(code);
-    const icons = [...new Set([...components.filter(isIcon), ...iconsHandedOver(code)])];
-    const rest = components.filter((component) => !isIcon(component));
+    const names = [...new Set([...componentsIn(code), ...handedOver(code)])];
+    const icons = names.filter(isIcon);
+    const rest = names.filter((name) => !isIcon(name));
 
     return [
         rest.length ? `import { ${rest.join(", ")} } from "@gamecrafters/base-ui/react";` : "",
