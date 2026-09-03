@@ -13,6 +13,7 @@ import {
     Badge,
     Banner,
     Box,
+    Breadcrumbs,
     Button,
     Card,
     Changelog,
@@ -87,6 +88,7 @@ const Router = () => (
                 <Route path="components/badge" element={<Badge />} />
                 <Route path="components/banner" element={<Banner />} />
                 <Route path="components/box" element={<Box />} />
+                <Route path="components/breadcrumbs" element={<Breadcrumbs />} />
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/card" element={<Card />} />
                 <Route path="components/clipboard" element={<Clipboard />} />
