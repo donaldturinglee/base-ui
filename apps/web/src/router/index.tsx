@@ -41,6 +41,7 @@ import {
     Rating,
     SkeletonAvatar,
     SkeletonBox,
+    SkeletonText,
     Spinner,
     Stack,
     Storybook,
@@ -114,6 +115,7 @@ const Router = () => (
                 <Route path="components/rating" element={<Rating />} />
                 <Route path="components/skeleton-avatar" element={<SkeletonAvatar />} />
                 <Route path="components/skeleton-box" element={<SkeletonBox />} />
+                <Route path="components/skeleton-text" element={<SkeletonText />} />
                 <Route path="components/spinner" element={<Spinner />} />
                 <Route path="components/stack" element={<Stack />} />
                 <Route path="components/strong" element={<Strong />} />
