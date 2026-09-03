@@ -205,7 +205,7 @@ const sections: SidebarSection[] = [
             { label: "Select", href: "/components/select" },
             { label: "Select Panel", href: "/components/select-panel" },
             { label: "Separator", href: "/components/separator" },
-            { label: "Skeleton Avatar", href: "/components/skeleton-avatar" },
+            { label: "SkeletonAvatar", href: "/components/skeleton-avatar" },
             { label: "Skeleton Box", href: "/components/skeleton-box" },
             { label: "Skeleton Text", href: "/components/skeleton-text" },
             { label: "Slider", href: "/components/slider" },

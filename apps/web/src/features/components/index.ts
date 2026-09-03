@@ -31,6 +31,7 @@ export { default as NativeSelect } from "./NativeSelect";
 export { default as Placeholder } from "./Placeholder";
 export { default as Radio } from "./Radio";
 export { default as Rating } from "./Rating";
+export { default as SkeletonAvatar } from "./SkeletonAvatar";
 export { default as Spinner } from "./Spinner";
 export { default as Stack } from "./Stack";
 export { default as Strong } from "./Strong";
