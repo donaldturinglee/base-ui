@@ -17,6 +17,7 @@ import {
     Card,
     Changelog,
     Em,
+    Flow,
     Frame,
     Heading,
     Home,
@@ -85,6 +86,7 @@ const Router = () => (
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/card" element={<Card />} />
                 <Route path="components/em" element={<Em />} />
+                <Route path="components/flow" element={<Flow />} />
                 <Route path="components/frame" element={<Frame />} />
                 <Route path="components/heading" element={<Heading />} />
                 <Route path="components/icon-button" element={<IconButton />} />
