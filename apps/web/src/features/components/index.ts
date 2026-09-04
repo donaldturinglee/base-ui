@@ -50,5 +50,6 @@ export { default as Strong } from "./Strong";
 export { default as Swap } from "./Swap";
 export { default as Switch } from "./Switch";
 export { default as Text } from "./Text";
+export { default as Textarea } from "./Textarea";
 export { default as Timer } from "./Timer";
 export { default as Token } from "./Token";

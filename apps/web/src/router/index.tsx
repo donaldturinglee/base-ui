@@ -59,6 +59,7 @@ import {
     Swap,
     Switch,
     Text,
+    Textarea,
     Timer,
     Token,
 } from "../features";
@@ -144,6 +145,7 @@ const Router = () => (
                 <Route path="components/swap" element={<Swap />} />
                 <Route path="components/switch" element={<Switch />} />
                 <Route path="components/text" element={<Text />} />
+                <Route path="components/textarea" element={<Textarea />} />
                 <Route path="components/timer" element={<Timer />} />
                 <Route path="components/token" element={<Token />} />
                 {/* The Storybook is read at the path itself and nowhere under it: what stands
