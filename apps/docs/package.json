@@ -34,7 +34,7 @@
   "homepage": "https://github.com/gamecrafters-io/base-ui#readme",
   "devDependencies": {
     "@gamecrafters/base-ui": "*",
-    "@gamecrafters/base-ui-icons": "^0.0.11",
+    "@gamecrafters/base-ui-icons": "^0.0.12",
     "@gamecrafters/eslint-config": "*",
     "@gamecrafters/typescript-config": "*",
     "@storybook/addon-a11y": "^10.4.2",
