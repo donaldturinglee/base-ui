@@ -30,6 +30,7 @@ import {
     IconButton,
     Image,
     Installation,
+    Label,
     Link,
     Mark,
     Marquee,
@@ -115,6 +116,7 @@ const Router = () => (
                 <Route path="components/heading" element={<Heading />} />
                 <Route path="components/icon-button" element={<IconButton />} />
                 <Route path="components/image" element={<Image />} />
+                <Route path="components/label" element={<Label />} />
                 <Route path="components/link" element={<Link />} />
                 <Route path="components/mark" element={<Mark />} />
                 <Route path="components/marquee" element={<Marquee />} />
