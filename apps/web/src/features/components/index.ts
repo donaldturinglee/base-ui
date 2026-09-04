@@ -30,6 +30,7 @@ export { default as IconButton } from "./IconButton";
 export { default as Image } from "./Image";
 export { default as Label } from "./Label";
 export { default as Link } from "./Link";
+export { default as List } from "./List";
 export { default as Mark } from "./Mark";
 export { default as Marquee } from "./Marquee";
 export { default as NativeSelect } from "./NativeSelect";
