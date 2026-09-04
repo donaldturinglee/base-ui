@@ -60,7 +60,7 @@ export const Default: StoryFn = () => (
         <Text as="p">
             Base UI is an implementation of GameCrafters&apos; Base UI Design System in React. It is
             published to npm as <Code>@gamecrafters/base-ui</Code> and developed in the open at{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui">donaldturinglee/base-ui</Link>.
+            <Link href="https://github.com/gamecrafters-io/base-ui">gamecrafters-io/base-ui</Link>.
         </Text>
         <Text as="p">
             What it is for is applications that would otherwise each answer the same questions
@@ -199,7 +199,7 @@ export const Licence: StoryFn = () => (
         <Heading size="medium">Licence</Heading>
         <Text as="p">
             Base UI is distributed under the{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui/blob/main/LICENSE">
+            <Link href="https://github.com/gamecrafters-io/base-ui/blob/main/LICENSE">
                 MIT Licence
             </Link>
             , © 2026 Donald Lee. It may be used, changed and redistributed, in a commercial product
@@ -209,7 +209,7 @@ export const Licence: StoryFn = () => (
             The version is still below <Code>1.0.0</Code>, and it is meant literally: the API is
             settled component by component as each is used in earnest, so a minor release can still
             change one. What has gone out and what changed with it is on the{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui/releases">releases page</Link>.
+            <Link href="https://github.com/gamecrafters-io/base-ui/releases">releases page</Link>.
         </Text>
     </Stack>
 );

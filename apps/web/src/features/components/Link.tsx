@@ -13,11 +13,11 @@ const classes = {
 // Where the links lead. It is the library's own source, which is where the row across the top of
 // the site sends a reader as well, so what is being shown is a link that goes somewhere rather than
 // one written to look as though it might
-const href = "https://github.com/donaldturinglee/base-ui";
+const href = "https://github.com/gamecrafters-io/base-ui";
 
 // What the examples have to have in hand before they can be drawn. It is written once and reached
 // for by each of them, since where a link leads is not what any of them is about
-const hrefSetup = `const href = "https://github.com/donaldturinglee/base-ui";`;
+const hrefSetup = `const href = "https://github.com/gamecrafters-io/base-ui";`;
 
 // The plainest link there is: words that lead somewhere, with nothing said about how they are set.
 // It is drawn in the accent colour and takes its underline under the pointer, which is what tells it

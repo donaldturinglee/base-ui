@@ -36,7 +36,7 @@ const App = ({ children }: { children: ReactNode }) => (
     <ThemeProvider colorMode="auto">{children}</ThemeProvider>
 );`;
 
-const clone = `git clone https://github.com/donaldturinglee/base-ui.git
+const clone = `git clone https://github.com/gamecrafters-io/base-ui.git
 cd base-ui
 npm install
 npm run dev`;
@@ -171,7 +171,7 @@ export const WorkingOnTheLibrary: StoryFn = () => (
         <Text as="p">
             Working from a fork, point the remote at the fork so that nothing is pushed to the base
             project by accident. The repository is{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui">donaldturinglee/base-ui</Link>.
+            <Link href="https://github.com/gamecrafters-io/base-ui">gamecrafters-io/base-ui</Link>.
         </Text>
         <CodeBlock language="shellscript">
             <CodeBlock.Content>

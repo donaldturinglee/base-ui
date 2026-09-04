@@ -55,7 +55,7 @@ const docsHref = "/overview/installation";
 
 // Where the library itself is kept, which is somewhere else entirely rather than another page of
 // the site, so it is written out in full and opened away from whatever was being read
-const sourceHref = "https://github.com/donaldturinglee/base-ui";
+const sourceHref = "https://github.com/gamecrafters-io/base-ui";
 
 // The row across the top of the page: what the site is, the way into the rest of it, and the one
 // control the page carries. It stands outside the layout rather than in a region of it, so the row

@@ -7,7 +7,7 @@ const classes = {
     container: "w-[var(--overlay-width-medium)]",
 };
 
-const value = "https://github.com/donaldturinglee/base-ui.git";
+const value = "https://github.com/gamecrafters-io/base-ui.git";
 
 export default {
     title: "Components/Clipboard",

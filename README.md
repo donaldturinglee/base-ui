@@ -19,9 +19,9 @@
   <p align="center">
     <a href="https://www.npmjs.com/package/@gamecrafters/base-ui">View Package</a>
     &middot;
-    <a href="https://github.com/donaldturinglee/base-ui/issues/new?labels=bug">Report Bug</a>
+    <a href="https://github.com/gamecrafters-io/base-ui/issues/new?labels=bug">Report Bug</a>
     &middot;
-    <a href="https://github.com/donaldturinglee/base-ui/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/gamecrafters-io/base-ui/issues/new?labels=enhancement">Request Feature</a>
   </p>
 </div>
 
@@ -68,7 +68,7 @@ To work on the library itself:
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/donaldturinglee/base-ui.git
+   git clone https://github.com/gamecrafters-io/base-ui.git
    ```
 2. Install NPM packages
    ```sh
@@ -183,7 +183,7 @@ its registry to `packages/mcp/build/`, which a client can be pointed straight at
 
 ## Roadmap
 
-See the [open issues](https://github.com/donaldturinglee/base-ui/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/gamecrafters-io/base-ui/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -214,8 +214,8 @@ and is added where a component has some.
 
 ### Top contributors:
 
-<a href="https://github.com/donaldturinglee/base-ui/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=donaldturinglee/base-ui" alt="contrib.rocks image" />
+<a href="https://github.com/gamecrafters-io/base-ui/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=gamecrafters-io/base-ui" alt="contrib.rocks image" />
 </a>
 
 
@@ -251,9 +251,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 [npm-shield]: https://img.shields.io/npm/v/%40gamecrafters%2Fbase-ui.svg?style=for-the-badge
 [npm-url]: https://www.npmjs.com/package/@gamecrafters/base-ui
-[contributors-shield]: https://img.shields.io/github/contributors/donaldturinglee/base-ui.svg?style=for-the-badge
-[contributors-url]: https://github.com/donaldturinglee/base-ui/graphs/contributors
-[last-commit-shield]: https://img.shields.io/github/last-commit/donaldturinglee/base-ui.svg?style=for-the-badge
-[last-commit-url]: https://github.com/donaldturinglee/base-ui/commits/main
-[license-shield]: https://img.shields.io/github/license/donaldturinglee/base-ui.svg?style=for-the-badge
-[license-url]: https://github.com/donaldturinglee/base-ui/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/gamecrafters-io/base-ui.svg?style=for-the-badge
+[contributors-url]: https://github.com/gamecrafters-io/base-ui/graphs/contributors
+[last-commit-shield]: https://img.shields.io/github/last-commit/gamecrafters-io/base-ui.svg?style=for-the-badge
+[last-commit-url]: https://github.com/gamecrafters-io/base-ui/commits/main
+[license-shield]: https://img.shields.io/github/license/gamecrafters-io/base-ui.svg?style=for-the-badge
+[license-url]: https://github.com/gamecrafters-io/base-ui/blob/main/LICENSE

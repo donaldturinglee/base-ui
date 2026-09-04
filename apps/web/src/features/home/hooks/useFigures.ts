@@ -1,4 +1,5 @@
 import * as React from "react";
+import { endpoint } from "./github";
 
 // A figure as the page knows it. One that could not be read is kept apart from one that has yet
 // to arrive, since the two are worth drawing differently: the first is answered with a dash, and
@@ -24,7 +25,7 @@ const sources: { id: FigureId; url: string; field: string }[] = [
     },
     {
         id: "stars",
-        url: "https://api.github.com/repos/donaldturinglee/base-ui",
+        url: endpoint("repos/{owner}/{repo}"),
         field: "stargazers_count",
     },
     {

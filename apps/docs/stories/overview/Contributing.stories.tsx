@@ -97,7 +97,7 @@ export const Default: StoryFn = () => (
         </Heading>
         <Text as="p">
             A change arrives as a pull request from a fork. The repository is{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui">donaldturinglee/base-ui</Link>,
+            <Link href="https://github.com/gamecrafters-io/base-ui">gamecrafters-io/base-ui</Link>,
             and a fork of it is cloned, installed and branched the way any other project would be.
         </Text>
         <CodeBlock language="shellscript">

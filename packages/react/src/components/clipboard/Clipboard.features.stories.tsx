@@ -11,7 +11,7 @@ const classes = {
     stack: "flex w-[var(--overlay-width-medium)] flex-col gap-[var(--base-size-16)]",
 };
 
-const value = "https://github.com/donaldturinglee/base-ui.git";
+const value = "https://github.com/gamecrafters-io/base-ui.git";
 
 export default {
     title: "Components/Clipboard/Features",
@@ -139,7 +139,7 @@ export const Controlled: StoryFn<typeof Clipboard> = () => {
                 </Clipboard.Control>
             </Clipboard>
 
-            <Button onClick={() => setUrl("git@github.com:donaldturinglee/base-ui.git")}>
+            <Button onClick={() => setUrl("git@github.com:gamecrafters-io/base-ui.git")}>
                 Switch to SSH
             </Button>
         </div>

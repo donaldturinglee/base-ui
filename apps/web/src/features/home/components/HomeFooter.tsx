@@ -31,7 +31,7 @@ type FooterLink = {
 // happened to be about
 const links: FooterLink[] = [
     { label: "Docs", href: "/overview/installation" },
-    { label: "GitHub", href: "https://github.com/donaldturinglee/base-ui", external: true },
+    { label: "GitHub", href: "https://github.com/gamecrafters-io/base-ui", external: true },
     { label: "Discord", href: "https://discord.gg/YsteKRjrSH", external: true },
 ];
 

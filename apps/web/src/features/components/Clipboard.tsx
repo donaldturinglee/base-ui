@@ -24,11 +24,11 @@ const classes = {
 // What every example is a copy of. It is the library's own clone URL, which is what a row like this
 // is most often standing under, and it is written once and read out into each of them since what
 // the examples are about is the row rather than the value in it
-const value = "https://github.com/donaldturinglee/base-ui.git";
+const value = "https://github.com/gamecrafters-io/base-ui.git";
 
 // What the examples have to have in hand before they can be drawn. It is written once and reached
 // for by each of them, rather than run out along a line that would then have to be read across
-const valueSetup = `const value = "https://github.com/donaldturinglee/base-ui.git";`;
+const valueSetup = `const value = "https://github.com/gamecrafters-io/base-ui.git";`;
 
 // The plainest clipboard there is: the value it is given, and something to press to take it. There
 // is nowhere showing what will be copied, which is what a row standing beside something that
@@ -211,7 +211,7 @@ const ControlledPreview = () => {
                     <ClipboardComponent.Trigger />
                 </ClipboardComponent.Control>
             </ClipboardComponent>
-            <Button onClick={() => setUrl("git@github.com:donaldturinglee/base-ui.git")}>
+            <Button onClick={() => setUrl("git@github.com:gamecrafters-io/base-ui.git")}>
                 Switch to SSH
             </Button>
         </Stack>
@@ -232,7 +232,7 @@ const controlledCode = `<Stack gap="normal" align="start">
             <Clipboard.Trigger />
         </Clipboard.Control>
     </Clipboard>
-    <Button onClick={() => setUrl("git@github.com:donaldturinglee/base-ui.git")}>
+    <Button onClick={() => setUrl("git@github.com:gamecrafters-io/base-ui.git")}>
         Switch to SSH
     </Button>
 </Stack>`;

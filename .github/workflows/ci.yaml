@@ -3,8 +3,6 @@ name: "Continuous Integration"
 # A published GitHub release is what sends the package to npm. Everything the repository
 # already checks on its own is run first, so a release can only ever ship something that
 # builds and passes its tests.
-#
-# Publishing needs an npm automation token stored as the NPM_TOKEN repository secret.
 on:
   release:
     types: [published]

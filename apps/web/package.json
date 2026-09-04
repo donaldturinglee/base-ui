@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/donaldturinglee/base-ui.git",
+    "url": "git+https://github.com/gamecrafters-io/base-ui.git",
     "directory": "apps/web"
   },
   "keywords": [
@@ -29,9 +29,9 @@
   "author": "donaldturinglee <donaldturinglee@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/donaldturinglee/base-ui/issues"
+    "url": "https://github.com/gamecrafters-io/base-ui/issues"
   },
-  "homepage": "https://github.com/donaldturinglee/base-ui#readme",
+  "homepage": "https://github.com/gamecrafters-io/base-ui#readme",
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

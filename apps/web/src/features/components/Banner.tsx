@@ -33,13 +33,13 @@ const classes = {
 
 // Where the link inside a description leads. It is the library's own source, which is where the row
 // across the top of the site sends a reader as well
-const href = "https://github.com/donaldturinglee/base-ui";
+const href = "https://github.com/gamecrafters-io/base-ui";
 
 // What the examples have to have in hand before they can be drawn. Each is written once and reached
 // for by the example that needs it
 const iconSetup = `const icon = "size-[var(--base-size-20)]";`;
 
-const hrefSetup = `const href = "https://github.com/donaldturinglee/base-ui";`;
+const hrefSetup = `const href = "https://github.com/gamecrafters-io/base-ui";`;
 
 // The plainest banner there is: what it is about and a line saying more, with nothing else said
 // with a prop. A banner names a region of its own and is named from its title, so the title is

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { endpoint } from "./github";
 
 // Somebody who has written part of it, as the page draws them: the name they are known by where
 // the work is kept, the picture that stands beside it, and the way to them
@@ -18,7 +19,7 @@ export type Contributors =
 // browser ask for it, and it comes back in the order the page wants it in: whoever has written the
 // most of it first. One page of it is asked for and no more, since a landing page naming everyone
 // who has ever touched the repository is a landing page of nothing else
-const source = "https://api.github.com/repos/donaldturinglee/base-ui/contributors?per_page=24";
+const source = endpoint("repos/{owner}/{repo}/contributors?per_page=24");
 
 // Nothing that comes back is taken on trust: it is written by somebody else's server, so anyone
 // missing any of the three things they are drawn from is left out rather than drawn with a hole

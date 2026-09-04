@@ -37,7 +37,7 @@ const externalLinkProps = {
 } as const;
 
 // Where the whole list is kept, which is where a reader is sent when the page cannot read it
-const contributorsHref = "https://github.com/donaldturinglee/base-ui/graphs/contributors";
+const contributorsHref = "https://github.com/gamecrafters-io/base-ui/graphs/contributors";
 
 // The picture is drawn at the size a row of them is looked over at rather than at the size a face
 // is looked at, since what is being shown is how many have written the library and not a portrait

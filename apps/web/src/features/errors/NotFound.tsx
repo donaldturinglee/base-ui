@@ -26,7 +26,7 @@ const NotFound = () => (
                     Back to the start
                 </Link>
             </Blankslate.PrimaryAction>
-            <Blankslate.SecondaryAction href="https://github.com/donaldturinglee/base-ui">
+            <Blankslate.SecondaryAction href="https://github.com/gamecrafters-io/base-ui">
                 Read the source
             </Blankslate.SecondaryAction>
         </Blankslate>

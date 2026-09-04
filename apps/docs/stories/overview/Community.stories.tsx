@@ -58,11 +58,11 @@ export const Default: StoryFn = () => (
         </Text>
         <List>
             <List.Item>
-                <Link href="https://github.com/donaldturinglee/base-ui/issues">Issues</Link> — bugs
+                <Link href="https://github.com/gamecrafters-io/base-ui/issues">Issues</Link> — bugs
                 and proposals, and the record of what has already been asked
             </List.Item>
             <List.Item>
-                <Link href="https://github.com/donaldturinglee/base-ui/pulls">Pull requests</Link> —
+                <Link href="https://github.com/gamecrafters-io/base-ui/pulls">Pull requests</Link> —
                 the changes currently up for review
             </List.Item>
             <List.Item>
@@ -84,7 +84,7 @@ export const ReportingABug: StoryFn = () => (
         <Heading size="medium">Reporting a bug</Heading>
         <Text as="p">
             A bug is{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui/issues/new?labels=bug">
+            <Link href="https://github.com/gamecrafters-io/base-ui/issues/new?labels=bug">
                 opened as an issue
             </Link>{" "}
             under the <Code>bug</Code> label. What settles how quickly it is dealt with is not how
@@ -121,7 +121,7 @@ export const RequestingAFeature: StoryFn = () => (
         <Heading size="medium">Requesting a feature</Heading>
         <Text as="p">
             A proposal is{" "}
-            <Link href="https://github.com/donaldturinglee/base-ui/issues/new?labels=enhancement">
+            <Link href="https://github.com/gamecrafters-io/base-ui/issues/new?labels=enhancement">
                 opened as an issue
             </Link>{" "}
             under the <Code>enhancement</Code> label. The useful thing to write down is the case
@@ -169,15 +169,15 @@ export const KeepingUp: StoryFn = () => (
         </Text>
         <List>
             <List.Item>
-                <Link href="https://github.com/donaldturinglee/base-ui/releases">Releases</Link> —
+                <Link href="https://github.com/gamecrafters-io/base-ui/releases">Releases</Link> —
                 what each published version carried
             </List.Item>
             <List.Item>
-                <Link href="https://github.com/donaldturinglee/base-ui/commits/main">Commits</Link>{" "}
+                <Link href="https://github.com/gamecrafters-io/base-ui/commits/main">Commits</Link>{" "}
                 — everything that has landed since
             </List.Item>
             <List.Item>
-                <Link href="https://github.com/donaldturinglee/base-ui/graphs/contributors">
+                <Link href="https://github.com/gamecrafters-io/base-ui/graphs/contributors">
                     Contributors
                 </Link>{" "}
                 — who has worked on it

@@ -13,7 +13,7 @@ const classes = {
 
 // Where the badge that leads somewhere leads. It is the library's own source, which is where the
 // row across the top of the site sends a reader as well
-const href = "https://github.com/donaldturinglee/base-ui";
+const href = "https://github.com/gamecrafters-io/base-ui";
 
 // The plainest badge there is: the word it carries, and nothing said with a prop. It comes to the
 // one that says what something is without claiming any particular weight, drawn at the smallest of
@@ -85,7 +85,7 @@ const plainPreview = (
     </Stack>
 );
 
-const plainSetup = `const href = "https://github.com/donaldturinglee/base-ui";`;
+const plainSetup = `const href = "https://github.com/gamecrafters-io/base-ui";`;
 
 const plainCode = `<Stack direction="horizontal" gap="condensed" align="center" wrap="wrap">
     <Badge variant="outline">outline</Badge>
