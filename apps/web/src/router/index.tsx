@@ -45,6 +45,7 @@ import {
     PrimitivesTypography,
     Radio,
     Rating,
+    Resizable,
     Separator,
     SkeletonAvatar,
     SkeletonBox,
@@ -129,6 +130,7 @@ const Router = () => (
                 <Route path="components/placeholder" element={<Placeholder />} />
                 <Route path="components/radio" element={<Radio />} />
                 <Route path="components/rating" element={<Rating />} />
+                <Route path="components/resizable" element={<Resizable />} />
                 <Route path="components/separator" element={<Separator />} />
                 <Route path="components/skeleton-avatar" element={<SkeletonAvatar />} />
                 <Route path="components/skeleton-box" element={<SkeletonBox />} />
