@@ -9,7 +9,6 @@ import {
 } from "@gamecrafters/base-ui-icons";
 import type { StoryFn } from "@storybook/react-vite";
 import { IconButton } from "../icon-button";
-import { LinkButton } from "../link-button";
 import { Button } from "../button";
 import type { ButtonSize } from "../button";
 import { ButtonGroup } from ".";
@@ -67,7 +66,9 @@ export const LoadingButtons: StoryFn<typeof ButtonGroup> = () => {
 export const ButtonAndLink: StoryFn<typeof ButtonGroup> = () => (
     <ButtonGroup>
         <Button>Button</Button>
-        <LinkButton href="#docs">Link</LinkButton>
+        <Button as="a" href="#docs">
+            Link
+        </Button>
     </ButtonGroup>
 );
 

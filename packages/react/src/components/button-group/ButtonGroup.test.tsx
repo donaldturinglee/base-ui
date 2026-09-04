@@ -3,7 +3,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { Button } from "../button";
-import { LinkButton } from "../link-button";
 import { ButtonGroup } from ".";
 
 const getItems = (group: HTMLElement) =>
@@ -55,7 +54,9 @@ describe("ButtonGroup", () => {
         render(
             <ButtonGroup data-testid="group">
                 <Button>One</Button>
-                <LinkButton href="#docs">Two</LinkButton>
+                <Button as="a" href="#docs">
+                    Two
+                </Button>
             </ButtonGroup>,
         );
         for (const item of getItems(screen.getByTestId("group"))) {
@@ -230,7 +231,9 @@ describe("ButtonGroup as a toolbar", () => {
         renderToolbar(
             <>
                 <Button>One</Button>
-                <LinkButton href="#docs">Two</LinkButton>
+                <Button as="a" href="#docs">
+                    Two
+                </Button>
             </>,
         );
         button("One").focus();

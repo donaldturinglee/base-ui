@@ -137,7 +137,7 @@ const examples: ComponentExample[] = [
     {
         name: "Doing something rather than going somewhere",
         description:
-            "A link that acts on the page rather than leading anywhere is drawn as the button it is, so that it answers the keyboard and is read out as something to press rather than as a place to go. Everything a button is given to look like one is taken back off, so it goes on reading as a link. A control that is meant to look like something to press is a Button, and one that leads somewhere but is meant to look pressable is a LinkButton.",
+            "A link that acts on the page rather than leading anywhere is drawn as the button it is, so that it answers the keyboard and is read out as something to press rather than as a place to go. Everything a button is given to look like one is taken back off, so it goes on reading as a link. A control that is meant to look like something to press is a Button instead, drawn as an anchor where it leads somewhere.",
         preview: buttonPreview,
         code: buttonCode,
     },
@@ -207,7 +207,7 @@ const Link = () => (
                 every reader can see, so a link inside running text is marked inline and underlined
                 for whoever has asked for underlines. Words that act on the page rather than leading
                 anywhere are drawn as a button and read the same; a control meant to look like
-                something to press is a Button, or a LinkButton where it leads somewhere.
+                something to press is a Button instead, drawn as an anchor where it leads somewhere.
             </Text>
         </Stack>
         <ComponentExamples component="Link" examples={examples} />

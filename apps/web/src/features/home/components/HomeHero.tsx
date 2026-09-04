@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { ArrowRightRegular } from "@gamecrafters/base-ui-icons";
-import { CodeBlock, Heading, LinkButton, Stack, Text } from "@gamecrafters/base-ui/react";
+import { Button, CodeBlock, Heading, Stack, Text } from "@gamecrafters/base-ui/react";
 
 const classes = {
     // The opening is read as prose rather than looked at as a specimen, so it is held to a
@@ -51,7 +51,7 @@ const HomeHero = () => (
         <Stack direction="horizontal" gap="condensed" align="center" wrap="wrap">
             {/* What the page is for, so it is drawn as the primary action. It stays on the site,
                 and is followed by the router the way the links beside a page are */}
-            <LinkButton
+            <Button
                 as={Link}
                 to={startHref}
                 variant="primary"
@@ -59,7 +59,7 @@ const HomeHero = () => (
                 trailingVisual={ArrowRightRegular}
             >
                 Start building
-            </LinkButton>
+            </Button>
             <CodeBlock language="shellscript" className={classes.install}>
                 <CodeBlock.Content>
                     <CodeBlock.Code>{install}</CodeBlock.Code>

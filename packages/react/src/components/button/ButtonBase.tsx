@@ -12,8 +12,8 @@ import type {
     ButtonVisual,
 } from "./Button.types";
 
-// The shared renderer behind Button, IconButton and LinkButton. It is typed for the button it
-// usually renders; a link button hands over its own attributes through a cast
+// The shared renderer behind Button and IconButton. It is typed for the button it usually
+// renders, and takes alongside that the few attributes a button drawn as an anchor brings with it
 export type ButtonBaseRenderProps = Omit<React.ComponentPropsWithoutRef<"button">, "type"> &
     ButtonBaseProps & {
         as?: React.ElementType;

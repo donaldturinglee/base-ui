@@ -1,11 +1,11 @@
 import * as React from "react";
 import {
+    Button,
     Card,
     Clipboard,
     CodeBlock,
     Collapsible,
     Heading,
-    LinkButton,
     Separator,
     Stack,
     Text,
@@ -182,14 +182,15 @@ const Example = ({ storybookHref, ...example }: ComponentExample & { storybookHr
                                 door, so the reader arrives at what they were already reading
                                 about. It is named in words rather than by a mark, since there is
                                 nothing a reader would already know to look for */}
-                            <LinkButton
+                            <Button
+                                as="a"
                                 href={storybookHref}
                                 variant="default"
                                 size="small"
                                 {...storybookLinkProps}
                             >
                                 Storybook
-                            </LinkButton>
+                            </Button>
                             {/* The clipboard is handed whichever of the two is being read rather
                                 than reading it back off the page, so what is copied is what is
                                 shown: a reader who asked for the whole file is handed the whole

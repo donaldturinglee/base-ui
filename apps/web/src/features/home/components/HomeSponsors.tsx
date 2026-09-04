@@ -1,5 +1,5 @@
 import { ArrowRightRegular, HeartRegular } from "@gamecrafters/base-ui-icons";
-import { Card, EmptyState, Heading, LinkButton, Stack } from "@gamecrafters/base-ui/react";
+import { Button, Card, EmptyState, Heading, Stack } from "@gamecrafters/base-ui/react";
 
 const classes = {
     // The heading is read, the sponsors under it are looked over, so only the heading is held to a
@@ -70,7 +70,8 @@ const HomeSponsors = () => (
                         {/* A sponsor is named on their own terms, so the way to them leads where
                             they are rather than to a page here written about them */}
                         <Card.Action>
-                            <LinkButton
+                            <Button
+                                as="a"
                                 href={href}
                                 variant="invisible"
                                 size="small"
@@ -78,7 +79,7 @@ const HomeSponsors = () => (
                                 {...externalLinkProps}
                             >
                                 Visit {name}
-                            </LinkButton>
+                            </Button>
                         </Card.Action>
                     </Card>
                 ))}
@@ -89,7 +90,8 @@ const HomeSponsors = () => (
                 title="Nobody sponsors it yet"
                 description={""}
                 actions={
-                    <LinkButton
+                    <Button
+                        as="a"
                         href={sponsorHref}
                         variant="default"
                         size="small"
@@ -98,7 +100,7 @@ const HomeSponsors = () => (
                         {...externalLinkProps}
                     >
                         Sponsor
-                    </LinkButton>
+                    </Button>
                 }
             />
         )}

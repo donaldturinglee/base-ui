@@ -24,6 +24,15 @@ describe("Button", () => {
         expect(screen.getByRole("button")).toHaveAttribute("type", "submit");
     });
 
+    it("leaves the type off an element that is not a button", () => {
+        render(
+            <Button as="a" href="/settings">
+                Settings
+            </Button>,
+        );
+        expect(screen.getByRole("link", { name: "Settings" })).not.toHaveAttribute("type");
+    });
+
     it("renders the label inside a text slot", () => {
         render(<Button>Save</Button>);
         const label = screen.getByText("Save");

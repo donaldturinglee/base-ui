@@ -171,7 +171,6 @@ const sections: SidebarSection[] = [
             { label: "Label Group", href: "/components/label-group" },
             { label: "Layer Card", href: "/components/layer-card" },
             { label: "Link", href: "/components/link" },
-            { label: "Link Button", href: "/components/link-button" },
             { label: "List", href: "/components/list" },
             { label: "Map", href: "/components/map" },
             { label: "Mark", href: "/components/mark" },

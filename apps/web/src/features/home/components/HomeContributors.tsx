@@ -1,10 +1,10 @@
 import { ArrowRightRegular, PeopleCommunityRegular } from "@gamecrafters/base-ui-icons";
 import {
     Avatar,
+    Button,
     EmptyState,
     Heading,
     Link,
-    LinkButton,
     SkeletonAvatar,
     Stack,
 } from "@gamecrafters/base-ui/react";
@@ -67,7 +67,8 @@ const unread = (
         title="Nobody came back from GitHub just now"
         description="The list is kept on the repository, where it can be read instead."
         actions={
-            <LinkButton
+            <Button
+                as="a"
                 href={contributorsHref}
                 variant="invisible"
                 size="small"
@@ -75,7 +76,7 @@ const unread = (
                 {...externalLinkProps}
             >
                 Read it on GitHub
-            </LinkButton>
+            </Button>
         }
     />
 );
