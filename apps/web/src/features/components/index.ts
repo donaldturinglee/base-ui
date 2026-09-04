@@ -17,6 +17,7 @@ export { default as Box } from "./Box";
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as Button } from "./Button";
 export { default as Card } from "./Card";
+export { default as Checkbox } from "./Checkbox";
 export { default as Clipboard } from "./Clipboard";
 export { default as Code } from "./Code";
 export { default as Collapsible } from "./Collapsible";
