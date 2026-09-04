@@ -31,6 +31,7 @@ import {
     Image,
     Installation,
     Mark,
+    Marquee,
     MCPServer,
     NativeSelect,
     NotFound,
@@ -114,6 +115,7 @@ const Router = () => (
                 <Route path="components/icon-button" element={<IconButton />} />
                 <Route path="components/image" element={<Image />} />
                 <Route path="components/mark" element={<Mark />} />
+                <Route path="components/marquee" element={<Marquee />} />
                 <Route path="components/native-select" element={<NativeSelect />} />
                 <Route path="components/placeholder" element={<Placeholder />} />
                 <Route path="components/radio" element={<Radio />} />
