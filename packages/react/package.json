@@ -1,6 +1,6 @@
 {
     "name": "@gamecrafters/base-ui",
-    "version": "0.0.35",
+    "version": "0.0.36",
     "description": "An implementation of GameCrafters' Base UI Design System using React.",
     "exports": {
         "./react": {
