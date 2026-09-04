@@ -1,0 +1,304 @@
+@layer components {
+    /* A grid of at most five columns. The context area, the description and the navigation each
+       run the width of the header, while the leading action, the breadcrumbs, the title area,
+       the trailing action and the actions share the row between them. The parts of the title
+       area and of the context area are placed by the orders below, so a caller can move one.
+
+       The size the title area asks for is written onto the root by the component, so the whole
+       row is drawn to the one line and the styles match a plain attribute rather than look down
+       through the header with `:has()`. Nothing is set where there is no title area, so the
+       header keeps the type it inherits. A caller's own --page-header-font-size,
+       --page-header-font-weight and --page-header-line-height win over the size. The widths
+       match --breakpoint-medium and --breakpoint-xxlarge in variables.css */
+    .page-header {
+        --page-header-title-area-order-leading-visual: 0;
+        --page-header-title-area-order-title: 1;
+        --page-header-title-area-order-trailing-visual: 2;
+        --page-header-context-area-order-parent-link: 0;
+        --page-header-context-area-order-context-bar: 1;
+        --page-header-context-area-order-context-area-actions: 2;
+
+        display: grid;
+        grid-template-columns: auto auto auto auto 1fr;
+        grid-template-areas:
+            "context-area context-area context-area context-area context-area"
+            "leading-action breadcrumbs title-area trailing-action actions"
+            "description description description description description"
+            "navigation navigation navigation navigation navigation";
+        font-size: var(--page-header-font-size, var(--page-header-title-size));
+        font-weight: var(--page-header-font-weight, var(--page-header-title-weight));
+        line-height: var(--page-header-line-height, var(--page-header-title-line-height));
+
+        &[data-title-size-variant="large"] {
+            --page-header-title-size: var(--text-title-size-large);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-large);
+        }
+
+        &[data-title-size-variant="medium"] {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-semibold);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+
+        &[data-title-size-variant="subtitle"] {
+            --page-header-title-size: var(--text-title-size-medium);
+            --page-header-title-weight: var(--base-text-weight-normal);
+            --page-header-title-line-height: var(--text-title-line-height-medium);
+        }
+
+        @media (width < 48rem) {
+            &[data-title-size-variant-narrow="large"] {
+                --page-header-title-size: var(--text-title-size-large);
+                --page-header-title-weight: var(--base-text-weight-normal);
+                --page-header-title-line-height: var(--text-title-line-height-large);
+            }
+
+            &[data-title-size-variant-narrow="medium"] {
+                --page-header-title-size: var(--text-title-size-medium);
+                --page-header-title-weight: var(--base-text-weight-semibold);
+                --page-header-title-line-height: var(--text-title-line-height-medium);
+            }
+
+            &[data-title-size-variant-narrow="subtitle"] {
+                --page-header-title-size: var(--text-title-size-medium);
+                --page-header-title-weight: var(--base-text-weight-normal);
+                --page-header-title-line-height: var(--text-title-line-height-medium);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-title-size-variant-regular="large"] {
+                --page-header-title-size: var(--text-title-size-large);
+                --page-header-title-weight: var(--base-text-weight-normal);
+                --page-header-title-line-height: var(--text-title-line-height-large);
+            }
+
+            &[data-title-size-variant-regular="medium"] {
+                --page-header-title-size: var(--text-title-size-medium);
+                --page-header-title-weight: var(--base-text-weight-semibold);
+                --page-header-title-line-height: var(--text-title-line-height-medium);
+            }
+
+            &[data-title-size-variant-regular="subtitle"] {
+                --page-header-title-size: var(--text-title-size-medium);
+                --page-header-title-weight: var(--base-text-weight-normal);
+                --page-header-title-line-height: var(--text-title-line-height-medium);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-title-size-variant-wide="large"] {
+                --page-header-title-size: var(--text-title-size-large);
+                --page-header-title-weight: var(--base-text-weight-normal);
+                --page-header-title-line-height: var(--text-title-line-height-large);
+            }
+
+            &[data-title-size-variant-wide="medium"] {
+                --page-header-title-size: var(--text-title-size-medium);
+                --page-header-title-weight: var(--base-text-weight-semibold);
+                --page-header-title-line-height: var(--text-title-line-height-medium);
+            }
+
+            &[data-title-size-variant-wide="subtitle"] {
+                --page-header-title-size: var(--text-title-size-medium);
+                --page-header-title-weight: var(--base-text-weight-normal);
+                --page-header-title-line-height: var(--text-title-line-height-medium);
+            }
+        }
+    }
+
+    /* The line beneath the header is left off wherever a navigation region is showing, since
+       the navigation draws a line of its own. Whether it is showing is written onto the root
+       alongside the title size */
+    .page-header-border {
+        &:not([data-has-nav]),
+        &[data-nav-hidden="true"] {
+            padding-block-end: var(--base-size-8);
+            border-block-end: var(--border-width-thin) solid var(--border-color-default);
+        }
+
+        @media (width < 48rem) {
+            &[data-nav-hidden-narrow="true"] {
+                padding-block-end: var(--base-size-8);
+                border-block-end: var(--border-width-thin) solid var(--border-color-default);
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-nav-hidden-regular="true"] {
+                padding-block-end: var(--base-size-8);
+                border-block-end: var(--border-width-thin) solid var(--border-color-default);
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-nav-hidden-wide="true"] {
+                padding-block-end: var(--base-size-8);
+                border-block-end: var(--border-width-thin) solid var(--border-color-default);
+            }
+        }
+    }
+
+    /* A region can be taken away for good, or only within a range of viewports */
+    .page-header-hidden {
+        &[data-hidden="true"] {
+            display: none;
+        }
+
+        @media (width < 48rem) {
+            &[data-hidden-narrow="true"] {
+                display: none;
+            }
+        }
+
+        @media (width >= 48rem) {
+            &[data-hidden-regular="true"] {
+                display: none;
+            }
+        }
+
+        @media (width >= 87.5rem) {
+            &[data-hidden-wide="true"] {
+                display: none;
+            }
+        }
+    }
+
+    /* The context area, the breadcrumbs, the description and the navigation are read as body
+       text rather than at the size of the title they stand around */
+    .page-header-context-area {
+        grid-area: context-area;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        padding-block-end: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .page-header-parent-link {
+        display: flex;
+        align-items: center;
+        order: var(--page-header-context-area-order-parent-link);
+        gap: var(--stack-gap-condensed);
+    }
+
+    .page-header-context-bar {
+        display: flex;
+        order: var(--page-header-context-area-order-context-bar);
+    }
+
+    /* The actions take whatever room the context area leaves and stand at its far end */
+    .page-header-context-area-actions {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        order: var(--page-header-context-area-order-context-area-actions);
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .page-header-title-area {
+        grid-area: title-area;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--stack-gap-condensed);
+    }
+
+    .page-header-leading-action {
+        grid-area: leading-action;
+        display: flex;
+        align-items: center;
+        padding-inline-end: var(--base-size-8);
+    }
+
+    .page-header-breadcrumbs {
+        grid-area: breadcrumbs;
+        display: flex;
+        align-items: center;
+        padding-inline-end: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The parts of the title area are placed by flex order, so the title stays first in the
+       DOM whatever is drawn before it */
+    .page-header-leading-visual {
+        display: flex;
+        align-items: center;
+        order: var(--page-header-title-area-order-leading-visual);
+    }
+
+    /* The title takes the type the header sets, whichever heading level it is rendered as */
+    .page-header-title {
+        display: block;
+        order: var(--page-header-title-area-order-title);
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+    .page-header-trailing-visual {
+        display: flex;
+        align-items: center;
+        order: var(--page-header-title-area-order-trailing-visual);
+    }
+
+    .page-header-trailing-action {
+        grid-area: trailing-action;
+        display: flex;
+        align-items: center;
+        padding-inline-start: var(--base-size-8);
+    }
+
+    /* The actions are never squeezed narrower than they need, and stand at the far end of the
+       row */
+    .page-header-actions {
+        grid-area: actions;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--stack-gap-condensed);
+        min-width: max-content;
+        padding-inline-start: var(--base-size-8);
+    }
+
+    .page-header-description {
+        grid-area: description;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--stack-gap-condensed);
+        padding-block-start: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    .page-header-navigation {
+        grid-area: navigation;
+        display: block;
+        padding-block-start: var(--base-size-8);
+        font-size: var(--text-body-size-medium);
+        font-weight: var(--base-text-weight-normal);
+        line-height: var(--text-body-line-height-medium);
+    }
+
+    /* The visuals and the actions stand as tall as the line the title is drawn on, so they sit
+       level with it whatever size it takes */
+    .page-header-leading-action,
+    .page-header-trailing-action,
+    .page-header-actions,
+    .page-header-leading-visual,
+    .page-header-trailing-visual {
+        height: calc(var(--page-header-line-height, var(--page-header-title-line-height)) * 1em);
+    }
+}
