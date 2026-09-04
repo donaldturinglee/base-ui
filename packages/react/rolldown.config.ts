@@ -40,6 +40,5 @@ export default defineConfig({
         /^@lexical\//,
         "recharts",
         /^recharts\//,
-        "react-resizable-panels",
     ],
 });

@@ -1,9 +1,20 @@
 @layer components {
-    /* The group lays its panels out itself, in a row or a column, and fills whatever room it
-       was given, so there is nothing left here to lay out. What the root carries instead are the
-       dials the triggers are drawn from, so that repainting every trigger in a group is a matter
-       of setting one of them here rather than reaching for each trigger in turn */
+    /* The group lays its panels out in a row or a column and fills whatever room it was given,
+       which is where the panels get theirs from: a group standing in a box of no height draws
+       nothing at all. The root also carries the dials the triggers are drawn from, so that
+       repainting every trigger in a group is a matter of setting one of them here rather than
+       reaching for each trigger in turn */
     .resizable {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        /* How far either side of the line a pointer still counts as being on it, so that a reader
+           does not have to land on a line a border thick to take hold of it */
+        --resizable-resize-trigger-reach: var(--base-size-4);
         --resizable-resize-trigger-color: var(--border-color-default);
         --resizable-resize-trigger-color-hover: var(--border-color-emphasis);
         --resizable-resize-trigger-color-active: var(--control-checked-background-color-rest);
@@ -23,25 +34,41 @@
         }
     }
 
-    /* The group leaves the box it lays a panel out in unclipped, and a content box cannot be
-       drawn narrower than the padding within it, so a panel squeezed shut still draws its words and
-       its scrollbar beside the trigger. Clipping a panel to the room it was given leaves nothing of
-       a shut one to be seen; it is told to clip what it draws rather than what overflows it, so
-       that a panel with nothing to show does not become something that can be scrolled */
+    /* A panel takes the share of the group it was laid out at, which is carried as how much of the
+       room left over it takes: the triggers keep the thickness they were drawn at and the panels
+       share only what is left, whatever that comes to. The share itself is the one thing written
+       on the element, since it is the only part of this that moves.
+
+       A content box cannot be drawn narrower than the padding within it, so a panel squeezed shut
+       would still draw its words and its scrollbar beside the trigger. It is told to clip what it
+       draws rather than what overflows it, so that a panel with nothing to show does not become
+       something that can be scrolled */
     [data-component="Resizable.Panel"] {
+        flex-basis: 0;
+        flex-shrink: 1;
+        min-width: 0;
+        min-height: 0;
         contain: paint;
     }
 
+    .resizable[data-orientation="vertical"] {
+        flex-direction: column;
+    }
+
     /* A panel is a containing block of its own, so that anything standing against one is
-       positioned against the panel rather than against the page */
+       positioned against the panel rather than against the page. It fills the room the group left
+       it, since that room is the panel's and the box drawing its content is what fills it */
     .resizable-panel {
         position: relative;
+        width: 100%;
+        height: 100%;
 
-        /* The group lets a panel scroll whatever will not fit in the room it has been left.
-           The scrolling stays; the bar drawn for it does not, since a panel dragged narrower than
-           what it holds would otherwise be crossed by one for as long as it stayed that narrow.
-           It is taken away twice over, since the browsers that read the first of these are not
-           the ones that read the second */
+        /* A panel scrolls whatever will not fit in the room it has been left. The scrolling stays;
+           the bar drawn for it does not, since a panel dragged narrower than what it holds would
+           otherwise be crossed by one for as long as it stayed that narrow. It is taken away twice
+           over, since the browsers that read the first of these are not the ones that read the
+           second */
+        overflow: auto;
         scrollbar-width: none;
 
         &::-webkit-scrollbar {
@@ -50,21 +77,52 @@
     }
 
     /* The trigger is drawn no thicker than a border, and whatever it holds is centred within it
-       whichever way it runs. What answers to a pointer is wider than that, which the group works
-       out for itself, so a reader does not have to land on the line to take hold of it. The
+       whichever way it runs. It keeps the thickness it was drawn at as the panels beside it are
+       moved, since it is the panels that share the room and the trigger that stands still. The
        thickness is the trigger's own rather than the separator's, so a trigger stands between two
        panels whether or not it was given a line to draw */
     .resizable-resize-trigger {
         position: relative;
         display: flex;
+        flex: none;
         align-items: center;
         justify-content: center;
+        touch-action: none;
+
+        /* A panel clips what it draws, which makes a layer of it, and a layer laid down after the
+           trigger would otherwise be the one a pointer lands on where the two meet. The trigger is
+           lifted over both the panels it stands between, so what answers to a pointer is the line
+           rather than whichever panel happened to be written after it */
+        z-index: 1;
+
+        /* What answers to a pointer reaches out either side of the line, so a reader does not have
+           to land on something a border thick to take hold of it. It is drawn rather than said in
+           script, so it costs nothing to be there and cannot fall out of step with the line */
+        &::before {
+            position: absolute;
+            content: "";
+        }
+
+        &[aria-orientation="vertical"]::before {
+            inset-block: 0;
+            inset-inline: calc(var(--resizable-resize-trigger-reach) * -1);
+        }
+
+        &[aria-orientation="horizontal"]::before {
+            inset-inline: 0;
+            inset-block: calc(var(--resizable-resize-trigger-reach) * -1);
+        }
+
+        &[aria-disabled="true"]::before {
+            content: none;
+        }
 
         /* Which way a trigger runs is the group's, the other way about: panels side by side are
            parted by a line standing up, and panels stacked one on another by a line lying down.
            The group says which on the trigger itself, so the rules are written against that
            rather than against a prop a caller would have to keep in step with the group */
         &[aria-orientation="vertical"] {
+            cursor: col-resize;
             width: var(--resizable-resize-trigger-thickness);
 
             & > .resizable-resize-trigger-indicator {
@@ -74,6 +132,7 @@
         }
 
         &[aria-orientation="horizontal"] {
+            cursor: row-resize;
             height: var(--resizable-resize-trigger-thickness);
 
             & > .resizable-resize-trigger-indicator {
@@ -108,6 +167,15 @@
         @media (forced-colors: active) {
             forced-color-adjust: none;
         }
+    }
+
+    /* The pointer says which way a trigger will move as it passes over one. A group holding every
+       panel where it stands has nothing to say, and one that was asked to leave the pointer alone
+       is left to whatever the page already had it drawn as */
+    .resizable[data-disabled] .resizable-resize-trigger,
+    .resizable[data-cursor="none"] .resizable-resize-trigger,
+    .resizable-resize-trigger[aria-disabled="true"] {
+        cursor: default;
     }
 
     /* The line fills the trigger it was put in rather than standing anywhere of its own, so that a

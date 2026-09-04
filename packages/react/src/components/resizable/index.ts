@@ -17,4 +17,6 @@ export {
     ResizableResizeTriggerSeparator,
     ResizableResizeTriggerIndicator,
 };
+export { ResizableContext, useResizableContext } from "./ResizableContext";
+export { useResizable } from "./useResizable";
 export * from "./Resizable.types";

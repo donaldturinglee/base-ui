@@ -1,8 +1,10 @@
 import * as React from "react";
-import { Group } from "react-resizable-panels";
+import { useMergedRefs } from "../../hooks/useMergedRefs";
 import { classNames } from "../../lib/classnames";
 import { fixedForwardRef } from "../../utilities/polymorphic";
-import type { ResizableProps } from "./Resizable.types";
+import { ResizableContext } from "./ResizableContext";
+import { useResizable } from "./useResizable";
+import type { ResizableInstance, ResizableProps } from "./Resizable.types";
 
 const classes = {
     root: "resizable",
@@ -20,18 +22,56 @@ function Resizable(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
-    const { className, orientation = "horizontal", resizableRef, ...rest } = props;
+    const {
+        className,
+        orientation = "horizontal",
+        disabled = false,
+        disableCursor = false,
+        defaultLayout,
+        onLayoutChange,
+        onLayoutChanged,
+        resizableRef,
+        children,
+        ...rest
+    } = props;
+
+    const resizable = useResizable({
+        orientation,
+        disabled,
+        disableCursor,
+        defaultLayout,
+        onLayoutChange,
+        onLayoutChanged,
+    });
+
+    const mergedRef = useMergedRefs(ref, resizable.groupRef);
+
+    // What the group can be asked to do from outside it. It is handed over through a ref of its
+    // own rather than through the one that lands on the element, since a caller reaching for the
+    // element and one reaching for the layout are asking for two different things
+    React.useImperativeHandle(
+        resizableRef,
+        (): ResizableInstance => ({
+            getLayout: resizable.getLayout,
+            setLayout: resizable.setLayout,
+        }),
+        [resizable.getLayout, resizable.setLayout],
+    );
 
     return (
-        <Group
-            elementRef={ref}
-            groupRef={resizableRef}
-            orientation={orientation}
-            className={classNames(classes.root, className)}
-            data-component="Resizable"
-            data-orientation={orientation}
-            {...rest}
-        />
+        <ResizableContext.Provider value={resizable}>
+            <div
+                ref={mergedRef}
+                className={classNames(classes.root, className)}
+                data-component="Resizable"
+                data-orientation={orientation}
+                data-disabled={disabled || undefined}
+                data-cursor={disableCursor ? "none" : undefined}
+                {...rest}
+            >
+                {children}
+            </div>
+        </ResizableContext.Provider>
     );
 }
 
