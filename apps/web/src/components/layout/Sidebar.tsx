@@ -197,6 +197,7 @@ const sections: SidebarSection[] = [
             { label: "Placeholder", href: "/components/placeholder" },
             { label: "Popover", href: "/components/popover" },
             { label: "Portal", href: "/components/portal" },
+            { label: "Presence", href: "/components/presence" },
             { label: "Progress Bar", href: "/components/progress-bar" },
             { label: "Progress Circle", href: "/components/progress-circle" },
             { label: "QR Code", href: "/components/qr-code" },
