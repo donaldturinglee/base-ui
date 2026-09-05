@@ -27,6 +27,7 @@ export { default as Carousel } from "./Carousel";
 export { default as Chart } from "./Chart";
 export { default as Checkbox } from "./Checkbox";
 export { default as CheckboxCard } from "./CheckboxCard";
+export { default as CheckboxGroup } from "./CheckboxGroup";
 export { default as Clipboard } from "./Clipboard";
 export { default as Code } from "./Code";
 export { default as Collapsible } from "./Collapsible";

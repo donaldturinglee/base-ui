@@ -131,7 +131,7 @@ const sections: SidebarSection[] = [
             { label: "Chart", href: "/components/chart" },
             { label: "Checkbox", href: "/components/checkbox" },
             { label: "CheckboxCard", href: "/components/checkbox-card" },
-            { label: "Checkbox Group", href: "/components/checkbox-group" },
+            { label: "CheckboxGroup", href: "/components/checkbox-group" },
             { label: "Clipboard", href: "/components/clipboard" },
             { label: "Code", href: "/components/code" },
             { label: "Code Block", href: "/components/code-block" },

@@ -28,6 +28,7 @@ import {
     Chart,
     Checkbox,
     CheckboxCard,
+    CheckboxGroup,
     Clipboard,
     Code,
     Collapsible,
@@ -131,6 +132,7 @@ const Router = () => (
                 <Route path="components/chart" element={<Chart />} />
                 <Route path="components/checkbox" element={<Checkbox />} />
                 <Route path="components/checkbox-card" element={<CheckboxCard />} />
+                <Route path="components/checkbox-group" element={<CheckboxGroup />} />
                 <Route path="components/clipboard" element={<Clipboard />} />
                 <Route path="components/code" element={<Code />} />
                 <Route path="components/collapsible" element={<Collapsible />} />
