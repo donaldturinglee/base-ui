@@ -9,6 +9,7 @@ import {
     AnchoredOverlay,
     AspectRatio,
     Attachment,
+    Autocomplete,
     Avatar,
     AvatarStack,
     Badge,
@@ -105,6 +106,7 @@ const Router = () => (
                 <Route path="components/anchored-overlay" element={<AnchoredOverlay />} />
                 <Route path="components/aspect-ratio" element={<AspectRatio />} />
                 <Route path="components/attachment" element={<Attachment />} />
+                <Route path="components/autocomplete" element={<Autocomplete />} />
                 <Route path="components/avatar" element={<Avatar />} />
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/badge" element={<Badge />} />

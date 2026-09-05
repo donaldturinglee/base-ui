@@ -9,6 +9,7 @@ export { default as Alert } from "./Alert";
 export { default as AnchoredOverlay } from "./AnchoredOverlay";
 export { default as AspectRatio } from "./AspectRatio";
 export { default as Attachment } from "./Attachment";
+export { default as Autocomplete } from "./Autocomplete";
 export { default as Avatar } from "./Avatar";
 export { default as AvatarStack } from "./AvatarStack";
 export { default as Badge } from "./Badge";
