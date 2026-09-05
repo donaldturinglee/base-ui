@@ -14,6 +14,7 @@ import {
     AvatarStack,
     Badge,
     Banner,
+    Blankslate,
     Blockquote,
     Box,
     Breadcrumbs,
@@ -111,6 +112,7 @@ const Router = () => (
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/badge" element={<Badge />} />
                 <Route path="components/banner" element={<Banner />} />
+                <Route path="components/blankslate" element={<Blankslate />} />
                 <Route path="components/blockquote" element={<Blockquote />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/breadcrumbs" element={<Breadcrumbs />} />
