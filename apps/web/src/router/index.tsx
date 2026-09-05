@@ -18,6 +18,7 @@ import {
     Blockquote,
     Box,
     Breadcrumbs,
+    Bubble,
     Button,
     Card,
     Changelog,
@@ -116,6 +117,7 @@ const Router = () => (
                 <Route path="components/blockquote" element={<Blockquote />} />
                 <Route path="components/box" element={<Box />} />
                 <Route path="components/breadcrumbs" element={<Breadcrumbs />} />
+                <Route path="components/bubble" element={<Bubble />} />
                 <Route path="components/button" element={<Button />} />
                 <Route path="components/card" element={<Card />} />
                 <Route path="components/checkbox" element={<Checkbox />} />

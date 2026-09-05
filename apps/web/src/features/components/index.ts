@@ -18,6 +18,7 @@ export { default as Blankslate } from "./Blankslate";
 export { default as Blockquote } from "./Blockquote";
 export { default as Box } from "./Box";
 export { default as Breadcrumbs } from "./Breadcrumbs";
+export { default as Bubble } from "./Bubble";
 export { default as Button } from "./Button";
 export { default as Card } from "./Card";
 export { default as Checkbox } from "./Checkbox";
