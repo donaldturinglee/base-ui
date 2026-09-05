@@ -5,8 +5,12 @@
         min-width: 0;
     }
 
-    /* A bar that is not flush is held in from the edges of whatever it is drawn on */
+    /* A bar that is not flush is held in from the edges of whatever it is drawn on. It is held in
+       from all four of them rather than the sides alone: the items are drawn to the height of the
+       bar, so with nothing above and below them they stand hard against whatever holds it while
+       being held clear of it on either side */
     .action-bar-inset {
+        padding-block: var(--base-size-8);
         padding-inline: var(--base-size-8);
     }
 
