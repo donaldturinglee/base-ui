@@ -35,7 +35,7 @@ const oppositeSide: Record<AnchorSide, AnchorSide> = {
 
 const isVertical = (side: AnchorSide) => side === "outside-top" || side === "outside-bottom";
 
-type Rect = {
+export type AnchoredPositionRect = {
     top: number;
     right: number;
     bottom: number;
@@ -44,8 +44,19 @@ type Rect = {
     height: number;
 };
 
+// Anything that can say where it stands in the viewport. An element can, and so can a point
+// the pointer was pressed at, which is what a menu opened by a press is measured against
+export type AnchoredPositionAnchor = {
+    getBoundingClientRect: () => AnchoredPositionRect;
+};
+
 // Where the floating element sits along the axis it stands off the anchor on
-const positionOnSide = (side: AnchorSide, anchor: Rect, floating: Rect, offset: number) => {
+const positionOnSide = (
+    side: AnchorSide,
+    anchor: AnchoredPositionRect,
+    floating: AnchoredPositionRect,
+    offset: number,
+) => {
     if (side === "outside-top") {
         return anchor.top - floating.height - offset;
     }
@@ -88,7 +99,7 @@ const positionOnAlignment = (
 // against
 export const getAnchoredPosition = (
     floating: HTMLElement,
-    anchor: HTMLElement,
+    anchor: AnchoredPositionAnchor,
     {
         side,
         align,

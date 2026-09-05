@@ -1,4 +1,12 @@
 @layer components {
+    /* A list of actions brought out from the thing they are about, at the press that asked
+       for it.
+
+       The menu stands at the point the press landed on rather than off the edge of anything,
+       so the frame it is placed in is laid out against the viewport, which is what the press
+       was reported in. The items inside it are each drawn from the state they carry: whether
+       the reader is on them, whether they can be used, and whether they are picked */
+
     /* The press is what the menu is about, so the area it is made in gives nothing else away
        to it: the callout a long press would raise on a touch screen is held back, and so is
        the run of text the same press would otherwise start selecting */
@@ -6,28 +14,184 @@
         -webkit-touch-callout: none;
         user-select: none;
 
-        &:focus {
-            outline: none;
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(-1 * var(--focus-outline-width));
         }
     }
 
-    /* The press held open as something the menu can be measured against, laid out against the
-       viewport because that is what the press was reported in. It is only there to be
-       measured, so nothing is drawn on it and nothing lands on it */
-    .context-menu-point {
+    /* Where the menu ends up is carried in variables rather than written straight onto the
+       element, the way the other floating surfaces have it. Nothing on it is transitioned: it
+       is measured as it opens, and a transition would carry it into place from the corner it
+       was first rendered in rather than let it appear where it belongs */
+    .context-menu-positioner {
         position: fixed;
-        top: var(--context-menu-point-top);
-        left: var(--context-menu-point-left);
-        width: var(--context-menu-point-size);
-        height: var(--context-menu-point-size);
-        pointer-events: none;
+        top: var(--context-menu-top);
+        left: var(--context-menu-left);
+        transition: none;
     }
 
-    /* The overlay is only as wide as the widest item, and gives way to a scrollbar rather
-       than growing past the screen */
-    .context-menu-overlay {
+    /* The menu grows out of the corner nearest the press, which is where it came from. Which
+       corner that is follows from where the frame ended up standing */
+    .context-menu-positioner[data-side="outside-top"] {
+        --context-menu-origin-block: bottom;
+    }
+
+    .context-menu-positioner[data-align="end"] {
+        --context-menu-origin-inline: right;
+    }
+
+    /* The menu is only as wide as the widest item, and gives way to a scrollbar rather than
+       growing past the screen. It is drawn on the same surface as every other overlay */
+    .context-menu-content {
+        display: flex;
+        flex-direction: column;
         min-width: var(--overlay-width-xsmall);
-        max-height: inherit;
+        max-height: min(var(--overlay-height-medium), 100dvh);
         overflow: auto;
+        padding: var(--base-size-4);
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-large);
+        box-shadow: var(--shadow-floating-small);
+        transform-origin: var(--context-menu-origin-block, top)
+            var(--context-menu-origin-inline, left);
+
+        &:focus {
+            outline: none;
+        }
+
+        @media (forced-colors: active) {
+            outline: 1px solid transparent;
+        }
+    }
+
+    /* An item is drawn from the state it carries: the reader being on it is what fills it,
+       whether they came by pointer or by key, and it stops answering either once it cannot
+       be used */
+    .context-menu-item {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--base-size-8);
+        min-height: var(--control-medium-size);
+        padding-block: var(--control-medium-padding-block);
+        padding-inline: var(--control-medium-padding-inline-condensed);
+        border-radius: var(--border-radius-medium);
+        color: var(--foreground-color-default);
+        font-size: var(--text-body-size-medium);
+        line-height: var(--text-body-line-height-medium);
+        cursor: pointer;
+        user-select: none;
+        outline: none;
+        transition: background-color var(--motion-transition-hover);
+
+        &[data-highlighted] {
+            background-color: var(--control-transparent-background-color-hover);
+        }
+
+        &:focus-visible {
+            outline: var(--focus-outline-width) solid var(--focus-outline-color);
+            outline-offset: calc(-1 * var(--focus-outline-width));
+        }
+
+        /* An icon set straight into the item is drawn at the size a visual is drawn at down
+           the rest of the system */
+        & > svg {
+            flex-shrink: 0;
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* An item that cannot be used says so by its colour, and is not filled under the reader */
+    .context-menu-item[data-disabled] {
+        cursor: not-allowed;
+        color: var(--control-foreground-color-disabled);
+
+        &[data-highlighted] {
+            background-color: transparent;
+        }
+    }
+
+    /* Something that cannot be undone is coloured as a warning, and warns louder under the
+       reader */
+    .context-menu-item[data-variant="danger"]:not([data-disabled]) {
+        color: var(--control-danger-foreground-color-rest);
+
+        &[data-highlighted] {
+            color: var(--control-danger-foreground-color-hover);
+            background-color: var(--control-danger-background-color-hover);
+        }
+    }
+
+    .context-menu-item-group {
+        display: flex;
+        flex-direction: column;
+
+        /* Two groups in a row are held apart, since there is no line between them */
+        & + & {
+            margin-top: var(--base-size-8);
+        }
+    }
+
+    .context-menu-item-group-label {
+        padding-block: var(--base-size-6);
+        padding-inline: var(--control-medium-padding-inline-condensed);
+        color: var(--foreground-color-muted);
+        font-size: var(--text-body-size-small);
+        font-weight: var(--base-text-weight-semibold);
+        line-height: var(--text-body-line-height-small);
+    }
+
+    /* The line is drawn as a background rather than a border, so it keeps its own height
+       whatever the menu is holding either side of it */
+    .context-menu-separator {
+        flex-shrink: 0;
+        height: var(--border-width-thin);
+        margin-block: var(--base-size-4);
+        margin-inline: 0;
+        padding: 0;
+        border: 0;
+        background-color: var(--border-color-muted);
+    }
+
+    /* The words take whatever room the mark beside them leaves, and give way to an ellipsis
+       rather than wrap */
+    .context-menu-item-text {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* The mark keeps its room whether or not it is shown, so the words beside it stand in
+       line down the menu */
+    .context-menu-item-indicator {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: var(--base-size-16);
+        height: var(--base-size-16);
+        color: var(--foreground-color-accent);
+
+        & svg {
+            width: var(--base-size-16);
+            height: var(--base-size-16);
+        }
+
+        &[data-state="unchecked"] {
+            visibility: hidden;
+        }
+    }
+
+    /* The mark of an item that cannot be used is coloured as the item is */
+    .context-menu-item[data-disabled] .context-menu-item-indicator {
+        color: inherit;
     }
 }

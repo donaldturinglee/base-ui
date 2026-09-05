@@ -1,19 +1,16 @@
 import type { StoryFn, Meta } from "@storybook/react-vite";
 import {
-    ArchiveRegular,
+    ClipboardPasteRegular,
     CopyRegular,
+    CutRegular,
     DeleteRegular,
-    RenameRegular,
 } from "@gamecrafters/base-ui-icons";
-import { ActionList } from "../action-list";
-import { Text } from "../text";
 import { ContextMenu } from ".";
+import type { ContextMenuProps } from "./ContextMenu.types";
 
 const classes = {
-    // Somewhere to press. A trigger draws nothing of its own, so the story gives it an area
-    // wide enough to aim at and says what to do with it
-    surface:
-        "grid h-[var(--base-size-128)] w-[var(--overlay-width-small)] place-items-center rounded-[var(--border-radius-large)] border border-dashed border-[var(--border-color-default)] text-center",
+    // Gives the menu an area to be opened from, drawn so that it reads as one
+    area: "flex h-48 w-80 select-none items-center justify-center rounded-md border border-dashed border-border-default text-foreground-muted",
 };
 
 export default {
@@ -23,38 +20,28 @@ export default {
 
 export const Default: StoryFn<typeof ContextMenu> = () => (
     <ContextMenu>
-        <ContextMenu.Trigger className={classes.surface}>
-            <Text>Right click, or press and hold</Text>
-        </ContextMenu.Trigger>
-        <ContextMenu.Overlay>
-            <ActionList>
-                <ActionList.Item>
-                    <ActionList.LeadingVisual>
-                        <CopyRegular />
-                    </ActionList.LeadingVisual>
-                    Copy link
-                </ActionList.Item>
-                <ActionList.Item>
-                    <ActionList.LeadingVisual>
-                        <RenameRegular />
-                    </ActionList.LeadingVisual>
-                    Rename
-                </ActionList.Item>
-                <ActionList.Item>
-                    <ActionList.LeadingVisual>
-                        <ArchiveRegular />
-                    </ActionList.LeadingVisual>
-                    Archive
-                </ActionList.Item>
-                <ActionList.Divider />
-                <ActionList.Item variant="danger">
-                    <ActionList.LeadingVisual>
-                        <DeleteRegular />
-                    </ActionList.LeadingVisual>
+        <ContextMenu.Trigger className={classes.area}>Right click here</ContextMenu.Trigger>
+        <ContextMenu.Positioner>
+            <ContextMenu.Content>
+                <ContextMenu.Item value="cut">
+                    <CutRegular />
+                    Cut
+                </ContextMenu.Item>
+                <ContextMenu.Item value="copy">
+                    <CopyRegular />
+                    Copy
+                </ContextMenu.Item>
+                <ContextMenu.Item value="paste">
+                    <ClipboardPasteRegular />
+                    Paste
+                </ContextMenu.Item>
+                <ContextMenu.Separator />
+                <ContextMenu.Item value="delete" variant="danger">
+                    <DeleteRegular />
                     Delete
-                </ActionList.Item>
-            </ActionList>
-        </ContextMenu.Overlay>
+                </ContextMenu.Item>
+            </ContextMenu.Content>
+        </ContextMenu.Positioner>
     </ContextMenu>
 );
 
@@ -62,33 +49,66 @@ Default.parameters = {
     layout: "centered",
 };
 
-export const Playground: StoryFn<typeof ContextMenu> = (args) => (
+export const Playground: StoryFn<ContextMenuProps> = (args) => (
     <ContextMenu {...args}>
-        <ContextMenu.Trigger className={classes.surface}>
-            <Text>Right click, or press and hold</Text>
-        </ContextMenu.Trigger>
-        <ContextMenu.Overlay>
-            <ActionList>
-                <ActionList.Item>Copy link</ActionList.Item>
-                <ActionList.Item>Rename</ActionList.Item>
-                <ActionList.Item>Archive</ActionList.Item>
-            </ActionList>
-        </ContextMenu.Overlay>
+        <ContextMenu.Trigger className={classes.area}>Right click here</ContextMenu.Trigger>
+        <ContextMenu.Positioner>
+            <ContextMenu.Content>
+                <ContextMenu.Item value="cut">Cut</ContextMenu.Item>
+                <ContextMenu.Item value="copy">Copy</ContextMenu.Item>
+                <ContextMenu.Item value="paste">Paste</ContextMenu.Item>
+                <ContextMenu.Separator />
+                <ContextMenu.Item value="delete" variant="danger">
+                    Delete
+                </ContextMenu.Item>
+            </ContextMenu.Content>
+        </ContextMenu.Positioner>
     </ContextMenu>
 );
 
 Playground.args = {
+    closeOnSelect: true,
+    loopFocus: false,
+    typeahead: true,
     disabled: false,
 };
 
 Playground.argTypes = {
+    closeOnSelect: {
+        control: {
+            type: "boolean",
+        },
+        description: "Whether picking an item closes the menu",
+    },
+    loopFocus: {
+        control: {
+            type: "boolean",
+        },
+        description: "Whether the arrow keys come round from the last item to the first",
+    },
+    typeahead: {
+        control: {
+            type: "boolean",
+        },
+        description: "Whether typing moves to the item that starts with what was typed",
+    },
     disabled: {
         control: {
             type: "boolean",
         },
-        description: "Leaves the press alone, so the browser answers it with its own menu",
+        description: "Leaves the press to the browser, which shows a menu of its own",
     },
     open: {
+        table: {
+            disable: true,
+        },
+    },
+    defaultOpen: {
+        table: {
+            disable: true,
+        },
+    },
+    portalContainerName: {
         table: {
             disable: true,
         },
