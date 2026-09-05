@@ -39,6 +39,7 @@ import {
     ContextMenu,
     CounterLabel,
     DataTable,
+    DatePicker,
     Details,
     Em,
     Flow,
@@ -150,6 +151,7 @@ const Router = () => (
                 <Route path="components/context-menu" element={<ContextMenu />} />
                 <Route path="components/counter-label" element={<CounterLabel />} />
                 <Route path="components/data-table" element={<DataTable />} />
+                <Route path="components/date-picker" element={<DatePicker />} />
                 <Route path="components/details" element={<Details />} />
                 <Route path="components/em" element={<Em />} />
                 <Route path="components/flow" element={<Flow />} />
