@@ -36,6 +36,7 @@ export { default as Combobox } from "./Combobox";
 export { default as CommandPalette } from "./CommandPalette";
 export { default as ConfirmationDialog } from "./ConfirmationDialog";
 export { default as ContextMenu } from "./ContextMenu";
+export { default as CounterLabel } from "./CounterLabel";
 export { default as Details } from "./Details";
 export { default as Em } from "./Em";
 export { default as Flow } from "./Flow";
