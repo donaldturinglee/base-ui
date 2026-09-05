@@ -278,7 +278,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ListItem",
+        name: "List.Item",
         props: [
             styling,
             {

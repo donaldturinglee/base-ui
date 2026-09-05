@@ -392,15 +392,15 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ClipboardLabel",
+        name: "Clipboard.Label",
         props: [styling, polymorphic("label")],
     },
     {
-        name: "ClipboardControl",
+        name: "Clipboard.Control",
         props: [styling, polymorphic("div")],
     },
     {
-        name: "ClipboardInput",
+        name: "Clipboard.Input",
         props: [
             styling,
             {
@@ -412,7 +412,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ClipboardTrigger",
+        name: "Clipboard.Trigger",
         props: [
             {
                 name: "label",
@@ -437,7 +437,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ClipboardIndicator",
+        name: "Clipboard.Indicator",
         props: [
             {
                 name: "copied",
@@ -450,7 +450,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ClipboardCopyText",
+        name: "Clipboard.CopyText",
         props: [
             {
                 name: "copied",
@@ -469,7 +469,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ClipboardValueText",
+        name: "Clipboard.ValueText",
         props: [styling, polymorphic("span")],
     },
 ];

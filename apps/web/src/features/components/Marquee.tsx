@@ -632,19 +632,19 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "MarqueeViewport",
+        name: "Marquee.Viewport",
         props: [styling, polymorphic],
     },
     {
-        name: "MarqueeContent",
+        name: "Marquee.Content",
         props: [styling, polymorphic],
     },
     {
-        name: "MarqueeItem",
+        name: "Marquee.Item",
         props: [styling, polymorphic],
     },
     {
-        name: "MarqueeEdge",
+        name: "Marquee.Edge",
         props: [
             {
                 name: "side",

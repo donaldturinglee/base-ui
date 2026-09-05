@@ -304,7 +304,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "SwapIndicator",
+        name: "Swap.Indicator",
         props: [
             {
                 name: "type",

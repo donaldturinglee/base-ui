@@ -157,7 +157,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AccordionItem",
+        name: "Accordion.Item",
         props: [
             {
                 name: "value",
@@ -175,7 +175,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AccordionHeader",
+        name: "Accordion.Header",
         props: [
             {
                 name: "headingLevel",
@@ -187,7 +187,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AccordionPanel",
+        name: "Accordion.Panel",
         props: [styling, polymorphic],
     },
 ];

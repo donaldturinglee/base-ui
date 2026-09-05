@@ -550,7 +550,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "BannerTitle",
+        name: "Banner.Title",
         props: [
             {
                 name: "as",
@@ -563,15 +563,15 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "BannerDescription",
+        name: "Banner.Description",
         props: [styling],
     },
     {
-        name: "BannerPrimaryAction",
+        name: "Banner.PrimaryAction",
         props: [styling],
     },
     {
-        name: "BannerSecondaryAction",
+        name: "Banner.SecondaryAction",
         props: [styling],
     },
 ];

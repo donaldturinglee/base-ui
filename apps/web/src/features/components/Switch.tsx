@@ -356,7 +356,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "SwitchRootProvider",
+        name: "Switch.RootProvider",
         props: [
             {
                 name: "value",
@@ -369,19 +369,19 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "SwitchControl",
+        name: "Switch.Control",
         props: [styling],
     },
     {
-        name: "SwitchThumb",
+        name: "Switch.Thumb",
         props: [styling],
     },
     {
-        name: "SwitchLabel",
+        name: "Switch.Label",
         props: [styling],
     },
     {
-        name: "SwitchHiddenInput",
+        name: "Switch.HiddenInput",
         props: [styling],
     },
 ];

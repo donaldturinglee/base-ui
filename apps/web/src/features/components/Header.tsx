@@ -268,7 +268,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "HeaderItem",
+        name: "Header.Item",
         props: [
             {
                 name: "full",
@@ -281,7 +281,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "HeaderLink",
+        name: "Header.Link",
         props: [
             styling,
             {

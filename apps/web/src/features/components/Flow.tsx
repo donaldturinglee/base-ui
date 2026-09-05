@@ -461,7 +461,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "FlowNode",
+        name: "Flow.Node",
         props: [
             {
                 name: "id",
@@ -480,11 +480,11 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "FlowList",
+        name: "Flow.List",
         props: [styling],
     },
     {
-        name: "FlowParallel",
+        name: "Flow.Parallel",
         props: [
             {
                 name: "align",

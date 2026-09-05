@@ -198,7 +198,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "StackItem",
+        name: "Stack.Item",
         props: [
             {
                 name: "grow",

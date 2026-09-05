@@ -437,7 +437,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "NativeSelectOption",
+        name: "NativeSelect.Option",
         props: [
             {
                 name: "value",
@@ -450,7 +450,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "NativeSelectOptGroup",
+        name: "NativeSelect.OptGroup",
         props: [
             {
                 name: "label",

@@ -421,7 +421,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "CardIcon",
+        name: "Card.Icon",
         props: [
             {
                 name: "icon",
@@ -440,7 +440,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "CardImage",
+        name: "Card.Image",
         props: [
             {
                 name: "alt",
@@ -453,7 +453,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "CardHeading",
+        name: "Card.Heading",
         props: [
             {
                 name: "as",
@@ -466,15 +466,15 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "CardDescription",
+        name: "Card.Description",
         props: [styling],
     },
     {
-        name: "CardMetadata",
+        name: "Card.Metadata",
         props: [styling],
     },
     {
-        name: "CardAction",
+        name: "Card.Action",
         props: [styling],
     },
 ];

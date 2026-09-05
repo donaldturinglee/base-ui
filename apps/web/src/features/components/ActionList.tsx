@@ -122,7 +122,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListItem",
+        name: "ActionList.Item",
         props: [
             {
                 name: "variant",
@@ -177,7 +177,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListLinkItem",
+        name: "ActionList.LinkItem",
         props: [
             {
                 name: "href",
@@ -218,7 +218,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListGroup",
+        name: "ActionList.Group",
         props: [
             {
                 name: "variant",
@@ -236,7 +236,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListGroupHeading",
+        name: "ActionList.GroupHeading",
         props: [
             {
                 name: "as",
@@ -259,7 +259,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListHeading",
+        name: "ActionList.Heading",
         props: [
             {
                 name: "as",
@@ -278,7 +278,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListDescription",
+        name: "ActionList.Description",
         props: [
             {
                 name: "variant",
@@ -290,15 +290,15 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListLeadingVisual",
+        name: "ActionList.LeadingVisual",
         props: [styling],
     },
     {
-        name: "ActionListTrailingVisual",
+        name: "ActionList.TrailingVisual",
         props: [styling],
     },
     {
-        name: "ActionListTrailingAction",
+        name: "ActionList.TrailingAction",
         props: [
             {
                 name: "label",
@@ -316,11 +316,11 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionListDivider",
+        name: "ActionList.Divider",
         props: [styling],
     },
     {
-        name: "ActionListSubItem",
+        name: "ActionList.SubItem",
         props: [],
     },
 ];

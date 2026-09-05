@@ -253,7 +253,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "DetailsSummary",
+        name: "Details.Summary",
         props: [
             {
                 name: "as",

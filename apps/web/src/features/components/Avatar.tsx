@@ -181,7 +181,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AvatarImage",
+        name: "Avatar.Image",
         props: [
             {
                 name: "src",
@@ -199,7 +199,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AvatarFallback",
+        name: "Avatar.Fallback",
         props: [
             {
                 name: "name",

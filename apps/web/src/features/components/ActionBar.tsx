@@ -122,7 +122,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionBarButton",
+        name: "ActionBar.Button",
         props: [
             {
                 name: "leadingVisual",
@@ -146,7 +146,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionBarIconButton",
+        name: "ActionBar.IconButton",
         props: [
             {
                 name: "icon",
@@ -172,15 +172,15 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionBarDivider",
+        name: "ActionBar.Divider",
         props: [styling],
     },
     {
-        name: "ActionBarGroup",
+        name: "ActionBar.Group",
         props: [styling],
     },
     {
-        name: "ActionBarMenu",
+        name: "ActionBar.Menu",
         props: [
             {
                 name: "icon",

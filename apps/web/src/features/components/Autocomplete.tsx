@@ -859,7 +859,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AutocompleteInput",
+        name: "Autocomplete.Input",
         props: [
             {
                 name: "openOnFocus",
@@ -885,7 +885,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AutocompleteMenu",
+        name: "Autocomplete.Menu",
         props: [
             {
                 name: "items",
@@ -969,7 +969,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AutocompleteOverlay",
+        name: "Autocomplete.Overlay",
         props: [
             {
                 name: "menuAnchorRef",

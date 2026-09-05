@@ -129,7 +129,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionMenuButton",
+        name: "ActionMenu.Button",
         props: [
             {
                 name: "leadingVisual",
@@ -147,7 +147,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionMenuAnchor",
+        name: "ActionMenu.Anchor",
         props: [
             {
                 // The one prop of the menu that is a constraint rather than a choice, so it is
@@ -166,7 +166,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ActionMenuOverlay",
+        name: "ActionMenu.Overlay",
         props: [
             {
                 name: "align",

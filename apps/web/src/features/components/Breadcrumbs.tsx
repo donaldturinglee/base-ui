@@ -100,7 +100,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "BreadcrumbsItem",
+        name: "Breadcrumbs.Item",
         props: [
             {
                 name: "selected",

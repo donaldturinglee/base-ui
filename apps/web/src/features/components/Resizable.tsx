@@ -382,7 +382,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ResizablePanel",
+        name: "Resizable.Panel",
         props: [
             {
                 name: "defaultSize",
@@ -447,7 +447,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ResizableResizeTrigger",
+        name: "Resizable.ResizeTrigger",
         props: [
             {
                 name: "disabled",
@@ -460,11 +460,11 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "ResizableResizeTriggerSeparator",
+        name: "Resizable.ResizeTriggerSeparator",
         props: [styling],
     },
     {
-        name: "ResizableResizeTriggerIndicator",
+        name: "Resizable.ResizeTriggerIndicator",
         props: [styling],
     },
 ];

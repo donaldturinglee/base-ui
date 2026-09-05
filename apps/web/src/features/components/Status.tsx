@@ -304,7 +304,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "StatusIndicator",
+        name: "Status.Indicator",
         props: [
             {
                 name: "variant",

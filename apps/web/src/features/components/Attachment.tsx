@@ -626,11 +626,11 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AttachmentGroup",
+        name: "Attachment.Group",
         props: [styling],
     },
     {
-        name: "AttachmentMedia",
+        name: "Attachment.Media",
         props: [
             {
                 name: "variant",
@@ -643,23 +643,23 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AttachmentContent",
+        name: "Attachment.Content",
         props: [styling],
     },
     {
-        name: "AttachmentTitle",
+        name: "Attachment.Title",
         props: [styling],
     },
     {
-        name: "AttachmentDescription",
+        name: "Attachment.Description",
         props: [styling],
     },
     {
-        name: "AttachmentActions",
+        name: "Attachment.Actions",
         props: [styling],
     },
     {
-        name: "AttachmentAction",
+        name: "Attachment.Action",
         props: [
             {
                 name: "icon",
@@ -698,7 +698,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "AttachmentTrigger",
+        name: "Attachment.Trigger",
         props: [
             styling,
             {

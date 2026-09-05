@@ -387,11 +387,11 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "TimerArea",
+        name: "Timer.Area",
         props: [styling, polymorphic],
     },
     {
-        name: "TimerItem",
+        name: "Timer.Item",
         props: [
             {
                 name: "type",
@@ -405,15 +405,15 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "TimerSeparator",
+        name: "Timer.Separator",
         props: [styling, polymorphic],
     },
     {
-        name: "TimerControl",
+        name: "Timer.Control",
         props: [styling, polymorphic],
     },
     {
-        name: "TimerActionTrigger",
+        name: "Timer.ActionTrigger",
         props: [
             {
                 name: "action",

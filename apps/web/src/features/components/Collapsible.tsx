@@ -433,7 +433,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "CollapsibleTrigger",
+        name: "Collapsible.Trigger",
         props: [
             {
                 name: "indicator",
@@ -446,7 +446,7 @@ const groups: ComponentPropGroup[] = [
         ],
     },
     {
-        name: "CollapsiblePanel",
+        name: "Collapsible.Panel",
         props: [
             {
                 name: "keepMounted",
