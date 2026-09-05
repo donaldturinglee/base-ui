@@ -1,13 +1,13 @@
-import type { ElementType } from "react";
+import * as React from "react";
 import { Link, useLocation } from "react-router";
-import { NavigationList, Stack } from "@gamecrafters/base-ui/react";
+import { ActionList, Stack } from "@gamecrafters/base-ui/react";
 
 // Somewhere the sidebar can send the reader. The icon stands beside the label rather than in
 // place of it, so a link written without one is still read the same way
 type SidebarLink = {
     label: string;
     href: string;
-    icon?: ElementType;
+    icon?: React.ElementType;
     // Marks the link standing for the page being read, which is the one the list shows. It is
     // worked out from the path being read unless it is said here, for the link that stands for
     // a page the path alone does not name
@@ -30,6 +30,10 @@ const externalLinkProps = {
     rel: "noreferrer",
 } as const;
 
+// Which element an item is drawn as is the router's link, whose own props the list's item does
+// not know, so the item is widened here to take them along with its own
+const LinkItem: React.ElementType = ActionList.LinkItem;
+
 // One row of the list. A link that stays on the site is followed by the router rather than by the
 // browser, so the page it leads to is drawn in place of the one being read and the row across the
 // top and the column of links are left where they are. One that leads off the site is an ordinary
@@ -49,27 +53,35 @@ const renderLink = (
     const content = (
         <>
             {Icon ? (
-                <NavigationList.LeadingVisual>
+                <ActionList.LeadingVisual>
                     <Icon />
-                </NavigationList.LeadingVisual>
+                </ActionList.LeadingVisual>
             ) : null}
             {label}
         </>
     );
 
     return external ? (
-        <NavigationList.Item
+        <LinkItem
             key={href}
             href={href}
             aria-current={ariaCurrent}
+            // The item standing for the page being read is the one the list shows
+            active={ariaCurrent !== undefined}
             {...externalLinkProps}
         >
             {content}
-        </NavigationList.Item>
+        </LinkItem>
     ) : (
-        <NavigationList.Item key={href} as={Link} to={href} aria-current={ariaCurrent}>
+        <LinkItem
+            key={href}
+            as={Link}
+            to={href}
+            aria-current={ariaCurrent}
+            active={ariaCurrent !== undefined}
+        >
             {content}
-        </NavigationList.Item>
+        </LinkItem>
     );
 };
 
@@ -177,7 +189,6 @@ const sections: SidebarSection[] = [
             { label: "Message", href: "/components/message" },
             { label: "Meter", href: "/components/meter" },
             { label: "Native Select", href: "/components/native-select" },
-            { label: "Navigation List", href: "/components/navigation-list" },
             { label: "Number Input", href: "/components/number-input" },
             { label: "Page Layout", href: "/components/page-layout" },
             { label: "Pagination", href: "/components/pagination" },
@@ -237,27 +248,33 @@ const sections: SidebarSection[] = [
 // the layout writes, and this is what is put inside it.
 //
 // The row across the top already says what the site is, so the heading naming the list is left to
-// a screen reader rather than said a second time
+// a screen reader rather than said a second time. The column is a landmark of its own, named by
+// that same heading, so a reader moving by landmark and one moving by heading both arrive at it
 const Sidebar = () => {
     const { pathname } = useLocation();
+    const headingId = React.useId();
 
     return (
         <Stack gap="normal">
-            <NavigationList>
-                {/* The list copies the heading to put an id on it, and stands what it copied
-                    beside the rest in a list of its own, so the heading is given a key here for
-                    the copy to carry into it */}
-                <NavigationList.Heading key="heading" visuallyHidden>
-                    Base UI
-                </NavigationList.Heading>
-                {/* Every group but the first is set apart from what comes before by a line, and
-                    the first has nothing above it to be set apart from */}
-                {sections.map(({ title, links }, index) => (
-                    <NavigationList.Group key={title} title={title} hideDivider={index === 0}>
-                        {links.map((link) => renderLink(link, pathname))}
-                    </NavigationList.Group>
-                ))}
-            </NavigationList>
+            <nav aria-labelledby={headingId}>
+                <ActionList>
+                    <ActionList.Heading as="h2" id={headingId} visuallyHidden>
+                        Base UI
+                    </ActionList.Heading>
+                    {/* Every group but the first is set apart from what comes before by a line,
+                        and the first has nothing above it to be set apart from. The list is
+                        named an h2, so each group is headed one level under it */}
+                    {sections.map(({ title, links }, index) => (
+                        <React.Fragment key={title}>
+                            {index === 0 ? null : <ActionList.Divider />}
+                            <ActionList.Group>
+                                <ActionList.GroupHeading as="h3">{title}</ActionList.GroupHeading>
+                                {links.map((link) => renderLink(link, pathname))}
+                            </ActionList.Group>
+                        </React.Fragment>
+                    ))}
+                </ActionList>
+            </nav>
         </Stack>
     );
 };

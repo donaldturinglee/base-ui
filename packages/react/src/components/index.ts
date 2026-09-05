@@ -72,7 +72,6 @@ export * from "./marquee";
 export * from "./message";
 export * from "./meter";
 export * from "./native-select";
-export * from "./navigation-list";
 export * from "./navigation-menu";
 export * from "./number-input";
 export * from "./page-header";
