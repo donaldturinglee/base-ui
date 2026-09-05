@@ -33,6 +33,7 @@ export { default as Code } from "./Code";
 export { default as CodeBlock } from "./CodeBlock";
 export { default as Collapsible } from "./Collapsible";
 export { default as Combobox } from "./Combobox";
+export { default as CommandPalette } from "./CommandPalette";
 export { default as Details } from "./Details";
 export { default as Em } from "./Em";
 export { default as Flow } from "./Flow";
