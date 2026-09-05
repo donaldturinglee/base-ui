@@ -1,56 +1,46 @@
 import NavigationMenuBase from "./NavigationMenu";
+import NavigationMenuArrow from "./NavigationMenuArrow";
 import NavigationMenuContent from "./NavigationMenuContent";
-import NavigationMenuDescription from "./NavigationMenuDescription";
-import NavigationMenuDivider from "./NavigationMenuDivider";
-import NavigationMenuGroup from "./NavigationMenuGroup";
-import NavigationMenuGroupHeading from "./NavigationMenuGroupHeading";
-import NavigationMenuHeading from "./NavigationMenuHeading";
+import NavigationMenuIndicator from "./NavigationMenuIndicator";
 import NavigationMenuItem from "./NavigationMenuItem";
-import NavigationMenuLeadingVisual from "./NavigationMenuLeadingVisual";
+import NavigationMenuItemIndicator from "./NavigationMenuItemIndicator";
 import NavigationMenuLink from "./NavigationMenuLink";
 import NavigationMenuList from "./NavigationMenuList";
-import NavigationMenuSubNavigation from "./NavigationMenuSubNavigation";
-import NavigationMenuTrailingVisual from "./NavigationMenuTrailingVisual";
+import NavigationMenuPositioner from "./NavigationMenuPositioner";
 import NavigationMenuTrigger from "./NavigationMenuTrigger";
+import NavigationMenuViewport from "./NavigationMenuViewport";
 
 // The parts a menu is built from are the menu's own, so that a caller writing a navigation
 // menu never has to reach past it for the row, the panels or the links standing in them
 export const NavigationMenu = Object.assign(NavigationMenuBase, {
-    Heading: NavigationMenuHeading,
     List: NavigationMenuList,
     Item: NavigationMenuItem,
     Trigger: NavigationMenuTrigger,
     Content: NavigationMenuContent,
     Link: NavigationMenuLink,
-    SubNavigation: NavigationMenuSubNavigation,
-    Group: NavigationMenuGroup,
-    GroupHeading: NavigationMenuGroupHeading,
-    Description: NavigationMenuDescription,
-    LeadingVisual: NavigationMenuLeadingVisual,
-    TrailingVisual: NavigationMenuTrailingVisual,
-    Divider: NavigationMenuDivider,
+    Indicator: NavigationMenuIndicator,
+    ItemIndicator: NavigationMenuItemIndicator,
+    Arrow: NavigationMenuArrow,
+    Positioner: NavigationMenuPositioner,
+    Viewport: NavigationMenuViewport,
 });
 
 export {
-    NavigationMenuHeading,
     NavigationMenuList,
     NavigationMenuItem,
     NavigationMenuTrigger,
     NavigationMenuContent,
     NavigationMenuLink,
-    NavigationMenuSubNavigation,
-    NavigationMenuGroup,
-    NavigationMenuGroupHeading,
-    NavigationMenuDescription,
-    NavigationMenuLeadingVisual,
-    NavigationMenuTrailingVisual,
-    NavigationMenuDivider,
+    NavigationMenuIndicator,
+    NavigationMenuItemIndicator,
+    NavigationMenuArrow,
+    NavigationMenuPositioner,
+    NavigationMenuViewport,
 };
 export {
     NavigationMenuContext,
     NavigationMenuItemContext,
-    NavigationMenuLinkContext,
-    NavigationMenuHeadingLevelContext,
-    NavigationMenuDepthContext,
+    NavigationMenuPositionerContext,
 } from "./NavigationMenuContext";
+export { useNavigationMenu } from "./useNavigationMenu";
 export * from "./NavigationMenu.types";

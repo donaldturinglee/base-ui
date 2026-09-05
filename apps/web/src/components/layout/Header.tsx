@@ -9,7 +9,6 @@ import {
 import {
     Header as BaseHeader,
     IconButton,
-    NavigationMenu,
     Separator,
     Text,
     useTheme,
@@ -117,17 +116,17 @@ const Header = ({
                             rather than in the middle of it, so the way into the library is come
                             upon where a reader is already looking for what the row can be asked
                             for */}
-                        <NavigationMenu aria-label="Main">
-                            <NavigationMenu.List>
-                                <NavigationMenu.Item>
-                                    {/* Followed by the router, the way the name of the site
-                                        beside it and the links beside a page are */}
-                                    <NavigationMenu.Link as={Link} to={docsHref}>
-                                        Docs
-                                    </NavigationMenu.Link>
-                                </NavigationMenu.Item>
-                            </NavigationMenu.List>
-                        </NavigationMenu>
+                        <nav aria-label="Main">
+                            {/* Followed by the router, the way the name of the site beside it
+                                and the links beside a page are */}
+                            <BaseHeader.Link as={Link} to={docsHref}>
+                                {/* The weight is said rather than left to the link to pass
+                                    down, since the row's link is written to carry the name of
+                                    the site and would otherwise draw the way into the library
+                                    as heavily as the name it stands beside */}
+                                <Text>Docs</Text>
+                            </BaseHeader.Link>
+                        </nav>
                     </BaseHeader.Item>
                 ) : null}
                 <BaseHeader.Item>

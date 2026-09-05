@@ -2,40 +2,53 @@ import * as React from "react";
 import { act, createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { NavigationMenu } from ".";
+import { NavigationMenu, useNavigationMenu } from ".";
 import type { NavigationMenuProps } from "./NavigationMenu.types";
 
-const renderMenu = (props: Partial<NavigationMenuProps> = {}) =>
+const originalResizeObserver = window.ResizeObserver;
+
+type RenderOptions = {
+    // Whatever stands after the row inside the menu, the viewport say
+    inside?: React.ReactNode;
+    // Whatever stands on the page after the menu, for focus to leave it for
+    after?: React.ReactNode;
+};
+
+const renderMenu = (props: Partial<NavigationMenuProps> = {}, options: RenderOptions = {}) =>
     render(
-        <NavigationMenu aria-label="Main" openDelay={100} closeDelay={100} {...props}>
-            <NavigationMenu.List>
-                <NavigationMenu.Item value="product">
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
-                        <NavigationMenu.Link href="#pricing">Pricing</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
+        <>
+            <NavigationMenu aria-label="Main" openDelay={100} closeDelay={100} {...props}>
+                <NavigationMenu.List>
+                    <NavigationMenu.Item value="product">
+                        <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                        <NavigationMenu.Content>
+                            <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
+                            <NavigationMenu.Link href="#pricing">Pricing</NavigationMenu.Link>
+                        </NavigationMenu.Content>
+                    </NavigationMenu.Item>
 
-                <NavigationMenu.Item value="resources">
-                    <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#docs">Documentation</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
+                    <NavigationMenu.Item value="resources">
+                        <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+                        <NavigationMenu.Content>
+                            <NavigationMenu.Link href="#docs">Documentation</NavigationMenu.Link>
+                        </NavigationMenu.Content>
+                    </NavigationMenu.Item>
 
-                <NavigationMenu.Item value="changelog">
-                    <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>,
+                    <NavigationMenu.Item value="changelog">
+                        <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
+                    </NavigationMenu.Item>
+                </NavigationMenu.List>
+                {options.inside}
+            </NavigationMenu>
+            {options.after}
+        </>,
     );
+
+const menu = () => screen.getByRole("navigation", { name: "Main" });
 
 const trigger = (name: string) => screen.getByRole("button", { name });
 
 const link = (name: string) => screen.getByRole("link", { name });
-
-const item = (name: string) => trigger(name).closest("li") as HTMLElement;
 
 // The panel the trigger says it opens, rather than one found by looking around the page, so
 // the tests read it the way a screen reader is told to
@@ -43,6 +56,28 @@ const panel = (name: string) =>
     document.getElementById(trigger(name).getAttribute("aria-controls") ?? "") as HTMLElement;
 
 const isOpen = (name: string) => trigger(name).getAttribute("aria-expanded") === "true";
+
+const part = (name: string) =>
+    document.querySelector(`[data-component='NavigationMenu.${name}']`) as HTMLElement | null;
+
+// jsdom has no PointerEvent, so what kind of pointer it was has to be put on the event by hand
+// rather than passed to `fireEvent` as part of its init. React reads the pointer crossing an
+// element's edge from the over and out events, so those are what is sent
+const pointer = (
+    element: HTMLElement,
+    crossing: "pointerOver" | "pointerOut",
+    pointerType = "mouse",
+) => {
+    const event = createEvent[crossing](element);
+    Object.defineProperty(event, "pointerType", { value: pointerType });
+    fireEvent(element, event);
+};
+
+const pointerEnter = (element: HTMLElement, pointerType?: string) =>
+    pointer(element, "pointerOver", pointerType);
+
+const pointerLeave = (element: HTMLElement, pointerType?: string) =>
+    pointer(element, "pointerOut", pointerType);
 
 // The wait before the pointer opens a panel is what the delays are for, so the tests move the
 // clock rather than the pointer
@@ -53,21 +88,33 @@ const wait = (milliseconds: number) =>
 
 const focus = (element: HTMLElement) => act(() => element.focus());
 
+const keyDown = (element: HTMLElement, key: string, init: object = {}) =>
+    fireEvent.keyDown(element, { key, ...init });
+
 describe("NavigationMenu", () => {
+    // jsdom has no ResizeObserver, and the menu watches the open item's trigger and the panel
+    // it opened so it can be measured again as either moves
     beforeEach(() => {
+        window.ResizeObserver = class {
+            observe() {}
+            unobserve() {}
+            disconnect() {}
+        } as unknown as typeof ResizeObserver;
+
         vi.useFakeTimers();
     });
 
     afterEach(() => {
         vi.useRealTimers();
+        window.ResizeObserver = originalResizeObserver;
     });
 
     it("renders a landmark named by the label it was given", () => {
         renderMenu();
 
-        const menu = screen.getByRole("navigation", { name: "Main" });
-        expect(menu).toHaveAttribute("data-component", "NavigationMenu");
-        expect(menu).toContainElement(trigger("Product"));
+        expect(menu()).toHaveAttribute("data-component", "NavigationMenu");
+        expect(menu()).toHaveAttribute("data-orientation", "horizontal");
+        expect(menu()).toContainElement(trigger("Product"));
     });
 
     it("keeps every panel shut to begin with", () => {
@@ -75,6 +122,7 @@ describe("NavigationMenu", () => {
 
         expect(isOpen("Product")).toBe(false);
         expect(panel("Product")).not.toBeVisible();
+        expect(menu()).not.toHaveAttribute("data-open");
     });
 
     it("takes a shut panel out of the page rather than only hiding it", () => {
@@ -93,6 +141,7 @@ describe("NavigationMenu", () => {
             expect(isOpen("Product")).toBe(true);
             expect(panel("Product")).toBeVisible();
             expect(link("Features")).toBeInTheDocument();
+            expect(menu()).toHaveAttribute("data-open", "");
         });
 
         it("puts it away again on a second press", () => {
@@ -113,13 +162,22 @@ describe("NavigationMenu", () => {
             expect(isOpen("Product")).toBe(false);
             expect(isOpen("Resources")).toBe(true);
         });
+
+        it("leaves a press unanswered where it was told to", () => {
+            renderMenu({ disableClickTrigger: true });
+
+            fireEvent.click(trigger("Product"));
+
+            expect(isOpen("Product")).toBe(false);
+        });
     });
 
-    describe("what the trigger points at", () => {
-        it("says whether it is expanded, and points at the panel it opens", () => {
+    describe("what the parts say about themselves", () => {
+        it("says whether the trigger is expanded, and points at the panel it opens", () => {
             renderMenu();
 
             expect(trigger("Product")).toHaveAttribute("aria-expanded", "false");
+            expect(trigger("Product")).toHaveAttribute("type", "button");
             expect(trigger("Product").getAttribute("aria-controls")).toBe(panel("Product").id);
         });
 
@@ -128,29 +186,63 @@ describe("NavigationMenu", () => {
 
             expect(panel("Product")).toHaveAttribute("aria-labelledby", trigger("Product").id);
         });
+
+        it("carries the item's value on the parts standing in it", () => {
+            renderMenu();
+            fireEvent.click(trigger("Product"));
+
+            expect(trigger("Product").closest("li")).toHaveAttribute("data-value", "product");
+            expect(trigger("Product")).toHaveAttribute("data-value", "product");
+            expect(panel("Product")).toHaveAttribute("data-value", "product");
+            expect(link("Features")).toHaveAttribute("data-value", "product");
+        });
+
+        it("marks the parts of an open item", () => {
+            renderMenu();
+            fireEvent.click(trigger("Product"));
+
+            expect(trigger("Product").closest("li")).toHaveAttribute("data-open", "");
+            expect(trigger("Product")).toHaveAttribute("data-open", "");
+            expect(panel("Product")).toHaveAttribute("data-open", "");
+            expect(trigger("Resources")).not.toHaveAttribute("data-open");
+        });
+
+        it("hands where the open item's trigger stands to the stylesheet", () => {
+            renderMenu();
+
+            expect(menu().style.getPropertyValue("--navigation-menu-trigger-width")).toBe("");
+
+            fireEvent.click(trigger("Product"));
+
+            // jsdom lays nothing out, so everything measures nought
+            expect(menu().style.getPropertyValue("--navigation-menu-trigger-width")).toBe("0px");
+            expect(menu().style.getPropertyValue("--navigation-menu-trigger-x")).toBe("0px");
+        });
     });
 
     describe("moving along the row", () => {
-        it("moves on with the arrow keys, and wraps round from the last item to the first", () => {
+        it("moves on with the arrow keys, and stops at the last item", () => {
             renderMenu();
 
             focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowRight" });
+            keyDown(trigger("Product"), "ArrowRight");
             expect(trigger("Resources")).toHaveFocus();
 
-            fireEvent.keyDown(trigger("Resources"), { key: "ArrowRight" });
+            keyDown(trigger("Resources"), "ArrowRight");
             expect(link("Changelog")).toHaveFocus();
 
-            fireEvent.keyDown(link("Changelog"), { key: "ArrowRight" });
-            expect(trigger("Product")).toHaveFocus();
+            keyDown(link("Changelog"), "ArrowRight");
+            expect(link("Changelog")).toHaveFocus();
         });
 
         it("goes back the other way", () => {
             renderMenu();
 
-            focus(trigger("Resources"));
-            fireEvent.keyDown(trigger("Resources"), { key: "ArrowLeft" });
+            focus(link("Changelog"));
+            keyDown(link("Changelog"), "ArrowLeft");
+            expect(trigger("Resources")).toHaveFocus();
 
+            keyDown(trigger("Resources"), "ArrowLeft");
             expect(trigger("Product")).toHaveFocus();
         });
 
@@ -158,133 +250,89 @@ describe("NavigationMenu", () => {
             renderMenu();
 
             focus(trigger("Resources"));
-            fireEvent.keyDown(trigger("Resources"), { key: "End" });
+            keyDown(trigger("Resources"), "End");
             expect(link("Changelog")).toHaveFocus();
 
-            fireEvent.keyDown(link("Changelog"), { key: "Home" });
+            keyDown(link("Changelog"), "Home");
             expect(trigger("Product")).toHaveFocus();
         });
 
-        it("takes the open panel away, since it belonged to the item that was left", () => {
+        it("leaves the keys that run the other way alone", () => {
+            renderMenu();
+
+            focus(trigger("Resources"));
+            keyDown(trigger("Resources"), "ArrowUp");
+
+            expect(trigger("Resources")).toHaveFocus();
+        });
+
+        it("passes over an item that cannot be opened", () => {
+            render(
+                <NavigationMenu aria-label="Main">
+                    <NavigationMenu.List>
+                        <NavigationMenu.Item value="product">
+                            <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                            <NavigationMenu.Content>
+                                <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
+                            </NavigationMenu.Content>
+                        </NavigationMenu.Item>
+                        <NavigationMenu.Item value="resources" disabled>
+                            <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+                            <NavigationMenu.Content>
+                                <NavigationMenu.Link href="#docs">
+                                    Documentation
+                                </NavigationMenu.Link>
+                            </NavigationMenu.Content>
+                        </NavigationMenu.Item>
+                        <NavigationMenu.Item value="changelog">
+                            <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
+                        </NavigationMenu.Item>
+                    </NavigationMenu.List>
+                </NavigationMenu>,
+            );
+
+            expect(trigger("Resources")).toBeDisabled();
+            expect(trigger("Resources").closest("li")).toHaveAttribute("data-disabled", "");
+
+            focus(trigger("Product"));
+            keyDown(trigger("Product"), "ArrowRight");
+
+            expect(link("Changelog")).toHaveFocus();
+        });
+
+        it("leaves the open panel standing while focus moves to another trigger", () => {
             renderMenu();
 
             fireEvent.click(trigger("Product"));
             focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowRight" });
+            keyDown(trigger("Product"), "ArrowRight");
 
-            expect(isOpen("Product")).toBe(false);
             expect(trigger("Resources")).toHaveFocus();
-        });
-
-        it("leaves the keys alone once focus has moved into a panel", () => {
-            renderMenu();
-
-            fireEvent.click(trigger("Product"));
-            focus(link("Features"));
-            fireEvent.keyDown(link("Features"), { key: "ArrowRight" });
-
-            expect(link("Features")).toHaveFocus();
             expect(isOpen("Product")).toBe(true);
-        });
-
-        it("lines the panel up against the item it was opened from", () => {
-            renderMenu();
-
-            expect(panel("Product")).toHaveAttribute("data-align", "start");
-            expect(panel("Product")).toHaveClass("navigation-menu-content-align-start");
         });
     });
 
-    // A column is a navigation list: the panels are drawn in the flow under the item that
-    // opened them rather than standing over the page beside it, so the keys run down the whole
-    // of what is showing rather than stepping past it
     describe("moving down a column", () => {
-        const renderColumn = () => renderMenu({ orientation: "vertical" });
-
-        it("turns onto the other axis", () => {
-            renderColumn();
+        it("turns the keys onto the other axis", () => {
+            renderMenu({ orientation: "vertical" });
 
             focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowDown" });
-
+            keyDown(trigger("Product"), "ArrowDown");
             expect(trigger("Resources")).toHaveFocus();
-        });
 
-        it("runs on through a panel standing open, since it is drawn in the column", () => {
-            renderColumn();
-
-            fireEvent.click(trigger("Product"));
-            focus(trigger("Product"));
-
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowDown" });
-            expect(link("Features")).toHaveFocus();
-
-            fireEvent.keyDown(link("Features"), { key: "ArrowDown" });
-            expect(link("Pricing")).toHaveFocus();
-
-            fireEvent.keyDown(link("Pricing"), { key: "ArrowDown" });
-            expect(trigger("Resources")).toHaveFocus();
-        });
-
-        it("comes back up through it the same way", () => {
-            renderColumn();
-
-            fireEvent.click(trigger("Product"));
-            focus(trigger("Resources"));
-            fireEvent.keyDown(trigger("Resources"), { key: "ArrowUp" });
-
-            expect(link("Pricing")).toHaveFocus();
-        });
-
-        it("leaves the open panel standing, since it is part of what is being moved down", () => {
-            renderColumn();
-
-            fireEvent.click(trigger("Product"));
-            focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowDown" });
-
-            expect(isOpen("Product")).toBe(true);
-        });
-
-        it("jumps to either end of everything standing open in the column", () => {
-            renderColumn();
-
-            fireEvent.click(trigger("Product"));
-            focus(link("Pricing"));
-
-            fireEvent.keyDown(link("Pricing"), { key: "Home" });
+            keyDown(trigger("Resources"), "ArrowUp");
             expect(trigger("Product")).toHaveFocus();
 
-            fireEvent.keyDown(trigger("Product"), { key: "End" });
-            expect(link("Changelog")).toHaveFocus();
+            keyDown(trigger("Product"), "ArrowRight");
+            expect(trigger("Product")).not.toHaveFocus();
         });
 
-        it("folds the panel away on the key pointing back the way it opened", () => {
-            renderColumn();
+        it("says which way the parts run", () => {
+            renderMenu({ orientation: "vertical" });
 
-            fireEvent.click(trigger("Product"));
-            focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowLeft" });
-
-            expect(isOpen("Product")).toBe(false);
-        });
-
-        it("comes back out to the trigger from inside the panel", () => {
-            renderColumn();
-
-            fireEvent.click(trigger("Product"));
-            focus(link("Features"));
-            fireEvent.keyDown(link("Features"), { key: "ArrowLeft" });
-
-            expect(isOpen("Product")).toBe(false);
-            expect(trigger("Product")).toHaveFocus();
-        });
-
-        it("draws the panel in the flow, with no edge left for it to line up against", () => {
-            renderColumn();
-
-            expect(panel("Product")).not.toHaveAttribute("data-align");
-            expect(panel("Product").className).not.toMatch(/navigation-menu-content-align/);
+            expect(menu()).toHaveAttribute("data-orientation", "vertical");
+            expect(screen.getByRole("list")).toHaveAttribute("data-orientation", "vertical");
+            expect(panel("Product")).toHaveAttribute("data-orientation", "vertical");
         });
     });
 
@@ -293,7 +341,7 @@ describe("NavigationMenu", () => {
             renderMenu();
 
             focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowDown" });
+            keyDown(trigger("Product"), "ArrowDown");
 
             expect(isOpen("Product")).toBe(true);
             expect(link("Features")).toHaveFocus();
@@ -304,7 +352,7 @@ describe("NavigationMenu", () => {
 
             fireEvent.click(trigger("Product"));
             focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowDown" });
+            keyDown(trigger("Product"), "ArrowDown");
 
             expect(link("Features")).toHaveFocus();
         });
@@ -313,9 +361,55 @@ describe("NavigationMenu", () => {
             renderMenu({ orientation: "vertical" });
 
             focus(trigger("Product"));
-            fireEvent.keyDown(trigger("Product"), { key: "ArrowRight" });
+            keyDown(trigger("Product"), "ArrowRight");
 
             expect(isOpen("Product")).toBe(true);
+            expect(link("Features")).toHaveFocus();
+        });
+
+        it("moves between the links in the panel, and stops at either end", () => {
+            renderMenu();
+
+            fireEvent.click(trigger("Product"));
+            focus(link("Features"));
+
+            keyDown(link("Features"), "ArrowDown");
+            expect(link("Pricing")).toHaveFocus();
+
+            keyDown(link("Pricing"), "ArrowDown");
+            expect(link("Pricing")).toHaveFocus();
+
+            keyDown(link("Pricing"), "ArrowUp");
+            expect(link("Features")).toHaveFocus();
+
+            keyDown(link("Features"), "End");
+            expect(link("Pricing")).toHaveFocus();
+
+            keyDown(link("Pricing"), "Home");
+            expect(link("Features")).toHaveFocus();
+        });
+
+        it("keeps the keys in the panel from moving along the row", () => {
+            renderMenu();
+
+            fireEvent.click(trigger("Product"));
+            focus(link("Pricing"));
+            keyDown(link("Pricing"), "ArrowRight");
+
+            expect(link("Pricing")).toHaveFocus();
+            expect(isOpen("Product")).toBe(true);
+        });
+
+        it("steps through the panel on the tab key", () => {
+            renderMenu();
+
+            fireEvent.click(trigger("Product"));
+            focus(link("Features"));
+
+            keyDown(link("Features"), "Tab");
+            expect(link("Pricing")).toHaveFocus();
+
+            keyDown(link("Pricing"), "Tab", { shiftKey: true });
             expect(link("Features")).toHaveFocus();
         });
     });
@@ -323,11 +417,11 @@ describe("NavigationMenu", () => {
     it("closes on Escape and hands focus back to the trigger the panel was opened from", () => {
         renderMenu();
 
-        fireEvent.click(trigger("Product"));
+        focus(trigger("Product"));
+        keyDown(trigger("Product"), "ArrowDown");
+        expect(link("Features")).toHaveFocus();
 
-        act(() => {
-            fireEvent.keyDown(document, { key: "Escape" });
-        });
+        keyDown(document.body, "Escape");
 
         expect(isOpen("Product")).toBe(false);
         expect(trigger("Product")).toHaveFocus();
@@ -342,54 +436,120 @@ describe("NavigationMenu", () => {
         expect(isOpen("Product")).toBe(false);
     });
 
-    it("closes once focus has left the menu altogether", () => {
+    it("leaves a press on a trigger to the trigger", () => {
         renderMenu();
 
         fireEvent.click(trigger("Product"));
-        focus(trigger("Product"));
+        fireEvent.mouseDown(trigger("Resources"));
 
-        act(() => {
-            trigger("Product").blur();
-        });
+        expect(isOpen("Product")).toBe(true);
 
-        expect(isOpen("Product")).toBe(false);
+        fireEvent.click(trigger("Resources"));
+
+        expect(isOpen("Resources")).toBe(true);
     });
 
-    it("stays open while focus is moving from the trigger into the panel", () => {
+    it("leaves a press inside the panel alone", () => {
         renderMenu();
 
         fireEvent.click(trigger("Product"));
-
-        act(() => {
-            fireEvent.blur(trigger("Product"), { relatedTarget: link("Features") });
-        });
+        fireEvent.mouseDown(link("Features"));
 
         expect(isOpen("Product")).toBe(true);
     });
 
-    it("puts the menu away once a link has been followed", () => {
-        renderMenu();
+    it("closes once focus has left the menu altogether", () => {
+        renderMenu({}, { after: <button type="button">Outside</button> });
 
         fireEvent.click(trigger("Product"));
-        fireEvent.click(link("Features"));
+        focus(link("Features"));
+        focus(screen.getByRole("button", { name: "Outside" }));
 
         expect(isOpen("Product")).toBe(false);
     });
 
-    describe("opening on the pointer", () => {
-        it("is left to the press alone unless the menu was asked to answer the pointer", () => {
+    describe("following a link", () => {
+        it("puts the menu away", () => {
             renderMenu();
 
-            fireEvent.pointerEnter(item("Product"));
-            wait(500);
+            fireEvent.click(trigger("Product"));
+            fireEvent.click(link("Features"));
 
             expect(isOpen("Product")).toBe(false);
         });
 
-        it("waits out the delay before opening", () => {
-            renderMenu({ openOn: "hover" });
+        it("leaves the menu standing where the link was told not to put it away", () => {
+            render(
+                <NavigationMenu aria-label="Main">
+                    <NavigationMenu.List>
+                        <NavigationMenu.Item value="product">
+                            <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                            <NavigationMenu.Content>
+                                <NavigationMenu.Link href="#features" closeOnClick={false}>
+                                    Features
+                                </NavigationMenu.Link>
+                            </NavigationMenu.Content>
+                        </NavigationMenu.Item>
+                    </NavigationMenu.List>
+                </NavigationMenu>,
+            );
 
-            fireEvent.pointerEnter(item("Product"));
+            fireEvent.click(trigger("Product"));
+            fireEvent.click(link("Features"));
+
+            expect(isOpen("Product")).toBe(true);
+        });
+
+        it("leaves the menu standing where the link was opened somewhere else", () => {
+            renderMenu();
+
+            fireEvent.click(trigger("Product"));
+            fireEvent.click(link("Features"), { ctrlKey: true });
+
+            expect(isOpen("Product")).toBe(true);
+        });
+
+        it("marks the link standing for the page being read", () => {
+            render(
+                <NavigationMenu aria-label="Main">
+                    <NavigationMenu.List>
+                        <NavigationMenu.Item value="changelog">
+                            <NavigationMenu.Link href="#changelog" current>
+                                Changelog
+                            </NavigationMenu.Link>
+                        </NavigationMenu.Item>
+                    </NavigationMenu.List>
+                </NavigationMenu>,
+            );
+
+            expect(link("Changelog")).toHaveAttribute("aria-current", "page");
+            expect(link("Changelog")).toHaveAttribute("data-current", "");
+        });
+
+        it("is drawn as whatever the caller asked for", () => {
+            render(
+                <NavigationMenu aria-label="Main">
+                    <NavigationMenu.List>
+                        <NavigationMenu.Item value="changelog">
+                            <NavigationMenu.Link as="button" type="button">
+                                Changelog
+                            </NavigationMenu.Link>
+                        </NavigationMenu.Item>
+                    </NavigationMenu.List>
+                </NavigationMenu>,
+            );
+
+            expect(screen.getByRole("button", { name: "Changelog" })).toHaveClass(
+                "navigation-menu-link",
+            );
+        });
+    });
+
+    describe("opening on the pointer", () => {
+        it("waits out the delay before opening", () => {
+            renderMenu();
+
+            pointerEnter(trigger("Product"));
             expect(isOpen("Product")).toBe(false);
 
             wait(99);
@@ -400,53 +560,105 @@ describe("NavigationMenu", () => {
         });
 
         it("does not open where the pointer moved on before the wait was out", () => {
-            renderMenu({ openOn: "hover" });
+            renderMenu();
 
-            fireEvent.pointerEnter(item("Product"));
-            fireEvent.pointerLeave(item("Product"));
+            pointerEnter(trigger("Product"));
+            pointerLeave(trigger("Product"));
             wait(500);
 
             expect(isOpen("Product")).toBe(false);
         });
 
         it("closes once the pointer has been gone for the closing delay", () => {
-            renderMenu({ openOn: "hover" });
+            renderMenu();
 
-            fireEvent.pointerEnter(item("Product"));
+            pointerEnter(trigger("Product"));
             wait(100);
             expect(isOpen("Product")).toBe(true);
 
-            fireEvent.pointerLeave(item("Product"));
+            pointerLeave(trigger("Product"));
             expect(isOpen("Product")).toBe(true);
 
             wait(100);
             expect(isOpen("Product")).toBe(false);
         });
 
-        it("switches at once where one panel already stands open", () => {
-            renderMenu({ openOn: "hover" });
+        it("stays open while the pointer is on the panel", () => {
+            renderMenu();
 
-            fireEvent.pointerEnter(item("Product"));
+            pointerEnter(trigger("Product"));
+            wait(100);
+            pointerLeave(trigger("Product"));
+            pointerEnter(panel("Product"));
+            wait(500);
+
+            expect(isOpen("Product")).toBe(true);
+
+            pointerLeave(panel("Product"));
             wait(100);
 
-            fireEvent.pointerLeave(item("Product"));
-            fireEvent.pointerEnter(item("Resources"));
+            expect(isOpen("Product")).toBe(false);
+        });
+
+        it("switches at once where one panel already stands open", () => {
+            renderMenu();
+
+            pointerEnter(trigger("Product"));
+            wait(100);
+
+            pointerLeave(trigger("Product"));
+            pointerEnter(trigger("Resources"));
 
             expect(isOpen("Product")).toBe(false);
             expect(isOpen("Resources")).toBe(true);
         });
 
         it("leaves a touch alone, since a tap has no pointer to move off the panel again", () => {
-            renderMenu({ openOn: "hover" });
+            renderMenu();
 
-            // jsdom has no PointerEvent, so `pointerType` has to be put on the event by hand
-            // rather than passed to `fireEvent` as part of its init
-            const event = createEvent.pointerOver(item("Product"));
-            Object.defineProperty(event, "pointerType", { value: "touch" });
-            fireEvent(item("Product"), event);
-
+            pointerEnter(trigger("Product"), "touch");
             wait(500);
 
+            expect(isOpen("Product")).toBe(false);
+        });
+
+        it("leaves the pointer alone where it was told to", () => {
+            renderMenu({ disableHoverTrigger: true });
+
+            pointerEnter(trigger("Product"));
+            wait(500);
+            expect(isOpen("Product")).toBe(false);
+
+            // A menu that does not open on the pointer does not close on it either
+            fireEvent.click(trigger("Product"));
+            pointerEnter(panel("Product"));
+            pointerLeave(panel("Product"));
+            wait(500);
+
+            expect(isOpen("Product")).toBe(true);
+        });
+
+        it("leaves a panel standing once the pointer has left it, where it was told to", () => {
+            renderMenu({ disablePointerLeaveClose: true });
+
+            pointerEnter(trigger("Product"));
+            wait(100);
+            pointerLeave(trigger("Product"));
+            pointerEnter(panel("Product"));
+            pointerLeave(panel("Product"));
+            wait(500);
+
+            expect(isOpen("Product")).toBe(true);
+        });
+
+        it("gives up a panel the pointer was about to open once something else has settled it", () => {
+            renderMenu();
+
+            pointerEnter(trigger("Product"));
+            fireEvent.click(trigger("Resources"));
+            wait(500);
+
+            expect(isOpen("Resources")).toBe(true);
             expect(isOpen("Product")).toBe(false);
         });
     });
@@ -461,12 +673,12 @@ describe("NavigationMenu", () => {
 
         it("stays as it is until the caller says otherwise", () => {
             const onValueChange = vi.fn();
-            renderMenu({ value: null, onValueChange });
+            renderMenu({ value: "", onValueChange });
 
             fireEvent.click(trigger("Product"));
 
             expect(isOpen("Product")).toBe(false);
-            expect(onValueChange).toHaveBeenCalledWith("product");
+            expect(onValueChange).toHaveBeenCalledWith({ value: "product" });
         });
 
         it("reports a panel opening and closing either way", () => {
@@ -474,10 +686,11 @@ describe("NavigationMenu", () => {
             renderMenu({ onValueChange });
 
             fireEvent.click(trigger("Product"));
-            expect(onValueChange).toHaveBeenLastCalledWith("product");
+            expect(onValueChange).toHaveBeenLastCalledWith({ value: "product" });
 
             fireEvent.click(trigger("Product"));
-            expect(onValueChange).toHaveBeenLastCalledWith(null);
+            expect(onValueChange).toHaveBeenLastCalledWith({ value: "" });
+            expect(onValueChange).toHaveBeenCalledTimes(2);
         });
 
         it("opens whichever panel it was told to start with", () => {
@@ -487,281 +700,236 @@ describe("NavigationMenu", () => {
         });
     });
 
-    it("marks the link standing for the page being read", () => {
-        render(
-            <NavigationMenu aria-label="Main">
-                <NavigationMenu.List>
-                    <NavigationMenu.Item>
-                        <NavigationMenu.Link href="#changelog" active>
-                            Changelog
-                        </NavigationMenu.Link>
-                    </NavigationMenu.Item>
-                </NavigationMenu.List>
-            </NavigationMenu>,
-        );
+    describe("the mark sliding along the row", () => {
+        const indicator = () => part("Indicator") as HTMLElement;
 
-        expect(link("Changelog")).toHaveAttribute("aria-current", "page");
-        expect(link("Changelog")).toHaveClass("navigation-menu-link-active");
-    });
-
-    it("draws nothing for a trigger or a panel written outside an item", () => {
-        const { container } = render(
-            <NavigationMenu aria-label="Main">
-                <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                <NavigationMenu.Content>Nowhere to be opened from</NavigationMenu.Content>
-            </NavigationMenu>,
-        );
-
-        expect(container.querySelector("button")).toBeNull();
-        expect(screen.queryByText("Nowhere to be opened from")).not.toBeInTheDocument();
-    });
-
-    describe("a heading of its own", () => {
-        it("names the landmark, where the caller gave it no name", () => {
-            render(
-                <NavigationMenu>
-                    <NavigationMenu.Heading>Documentation</NavigationMenu.Heading>
-                    <NavigationMenu.List>
-                        <NavigationMenu.Item>
-                            <NavigationMenu.Link href="#start">Getting started</NavigationMenu.Link>
-                        </NavigationMenu.Item>
-                    </NavigationMenu.List>
-                </NavigationMenu>,
-            );
-
-            const menu = screen.getByRole("navigation", { name: "Documentation" });
-            expect(menu).toContainElement(screen.getByRole("heading", { name: "Documentation" }));
-        });
-
-        it("leaves the name the caller gave it standing", () => {
+        const renderIndicator = () =>
             render(
                 <NavigationMenu aria-label="Main">
-                    <NavigationMenu.Heading>Documentation</NavigationMenu.Heading>
-                    <NavigationMenu.List />
-                </NavigationMenu>,
-            );
-
-            expect(screen.getByRole("navigation", { name: "Main" })).not.toHaveAttribute(
-                "aria-labelledby",
-            );
-        });
-
-        it("keeps a heading from the page while still naming the landmark by it", () => {
-            render(
-                <NavigationMenu>
-                    <NavigationMenu.Heading visuallyHidden>Documentation</NavigationMenu.Heading>
-                    <NavigationMenu.List />
-                </NavigationMenu>,
-            );
-
-            expect(screen.getByRole("navigation", { name: "Documentation" })).toBeInTheDocument();
-            expect(screen.getByRole("heading", { name: "Documentation" })).toHaveClass("sr-only");
-        });
-    });
-
-    describe("groups", () => {
-        const renderGroups = (heading?: React.ReactNode) =>
-            render(
-                <NavigationMenu aria-label="Main">
-                    {heading}
                     <NavigationMenu.List>
-                        <NavigationMenu.Item>
+                        <NavigationMenu.Item value="product">
                             <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
                             <NavigationMenu.Content>
-                                <NavigationMenu.Group title="Build" hideDivider>
-                                    <NavigationMenu.Link href="#editor">Editor</NavigationMenu.Link>
-                                </NavigationMenu.Group>
-                                <NavigationMenu.Group title="Ship">
-                                    <NavigationMenu.Link href="#releases">
-                                        Releases
-                                    </NavigationMenu.Link>
-                                </NavigationMenu.Group>
+                                <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
                             </NavigationMenu.Content>
                         </NavigationMenu.Item>
-                    </NavigationMenu.List>
-                </NavigationMenu>,
-            );
-
-        it("names the group by the heading its title builds", () => {
-            renderGroups();
-            fireEvent.click(trigger("Product"));
-
-            const group = screen.getByRole("group", { name: "Build" });
-            expect(group).toContainElement(link("Editor"));
-        });
-
-        it("stands a group heading one level below the menu's own", () => {
-            renderGroups(<NavigationMenu.Heading as="h3">Product</NavigationMenu.Heading>);
-            fireEvent.click(trigger("Product"));
-
-            expect(screen.getByRole("heading", { name: "Build", level: 4 })).toBeInTheDocument();
-        });
-
-        it("falls back to an h3 where the menu has no heading of its own", () => {
-            renderGroups();
-            fireEvent.click(trigger("Product"));
-
-            expect(screen.getByRole("heading", { name: "Build", level: 3 })).toBeInTheDocument();
-        });
-
-        it("sets a group apart from what comes before it, unless told not to", () => {
-            renderGroups();
-            fireEvent.click(trigger("Product"));
-
-            // The first group has nothing before it to be set apart from, so it was told to
-            // leave the line out
-            expect(
-                panel("Product").querySelectorAll('[data-component="NavigationMenu.Divider"]'),
-            ).toHaveLength(1);
-        });
-
-        it("takes a heading written out in place of the one a title would build", () => {
-            render(
-                <NavigationMenu aria-label="Main">
-                    <NavigationMenu.List>
-                        <NavigationMenu.Item>
-                            <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                            <NavigationMenu.Content>
-                                <NavigationMenu.Group hideDivider>
-                                    <NavigationMenu.GroupHeading>
-                                        <a href="#build">Build</a>
-                                    </NavigationMenu.GroupHeading>
-                                    <NavigationMenu.Link href="#editor">Editor</NavigationMenu.Link>
-                                </NavigationMenu.Group>
-                            </NavigationMenu.Content>
-                        </NavigationMenu.Item>
-                    </NavigationMenu.List>
-                </NavigationMenu>,
-            );
-
-            fireEvent.click(trigger("Product"));
-
-            expect(screen.getByRole("group", { name: "Build" })).toBeInTheDocument();
-            expect(link("Build")).toBeInTheDocument();
-        });
-    });
-
-    describe("a sub-list standing under a link", () => {
-        const renderSubNavigation = (props: Partial<NavigationMenuProps> = {}) =>
-            render(
-                <NavigationMenu aria-label="Main" {...props}>
-                    <NavigationMenu.List>
-                        <NavigationMenu.Item>
+                        <NavigationMenu.Item value="resources">
                             <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+                            <NavigationMenu.ItemIndicator />
                             <NavigationMenu.Content>
                                 <NavigationMenu.Link href="#docs">
                                     Documentation
-                                    <NavigationMenu.SubNavigation>
-                                        <NavigationMenu.Link href="#start">
-                                            Getting started
-                                        </NavigationMenu.Link>
-                                        <NavigationMenu.Link href="#components">
-                                            Components
-                                        </NavigationMenu.Link>
-                                    </NavigationMenu.SubNavigation>
                                 </NavigationMenu.Link>
-                                <NavigationMenu.Link href="#support">Support</NavigationMenu.Link>
                             </NavigationMenu.Content>
                         </NavigationMenu.Item>
+                        <NavigationMenu.Indicator>
+                            <NavigationMenu.Arrow />
+                        </NavigationMenu.Indicator>
                     </NavigationMenu.List>
                 </NavigationMenu>,
             );
 
-        it("is named by the link it stands under, and stands after it rather than inside it", () => {
-            renderSubNavigation();
-            fireEvent.click(trigger("Resources"));
+        it("is kept out of the way while the menu is shut", () => {
+            renderIndicator();
 
-            const subNavigation = screen.getByRole("list", { name: "Documentation" });
-            expect(subNavigation).toHaveAttribute("aria-labelledby", link("Documentation").id);
-            expect(link("Documentation")).not.toContainElement(subNavigation);
-            expect(subNavigation).toContainElement(link("Getting started"));
+            expect(indicator()).not.toBeVisible();
+            expect(indicator()).toHaveAttribute("aria-hidden", "true");
         });
 
-        it("stands its links in the list rather than loose in the panel", () => {
-            renderSubNavigation();
+        it("is held still where the menu has only just opened, and slid after that", () => {
+            renderIndicator();
+
+            fireEvent.click(trigger("Product"));
+
+            expect(indicator()).toBeVisible();
+            expect(indicator()).toHaveAttribute("data-open", "");
+            expect(indicator()).toHaveAttribute("data-still", "");
+
             fireEvent.click(trigger("Resources"));
 
-            expect(link("Getting started").closest("li")).toBeInTheDocument();
+            expect(indicator()).not.toHaveAttribute("data-still");
         });
 
-        it("draws nothing for a sub-list written outside a link", () => {
-            render(
-                <NavigationMenu aria-label="Main">
-                    <NavigationMenu.SubNavigation>
-                        <NavigationMenu.Link href="#start">Nowhere to stand</NavigationMenu.Link>
-                    </NavigationMenu.SubNavigation>
-                </NavigationMenu>,
-            );
+        it("carries the arrow, pointing back at the row", () => {
+            renderIndicator();
 
-            expect(screen.queryByText("Nowhere to stand")).not.toBeInTheDocument();
+            const arrow = part("Arrow") as HTMLElement;
+
+            expect(indicator()).toContainElement(arrow);
+            expect(arrow).toHaveAttribute("data-location", "top");
+            expect(arrow).toHaveClass("navigation-menu-arrow");
         });
 
-        it("runs the keys on through it down a column, since it is drawn in the flow", () => {
-            renderSubNavigation({ orientation: "vertical" });
+        it("marks one item in place while its panel stands open", () => {
+            renderIndicator();
+
+            const itemIndicator = part("ItemIndicator") as HTMLElement;
+
+            expect(itemIndicator).not.toBeVisible();
+
             fireEvent.click(trigger("Resources"));
-            focus(link("Documentation"));
 
-            fireEvent.keyDown(link("Documentation"), { key: "ArrowDown" });
-            expect(link("Getting started")).toHaveFocus();
-
-            fireEvent.keyDown(link("Getting started"), { key: "ArrowDown" });
-            expect(link("Components")).toHaveFocus();
-
-            fireEvent.keyDown(link("Components"), { key: "ArrowDown" });
-            expect(link("Support")).toHaveFocus();
+            expect(itemIndicator).toBeVisible();
+            expect(itemIndicator).toHaveAttribute("data-value", "resources");
         });
     });
 
-    describe("what a link says about itself", () => {
-        const renderLink = () =>
-            render(
-                <NavigationMenu aria-label="Main">
-                    <NavigationMenu.List>
-                        <NavigationMenu.Item>
-                            <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                            <NavigationMenu.Content>
-                                <NavigationMenu.Link href="#editor">
-                                    <NavigationMenu.LeadingVisual>
-                                        <svg aria-hidden="true" />
-                                    </NavigationMenu.LeadingVisual>
-                                    Editor
-                                    <NavigationMenu.Description>
-                                        Write, review and ship
-                                    </NavigationMenu.Description>
-                                    <NavigationMenu.TrailingVisual>
-                                        12
-                                    </NavigationMenu.TrailingVisual>
-                                </NavigationMenu.Link>
-                            </NavigationMenu.Content>
-                        </NavigationMenu.Item>
-                    </NavigationMenu.List>
-                </NavigationMenu>,
+    describe("drawing every panel in the one viewport", () => {
+        const viewport = () => part("Viewport") as HTMLElement;
+
+        const renderViewport = () =>
+            renderMenu(
+                {},
+                {
+                    inside: (
+                        <NavigationMenu.Positioner align="start">
+                            <NavigationMenu.Viewport />
+                        </NavigationMenu.Positioner>
+                    ),
+                },
             );
 
-        it("points the link at the description written inside it", () => {
-            renderLink();
-            fireEvent.click(trigger("Product"));
+        it("carries the panels off into the viewport", () => {
+            renderViewport();
 
-            const editor = screen.getByRole("link", { name: /Editor/ });
-            const description = screen.getByText("Write, review and ship");
-
-            expect(editor).toHaveAttribute("aria-describedby", description.id);
-            expect(editor).toHaveAttribute("data-has-description", "");
+            expect(viewport()).toContainElement(panel("Product"));
+            expect(viewport()).toContainElement(panel("Resources"));
+            expect(trigger("Product").closest("li")).not.toContainElement(panel("Product"));
         });
 
-        it("stands a visual either side of the label", () => {
-            renderLink();
+        it("keeps the viewport out of the way while the menu is shut", () => {
+            renderViewport();
+
+            expect(viewport()).not.toBeVisible();
+            expect(part("Positioner")).toHaveAttribute("data-align", "start");
+
             fireEvent.click(trigger("Product"));
 
-            const editor = screen.getByRole("link", { name: /Editor/ });
-
-            expect(
-                editor.querySelector('[data-component="NavigationMenu.LeadingVisual"]'),
-            ).toBeInTheDocument();
-            expect(
-                editor.querySelector('[data-component="NavigationMenu.TrailingVisual"]'),
-            ).toBeInTheDocument();
+            expect(viewport()).toBeVisible();
+            expect(viewport()).toHaveAttribute("data-open", "");
+            expect(viewport()).toHaveAttribute("data-still", "");
+            expect(viewport().style.getPropertyValue("--navigation-menu-viewport-width")).toBe(
+                "0px",
+            );
         });
+
+        it("shows only the open panel in it", () => {
+            renderViewport();
+
+            fireEvent.click(trigger("Product"));
+
+            expect(panel("Product")).toBeVisible();
+            expect(panel("Resources")).not.toBeVisible();
+        });
+
+        it("says which way a panel arrived from as it takes another's place", () => {
+            renderViewport();
+
+            fireEvent.click(trigger("Product"));
+            expect(panel("Product")).not.toHaveAttribute("data-motion");
+
+            fireEvent.click(trigger("Resources"));
+            expect(panel("Resources")).toHaveAttribute("data-motion", "from-end");
+
+            fireEvent.click(trigger("Product"));
+            expect(panel("Product")).toHaveAttribute("data-motion", "from-start");
+        });
+
+        it("leaves a stand-in after the trigger for a screen reader", () => {
+            renderViewport();
+
+            fireEvent.click(trigger("Product"));
+
+            const proxy = trigger("Product")
+                .closest("li")
+                ?.querySelector("[data-component='NavigationMenu.ViewportProxy']");
+
+            expect(proxy).toHaveAttribute("aria-owns", panel("Product").id);
+        });
+
+        it("steps into the panel from the stop after the trigger", () => {
+            renderViewport();
+
+            fireEvent.click(trigger("Product"));
+
+            const stop = document.getElementById(
+                trigger("Product")
+                    .closest("li")
+                    ?.querySelector<HTMLElement>("[data-component='NavigationMenu.TriggerProxy']")
+                    ?.id ?? "",
+            ) as HTMLElement;
+
+            expect(stop).toHaveAttribute("aria-hidden", "true");
+            expect(stop).toHaveAttribute("tabindex", "0");
+
+            focus(trigger("Product"));
+            fireEvent.focus(stop, { relatedTarget: trigger("Product") });
+
+            expect(link("Features")).toHaveFocus();
+        });
+
+        it("hands the tab key back to the stop at the end of the panel", () => {
+            renderViewport();
+
+            fireEvent.click(trigger("Product"));
+            focus(link("Pricing"));
+            keyDown(link("Pricing"), "Tab");
+
+            expect(part("TriggerProxy")).toHaveFocus();
+        });
+    });
+
+    describe("read from inside", () => {
+        const Reader = () => {
+            const { value, open, setValue } = useNavigationMenu();
+
+            return (
+                <>
+                    <output>{open ? value : "nothing"}</output>
+                    <button type="button" onClick={() => setValue("resources")}>
+                        Open resources
+                    </button>
+                </>
+            );
+        };
+
+        it("says which item stands open, and opens another", () => {
+            renderMenu({}, { inside: <Reader /> });
+
+            expect(screen.getByRole("status")).toHaveTextContent("nothing");
+
+            fireEvent.click(trigger("Product"));
+            expect(screen.getByRole("status")).toHaveTextContent("product");
+
+            fireEvent.click(screen.getByRole("button", { name: "Open resources" }));
+            expect(isOpen("Resources")).toBe(true);
+        });
+
+        it("is a mistake outside a menu", () => {
+            const error = vi.spyOn(console, "error").mockImplementation(() => {});
+
+            expect(() => render(<Reader />)).toThrow(/within a `NavigationMenu`/);
+
+            error.mockRestore();
+        });
+    });
+
+    it("draws nothing for a part written outside a menu, or a trigger outside an item", () => {
+        const { container } = render(
+            <>
+                <NavigationMenu.List>
+                    <NavigationMenu.Item value="loose">Nowhere to stand</NavigationMenu.Item>
+                </NavigationMenu.List>
+                <NavigationMenu aria-label="Main">
+                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                    <NavigationMenu.Content>Nowhere to be opened from</NavigationMenu.Content>
+                </NavigationMenu>
+            </>,
+        );
+
+        expect(screen.queryByText("Nowhere to stand")).not.toBeInTheDocument();
+        expect(container.querySelector("button")).toBeNull();
+        expect(screen.queryByText("Nowhere to be opened from")).not.toBeInTheDocument();
     });
 
     it("merges a custom className onto each of the parts", () => {
@@ -782,9 +950,9 @@ describe("NavigationMenu", () => {
             </NavigationMenu>,
         );
 
-        expect(screen.getByRole("navigation")).toHaveClass("navigation-menu", "custom-menu");
+        expect(menu()).toHaveClass("navigation-menu", "custom-menu");
         expect(screen.getByRole("list")).toHaveClass("navigation-menu-list", "custom-list");
-        expect(item("Product")).toHaveClass("navigation-menu-item", "custom-item");
+        expect(trigger("Product").closest("li")).toHaveClass("navigation-menu-item", "custom-item");
         expect(trigger("Product")).toHaveClass("navigation-menu-trigger", "custom-trigger");
         expect(panel("Product")).toHaveClass("navigation-menu-content", "custom-content");
 

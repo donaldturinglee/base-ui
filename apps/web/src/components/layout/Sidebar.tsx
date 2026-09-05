@@ -178,7 +178,6 @@ const sections: SidebarSection[] = [
             { label: "Meter", href: "/components/meter" },
             { label: "Native Select", href: "/components/native-select" },
             { label: "Navigation List", href: "/components/navigation-list" },
-            { label: "Navigation Menu", href: "/components/navigation-menu" },
             { label: "Number Input", href: "/components/number-input" },
             { label: "Page Layout", href: "/components/page-layout" },
             { label: "Pagination", href: "/components/pagination" },

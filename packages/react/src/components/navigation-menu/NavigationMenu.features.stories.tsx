@@ -1,403 +1,305 @@
 import * as React from "react";
-import type { StoryFn } from "@storybook/react-vite";
-import {
-    BookRegular,
-    CodeRegular,
-    DocumentRegular,
-    RocketRegular,
-    StarRegular,
-} from "@gamecrafters/base-ui-icons";
-import { CounterLabel } from "../counter-label";
-import { Link } from "../link";
+import type { Decorator, StoryFn } from "@storybook/react-vite";
+import { Button } from "../button";
 import { Text } from "../text";
-import { NavigationMenu } from ".";
+import { NavigationMenu, useNavigationMenu } from ".";
 
 const classes = {
     // Gives the panels room to open into, rather than against the edge of the frame
-    container: "p-[var(--base-size-24)] pb-[var(--base-size-64)]",
-    stack: "flex flex-col items-start gap-[var(--base-size-16)]",
-    // A column stands down the side of a page, so it is given the width one would have
-    sidebar: "w-[var(--overlay-width-xsmall)]",
-    // A panel holding more than a list of links lays out what it holds itself
-    columns: "grid grid-cols-2 gap-[var(--base-size-16)]",
-    // A panel of links that say something about themselves needs the room to say it
-    wide: "w-[var(--overlay-width-medium)]",
-    muted: "text-[var(--foreground-color-muted)]",
+    container: "p-[var(--base-size-24)] pb-[var(--base-size-128)]",
+    // A column of items runs the width of whatever it stands in, so it is given something to
+    // run the width of
+    column: "w-[var(--overlay-width-xsmall)]",
+    // A link in a panel says more than its label, so the two are stood one over the other
+    panelLink: "flex-col items-start gap-[var(--base-size-2)]",
+    description: "text-body-small text-foreground-muted",
+    // A wider panel, for a viewport with room to lay its links out in columns
+    columns: "grid grid-cols-2 gap-x-[var(--base-size-24)]",
+    // Names a column of links, quieter than the links it names
+    heading:
+        "px-[var(--control-medium-padding-inline-normal)] pb-[var(--base-size-4)] text-body-small text-foreground-muted",
+    // What stands beside the menu to say what it is doing
+    caption: "text-foreground-muted",
+    row: "flex items-center gap-[var(--base-size-16)]",
 };
+
+const withContainer: Decorator = (Story) => (
+    <div className={classes.container}>
+        <Story />
+    </div>
+);
+
+// What each panel holds: somewhere to go, and a line saying what is there
+const panels = {
+    product: [
+        { href: "#features", label: "Features", description: "What the product does" },
+        { href: "#integrations", label: "Integrations", description: "What it works with" },
+        { href: "#pricing", label: "Pricing", description: "What it costs" },
+    ],
+    resources: [
+        { href: "#docs", label: "Documentation", description: "How to use it" },
+        { href: "#guides", label: "Guides", description: "How to get the most out of it" },
+        { href: "#support", label: "Support", description: "Where to ask for help" },
+    ],
+};
+
+const PanelLinks = ({ links }: { links: (typeof panels)["product"] }) =>
+    links.map(({ href, label, description }) => (
+        <NavigationMenu.Link key={href} href={href} className={classes.panelLink}>
+            {label}
+            <span className={classes.description}>{description}</span>
+        </NavigationMenu.Link>
+    ));
+
+// The items every story is a row of, so what the stories are about is what is done around
+// them rather than what they hold
+const Items = () => (
+    <>
+        <NavigationMenu.Item value="product">
+            <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+            <NavigationMenu.Content>
+                <PanelLinks links={panels.product} />
+            </NavigationMenu.Content>
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item value="resources">
+            <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+            <NavigationMenu.Content>
+                <PanelLinks links={panels.resources} />
+            </NavigationMenu.Content>
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item value="changelog">
+            <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
+        </NavigationMenu.Item>
+    </>
+);
 
 export default {
     title: "Components/NavigationMenu/Features",
+    decorators: [withContainer],
 };
 
-// What Opens A Panel, where the pointer opens one as well as a press. The keys and the press
-// still work, since a menu that only answered the pointer would be shut to anyone without one
-export const OpensOnHover: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main" openOn="hover">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
-                        <NavigationMenu.Link href="#pricing">Pricing</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#docs">Documentation</NavigationMenu.Link>
-                        <NavigationMenu.Link href="#guides">Guides</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// Standing In A Column, which is a navigation list: the keys that moved along the row turn
-// onto the other axis, and each panel is drawn in the flow under the item that opened it,
-// stepped in from it, rather than standing over the page beside it
-export const Vertical: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main" orientation="vertical" className={classes.sidebar}>
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
-                        <NavigationMenu.Link href="#pricing">Pricing</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#docs">Documentation</NavigationMenu.Link>
-                        <NavigationMenu.Link href="#guides">Guides</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// Where The Panel Lines Up, for a panel wider than the item that opened it and standing near
-// the end of the row
-export const ContentAlignment: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Lines up at the start</NavigationMenu.Trigger>
-                    <NavigationMenu.Content align="start">
-                        <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Halfway along</NavigationMenu.Trigger>
-                    <NavigationMenu.Content align="center">
-                        <NavigationMenu.Link href="#docs">Documentation</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>At the end</NavigationMenu.Trigger>
-                    <NavigationMenu.Content align="end">
-                        <NavigationMenu.Link href="#support">Support</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// The Page Being Read, which is the one link in the menu that is not somewhere to go
-export const ActiveLink: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#features" active>
-                            Features
-                        </NavigationMenu.Link>
-                        <NavigationMenu.Link href="#pricing">Pricing</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// More Than A List Of Links, since a panel holds whatever the caller puts in it and lays it
-// out itself. The groups keep their headings and their names; how they stand beside one
-// another is the caller's to say
-export const RichContent: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content className={classes.wide}>
-                        <div className={classes.columns}>
-                            <NavigationMenu.Group title="Build" hideDivider>
-                                <NavigationMenu.Link href="#editor">Editor</NavigationMenu.Link>
-                                <NavigationMenu.Link href="#actions">Actions</NavigationMenu.Link>
-                            </NavigationMenu.Group>
-                            <NavigationMenu.Group title="Ship" hideDivider>
-                                <NavigationMenu.Link href="#packages">Packages</NavigationMenu.Link>
-                                <NavigationMenu.Link href="#releases">Releases</NavigationMenu.Link>
-                            </NavigationMenu.Group>
+// One Surface For Every Panel, slid along the row to whichever item stands open and grown to
+// fit its panel, with an arrow carried along to point up at the item
+export const Viewport: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <NavigationMenu.Item value="product">
+                <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                    <div className={classes.columns}>
+                        <div>
+                            <div className={classes.heading}>Build</div>
+                            <PanelLinks links={panels.product} />
                         </div>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
+                        <div>
+                            <div className={classes.heading}>Learn</div>
+                            <PanelLinks links={panels.resources} />
+                        </div>
+                    </div>
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
 
-                <NavigationMenu.Item>
-                    <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
+            <NavigationMenu.Item value="resources">
+                <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                    <PanelLinks links={panels.resources} />
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Item value="changelog">
+                <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Indicator>
+                <NavigationMenu.Arrow />
+            </NavigationMenu.Indicator>
+        </NavigationMenu.List>
+
+        <NavigationMenu.Positioner align="start">
+            <NavigationMenu.Viewport />
+        </NavigationMenu.Positioner>
+    </NavigationMenu>
 );
 
-// A Heading, which names the menu and the landmark it stands in. A menu named this way needs
-// nothing else said about it
-export const WithHeading: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu orientation="vertical" className={classes.sidebar}>
-            <NavigationMenu.Heading>Documentation</NavigationMenu.Heading>
+// A Mark Sliding Along The Row to whichever item stands open, drawn under it as a line
+export const Indicator: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <Items />
+            <NavigationMenu.Indicator />
+        </NavigationMenu.List>
+    </NavigationMenu>
+);
+
+// A Mark Under Each Item, drawn in place while that item's panel stands open rather than slid
+// along the row from the last one
+export const ItemIndicator: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <NavigationMenu.Item value="product">
+                <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                <NavigationMenu.ItemIndicator />
+                <NavigationMenu.Content>
+                    <PanelLinks links={panels.product} />
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Item value="resources">
+                <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+                <NavigationMenu.ItemIndicator />
+                <NavigationMenu.Content>
+                    <PanelLinks links={panels.resources} />
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
+        </NavigationMenu.List>
+    </NavigationMenu>
+);
+
+// Down A Column, where the panels stand beside the items and the keys turn onto the other axis:
+// up and down move between items, and the key pointing the way the panel opens steps into it
+export const Vertical: StoryFn = () => (
+    <div className={classes.column}>
+        <NavigationMenu aria-label="Main" orientation="vertical">
             <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Link href="#start" active>
-                        Getting started
-                    </NavigationMenu.Link>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Components</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#action-list">ActionList</NavigationMenu.Link>
-                        <NavigationMenu.Link href="#navigation-menu">
-                            NavigationMenu
-                        </NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
+                <Items />
             </NavigationMenu.List>
         </NavigationMenu>
     </div>
 );
 
-// Groups, which collect related links under a heading of their own. A panel holding a few of
-// these reads as several short lists rather than as one long one
-export const WithGroups: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Group title="Build" hideDivider>
-                            <NavigationMenu.Link href="#editor">
-                                <NavigationMenu.LeadingVisual>
-                                    <CodeRegular />
-                                </NavigationMenu.LeadingVisual>
-                                Editor
-                            </NavigationMenu.Link>
-                            <NavigationMenu.Link href="#actions">
-                                <NavigationMenu.LeadingVisual>
-                                    <RocketRegular />
-                                </NavigationMenu.LeadingVisual>
-                                Actions
-                            </NavigationMenu.Link>
-                        </NavigationMenu.Group>
-
-                        <NavigationMenu.Group title="Learn">
-                            <NavigationMenu.Link href="#docs">
-                                <NavigationMenu.LeadingVisual>
-                                    <BookRegular />
-                                </NavigationMenu.LeadingVisual>
-                                Documentation
-                            </NavigationMenu.Link>
-                            <NavigationMenu.Link href="#guides">
-                                <NavigationMenu.LeadingVisual>
-                                    <DocumentRegular />
-                                </NavigationMenu.LeadingVisual>
-                                Guides
-                            </NavigationMenu.Link>
-                        </NavigationMenu.Group>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
+// The Page The Reader Is On, marked as the one link in the menu that goes nowhere
+export const CurrentLink: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <NavigationMenu.Item value="home">
+                <NavigationMenu.Link href="#home" current>
+                    Home
+                </NavigationMenu.Link>
+            </NavigationMenu.Item>
+            <Items />
+        </NavigationMenu.List>
+    </NavigationMenu>
 );
 
-// A group heading written out, for a heading holding more than plain text
-export const WithGroupHeading: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Group hideDivider>
-                            <NavigationMenu.GroupHeading>
-                                <Link href="#build">Build</Link>
-                            </NavigationMenu.GroupHeading>
-                            <NavigationMenu.Link href="#editor">Editor</NavigationMenu.Link>
-                            <NavigationMenu.Link href="#actions">Actions</NavigationMenu.Link>
-                        </NavigationMenu.Group>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// Descriptions, where a link says more about itself than its name does. A panel is often the
-// first a reader sees of what stands behind a link, so there is room here to say what that is
-export const WithDescriptions: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                    <NavigationMenu.Content className={classes.wide}>
-                        <NavigationMenu.Link href="#editor">
-                            <NavigationMenu.LeadingVisual>
-                                <CodeRegular />
-                            </NavigationMenu.LeadingVisual>
-                            Editor
-                            <NavigationMenu.Description>
-                                Write, review and ship without leaving the page
-                            </NavigationMenu.Description>
-                        </NavigationMenu.Link>
-                        <NavigationMenu.Link href="#actions">
-                            <NavigationMenu.LeadingVisual>
-                                <RocketRegular />
-                            </NavigationMenu.LeadingVisual>
-                            Actions
-                            <NavigationMenu.Description>
-                                Run the work that follows every change
-                            </NavigationMenu.Description>
-                        </NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// Trailing visuals, which stand after the name and say something more about the link
-export const WithTrailingVisuals: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#starred">
-                            <NavigationMenu.LeadingVisual>
-                                <StarRegular />
-                            </NavigationMenu.LeadingVisual>
-                            Starred
-                            <NavigationMenu.TrailingVisual>
-                                <CounterLabel>12</CounterLabel>
-                            </NavigationMenu.TrailingVisual>
-                        </NavigationMenu.Link>
-                        <NavigationMenu.Link href="#guides">
-                            <NavigationMenu.LeadingVisual>
-                                <DocumentRegular />
-                            </NavigationMenu.LeadingVisual>
-                            Guides
-                            <NavigationMenu.TrailingVisual>
-                                <CounterLabel>3</CounterLabel>
-                            </NavigationMenu.TrailingVisual>
-                        </NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// A sub-list, which stands under the link it belongs to and is named by it. Nothing here opens
-// or shuts: the panel it stands in is the thing that opens, and a reader who has already
-// opened one should not have to open another to read what it holds
-export const WithSubNavigation: StoryFn<typeof NavigationMenu> = () => (
-    <div className={classes.container}>
-        <NavigationMenu aria-label="Main">
-            <NavigationMenu.List>
-                <NavigationMenu.Item>
-                    <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-                    <NavigationMenu.Content>
-                        <NavigationMenu.Link href="#docs">
-                            Documentation
-                            <NavigationMenu.SubNavigation>
-                                <NavigationMenu.Link href="#start">
-                                    Getting started
-                                </NavigationMenu.Link>
-                                <NavigationMenu.Link href="#components">
-                                    Components
-                                    <NavigationMenu.SubNavigation>
-                                        <NavigationMenu.Link href="#action-list">
-                                            ActionList
-                                        </NavigationMenu.Link>
-                                        <NavigationMenu.Link href="#navigation-menu">
-                                            NavigationMenu
-                                        </NavigationMenu.Link>
-                                    </NavigationMenu.SubNavigation>
-                                </NavigationMenu.Link>
-                            </NavigationMenu.SubNavigation>
-                        </NavigationMenu.Link>
-                        <NavigationMenu.Link href="#support">Support</NavigationMenu.Link>
-                    </NavigationMenu.Content>
-                </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu>
-    </div>
-);
-
-// Controlled, where the caller keeps hold of which panel stands open
-export const Controlled: StoryFn<typeof NavigationMenu> = () => {
-    const [value, setValue] = React.useState<string | null>("product");
+// Held By The Caller, where the menu asks to be opened and the caller says what opens
+export const Controlled: StoryFn = () => {
+    const [value, setValue] = React.useState("");
 
     return (
-        <div className={`${classes.container} ${classes.stack}`}>
-            <NavigationMenu aria-label="Main" value={value} onValueChange={setValue}>
-                <NavigationMenu.List>
-                    <NavigationMenu.Item value="product">
-                        <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
-                        <NavigationMenu.Content>
-                            <NavigationMenu.Link href="#features">Features</NavigationMenu.Link>
-                            <NavigationMenu.Link href="#pricing">Pricing</NavigationMenu.Link>
-                        </NavigationMenu.Content>
-                    </NavigationMenu.Item>
-
-                    <NavigationMenu.Item value="resources">
-                        <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
-                        <NavigationMenu.Content>
-                            <NavigationMenu.Link href="#docs">Documentation</NavigationMenu.Link>
-                            <NavigationMenu.Link href="#guides">Guides</NavigationMenu.Link>
-                        </NavigationMenu.Content>
-                    </NavigationMenu.Item>
-                </NavigationMenu.List>
-            </NavigationMenu>
-
-            <Text size="small" className={classes.muted}>
-                {value === null ? "Nothing stands open." : `The ${value} panel stands open.`}
+        <NavigationMenu
+            aria-label="Main"
+            value={value}
+            onValueChange={(details) => setValue(details.value)}
+        >
+            <NavigationMenu.List>
+                <Items />
+            </NavigationMenu.List>
+            <Text size="small" className={classes.caption}>
+                Open: {value || "nothing"}
             </Text>
+        </NavigationMenu>
+    );
+};
+
+// An Item That Cannot Be Opened, passed over by the keys as well as the pointer
+export const Disabled: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <NavigationMenu.Item value="product">
+                <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                    <PanelLinks links={panels.product} />
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Item value="resources" disabled>
+                <NavigationMenu.Trigger>Resources</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                    <PanelLinks links={panels.resources} />
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Item value="changelog">
+                <NavigationMenu.Link href="#changelog">Changelog</NavigationMenu.Link>
+            </NavigationMenu.Item>
+        </NavigationMenu.List>
+    </NavigationMenu>
+);
+
+// Opened By A Press Alone, for a menu that would rather not answer a pointer crossing the row.
+// A menu that does not open on the pointer does not close on it either, so a panel stays
+// standing until it is pressed shut, put away with Escape, or left for elsewhere
+export const ClickOnly: StoryFn = () => (
+    <NavigationMenu aria-label="Main" disableHoverTrigger>
+        <NavigationMenu.List>
+            <Items />
+        </NavigationMenu.List>
+    </NavigationMenu>
+);
+
+// Stands in for a router's own link, which is what a link in an application is usually written
+// as. The menu still puts itself away as the link is followed
+const RouterLink = React.forwardRef<
+    HTMLAnchorElement,
+    React.ComponentPropsWithoutRef<"a"> & { to: string }
+>(({ to, ...rest }, ref) => <a ref={ref} href={to} {...rest} />);
+
+RouterLink.displayName = "RouterLink";
+
+// Written As The Router's Link, so that following one is a change of page rather than a load
+export const CustomLink: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <NavigationMenu.Item value="product">
+                <NavigationMenu.Trigger>Product</NavigationMenu.Trigger>
+                <NavigationMenu.Content>
+                    {panels.product.map(({ href, label, description }) => (
+                        <NavigationMenu.Link
+                            key={href}
+                            as={RouterLink}
+                            to={href}
+                            className={classes.panelLink}
+                        >
+                            {label}
+                            <span className={classes.description}>{description}</span>
+                        </NavigationMenu.Link>
+                    ))}
+                </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Item value="changelog">
+                <NavigationMenu.Link as={RouterLink} to="#changelog">
+                    Changelog
+                </NavigationMenu.Link>
+            </NavigationMenu.Item>
+        </NavigationMenu.List>
+    </NavigationMenu>
+);
+
+// Reads the menu from inside it, and opens a panel from somewhere other than the row
+const Reader = () => {
+    const { value, setValue } = useNavigationMenu();
+
+    return (
+        <div className={classes.row}>
+            <Text size="small" className={classes.caption}>
+                Open: {value || "nothing"}
+            </Text>
+            <Button size="small" onClick={() => setValue(value === "resources" ? "" : "resources")}>
+                {value === "resources" ? "Close resources" : "Open resources"}
+            </Button>
         </div>
     );
 };
+
+// Read From Inside, by something of the caller's own standing in the menu rather than in the row
+export const Hook: StoryFn = () => (
+    <NavigationMenu aria-label="Main">
+        <NavigationMenu.List>
+            <Items />
+        </NavigationMenu.List>
+        <Reader />
+    </NavigationMenu>
+);

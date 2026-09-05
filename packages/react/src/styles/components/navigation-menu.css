@@ -1,15 +1,17 @@
 @layer components {
-    /* Names the menu, and the landmark it stands in. Lined up with the labels of the items
-       below it rather than with the edge of the menu, since those items are held in from that
-       edge by their own padding */
-    .navigation-menu-heading {
-        margin-block-end: var(--base-size-8);
-        margin-inline-start: var(--control-medium-padding-inline-normal);
+    /* The menu is what the viewport is laid out against, so it is positioned. The room the arrow
+       takes between the row and the viewport is named here, where the arrow, the mark carrying
+       it and the viewport can all read it */
+    .navigation-menu {
+        --navigation-menu-arrow-size: var(--base-size-8);
+
+        position: relative;
     }
 
-    /* The row itself. It holds nothing of its own beyond the direction its items run in, so
-       that where the menu stands on a page is left to whatever it was put in */
+    /* The row itself. It holds nothing of its own beyond the direction its items run in, and is
+       positioned so that a mark sliding along it has something to be laid out against */
     .navigation-menu-list {
+        position: relative;
         display: flex;
         gap: var(--base-size-4);
         margin: 0;
@@ -21,10 +23,18 @@
         flex-direction: column;
     }
 
-    /* Each item is what a panel standing over the page is laid out against, which is why that
-       panel needs nothing measured: an item already knows where it stands */
+    /* Each item is what a panel standing under it is laid out against, which is why that panel
+       needs nothing measured: an item already knows where it stands */
     .navigation-menu-item {
         position: relative;
+    }
+
+    /* Where the open item is measured against the row, the items step aside: a mark sliding
+       along the row and the viewport are both laid out from where the trigger stands in the
+       row, and an item that was positioned would have its trigger measured against itself */
+    .navigation-menu-list:has(> .navigation-menu-indicator) .navigation-menu-item,
+    .navigation-menu:has(.navigation-menu-viewport) .navigation-menu-item {
+        position: static;
     }
 
     /* A trigger and a link standing in the row are the same thing to a reader, so they are
@@ -46,6 +56,7 @@
         line-height: var(--text-body-line-height-medium);
         text-align: start;
         text-decoration: none;
+        white-space: nowrap;
         transition: background-color var(--motion-transition-hover);
 
         &:hover {
@@ -62,7 +73,6 @@
        that a glance at the row says which panel is being read */
     .navigation-menu-trigger[data-open] {
         background-color: var(--control-transparent-background-color-selected);
-        font-weight: var(--base-text-weight-semibold);
     }
 
     .navigation-menu-trigger:disabled,
@@ -76,32 +86,52 @@
     }
 
     /* The page the reader is already on is the one link in the menu that goes nowhere */
-    .navigation-menu-link-active {
+    .navigation-menu-link[data-current] {
         font-weight: var(--base-text-weight-semibold);
     }
 
-    /* Turns over as the panel opens, so that the arrow always points the way the menu will go
-       rather than the way it has been */
-    .navigation-menu-chevron {
-        transition: transform var(--motion-transition-state-change);
+    /* Down a column every item runs the width of the menu, so the chevron stands at the end of
+       its row rather than beside the label */
+    .navigation-menu-list[data-orientation="vertical"]
+        .navigation-menu-item
+        > .navigation-menu-trigger,
+    .navigation-menu-list[data-orientation="vertical"]
+        .navigation-menu-item
+        > .navigation-menu-link {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
 
-        [aria-expanded="true"] & {
-            scale: 1 -1;
-        }
+    /* Turns over as the panel opens across a row, so that the arrow always points the way the
+       panel will go rather than the way it has been. Down a column it points at the panel
+       standing beside the item, and so the other way where the page is read right to left */
+    .navigation-menu-chevron {
+        flex-shrink: 0;
+        transition: scale var(--motion-transition-state-change);
 
         @media (prefers-reduced-motion: reduce) {
             transition: none;
         }
     }
 
-    /* The panel, laid out against the item it was opened from. It runs at least as wide as the
-       item so a panel under a short label does not read as a strip, and no wider than a line
-       of text can be followed back to its start */
+    .navigation-menu-trigger[data-orientation="horizontal"][data-open] .navigation-menu-chevron {
+        scale: 1 -1;
+    }
+
+    .navigation-menu-trigger[data-orientation="vertical"] .navigation-menu-chevron:dir(rtl) {
+        scale: -1 1;
+    }
+
+    /* The panel, laid out against the item it was opened from. It runs as wide as what it holds:
+       at least wide enough that the panel under a short label does not read as a strip, and no
+       wider than a line of text can be followed back to its start or the screen has room for */
     .navigation-menu-content {
         position: absolute;
         z-index: var(--z-index-dropdown);
+        width: max-content;
         min-width: var(--overlay-width-xsmall);
-        max-width: var(--overlay-width-medium);
+        max-width: min(var(--overlay-width-medium), calc(100dvw - var(--base-size-32)));
         padding: var(--overlay-padding-condensed);
         background-color: var(--overlay-background-color);
         border-radius: var(--border-radius-medium);
@@ -112,159 +142,267 @@
        the gap the pointer crosses on its way to it, which the closing delay allows for */
     .navigation-menu-content[data-orientation="horizontal"] {
         top: 100%;
+        inset-inline-start: 0;
         margin-block-start: var(--overlay-offset);
     }
 
-    /* Down a column it is drawn in the flow instead, stepped in from the item that opened it
-       so that a glance down the menu says which links belong to which item. This is how a
-       navigation list shows the list standing under one of its items, and nothing is lifted
-       off the page to do it: the surface, its shadow and the room it took are all given up */
+    /* Down a column it stands beside the item, at the end the page is read towards */
     .navigation-menu-content[data-orientation="vertical"] {
-        position: static;
+        top: 0;
+        inset-inline-start: 100%;
+        margin-inline-start: var(--overlay-offset);
+    }
+
+    /* A panel holding nothing but links is a list of places to go, and reads as one. A link
+       standing in a panel has room to say more than its label, so its words are let wrap */
+    .navigation-menu-content .navigation-menu-link {
+        display: flex;
+        width: 100%;
+        white-space: normal;
+    }
+
+    /* Drawn in the viewport, the panel gives up the surface: the viewport is the surface, and the
+       panel only what it holds, stood in the viewport's top corner so the viewport can be sized
+       to it. A shared surface has room for a wider panel than one standing under an item */
+    .navigation-menu-viewport > .navigation-menu-content {
+        top: 0;
+        inset-inline-start: 0;
         min-width: 0;
-        max-width: none;
-        margin-block-start: var(--base-size-2);
-        padding: 0;
-        padding-inline-start: var(--base-size-16);
+        max-width: min(var(--overlay-width-large), calc(100dvw - var(--base-size-32)));
+        margin: 0;
         background-color: transparent;
         border-radius: 0;
         box-shadow: none;
     }
 
-    /* Where along the item the panel lines up, which only a panel standing over the page has
-       to answer: one drawn in the flow is under its item and nowhere else */
-    .navigation-menu-content-align-start {
-        inset-inline-start: 0;
+    /* As one panel gives way to another in the viewport, the new one slides in from the way the
+       reader moved: from the end of the row where they moved on along it, and from the start
+       where they moved back. Down a column the row runs the other way, and so does the slide.
+       Nothing is animated on the way out, since the old panel is taken off the page and there
+       is nothing left to see */
+    .navigation-menu-content[data-motion="from-start"] {
+        animation: navigation-menu-content-from-start var(--motion-transition-state-change);
     }
 
-    .navigation-menu-content-align-center {
-        inset-inline-start: 50%;
-        translate: -50% 0;
+    .navigation-menu-content[data-motion="from-end"] {
+        animation: navigation-menu-content-from-end var(--motion-transition-state-change);
     }
 
-    .navigation-menu-content-align-end {
+    .navigation-menu-content[data-orientation="vertical"][data-motion="from-start"] {
+        animation-name: navigation-menu-content-from-top;
+    }
+
+    .navigation-menu-content[data-orientation="vertical"][data-motion="from-end"] {
+        animation-name: navigation-menu-content-from-bottom;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .navigation-menu-content[data-motion] {
+            animation: none;
+        }
+    }
+
+    @keyframes navigation-menu-content-from-start {
+        from {
+            opacity: 0;
+            translate: calc(-1 * var(--base-size-24)) 0;
+        }
+
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    @keyframes navigation-menu-content-from-end {
+        from {
+            opacity: 0;
+            translate: var(--base-size-24) 0;
+        }
+
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    @keyframes navigation-menu-content-from-top {
+        from {
+            opacity: 0;
+            translate: 0 calc(-1 * var(--base-size-24));
+        }
+
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    @keyframes navigation-menu-content-from-bottom {
+        from {
+            opacity: 0;
+            translate: 0 var(--base-size-24);
+        }
+
+        to {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+
+    /* The mark that slides along the row to the open item, laid out against the row from where
+       the menu measured the open item's trigger to be. It slides and grows from one item to the
+       next while the menu stays open, and is held still where the menu has only just opened,
+       since then it has nowhere to slide from. It stands over the viewport, so that an arrow it
+       carries is not lost under the viewport's shadow */
+    .navigation-menu-indicator {
+        position: absolute;
+        z-index: calc(var(--z-index-dropdown) + 1);
+        background-color: var(--border-color-accent-emphasis);
+        border-radius: var(--border-radius-full);
+        transition:
+            translate var(--motion-transition-state-change),
+            width var(--motion-transition-state-change),
+            height var(--motion-transition-state-change);
+
+        &[data-still] {
+            transition: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+    }
+
+    /* The trigger is measured from the left of the row whichever way the page is read, so the
+       mark is laid out from there as well */
+    .navigation-menu-indicator[data-orientation="horizontal"] {
+        bottom: 0;
+        left: 0;
+        width: var(--navigation-menu-trigger-width, 0px);
+        height: var(--border-width-thick);
+        translate: var(--navigation-menu-trigger-x, 0px) 0;
+    }
+
+    .navigation-menu-indicator[data-orientation="vertical"] {
+        top: 0;
         inset-inline-end: 0;
+        width: var(--border-width-thick);
+        height: var(--navigation-menu-trigger-height, 0px);
+        translate: 0 var(--navigation-menu-trigger-y, 0px);
     }
 
-    /* A panel holding nothing but links is a list of places to go, and reads as one */
-    .navigation-menu-content .navigation-menu-link {
-        display: flex;
+    /* Holding an arrow, the mark is no longer a line under the item but the room the arrow
+       stands in between the row and the viewport, and draws nothing of its own */
+    .navigation-menu-indicator:has(> .navigation-menu-arrow) {
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .navigation-menu-indicator[data-orientation="horizontal"]:has(> .navigation-menu-arrow) {
+        bottom: calc(-1 * var(--navigation-menu-arrow-size));
+        height: var(--navigation-menu-arrow-size);
+    }
+
+    .navigation-menu-indicator[data-orientation="vertical"]:has(> .navigation-menu-arrow) {
+        inset-inline-end: calc(-1 * var(--navigation-menu-arrow-size));
+        width: var(--navigation-menu-arrow-size);
+    }
+
+    /* A caret stands clear of the edge it is named for by the whole of its own box, which is
+       right for a surface it points from and wrong for the room it stands in here. It is drawn
+       back into the mark, so that its point is at the row and its base at the viewport */
+    .navigation-menu-indicator[data-orientation="horizontal"] > .navigation-menu-arrow {
+        bottom: 0;
+    }
+
+    .navigation-menu-indicator[data-orientation="vertical"] > .navigation-menu-arrow {
+        inset-inline: auto 0;
+    }
+
+    /* A mark drawn under one item while its panel stands open, for a menu marking each item in
+       place rather than sliding one mark along the row */
+    .navigation-menu-item-indicator {
+        position: absolute;
+        z-index: 1;
+        background-color: var(--border-color-accent-emphasis);
+        border-radius: var(--border-radius-full);
+    }
+
+    .navigation-menu-item-indicator[data-orientation="horizontal"] {
+        bottom: 0;
+        inset-inline: 0;
+        height: var(--border-width-thick);
+    }
+
+    .navigation-menu-item-indicator[data-orientation="vertical"] {
+        top: 0;
+        bottom: 0;
+        inset-inline-end: 0;
+        width: var(--border-width-thick);
+    }
+
+    /* Where the viewport stands: at the foot of the row, or beside the column, stood off by the
+       room the arrow takes. It takes no presses of its own, since it is a place rather than a
+       thing and the page under it is not to be covered */
+    .navigation-menu-positioner {
+        position: absolute;
+        z-index: var(--z-index-dropdown);
+        pointer-events: none;
+    }
+
+    .navigation-menu-positioner[data-orientation="horizontal"] {
+        top: 100%;
+        left: 0;
         width: 100%;
+        margin-block-start: var(--navigation-menu-arrow-size);
     }
 
-    /* Down a column every item runs the width of the menu, so the chevron stands at the end of
-       its row rather than beside the label, as a trailing visual does in a navigation list */
-    .navigation-menu-list[data-orientation="vertical"] .navigation-menu-trigger,
-    .navigation-menu-list[data-orientation="vertical"] .navigation-menu-link {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
+    .navigation-menu-positioner[data-orientation="vertical"] {
+        top: 0;
+        inset-inline-start: 100%;
+        height: 100%;
+        margin-inline-start: var(--navigation-menu-arrow-size);
     }
 
-    /* A link standing under the item that opened it is drawn a little quieter than that item */
-    .navigation-menu-content[data-orientation="vertical"] .navigation-menu-link {
-        font-size: var(--text-body-size-small);
-    }
+    /* The one surface every panel is drawn in. It is sized to the open panel and slid along to
+       the open item from what the menu measured, and both are transitioned so that moving
+       between items grows and slides it rather than redrawing it. Whatever a panel holds past
+       the edges while the surface is still growing is clipped rather than left hanging out */
+    .navigation-menu-viewport {
+        position: absolute;
+        top: 0;
+        overflow: hidden;
+        width: var(--navigation-menu-viewport-width);
+        height: var(--navigation-menu-viewport-height);
+        pointer-events: auto;
+        background-color: var(--overlay-background-color);
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--shadow-floating-small);
+        transform-origin: top;
+        transition:
+            translate var(--motion-transition-state-change),
+            width var(--motion-transition-state-change),
+            height var(--motion-transition-state-change);
 
-    /* The label of a link, and whatever it says about itself under it. Holding them together
-       is what keeps the description under the label rather than under the visual beside it */
-    .navigation-menu-link-label {
-        display: flex;
-        flex: 1;
-        min-width: 0;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--base-size-2);
-    }
+        &[data-still] {
+            transition: none;
+        }
 
-    /* A link saying more about itself stands taller than one that does not, so what it holds
-       is lined up with the label rather than with the middle of the whole row */
-    .navigation-menu-link[data-has-description] {
-        align-items: start;
-    }
-
-    /* Says more about a link than its label does, which is what gives a panel of a few links
-       room to be more than a list of names */
-    .navigation-menu-description {
-        color: var(--foreground-color-muted);
-        font-size: var(--text-body-size-small);
-        font-weight: var(--base-text-weight-normal);
-        line-height: var(--text-body-line-height-small);
-    }
-
-    /* The box a leading or trailing visual is drawn in. A visual says the same thing the label
-       does rather than something more, so it is only ever coloured against it */
-    .navigation-menu-visual {
-        display: flex;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        min-width: var(--base-size-16);
-        height: calc(var(--text-body-line-height-medium) * 1em);
-        color: var(--foreground-color-muted);
-
-        & svg {
-            width: var(--base-size-16);
-            height: var(--base-size-16);
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
         }
     }
 
-    /* A trailing visual stands at the end of the row rather than beside the label, so that a
-       count or a mark reads straight down a column of links */
-    .navigation-menu-visual-trailing {
-        margin-inline-start: auto;
+    /* Where it stands is measured from the left of the menu whichever way the page is read, so
+       across a row it is laid out from there as well */
+    .navigation-menu-viewport[data-orientation="horizontal"] {
+        left: 0;
+        translate: var(--navigation-menu-viewport-x, 0px) 0;
     }
 
-    /* A group is a section of a panel rather than a panel of its own, so it holds nothing but
-       the room its heading and its links take */
-    .navigation-menu-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Lined up with the labels of the links standing under it rather than with the edge of the
-       panel, since those links are held in from that edge by their own padding */
-    .navigation-menu-group-heading {
-        margin: 0;
-        margin-block-end: var(--base-size-4);
-        margin-inline-start: var(--control-medium-padding-inline-normal);
-        color: var(--foreground-color-muted);
-        font-size: var(--text-body-size-small);
-        font-weight: var(--base-text-weight-semibold);
-        line-height: var(--text-body-line-height-small);
-
-        /* A heading that is a link is still read as a heading, so it is left looking like one
-           until it is reached for */
-        & a {
-            color: inherit;
-            text-decoration: inherit;
-        }
-
-        & a:hover {
-            text-decoration: underline;
-        }
-    }
-
-    /* The line is drawn as a background rather than a border, so it keeps its own height
-       whatever the panel is holding either side of it */
-    .navigation-menu-divider {
-        height: var(--border-width-thin);
-        margin-block: var(--base-size-8);
-        background-color: var(--border-color-muted);
-    }
-
-    /* Stepped in from the link it stands under, so that a glance down the panel says which
-       links belong to which. The step compounds as the lists nest */
-    .navigation-menu-sub-navigation {
-        margin: 0;
-        margin-block-start: var(--base-size-2);
-        padding: 0;
-        padding-inline-start: var(--base-size-16);
-        list-style: none;
-    }
-
-    /* A link standing under another is drawn a little quieter than the one it stands under */
-    .navigation-menu-sub-navigation > .navigation-menu-sub-navigation-item > .navigation-menu-link {
-        font-size: var(--text-body-size-small);
+    .navigation-menu-viewport[data-orientation="vertical"] {
+        inset-inline-start: 0;
+        translate: 0 var(--navigation-menu-viewport-y, 0px);
     }
 }

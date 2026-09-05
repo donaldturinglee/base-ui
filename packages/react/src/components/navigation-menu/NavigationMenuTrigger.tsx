@@ -1,56 +1,77 @@
 import * as React from "react";
-import { ChevronDownRegular } from "@gamecrafters/base-ui-icons";
-import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect";
+import { ChevronDownRegular, ChevronRightRegular } from "@gamecrafters/base-ui-icons";
 import { classNames } from "../../lib/classnames";
-import { getInteractiveNodes } from "../../utilities/interactive";
+import { navigate } from "./navigate";
 import { NavigationMenuContext, NavigationMenuItemContext } from "./NavigationMenuContext";
 import type { NavigationMenuTriggerProps } from "./NavigationMenu.types";
 
 const classes = {
     root: "navigation-menu-trigger",
-    // Turns over as the panel opens, so that the arrow always points the way the menu will go
-    // rather than the way it has been
+    // Says which way the panel opens: turning over as it does across a row, and pointing at the
+    // panel standing beside the item down a column
     chevron: "navigation-menu-chevron",
 };
 
-// What opens an item's panel. It is a button rather than a link, since a panel is not
-// somewhere to go, and the panel stands after it rather than inside it
+// What opens an item's panel. It is a button rather than a link, since a panel is not somewhere
+// to go, and the panel stands after it rather than inside it
 function NavigationMenuTrigger(
     props: NavigationMenuTriggerProps,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: React.ForwardedRef<any>,
 ) {
-    const { children, className, onClick, onKeyDown, ...rest } = props;
+    const {
+        children,
+        className,
+        disabled: disabledProp,
+        onPointerEnter,
+        onPointerLeave,
+        onClick,
+        onKeyDown,
+        ...rest
+    } = props;
 
-    const { setOpenValue, orientation } = React.useContext(NavigationMenuContext);
-    const { value, triggerId, contentId, isOpen } = React.useContext(NavigationMenuItemContext);
-
-    // Set where the panel was opened by a key that asks for focus to be moved into it as well,
-    // so that focus is moved once the panel has been drawn rather than while it is still shut
-    const enterOnOpen = React.useRef(false);
-
-    useIsomorphicLayoutEffect(() => {
-        if (!isOpen || !enterOnOpen.current) {
-            return;
-        }
-
-        enterOnOpen.current = false;
-        getInteractiveNodes(document.getElementById(contentId))[0]?.focus();
-    }, [isOpen, contentId]);
+    const menu = React.useContext(NavigationMenuContext);
+    const item = React.useContext(NavigationMenuItemContext);
 
     // A trigger written outside an item has nothing to open, and nothing to name it either
-    if (!triggerId) {
+    if (!menu || !item) {
         return null;
     }
+
+    const { value, isOpen, triggerId, contentId } = item;
+    const disabled = disabledProp ?? item.disabled;
+
+    // A panel that opens on the pointer is a pointer affordance. A touch screen sends one of
+    // these on a tap, and a panel opened that way would stand with no pointer to move off it
+    // again, so a tap is left to the press the trigger already answers
+    const answersPointer = (event: React.PointerEvent<HTMLButtonElement>) =>
+        !menu.disableHoverTrigger && !disabled && event.pointerType === "mouse";
+
+    const handlePointerEnter = (event: React.PointerEvent<HTMLButtonElement>) => {
+        onPointerEnter?.(event);
+
+        if (answersPointer(event)) {
+            menu.openAfterDelay(value);
+        }
+    };
+
+    const handlePointerLeave = (event: React.PointerEvent<HTMLButtonElement>) => {
+        onPointerLeave?.(event);
+
+        if (answersPointer(event)) {
+            menu.cancelOpen(value);
+            menu.closeAfterDelay();
+        }
+    };
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         onClick?.(event);
 
-        if (event.defaultPrevented) {
+        if (event.defaultPrevented || menu.disableClickTrigger) {
             return;
         }
 
-        setOpenValue(isOpen ? null : value);
+        menu.toggle(value);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -60,46 +81,63 @@ function NavigationMenuTrigger(
             return;
         }
 
-        // The key that carries on the way the row does not run: down from a row of items,
-        // along from a column of them
-        const enterKey = orientation === "vertical" ? "ArrowRight" : "ArrowDown";
+        // The key that carries on the way the row does not run: down from a row of items, and
+        // along from a column of them, the way the page is read
+        const entryKey =
+            menu.orientation === "horizontal"
+                ? "ArrowDown"
+                : menu.direction === "rtl"
+                  ? "ArrowLeft"
+                  : "ArrowRight";
 
-        if (event.key !== enterKey) {
+        if (event.key === entryKey) {
+            // Taking the event keeps the page from scrolling away underneath the panel
+            event.preventDefault();
+            event.stopPropagation();
+            menu.focusContent(value, "start");
             return;
         }
 
-        // Taking the event keeps the page from scrolling away underneath the panel
-        event.preventDefault();
+        const next = navigate(menu.getTopLevelElements(), event.currentTarget, {
+            key: event.key,
+            orientation: menu.orientation,
+            direction: menu.direction,
+            loop: false,
+        });
 
-        // Opening the panel and stepping into it are the one gesture, so a panel that was
-        // still shut is opened and stepped into once it has been drawn
-        if (!isOpen) {
-            enterOnOpen.current = true;
-            setOpenValue(value);
-            return;
+        if (next) {
+            next.focus();
+            event.preventDefault();
+            event.stopPropagation();
         }
-
-        getInteractiveNodes(document.getElementById(contentId))[0]?.focus();
     };
+
+    const Chevron = menu.orientation === "horizontal" ? ChevronDownRegular : ChevronRightRegular;
 
     return (
         <button
             ref={ref}
             type="button"
             id={triggerId}
+            disabled={disabled}
             aria-expanded={isOpen}
             aria-controls={contentId}
             className={classNames(classes.root, className)}
             data-component="NavigationMenu.Trigger"
+            data-value={value}
+            data-orientation={menu.orientation}
             data-open={isOpen ? "" : undefined}
+            data-disabled={disabled ? "" : undefined}
             {...rest}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
         >
             {children}
             {/* The chevron stands beside whatever the caller put here rather than in place of
                 it, since only the chevron says whether the panel is open */}
-            <ChevronDownRegular className={classes.chevron} />
+            <Chevron className={classes.chevron} />
         </button>
     );
 }
