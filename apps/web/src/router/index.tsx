@@ -20,6 +20,7 @@ import {
     Breadcrumbs,
     Bubble,
     Button,
+    ButtonGroup,
     Card,
     Changelog,
     Checkbox,
@@ -119,6 +120,7 @@ const Router = () => (
                 <Route path="components/breadcrumbs" element={<Breadcrumbs />} />
                 <Route path="components/bubble" element={<Bubble />} />
                 <Route path="components/button" element={<Button />} />
+                <Route path="components/button-group" element={<ButtonGroup />} />
                 <Route path="components/card" element={<Card />} />
                 <Route path="components/checkbox" element={<Checkbox />} />
                 <Route path="components/clipboard" element={<Clipboard />} />

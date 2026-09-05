@@ -124,7 +124,7 @@ const sections: SidebarSection[] = [
             { label: "Breadcrumbs", href: "/components/breadcrumbs" },
             { label: "Bubble", href: "/components/bubble" },
             { label: "Button", href: "/components/button" },
-            { label: "Button Group", href: "/components/button-group" },
+            { label: "ButtonGroup", href: "/components/button-group" },
             { label: "Calendar", href: "/components/calendar" },
             { label: "Card", href: "/components/card" },
             { label: "Carousel", href: "/components/carousel" },
