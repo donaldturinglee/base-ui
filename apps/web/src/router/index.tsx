@@ -36,6 +36,7 @@ import {
     Combobox,
     CommandPalette,
     ConfirmationDialog,
+    ContextMenu,
     Details,
     Em,
     Flow,
@@ -144,6 +145,7 @@ const Router = () => (
                 <Route path="components/combobox" element={<Combobox />} />
                 <Route path="components/command-palette" element={<CommandPalette />} />
                 <Route path="components/confirmation-dialog" element={<ConfirmationDialog />} />
+                <Route path="components/context-menu" element={<ContextMenu />} />
                 <Route path="components/details" element={<Details />} />
                 <Route path="components/em" element={<Em />} />
                 <Route path="components/flow" element={<Flow />} />
