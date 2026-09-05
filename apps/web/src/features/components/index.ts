@@ -24,6 +24,7 @@ export { default as ButtonGroup } from "./ButtonGroup";
 export { default as Calendar } from "./Calendar";
 export { default as Card } from "./Card";
 export { default as Carousel } from "./Carousel";
+export { default as Chart } from "./Chart";
 export { default as Checkbox } from "./Checkbox";
 export { default as Clipboard } from "./Clipboard";
 export { default as Code } from "./Code";

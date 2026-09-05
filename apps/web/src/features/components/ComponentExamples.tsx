@@ -11,7 +11,7 @@ import {
     Text,
 } from "@gamecrafters/base-ui/react";
 import { storybookUrl } from "../storybook";
-import type { ComponentExample } from "./ComponentExamples.types";
+import type { ComponentExample, ComponentExternalPackage } from "./ComponentExamples.types";
 
 const classes = {
     // The line under the name is read, the listing under it is copied, so only the prose is held
@@ -91,16 +91,37 @@ const handedOver = (code: string) => [
     ...new Set([...code.matchAll(/=\{([A-Z][A-Za-z0-9]*)\}/g)].map(([, name]) => name)),
 ];
 
+// A hook the library exports, which is called in what an example gets ready rather than drawn as a
+// tag, so it is looked for by the call rather than by the mark that opens an element. One reached
+// for through something else — React's own, on the namespace it was imported under — is already in
+// hand and is passed over
+const hooksIn = (code: string) => [
+    ...new Set([...code.matchAll(/(?<![.\w])(use[A-Z][A-Za-z0-9]*)\(/g)].map(([, hook]) => hook)),
+];
+
 // What a listing imports, a line to the package it is imported from. A package nothing was drawn
-// from is left out rather than written as an empty pair of braces
-const importsIn = (code: string) => {
-    const names = [...new Set([...componentsIn(code), ...handedOver(code)])];
+// from is left out rather than written as an empty pair of braces.
+//
+// The tags and the props are read off the element alone, since what an example gets ready is
+// ordinary code, and the mark a tag is opened with is a type annotation's as readily as an
+// element's. A hook is read off both, being called in the one and now and then in the other
+const importsIn = (
+    { setup = "", code }: Pick<ComponentExample, "setup" | "code">,
+    external?: ComponentExternalPackage,
+) => {
+    const names = [
+        ...new Set([...componentsIn(code), ...handedOver(code), ...hooksIn(`${setup}\n${code}`)]),
+    ];
     const icons = names.filter(isIcon);
-    const rest = names.filter((name) => !isIcon(name));
+    const outside = names.filter((name) => external?.exports.includes(name) ?? false);
+    const rest = names.filter((name) => !isIcon(name) && !outside.includes(name));
 
     return [
         rest.length ? `import { ${rest.join(", ")} } from "@gamecrafters/base-ui/react";` : "",
         icons.length ? `import { ${icons.join(", ")} } from "@gamecrafters/base-ui-icons";` : "",
+        outside.length && external
+            ? `import { ${outside.join(", ")} } from "${external.name}";`
+            : "",
     ].filter(Boolean);
 };
 
@@ -130,12 +151,13 @@ const snippetOf = ({ setup, code }: ComponentExample) => (setup ? `${setup}\n\n$
 // from. It is worked out from the snippet rather than written beside it, so the two cannot fall
 // out of step, and a listing that runs to more than a line is returned in brackets the way it
 // would have been typed
-const fullListing = ({ name, setup, code }: ComponentExample) => {
+const fullListing = (example: ComponentExample, external?: ComponentExternalPackage) => {
+    const { name, setup, code } = example;
     const body = code.includes("\n") ? `  return (\n${indent(code, 4)}\n  )` : `  return ${code}`;
 
     return [
         'import React from "react";',
-        ...importsIn(code),
+        ...importsIn(example, external),
         "",
         `const ${componentName(name)} = () => {`,
         // What the example got ready stands inside the component, above what it returns, which is
@@ -149,14 +171,18 @@ const fullListing = ({ name, setup, code }: ComponentExample) => {
 // One example, as a card: what it draws above, and what was written to draw it below. The card
 // gives its padding up, since the listing is already set in from its own edges, and the half
 // above is padded on its own instead
-const Example = ({ storybookHref, ...example }: ComponentExample & { storybookHref: string }) => {
+const Example = ({
+    storybookHref,
+    external,
+    ...example
+}: ComponentExample & { storybookHref: string; external?: ComponentExternalPackage }) => {
     const { name, description, preview } = example;
     // The snippet is what stands, since it is the part a reader came for; the file it would be
     // written in is there to be asked for. Which of the two is showing is held here rather than
     // left to the disclosure, because both the trigger's words and the listing depend on it
     const [isOpen, setOpen] = React.useState(false);
     const snippet = snippetOf(example);
-    const full = fullListing(example);
+    const full = fullListing(example, external);
 
     return (
         <Stack gap="condensed">
@@ -246,9 +272,14 @@ const Example = ({ storybookHref, ...example }: ComponentExample & { storybookHr
 const ComponentExamples = ({
     component,
     examples,
+    external,
 }: {
     component: string;
     examples: ComponentExample[];
+    // Named only by a page whose examples are drawn out of another package's parts as well as the
+    // library's, so that the whole file each of them would be written in says where every name in
+    // it came from
+    external?: ComponentExternalPackage;
 }) => {
     if (!examples.length) {
         return null;
@@ -267,7 +298,12 @@ const ComponentExamples = ({
                 begins is said by a line rather than left to the spacing alone */}
             <Separator />
             {examples.map((example) => (
-                <Example key={example.name} storybookHref={storybookHref} {...example} />
+                <Example
+                    key={example.name}
+                    storybookHref={storybookHref}
+                    external={external}
+                    {...example}
+                />
             ))}
         </Stack>
     );

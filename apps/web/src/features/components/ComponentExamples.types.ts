@@ -5,6 +5,15 @@ import type { ReactNode } from "react";
 // other, since nothing on the page runs what a reader is handed, so the two are written side by
 // side and kept in step by hand
 
+// Where a listing's names come from besides the library and its icons. A component that is drawn
+// out of another package's parts as well as its own says which package that is and what belongs to
+// it, since there is nothing in a name like Line or Tooltip that says which of the two it came
+// from — and both of those are names the library uses itself
+export type ComponentExternalPackage = {
+    name: string;
+    exports: string[];
+};
+
 export type ComponentExample = {
     name: string;
     // What the example is showing, where the name alone does not say it
