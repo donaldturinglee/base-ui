@@ -23,6 +23,7 @@ import {
     ButtonGroup,
     Calendar,
     Card,
+    Carousel,
     Changelog,
     Checkbox,
     Clipboard,
@@ -124,6 +125,7 @@ const Router = () => (
                 <Route path="components/button-group" element={<ButtonGroup />} />
                 <Route path="components/calendar" element={<Calendar />} />
                 <Route path="components/card" element={<Card />} />
+                <Route path="components/carousel" element={<Carousel />} />
                 <Route path="components/checkbox" element={<Checkbox />} />
                 <Route path="components/clipboard" element={<Clipboard />} />
                 <Route path="components/code" element={<Code />} />
