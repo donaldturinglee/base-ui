@@ -39,6 +39,7 @@ export { default as ContextMenu } from "./ContextMenu";
 export { default as CounterLabel } from "./CounterLabel";
 export { default as DataTable } from "./DataTable";
 export { default as DatePicker } from "./DatePicker";
+export { default as Dialog } from "./Dialog";
 export { default as Details } from "./Details";
 export { default as Em } from "./Em";
 export { default as Flow } from "./Flow";
