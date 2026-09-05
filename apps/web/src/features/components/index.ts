@@ -21,6 +21,7 @@ export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as Bubble } from "./Bubble";
 export { default as Button } from "./Button";
 export { default as ButtonGroup } from "./ButtonGroup";
+export { default as Calendar } from "./Calendar";
 export { default as Card } from "./Card";
 export { default as Checkbox } from "./Checkbox";
 export { default as Clipboard } from "./Clipboard";
