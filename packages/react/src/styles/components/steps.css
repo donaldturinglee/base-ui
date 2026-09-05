@@ -11,8 +11,12 @@
         --steps-indicator-size: var(--base-size-32);
         --steps-indicator-font-size: var(--text-body-size-small);
         --steps-connector-width: var(--border-width-thick);
+        --steps-connector-gap: var(--base-size-4);
         --steps-gap: var(--base-size-12);
         --steps-run-gap: var(--base-size-24);
+        --steps-title-line-height: calc(
+            var(--text-body-size-medium) * var(--text-body-line-height-medium)
+        );
 
         display: flex;
         margin: 0;
@@ -23,6 +27,7 @@
     .steps-small {
         --steps-indicator-size: var(--base-size-24);
         --steps-indicator-font-size: var(--text-caption-size);
+        --steps-connector-gap: var(--base-size-2);
         --steps-gap: var(--base-size-8);
         --steps-run-gap: var(--base-size-16);
     }
@@ -89,12 +94,14 @@
         padding-bottom: 0;
     }
 
-    /* The line starts where the circle ends and runs to the foot of the step, which is where the
-       next circle begins */
+    /* The line leads from the circle to the one below it, which stands at the foot of the step.
+       It is held off both rather than run into them, as a row holds its connector off what it
+       joins by the gap the step is laid out with */
     .steps-vertical > .steps-item:not(:last-child)::after {
         content: "";
         position: absolute;
-        inset-block: var(--steps-indicator-size) 0;
+        inset-block: calc(var(--steps-indicator-size) + var(--steps-connector-gap))
+            var(--steps-connector-gap);
         inset-inline-start: calc((var(--steps-indicator-size) - var(--steps-connector-width)) / 2);
         width: var(--steps-connector-width);
         background-color: var(--steps-connector-color);
@@ -174,11 +181,13 @@
     }
 
     /* A step still to come is drawn back rather than out, so what is read first down the list is
-       where the flow has got to */
+       where the flow has got to. The height of a line is said outright rather than left to be
+       inherited, since it is what a column sets the title against the circle by */
     .steps-title {
         color: var(--foreground-color-muted);
         font-size: var(--text-body-size-medium);
         font-weight: var(--base-text-weight-normal);
+        line-height: var(--steps-title-line-height);
     }
 
     .steps-item[data-status="complete"] .steps-title {
@@ -188,6 +197,14 @@
     .steps-item[data-status="current"] .steps-title {
         color: var(--foreground-color-default);
         font-weight: var(--base-text-weight-semibold);
+    }
+
+    /* Standing in a column the circle keeps to the head of the step, so that the connector can
+       start where it ends, and the title comes down to meet it instead: the top margin sets its
+       first line against the middle of the circle, as it stands in a row, and whatever follows
+       runs on below */
+    .steps-vertical .steps-title {
+        margin-top: calc((var(--steps-indicator-size) - var(--steps-title-line-height)) / 2);
     }
 
     .steps-description {
