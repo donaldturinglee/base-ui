@@ -127,7 +127,6 @@ const sections: SidebarSection[] = [
             { label: "Button Group", href: "/components/button-group" },
             { label: "Calendar", href: "/components/calendar" },
             { label: "Card", href: "/components/card" },
-            { label: "Caret", href: "/components/caret" },
             { label: "Carousel", href: "/components/carousel" },
             { label: "Chart", href: "/components/chart" },
             { label: "Checkbox", href: "/components/checkbox" },
@@ -159,7 +158,6 @@ const sections: SidebarSection[] = [
             { label: "Frame", href: "/components/frame" },
             { label: "Header", href: "/components/header" },
             { label: "Heading", href: "/components/heading" },
-            { label: "Hidden", href: "/components/hidden" },
             { label: "Highlight", href: "/components/highlight" },
             { label: "Hover Card", href: "/components/hover-card" },
             { label: "IconButton", href: "/components/icon-button" },
@@ -230,7 +228,6 @@ const sections: SidebarSection[] = [
             { label: "Topic Tag", href: "/components/topic-tag" },
             { label: "Tour", href: "/components/tour" },
             { label: "Tree View", href: "/components/tree-view" },
-            { label: "Truncate", href: "/components/truncate" },
         ],
     },
 ];

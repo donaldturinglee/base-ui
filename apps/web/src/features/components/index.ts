@@ -8,6 +8,7 @@ export { default as ActionMenu } from "./ActionMenu";
 export { default as Alert } from "./Alert";
 export { default as AnchoredOverlay } from "./AnchoredOverlay";
 export { default as AspectRatio } from "./AspectRatio";
+export { default as Attachment } from "./Attachment";
 export { default as Avatar } from "./Avatar";
 export { default as AvatarStack } from "./AvatarStack";
 export { default as Badge } from "./Badge";

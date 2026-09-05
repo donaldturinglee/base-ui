@@ -8,6 +8,7 @@ import {
     Alert,
     AnchoredOverlay,
     AspectRatio,
+    Attachment,
     Avatar,
     AvatarStack,
     Badge,
@@ -103,6 +104,7 @@ const Router = () => (
                 <Route path="components/alert" element={<Alert />} />
                 <Route path="components/anchored-overlay" element={<AnchoredOverlay />} />
                 <Route path="components/aspect-ratio" element={<AspectRatio />} />
+                <Route path="components/attachment" element={<Attachment />} />
                 <Route path="components/avatar" element={<Avatar />} />
                 <Route path="components/avatar-stack" element={<AvatarStack />} />
                 <Route path="components/badge" element={<Badge />} />
