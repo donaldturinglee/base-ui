@@ -33,6 +33,7 @@ import {
     Code,
     CodeBlock,
     Collapsible,
+    Combobox,
     Details,
     Em,
     Flow,
@@ -138,6 +139,7 @@ const Router = () => (
                 <Route path="components/code" element={<Code />} />
                 <Route path="components/code-block" element={<CodeBlock />} />
                 <Route path="components/collapsible" element={<Collapsible />} />
+                <Route path="components/combobox" element={<Combobox />} />
                 <Route path="components/details" element={<Details />} />
                 <Route path="components/em" element={<Em />} />
                 <Route path="components/flow" element={<Flow />} />
