@@ -134,13 +134,33 @@ const componentName = (name: string) =>
         .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
         .join("");
 
+// Whether a line leaves a template literal open behind it, which is what an odd number of
+// backticks in it comes to. One opened and closed within the line — a name built out of a value,
+// written inside a prop — leaves nothing open and is passed over
+const opensTemplate = (line: string) => (line.match(/`/g)?.length ?? 0) % 2 === 1;
+
 // Every line of a listing moved in by the same amount, so a snippet keeps the shape it was written
-// in wherever it is set down. An empty line is left empty rather than padded out with the rest
-const indent = (code: string, spaces: number) =>
-    code
+// in wherever it is set down. An empty line is left empty rather than padded out with the rest.
+//
+// A line standing inside a template literal is left where it is. What is between the backticks is
+// the value itself rather than code being laid out, so moving it in would put spaces into a string
+// the reader is meant to copy out, which is what an example holding a listing of its own is made of
+const indent = (code: string, spaces: number) => {
+    let inTemplate = false;
+
+    return code
         .split("\n")
-        .map((line) => (line.trim() ? `${" ".repeat(spaces)}${line}` : line))
+        .map((line) => {
+            const moved = inTemplate || !line.trim() ? line : `${" ".repeat(spaces)}${line}`;
+
+            if (opensTemplate(line)) {
+                inTemplate = !inTemplate;
+            }
+
+            return moved;
+        })
         .join("\n");
+};
 
 // The snippet as it stands on the page: what the example has to have in hand, and the element it
 // draws under it. The two are read as the one thing, so they are set down together rather than the

@@ -30,6 +30,7 @@ export { default as CheckboxCard } from "./CheckboxCard";
 export { default as CheckboxGroup } from "./CheckboxGroup";
 export { default as Clipboard } from "./Clipboard";
 export { default as Code } from "./Code";
+export { default as CodeBlock } from "./CodeBlock";
 export { default as Collapsible } from "./Collapsible";
 export { default as Details } from "./Details";
 export { default as Em } from "./Em";

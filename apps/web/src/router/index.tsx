@@ -31,6 +31,7 @@ import {
     CheckboxGroup,
     Clipboard,
     Code,
+    CodeBlock,
     Collapsible,
     Details,
     Em,
@@ -135,6 +136,7 @@ const Router = () => (
                 <Route path="components/checkbox-group" element={<CheckboxGroup />} />
                 <Route path="components/clipboard" element={<Clipboard />} />
                 <Route path="components/code" element={<Code />} />
+                <Route path="components/code-block" element={<CodeBlock />} />
                 <Route path="components/collapsible" element={<Collapsible />} />
                 <Route path="components/details" element={<Details />} />
                 <Route path="components/em" element={<Em />} />
